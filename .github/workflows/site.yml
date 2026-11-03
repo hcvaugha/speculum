@@ -1,0 +1,32 @@
+name: Deploy site
+
+# Redeploys both sites whenever code or templates change, without fetching new data.
+on:
+  push:
+    branches: [main]
+    paths: ["speculum/site/**", ".github/workflows/site.yml"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m speculum build --out dist
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # First run creates the two Pages projects; later runs skip this harmlessly.
+          npx --yes wrangler@3 pages project create speculum-public --production-branch main || true
+          npx --yes wrangler@3 pages project create speculum-preview --production-branch main || true
+          npx --yes wrangler@3 pages deploy dist/public --project-name speculum-public --branch main --commit-dirty=true
+          npx --yes wrangler@3 pages deploy dist/preview --project-name speculum-preview --branch main --commit-dirty=true

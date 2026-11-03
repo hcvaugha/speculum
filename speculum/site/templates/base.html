@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{% block title %}Speculum{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ root }}static/style.css">
+</head>
+<body>
+<header class="mast"><div class="wrap">
+  <a class="wordmark" href="{{ root }}index.html">Specul<span>u</span>m</a>
+  <nav>
+    <a href="{{ root }}index.html" {% if page == 'chamber' %}class="on"{% endif %}>The Chamber</a>
+    <a href="{{ root }}day-zero.html" {% if page == 'dayzero' %}class="on"{% endif %}>Day Zero</a>
+    <a href="{{ root }}method.html" {% if page == 'method' %}class="on"{% endif %}>Method</a>
+  </nav>
+  <span class="preview-flag">Private preview · not for distribution</span>
+</div></header>
+<main class="wrap">
+{% block body %}{% endblock %}
+</main>
+<footer><div class="wrap">
+  {% include "_seal.html" %}
+  <div>Snapshot {{ snapshot_date }} · Day {{ day_number }} since November 3, 2026<br>
+  Every figure is drawn from public filings and links to its source. Readings describe; they do not accuse.</div>
+</div></footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

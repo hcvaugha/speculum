@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% from "_rule.html" import rule %}
+{% block title %}{{ m.name }} · Speculum{% endblock %}
+{% block body %}
+<h1>{{ m.name }}</h1>
+<p class="lede"><span class="party-{{ m.party }}">{{ m.party_name }}{% if m.party != m.caucus %} (caucuses with {{ party_names[m.caucus] }}s){% endif %}</span> · {{ m.seat_long }} · {{ 'Senator' if m.chamber == 'senate' else 'Representative' }}{% if m.chamber_since or m.start %} since {{ (m.chamber_since or m.start)[:4] }}{% endif %}</p>
+<p class="meta">Bioguide {{ m.bioguide }}{% if L.finance and L.finance.candidate_id %} · FEC <a href="https://www.fec.gov/data/candidate/{{ L.finance.candidate_id }}/">{{ L.finance.candidate_id }}</a>{% endif %} · <a href="https://bioguide.congress.gov/search/bio/{{ m.bioguide }}">Congressional biography</a></p>
+
+<h2>The Ledger</h2>
+<div class="readings">
+  <div class="reading">
+    <div class="label">Small donors</div>
+    <div class="value">{{ L.funding.parts.small|pct if L.funding else '—' }}</div>
+    <div class="context">of contributions came from donors giving under $200.</div>
+    {{ rule(L.pct.small_share, L.party_pct.small_share, m.caucus) }}
+    <div class="src">Source: FEC candidate totals{% if L.finance %}, {{ L.finance.cycle_label }}{% endif %}</div>
+  </div>
+  <div class="reading">
+    <div class="label">PACs and committees</div>
+    <div class="value">{{ L.funding.parts.pac|pct if L.funding else '—' }}</div>
+    <div class="context">of contributions came from PACs and other non-party committees.</div>
+    {{ rule(L.pct.pac_share, L.party_pct.pac_share, m.caucus) }}
+    <div class="src">Source: FEC candidate totals</div>
+  </div>
+  <div class="reading">
+    <div class="label">Lobbyist money</div>
+    <div class="value">{{ L.lobbyist_total|money if L.lobbyist_total else '$0' }}</div>
+    <div class="context">reported by registered lobbyists and their PACs as given to or honoring this member{% if lobby_years %} ({{ lobby_years }}){% endif %}.</div>
+    {{ rule(L.pct.lobbyist_total, L.party_pct.lobbyist_total, m.caucus) }}
+    <div class="src">Source: LD-203 reports, lda.gov</div>
+  </div>
+  <div class="reading">
+    <div class="label">Party unity</div>
+    <div class="value">{{ L.unity|pct if L.unity is not none else '—' }}</div>
+    <div class="context">{% if L.unity_votes %}of {{ L.unity_votes }} votes that split the parties were cast with the {{ party_names[m.caucus] }} majority.{% else %}No votes have split the parties yet in this record.{% endif %}</div>
+    {{ rule(L.pct.unity, L.party_pct.unity, m.caucus) }}
+    <div class="src">Source: roll calls, {{ 'Senate.gov' if m.chamber == 'senate' else 'Congress.gov / House Clerk' }}</div>
+  </div>
+  <div class="reading">
+    <div class="label">Voted</div>
+    <div class="value">{{ L.attendance|pct if L.attendance is not none else '—' }}</div>
+    <div class="context">of {{ L.eligible }} roll calls this session.</div>
+    {{ rule(L.pct.attendance, L.party_pct.attendance, m.caucus) }}
+    <div class="src">Source: roll calls</div>
+  </div>
+</div>
+<div class="notice">Readings not yet live: <b>Independence</b> (votes against the stated positions of this member's own top funders), <b>Exposure</b>, <b>Timing</b>, <b>Revolving door</b>, and <b>Earmarks and trades</b>. They arrive once funder positions are coded and reviewed. See the <a href="../method.html">method</a>.</div>
+
+<h2>Where the money came from</h2>
+{% if L.funding %}
+<p class="meta">{{ L.funding.total|money }} in contributions · {{ L.finance.cycle_label }} · through {{ L.finance.coverage_end or 'latest report' }}</p>
+<div class="fbar" role="img" aria-label="Contributions by source">
+  {% for key, label, desc in parts %}<span style="width:{{ '%.2f'|format(L.funding.parts[key] * 100) }}%;background:var(--{{ key }})" title="{{ label }}"></span>{% endfor %}
+</div>
+<div class="fkey">
+  {% for key, label, desc in parts %}<div title="{{ desc }}"><span class="sw" style="background:var(--{{ key }})"></span>{{ label }} <span class="amt">{{ L.funding.parts[key]|pct }} · {{ L.funding.dollars[key]|money }}</span></div>{% endfor %}
+</div>
+{% else %}
+<p class="muted">No FEC totals matched for this member yet.</p>
+{% endif %}
+
+{% if L.finance and L.finance.top_committees %}
+<h2>Largest committee contributors</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Committee</th><th class="r">Amount</th><th class="r">Gifts</th></tr></thead>
+<tbody>
+{% for c in L.finance.top_committees %}
+<tr><td>{% if c.committee_id %}<a href="https://www.fec.gov/data/committee/{{ c.committee_id }}/">{{ c.name }}</a>{% else %}{{ c.name }}{% endif %}</td><td class="r num">{{ c.amount|money }}</td><td class="r num">{{ c.count }}</td></tr>
+{% endfor %}
+</tbody></table></div>
+<p class="meta" style="margin-top:8px">Itemized receipts from committees to {{ L.finance.committee_name or 'the principal campaign committee' }}, {{ L.finance.cycle_label }}.</p>
+{% endif %}
+
+<h2>Lobbyist contributions</h2>
+{% if L.lobbyist_items %}
+<div class="tbl-wrap"><table>
+<thead><tr><th>Date</th><th>Reported by</th><th>Paid to</th><th>Type</th><th class="r">Amount</th></tr></thead>
+<tbody>
+{% for c in L.lobbyist_items[:40] %}
+<tr><td class="num">{{ c.date or '' }}</td><td>{{ c.reported_by }}{% if c.contributor and c.contributor != c.reported_by %}<br><span class="muted">{{ c.contributor }}</span>{% endif %}</td><td>{{ c.payee }}</td><td class="muted">{{ c.type }}</td><td class="r num">{% if c.url %}<a href="{{ c.url }}">{{ c.amount|money }}</a>{% else %}{{ c.amount|money }}{% endif %}</td></tr>
+{% endfor %}
+</tbody></table></div>
+<p class="meta" style="margin-top:8px">Matched by the honoree name on each LD-203 report. Matches marked by name only can be wrong; each amount links to the filing.</p>
+{% else %}
+<p class="muted">No LD-203 contributions matched to this member in the years collected.</p>
+{% endif %}
+
+<h2>Recent roll calls</h2>
+{% if recent %}
+<div class="tbl-wrap"><table>
+<thead><tr><th>Date</th><th>Question</th><th>Result</th><th>Vote</th></tr></thead>
+<tbody>
+{% for v in recent %}
+<tr><td class="num">{{ v.date[:10] }}</td><td>{% if v.url %}<a href="{{ v.url }}">{{ v.question }}</a>{% else %}{{ v.question }}{% endif %}{% if v.bill %} <span class="muted">{{ v.bill }}</span>{% endif %}</td><td class="muted">{{ v.result }}</td>
+<td><span class="pos pos-{{ v.side or 'X' }}">{{ v.position }}</span>{% if v.dissent %} <span class="dissent">against party</span>{% endif %}</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}
+<p class="muted">No roll calls collected yet.</p>
+{% endif %}
+{% endblock %}

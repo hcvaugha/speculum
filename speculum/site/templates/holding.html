@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speculum</title>
+<meta name="description" content="A mirror held to Congress. Recording began November 3, 2026.">
+<meta property="og:title" content="Speculum">
+<meta property="og:description" content="A mirror held to Congress. Recording began November 3, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<main class="holding">
+  <div>
+    <svg class="mirror" viewBox="0 0 120 168" role="img" aria-label="An upright mirror">
+      <defs><linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b1a17"/><stop offset="1" stop-color="#0b0a09"/></linearGradient></defs>
+      <ellipse cx="60" cy="84" rx="56" ry="80" fill="none" stroke="#8a6f33" stroke-width="1"/>
+      <ellipse cx="60" cy="84" rx="46" ry="70" fill="url(#glass)" stroke="#c9a24a" stroke-width="1.4"/>
+      <path d="M38 40 Q46 30 58 26" fill="none" stroke="#9fc3e6" stroke-opacity=".35" stroke-width="1.2"/>
+      <line x1="60" y1="4" x2="60" y2="14" stroke="#8a6f33"/><line x1="60" y1="154" x2="60" y2="164" stroke="#8a6f33"/>
+    </svg>
+    <h1>Speculum</h1>
+    <p class="tag">A mirror held to Congress.</p>
+    <div class="day">Recording began November 3, 2026<b id="day">Day 1</b>of the record</div>
+    <div class="principles">
+      <p>Who funds each member of Congress, who lobbies them, and how they vote on what those interests want, drawn only from public filings.</p>
+      <p>The same yardstick for every member and every party. Every figure links to its source. The record describes; the reader decides.</p>
+      <p class="meta" style="margin-top:22px">The Ledger opens after independent review of its method.</p>
+    </div>
+    <div style="margin-top:44px">{% include "_seal.html" %}</div>
+  </div>
+</main>
+<script>
+(function () {
+  var start = Date.UTC(2026, 10, 3);
+  var now = new Date();
+  var today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  var n = Math.floor((today - start) / 86400000) + 1;
+  if (n >= 1) document.getElementById('day').textContent = 'Day ' + n;
+})();
+</script>
+</body>
+</html>

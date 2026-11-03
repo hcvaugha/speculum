@@ -1,0 +1,77 @@
+name: Nightly snapshot
+
+on:
+  schedule:
+    - cron: "17 10 * * *"   # 10:17 UTC: 5:17am Eastern in winter, after overnight filings post
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Snapshot date override (YYYY-MM-DD); leave blank for today"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Fetch every source and write the snapshot
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+          FEC_API_KEY: ${{ secrets.FEC_API_KEY }}
+          LDA_API_KEY: ${{ secrets.LDA_API_KEY }}
+        run: python -m speculum snapshot ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+
+      - name: Commit the snapshot
+        run: |
+          git config user.name "speculum-bot"
+          git config user.email "speculum-bot@users.noreply.github.com"
+          git add data/snapshots
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          DATE=$(ls data/snapshots | sort | tail -1)
+          git commit -m "Snapshot $DATE"
+          git push
+
+      - name: Archive raw filings as a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE=$(ls data/raw | sort | tail -1)
+          tar -czf "raw-$DATE.tar.gz" -C data/raw "$DATE"
+          sha256sum "raw-$DATE.tar.gz" > "raw-$DATE.tar.gz.sha256"
+          gh release create "raw-$DATE" "raw-$DATE.tar.gz" "raw-$DATE.tar.gz.sha256" "data/raw/$DATE/MANIFEST.jsonl" \
+            --title "Raw filings $DATE" \
+            --notes "Untouched source files fetched on $DATE, with SHA-256 manifest." || \
+          gh release upload "raw-$DATE" "raw-$DATE.tar.gz" "raw-$DATE.tar.gz.sha256" "data/raw/$DATE/MANIFEST.jsonl" --clobber
+
+      - name: Build the site
+        run: python -m speculum build --out dist
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Deploy public holding page and private preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # First run creates the two Pages projects; later runs skip this harmlessly.
+          npx --yes wrangler@3 pages project create speculum-public --production-branch main || true
+          npx --yes wrangler@3 pages project create speculum-preview --production-branch main || true
+          npx --yes wrangler@3 pages deploy dist/public --project-name speculum-public --branch main --commit-dirty=true
+          npx --yes wrangler@3 pages deploy dist/preview --project-name speculum-preview --branch main --commit-dirty=true

@@ -1,0 +1,11 @@
+{% macro rule(pct, party_pct, party_code) -%}
+{% if pct is not none %}
+<div class="rule" aria-hidden="true">
+  <span class="tick" style="left:50%"></span>
+  {% if party_pct is not none %}<span class="tick party" style="left:{{ '%.1f'|format(party_pct) }}%"></span>{% endif %}
+  <span class="dot" style="left:{{ '%.1f'|format(pct) }}%"></span>
+</div>
+<div class="rule-key"><span>lowest in chamber</span><span>median</span><span>highest</span></div>
+<div class="context" style="margin-top:6px">{{ '%d'|format(pct|round) }}th percentile of the chamber{% if party_pct is not none %}; gold tick marks the party median{% endif %}.</div>
+{% endif %}
+{%- endmacro %}

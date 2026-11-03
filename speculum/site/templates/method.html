@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Method · Speculum{% endblock %}
+{% block body %}
+<h1>Method</h1>
+<p class="lede">Speculum describes; it does not accuse. Every reading below is a rate or a dollar figure computed the same way for every member, compared with the chamber and with the member's own party.</p>
+
+<h2>Readings in this version</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Reading</th><th>How it is computed</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Small donors</td><td>Unitemized individual contributions (donors giving $200 or less in the cycle) as a share of all contributions: individuals, committees, party, and the candidate.</td><td>FEC candidate totals</td></tr>
+<tr><td>PACs and committees</td><td>Contributions from PACs and other non-party committees as a share of the same total.</td><td>FEC candidate totals</td></tr>
+<tr><td>Lobbyist money</td><td>Sum of contributions listed on LD-203 reports whose honoree is this member, matched by name.</td><td>lda.gov</td></tr>
+<tr><td>Party unity</td><td>On votes where most Democrats opposed most Republicans, the share of the member's yes-or-no votes cast with their party's majority. Independents count with the party they caucus with.</td><td>Roll calls</td></tr>
+<tr><td>Voted</td><td>Roll calls the member voted on, as a share of roll calls held while they served.</td><td>Roll calls</td></tr>
+</tbody></table></div>
+
+<h2>Campaign cycles</h2>
+<p class="lede">House figures cover the current two-year cycle. Senate figures cover the senator's full six-year election cycle, because senators raise money across their whole term.</p>
+
+<h2>Known limits</h2>
+<ul class="lede">
+  <li>Lobbyist contributions are matched to members by the honoree name written on each report. Names vary, so some matches will be missed and a few may be wrong. Every amount links to its filing.</li>
+  <li>A high share of PAC money or a high party-unity rate is not evidence of wrongdoing. They describe how a member is funded and how they vote.</li>
+  <li>Readings that need coded funder positions (Independence, Exposure, Timing) are not shown until those positions have been reviewed by people.</li>
+</ul>
+
+<h2>Archive</h2>
+<p class="lede">Each night every raw file fetched from a source is saved untouched, hashed with SHA-256, and listed in a manifest attached to that night's release, so any figure can be traced to the exact bytes it came from.</p>
+{% endblock %}
