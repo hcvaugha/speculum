@@ -62,7 +62,7 @@ def cmd_snapshot(args) -> int:
     # 1,000 requests an hour), so it runs last and stops early to leave time to commit.
     import time
     deadline = time.monotonic() + 60 * float(os.environ.get("SPECULUM_BUDGET_MINUTES", "290"))
-    votes = step("votes", lambda: _votes(fetch, keys, members, snap))
+    votes = step("votes", lambda: _votes(fetch, keys, members, snap, errors))
     lobbying = step("lobbying", lambda: lda.fetch_lobbying(fetch, keys["lda"], members, run_date))
     if lobbying is not None:
         snap.write("lobbying.json", lobbying)
@@ -114,12 +114,24 @@ def cmd_snapshot(args) -> int:
     return 0
 
 
-def _votes(fetch, keys, members, snap):
+def _votes(fetch, keys, members, snap, errors):
     from .sources import congress, senate
 
     previous = _latest(snap, "votes.json.gz")
-    house = congress.fetch_house_votes(fetch, keys["congress"], previous)
-    sen = senate.fetch_senate_votes(fetch, members, previous)
+    empty = {"votes": [], "positions": {}}
+
+    def chamber(name, fn):
+        # Each chamber stands alone: a refusal from one site must not throw away the other's votes.
+        try:
+            return fn()
+        except Exception as exc:
+            log.exception("%s votes failed", name)
+            errors[f"votes_{name}"] = f"{type(exc).__name__}: {exc}"
+            keep = [v for v in (previous or {}).get("votes", []) if v.get("chamber") == name]
+            return {"votes": keep, "positions": {v["id"]: previous["positions"].get(v["id"], {}) for v in keep}} if keep else empty
+
+    house = chamber("house", lambda: congress.fetch_house_votes(fetch, keys["congress"], previous))
+    sen = chamber("senate", lambda: senate.fetch_senate_votes(fetch, members, previous))
     merged = {"votes": house["votes"] + sen["votes"], "positions": {**house["positions"], **sen["positions"]}}
     # A back-dated run (e.g. stamping Day Zero after the fact) keeps only roll calls held by that date.
     if snap.date < today_et():

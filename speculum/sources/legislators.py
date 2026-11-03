@@ -26,6 +26,7 @@ def normalize(records: list[dict]) -> list[dict]:
         out.append({
             "bioguide": r["id"]["bioguide"],
             "lis": r["id"].get("lis"),
+            "icpsr": str(r["id"]["icpsr"]) if r["id"].get("icpsr") else None,
             "fec_ids": r["id"].get("fec", []),
             "name": full,
             "first": name.get("first"),

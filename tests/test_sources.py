@@ -247,3 +247,29 @@ def test_finance_stops_at_deadline_and_carries_forward():
     out = fec.fetch_finance(FakeFetch({}), "KEY", sanders + pelosi, "2026-11-03", previous=prev, deadline=time.monotonic() - 1)
     assert out["P000197"]["carried_forward"] is True
     assert "S000033" not in out and out["_partial"] == {"reached": 0, "of": 2}
+
+
+def test_voteview_fallback_when_senate_refuses():
+    import requests
+    from datetime import date
+    from speculum.sources import senate
+
+    rollcalls = ("congress,chamber,rollnumber,date,session,clerk_rollnumber,yea_count,nay_count,bill_number,vote_result,vote_desc,vote_question,dtl_desc\n"
+                 "119,Senate,1,2025-01-07,1,1,52,47,S5,Agreed to,A bill,On the Motion,\n"
+                 "119,Senate,700,2026-01-06,2,3,50,50,,Rejected,Nomination,On the Cloture Motion,\n")
+    votes = "congress,chamber,rollnumber,icpsr,cast_code,prob\n119,Senate,1,41301,1,99\n119,Senate,1,41302,6.0,99\n119,Senate,700,41301,9,\n"
+
+    class F:
+        def get(self, source, name, url, params=None, headers=None, retries=5):
+            if "senate.gov" in url:
+                r = requests.Response(); r.status_code = 403
+                raise requests.HTTPError("403 Forbidden", response=r)
+            return (rollcalls if "rollcalls" in url else votes).encode()
+
+    members = [{"bioguide": "A000001", "icpsr": "41301", "lis": "S1"}, {"bioguide": "B000002", "icpsr": "41302", "lis": "S2"}]
+    out = senate.fetch_senate_votes(F(), members, None, today=date(2026, 11, 3))
+    assert out["source"] == "voteview"
+    assert [v["id"] for v in out["votes"]] == ["s-119-1-1", "s-119-2-3"]
+    assert out["positions"]["s-119-1-1"] == {"A000001": "Yea", "B000002": "Nay"}
+    assert out["positions"]["s-119-2-3"] == {"A000001": "Not Voting"}
+    assert out["votes"][0]["bill"] == "S5"
