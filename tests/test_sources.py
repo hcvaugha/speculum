@@ -237,3 +237,13 @@ def test_interests_aggregate_split_and_link():
     reg = out["r-1"]
     assert reg["kind"] == "registrant" and reg["total"] == 2500.0   # 5000 to Markey, -2500 void to Pelosi
     assert reg["linked_slugs"] == ["c-C001"] and pac["linked_slugs"] == ["r-1"]
+
+
+def test_finance_stops_at_deadline_and_carries_forward():
+    import time
+    sanders = [m for m in members() if m["bioguide"] == "S000033"]
+    pelosi = [m for m in members() if m["bioguide"] == "P000197"]
+    prev = {"P000197": {"candidate_id": "H8CA05035", "receipts": 1, "coverage_end": "2026-09-30"}}
+    out = fec.fetch_finance(FakeFetch({}), "KEY", sanders + pelosi, "2026-11-03", previous=prev, deadline=time.monotonic() - 1)
+    assert out["P000197"]["carried_forward"] is True
+    assert "S000033" not in out and out["_partial"] == {"reached": 0, "of": 2}

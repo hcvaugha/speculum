@@ -12,6 +12,10 @@
   <div class="reading"><div class="label">Lobbyist contributions matched</div><div class="value">{{ meta.counts.lobbying_items }}</div><div class="context">{{ meta.counts.lobbying_unmatched }} honorees not yet matched to a member</div></div>
 </div>
 
+{% if meta.finance_partial %}
+<div class="notice">This night's run reached campaign figures for {{ meta.finance_partial.reached }} of {{ meta.finance_partial.of }} members before its time limit. The rest carry forward from the previous night or complete on the next run.</div>
+{% endif %}
+
 <h2>Snapshots so far</h2>
 <div class="tbl-wrap"><table>
 <thead><tr><th>Date</th><th>Day</th><th class="r">Raw files archived</th><th class="r">Source calls</th><th>Note</th></tr></thead>

@@ -58,15 +58,21 @@ def cmd_snapshot(args) -> int:
             errors[name] = f"{type(exc).__name__}: {exc}"
             return None
 
+    # Time budget: GitHub stops a job after 6 hours. Finance is the slowest source (FEC allows
+    # 1,000 requests an hour), so it runs last and stops early to leave time to commit.
+    import time
+    deadline = time.monotonic() + 60 * float(os.environ.get("SPECULUM_BUDGET_MINUTES", "290"))
     votes = step("votes", lambda: _votes(fetch, keys, members, snap))
-    finance = step("finance", lambda: fec.fetch_finance(fetch, keys["fec"], members, run_date,
-                                                         previous=_latest(snap, "finance.json"),
-                                                         top_n=args.top_committees))
-    if finance is not None:
-        snap.write("finance.json", finance)
     lobbying = step("lobbying", lambda: lda.fetch_lobbying(fetch, keys["lda"], members, run_date))
     if lobbying is not None:
         snap.write("lobbying.json", lobbying)
+    finance = step("finance", lambda: fec.fetch_finance(fetch, keys["fec"], members, run_date,
+                                                         previous=_latest(snap, "finance.json"),
+                                                         top_n=args.top_committees, deadline=deadline))
+    partial = None
+    if finance is not None:
+        partial = finance.pop("_partial", None)
+        snap.write("finance.json", finance)
 
     votes = votes or snap.read("votes.json.gz", {"votes": []})
     finance = finance or snap.read("finance.json", {})
@@ -92,6 +98,7 @@ def cmd_snapshot(args) -> int:
         "raw_files": files,
         "calls": fetch.calls,
         "errors": errors,
+        "finance_partial": partial,
     }
     snap.write("meta.json", meta)
     try:

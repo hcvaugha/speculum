@@ -109,11 +109,23 @@ def _top_committees(fetch, key, committee_id: str, periods: list[int], top_n: in
     return sorted((a for a in agg.values() if a["amount"] > 0), key=lambda a: -a["amount"])[:top_n]
 
 
-def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous: dict | None = None, top_n: int = 50) -> dict:
+def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous: dict | None = None, top_n: int = 50,
+                  deadline: float | None = None) -> dict:
+    """With a deadline (time.monotonic() value), stops fetching when time runs out and carries
+    forward the previous night's figures for members it did not reach. Members missing from the
+    previous snapshot go first, so an interrupted first run is completed on the next night."""
+    import time
     today = date.fromisoformat(run_date)
     previous = previous or {}
     out = {}
-    for m in members:
+    order = sorted(members, key=lambda m: m["bioguide"] in previous)
+    for idx, m in enumerate(order):
+        if deadline is not None and time.monotonic() > deadline:
+            for rest in order[idx:]:
+                if rest["bioguide"] in previous:
+                    out[rest["bioguide"]] = {**previous[rest["bioguide"]], "carried_forward": True}
+            out["_partial"] = {"reached": idx, "of": len(order)}
+            break
         cycle, label = election_cycle(m, today)
         best = None
         for cand in _ids_for(m):
