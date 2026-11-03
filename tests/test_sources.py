@@ -273,3 +273,16 @@ def test_voteview_fallback_when_senate_refuses():
     assert out["positions"]["s-119-1-1"] == {"A000001": "Yea", "B000002": "Nay"}
     assert out["positions"]["s-119-2-3"] == {"A000001": "Not Voting"}
     assert out["votes"][0]["bill"] == "S5"
+
+
+def test_lda_tolerates_blank_lobbyist_names():
+    from speculum.sources import lda
+    members = [{"bioguide": "S000001", "first": "Jane", "last": "Smith", "nickname": None, "name": "Jane Smith",
+                "chamber": "senate", "state": "OH", "party": "D"}]
+    reports = [{"registrant": {"id": 7, "name": "ACME LOBBYING"}, "lobbyist": {"first_name": None, "last_name": "DOE"},
+                "contribution_items": [{"contribution_type": "feca", "honoree_name": "Sen. Jane Smith", "amount": None}]},
+               {"registrant": {}, "lobbyist": None, "contribution_items": []}]
+    out = lda.match_reports(reports, members, [2026])
+    assert out["reports"] == 2
+    for items in out["by_member"].values():
+        assert items[0]["reported_by"] == "Doe (Acme Lobbying)"

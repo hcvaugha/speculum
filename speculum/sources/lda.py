@@ -126,8 +126,10 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
             for pac in r.get("pacs") or []:
                 if pac and pac not in entry["pacs"]:
                     entry["pacs"].append(pac)
-        lob = r.get("lobbyist")
-        reported_by = f"{lob['first_name'].title()} {lob['last_name'].title()} ({filer.title()})" if lob else filer.title()
+        lob = r.get("lobbyist") or {}
+        # Filings leave fields blank more often than the schema suggests; never let one sink the night.
+        lob_name = " ".join(str(x).strip().title() for x in (lob.get("first_name"), lob.get("last_name")) if x and str(x).strip())
+        reported_by = f"{lob_name} ({filer.title()})" if lob_name else (filer.title() or "Unnamed filer")
         for it in r.get("contribution_items") or []:
             if it.get("contribution_type") not in COUNTED_TYPES:
                 continue
@@ -135,7 +137,7 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
             m = matcher.match(honoree)
             try:
                 amount = float(it.get("amount") or 0)
-            except ValueError:
+            except (TypeError, ValueError):
                 amount = 0.0
             if not m:
                 if _chamber_hint(honoree):

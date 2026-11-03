@@ -8,6 +8,9 @@ on:
       date:
         description: "Snapshot date override (YYYY-MM-DD); leave blank for today"
         required: false
+      only:
+        description: "Rerun only these sources for that date (space-separated: votes finance lobbying); blank for all"
+        required: false
 
 permissions:
   contents: write
@@ -34,7 +37,7 @@ jobs:
           CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
           FEC_API_KEY: ${{ secrets.FEC_API_KEY }}
           LDA_API_KEY: ${{ secrets.LDA_API_KEY }}
-        run: python -m speculum snapshot ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+        run: python -m speculum snapshot ${{ inputs.date && format('--date {0}', inputs.date) || '' }} ${{ inputs.only && format('--only {0}', inputs.only) || '' }}
 
       - name: Commit the snapshot
         run: |
@@ -56,8 +59,13 @@ jobs:
           sha256sum "raw-$DATE.tar.gz" > "raw-$DATE.tar.gz.sha256"
           gh release create "raw-$DATE" "raw-$DATE.tar.gz" "raw-$DATE.tar.gz.sha256" "data/raw/$DATE/MANIFEST.jsonl" \
             --title "Raw filings $DATE" \
-            --notes "Untouched source files fetched on $DATE, with SHA-256 manifest." || \
-          gh release upload "raw-$DATE" "raw-$DATE.tar.gz" "raw-$DATE.tar.gz.sha256" "data/raw/$DATE/MANIFEST.jsonl" --clobber
+            --notes "Untouched source files fetched on $DATE, with SHA-256 manifest." && exit 0
+          # A later run for the same date (a partial rerun) adds its files beside the first set, never over them.
+          SUF="run${{ github.run_id }}"
+          mv "raw-$DATE.tar.gz" "raw-$DATE-$SUF.tar.gz"
+          sha256sum "raw-$DATE-$SUF.tar.gz" > "raw-$DATE-$SUF.tar.gz.sha256"
+          cp "data/raw/$DATE/MANIFEST.jsonl" "MANIFEST-$SUF.jsonl"
+          gh release upload "raw-$DATE" "raw-$DATE-$SUF.tar.gz" "raw-$DATE-$SUF.tar.gz.sha256" "MANIFEST-$SUF.jsonl"
 
       - name: Build the site
         run: python -m speculum build --out dist

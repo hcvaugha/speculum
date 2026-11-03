@@ -100,6 +100,18 @@ def cmd_snapshot(args) -> int:
         "errors": errors,
         "finance_partial": partial,
     }
+    if args.only:
+        # A partial rerun fills in sources for a night already saved: keep what that night recorded
+        # about the sources this run did not touch.
+        prior = snap.read("meta.json", {}) or {}
+        skipped = [k for k in ("votes", "finance", "lobbying") if k not in args.only]
+        meta["errors"] = {**{k: v for k, v in (prior.get("errors") or {}).items()
+                             if any(k == s or k.startswith(s + "_") for s in skipped)}, **errors}
+        if "finance" not in args.only:
+            meta["finance_partial"] = prior.get("finance_partial")
+        meta["raw_files"] += prior.get("raw_files") or 0
+        meta["calls"] += prior.get("calls") or 0
+        meta["note"] = prior.get("note", meta["note"])
     snap.write("meta.json", meta)
     try:
         from . import tide
