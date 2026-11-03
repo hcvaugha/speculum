@@ -1,7 +1,8 @@
 """Campaign money from the OpenFEC API.
 
 For each member: the candidate's totals for the cycle that funds their current seat, their
-principal campaign committee, and the committees (PACs, party and others) that gave the most.
+principal campaign committee, and the committees (PACs, party and others) that gave the most,
+grouped from itemized receipts (OpenFEC has no per-contributor aggregate).
 
 Cycles: House members raise money over two years, so their figures cover 2025-2026. Senators
 raise over six years, so their figures cover the full election cycle for their seat's next
@@ -62,10 +63,15 @@ def _get(fetch, key, name, path, **params):
     return fetch.get_json("fec", name, f"{BASE}{path}", params={"api_key": key, **params})
 
 
-def _totals(fetch, key, cand: str, cycle: int) -> dict | None:
-    data = _get(fetch, key, f"totals_{cand}_{cycle}.json", f"/candidate/{cand}/totals/",
-                cycle=cycle, election_full="true", per_page=20)
-    rows = [r for r in data.get("results", []) if r.get("cycle") in (cycle, None)] or data.get("results", [])
+def _totals(fetch, key, cand: str, cycle: int, election_full: bool) -> dict | None:
+    data = _get(fetch, key, f"totals_{cand}_{cycle}_{'full' if election_full else '2yr'}.json",
+                f"/candidate/{cand}/totals/", cycle=cycle, election_full=str(election_full).lower(), per_page=20)
+    rows = data.get("results", [])
+    if election_full:
+        rows = [r for r in rows if r.get("candidate_election_year") in (cycle, None)] or rows
+    else:
+        rows = [r for r in rows if r.get("cycle") in (cycle, None)] or rows
+    rows = [r for r in rows if r.get("election_full") in (election_full, None)] or rows
     return rows[0] if rows else None
 
 
@@ -73,20 +79,33 @@ def _principal_committee(fetch, key, cand: str, cycle: int) -> dict | None:
     data = _get(fetch, key, f"committees_{cand}_{cycle}.json", f"/candidate/{cand}/committees/",
                 cycle=cycle, designation="P", per_page=20)
     rows = data.get("results", [])
+    rows = [r for r in rows if cycle in (r.get("cycles") or [])] or rows
     return {"id": rows[0]["committee_id"], "name": rows[0].get("name")} if rows else None
 
 
-def _top_committees(fetch, key, committee_id: str, cycle: int, years: list[int], top_n: int) -> list[dict]:
-    """Committees that gave to the campaign, aggregated by giving committee across the cycle."""
+def _top_committees(fetch, key, committee_id: str, periods: list[int], top_n: int, max_pages: int = 8) -> list[dict]:
+    """Group itemized receipts from committees (PACs, party, other campaigns) by giving committee.
+    Memo rows are skipped so earmarked pass-throughs are not double counted."""
     agg: dict[str, dict] = {}
-    for period in years:
-        data = _get(fetch, key, f"givers_{committee_id}_{period}.json", "/schedules/schedule_b/by_recipient_id/",
-                    recipient_id=committee_id, cycle=period, per_page=100, sort="-total")
-        for r in data.get("results", []):
-            cid = r.get("committee_id")
-            a = agg.setdefault(cid, {"committee_id": cid, "name": r.get("committee_name") or cid, "amount": 0.0, "count": 0})
-            a["amount"] += _num(r.get("total"))
-            a["count"] += int(r.get("count") or 0)
+    params = {"committee_id": committee_id, "two_year_transaction_period": periods, "contributor_type": "committee",
+              "sort": "-contribution_receipt_amount", "per_page": 100}
+    for page in range(max_pages):
+        data = _get(fetch, key, f"sched_a_{committee_id}_p{page}.json", "/schedules/schedule_a/", **params)
+        rows = data.get("results", [])
+        for r in rows:
+            if r.get("memo_code") == "X" or r.get("memoed_subtotal") or r.get("entity_type") == "IND":
+                continue
+            cid = r.get("contributor_id") or (r.get("contributor_name") or "").upper()
+            if not cid:
+                continue
+            a = agg.setdefault(cid, {"committee_id": r.get("contributor_id"), "name": (r.get("contributor_name") or cid).title(),
+                                     "entity_type": r.get("entity_type"), "amount": 0.0, "count": 0})
+            a["amount"] += _num(r.get("contribution_receipt_amount"))
+            a["count"] += 1
+        last = (data.get("pagination") or {}).get("last_indexes")
+        if not rows or not last:
+            break
+        params = {**params, **last}
     return sorted((a for a in agg.values() if a["amount"] > 0), key=lambda a: -a["amount"])[:top_n]
 
 
@@ -98,9 +117,17 @@ def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous:
         cycle, label = election_cycle(m, today)
         best = None
         for cand in _ids_for(m):
-            row = _totals(fetch, key, cand, cycle)
+            row = _totals(fetch, key, cand, cycle, election_full=True)
             if row and (best is None or _num(row.get("receipts")) > _num(best[1].get("receipts"))):
                 best = (cand, row)
+        if not best and m["chamber"] == "senate":
+            # Fallback when no full-cycle row exists yet for a seat not up this year: the current two years.
+            cycle = today.year + (today.year % 2)
+            label = f"{cycle - 1}–{cycle} only"
+            for cand in _ids_for(m):
+                row = _totals(fetch, key, cand, cycle, election_full=False)
+                if row and (best is None or _num(row.get("receipts")) > _num(best[1].get("receipts"))):
+                    best = (cand, row)
         if not best:
             continue
         cand, row = best
@@ -113,8 +140,8 @@ def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous:
             pc = _principal_committee(fetch, key, cand, cycle)
             if pc:
                 rec["committee_id"], rec["committee_name"] = pc["id"], pc["name"]
-                periods = list(range(cycle - (4 if m["chamber"] == "senate" else 0), cycle + 1, 2))
-                periods = [p for p in periods if p <= today.year + (today.year % 2)]
-                rec["top_committees"] = _top_committees(fetch, key, pc["id"], cycle, periods, top_n)
+                span = 4 if (m["chamber"] == "senate" and not label.endswith("only")) else 0
+                periods = [p for p in range(cycle - span, cycle + 1, 2) if p <= today.year + (today.year % 2)]
+                rec["top_committees"] = _top_committees(fetch, key, pc["id"], periods, top_n)
         out[m["bioguide"]] = rec
     return out

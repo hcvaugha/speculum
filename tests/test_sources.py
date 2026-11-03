@@ -161,3 +161,40 @@ def test_party_unity_counts_independents_with_caucus():
     # v1 splits the parties (D majority Nay, R majority Yea); Sanders broke with Democrats.
     assert u["S000033"]["unity"] == 0.0 and u["C000127"]["unity"] == 1.0
     assert u["S000033"]["attendance"] == 0.5
+
+
+from speculum.sources import fec
+
+TOTALS = {"results": [{"candidate_id": "S4VT00033", "cycle": 2030, "candidate_election_year": 2030, "election_full": True,
+    "individual_unitemized_contributions": 3000000, "individual_itemized_contributions": 2000000,
+    "other_political_committee_contributions": 100000, "political_party_committee_contributions": 0,
+    "candidate_contribution": 0, "loans_made_by_candidate": 0, "receipts": 5200000,
+    "last_cash_on_hand_end_period": 900000, "coverage_end_date": "2026-09-30T00:00:00"}]}
+COMMITTEES = {"results": [{"committee_id": "C00411330", "name": "FRIENDS OF BERNIE SANDERS", "cycles": [2024, 2026, 2028, 2030]}]}
+SCHED_A = {"results": [
+    {"contributor_id": "C00000001", "contributor_name": "EXAMPLE UNION PAC", "entity_type": "PAC", "contribution_receipt_amount": 5000},
+    {"contributor_id": "C00000001", "contributor_name": "EXAMPLE UNION PAC", "entity_type": "PAC", "contribution_receipt_amount": 2500},
+    {"contributor_id": "C00000002", "contributor_name": "MEMO ROW", "entity_type": "PAC", "contribution_receipt_amount": 9999, "memo_code": "X"},
+    {"contributor_id": None, "contributor_name": "Jane Doe", "entity_type": "IND", "contribution_receipt_amount": 100}],
+    "pagination": {"last_indexes": None}}
+
+
+def test_fec_totals_and_top_committees():
+    sanders = [m for m in members() if m["bioguide"] == "S000033"]
+    fetch = FakeFetch({"/candidate/S4VT00033/totals/": TOTALS, "/candidate/S4VT00033/committees/": COMMITTEES,
+                       "/schedules/schedule_a/": SCHED_A})
+    out = fec.fetch_finance(fetch, "KEY", sanders, "2026-11-03")["S000033"]
+    assert out["cycle"] == 2030 and out["cycle_label"] == "2025–2030 cycle"
+    assert out["small"] == 3e6 and out["pac"] == 1e5 and out["cash_on_hand"] == 9e5
+    assert out["coverage_end"] == "2026-09-30"
+    assert out["committee_id"] == "C00411330"
+    assert out["top_committees"] == [{"committee_id": "C00000001", "name": "Example Union Pac", "entity_type": "PAC",
+                                      "amount": 7500.0, "count": 2}]
+    shares = ledger.funding_shares(out)
+    assert round(shares["parts"]["small"], 3) == round(3e6 / 5.1e6, 3)
+
+
+def test_senate_cycles():
+    assert fec.election_cycle({"chamber": "senate", "senate_class": 2}, date(2026, 11, 3)) == (2026, "2021–2026 cycle")
+    assert fec.election_cycle({"chamber": "senate", "senate_class": 2}, date(2027, 2, 1))[0] == 2032
+    assert fec.election_cycle({"chamber": "house"}, date(2026, 11, 3)) == (2026, "2025–2026 cycle")

@@ -20,7 +20,7 @@ YES = {"Yea", "Aye", "Yes"}
 NO = {"Nay", "No"}
 
 FUNDING_PARTS = [
-    ("small", "Small donors", "Unitemized individual contributions (under $200 per donor per cycle)"),
+    ("small", "Small donors", "Unitemized individual contributions ($200 or less per donor per cycle)"),
     ("large", "Larger individual donors", "Itemized individual contributions"),
     ("pac", "PACs and other committees", "Contributions from political action committees and other non-party committees"),
     ("party", "Party committees", "Contributions from party committees"),

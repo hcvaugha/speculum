@@ -11,7 +11,7 @@
   <div class="reading">
     <div class="label">Small donors</div>
     <div class="value">{{ L.funding.parts.small|pct if L.funding else '—' }}</div>
-    <div class="context">of contributions came from donors giving under $200.</div>
+    <div class="context">of contributions came from donors giving $200 or less in the cycle.</div>
     {{ rule(L.pct.small_share, L.party_pct.small_share, m.caucus) }}
     <div class="src">Source: FEC candidate totals{% if L.finance %}, {{ L.finance.cycle_label }}{% endif %}</div>
   </div>
