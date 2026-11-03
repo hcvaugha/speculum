@@ -24,6 +24,8 @@ def _plural(n: int, word: str) -> str:
 
 
 def _money(x: float) -> str:
+    if x < 0:
+        return "−" + _money(-x)
     if abs(x) >= 1e6:
         return f"${x / 1e6:,.1f} million"
     return f"${x:,.0f}"

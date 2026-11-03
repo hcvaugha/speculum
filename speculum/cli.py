@@ -152,7 +152,7 @@ def main(argv=None) -> int:
     s = sub.add_parser("snapshot", help="fetch every source and write today's snapshot")
     s.add_argument("--date", help="override the snapshot date (YYYY-MM-DD)")
     s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying"])
-    s.add_argument("--top-committees", type=int, default=10, help="committee givers listed per member")
+    s.add_argument("--top-committees", type=int, default=50, help="committee givers kept per member (pages show the top 10)")
     b = sub.add_parser("build", help="render the site from the latest snapshot")
     b.add_argument("--out", default="dist")
     args = p.parse_args(argv)

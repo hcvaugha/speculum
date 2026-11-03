@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ e.name }} · Speculum{% endblock %}
+{% block body %}
+<h1>{{ e.name }}</h1>
+<p class="lede">{{ e.type }}{% if e.description %} · {{ e.description }}{% endif %}</p>
+<p class="meta">
+  {% if e.committee_id %}FEC <a href="https://www.fec.gov/data/committee/{{ e.committee_id }}/">{{ e.committee_id }}</a>{% endif %}
+  {% if e.kind == 'registrant' %}Lobbying registrant {{ e.key }} · <a href="https://lda.gov/system/public/">lda.gov</a>{% endif %}
+  {% for s in e.linked_slugs %}{% if s in all %} · Linked by PAC name: <a href="{{ s }}.html">{{ all[s].name }}</a>{% endif %}{% endfor %}
+</p>
+
+<h2>Reading</h2>
+<div class="readings">
+  <div class="reading">
+    <div class="label">{{ 'Given to members' if e.kind == 'committee' else 'Reported to members' }}</div>
+    <div class="value">{{ e.total|money }}</div>
+    <div class="context">across {{ e.members }} sitting member{{ '' if e.members == 1 else 's' }} of Congress{% if e.kind == 'committee' %}, counting only the largest gifts collected for each member{% else %}, from LD-203 reports{% endif %}.</div>
+  </div>
+  <div class="reading">
+    <div class="label">By party</div>
+    <div class="fbar" role="img" aria-label="Money by party of recipient" style="margin-top:16px">
+      {% for p, colour in [('D', '#8fb3d9'), ('R', '#d99a8f'), ('I', '#b9b39a')] %}{% if e.split.get(p) %}<span style="width:{{ '%.2f'|format(e.split[p] * 100) }}%;background:{{ colour }}"></span>{% endif %}{% endfor %}
+    </div>
+    <div class="context">{% set parts = [] %}{% for p in ['D', 'R', 'I'] %}{% if e.split.get(p) %}{% set _ = parts.append(party_names[p] ~ 's ' ~ (e.split[p]|pct)) %}{% endif %}{% endfor %}{{ parts|join(' · ') }}</div>
+    <div class="src">Independents counted with the party they caucus with</div>
+  </div>
+  <div class="reading">
+    <div class="label">By chamber</div>
+    <div class="value" style="font-size:20px">House {{ e.chambers.house|money }}<br>Senate {{ e.chambers.senate|money }}</div>
+  </div>
+</div>
+
+<h2>Members funded</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Member</th><th>Seat</th><th class="r">Amount</th><th class="r">{{ 'Gifts' if e.kind == 'committee' else 'Contributions' }}</th></tr></thead>
+<tbody>
+{% for r in e.rows %}{% set m = by_id.get(r.bioguide) %}{% if m %}
+<tr><td><a href="../member/{{ r.bioguide }}.html">{{ m.name }}</a> <span class="party-{{ m.party }} num">{{ m.party }}</span></td>
+<td class="num">{{ seat(m) }}</td><td class="r num">{{ r.amount|money }}</td><td class="r num">{{ r.count }}</td></tr>
+{% endif %}{% endfor %}
+</tbody></table></div>
+
+{% if e.kind == 'registrant' and e['items'] %}
+<h2>Reported contributions</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Date</th><th>To</th><th>From</th><th>Type</th><th class="r">Amount</th></tr></thead>
+<tbody>
+{% for it in e['items']|sort(attribute='date', reverse=true) %}{% if loop.index <= 100 %}
+<tr><td class="num">{{ it.date or '' }}</td><td>{% if by_id.get(it.bioguide) %}<a href="../member/{{ it.bioguide }}.html">{{ by_id[it.bioguide].name }}</a>{% endif %}<br><span class="muted">{{ it.payee }}</span></td>
+<td>{{ it.contributor }}</td><td class="muted">{{ it.type }}</td>
+<td class="r num">{% if it.url %}<a href="{{ it.url }}">{{ it.amount|money }}</a>{% else %}{{ it.amount|money }}{% endif %}</td></tr>
+{% endif %}{% endfor %}
+</tbody></table></div>
+{% if e.pacs %}<p class="meta" style="margin-top:8px">PACs this organization names on its reports: {{ e.pacs|join(', ') }}</p>{% endif %}
+{% endif %}
+
+<div class="notice">Giving to a member is legal and common. This page shows where an interest's money goes; it does not show what, if anything, the money bought. Readings that compare an interest's lobbying positions with how its recipients voted come after positions are coded and reviewed.</div>
+{% endblock %}

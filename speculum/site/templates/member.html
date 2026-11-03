@@ -64,8 +64,8 @@
 <div class="tbl-wrap"><table>
 <thead><tr><th>Committee</th><th class="r">Amount</th><th class="r">Gifts</th></tr></thead>
 <tbody>
-{% for c in L.finance.top_committees %}
-<tr><td>{% if c.committee_id %}<a href="https://www.fec.gov/data/committee/{{ c.committee_id }}/">{{ c.name }}</a>{% else %}{{ c.name }}{% endif %}</td><td class="r num">{{ c.amount|money }}</td><td class="r num">{{ c.count }}</td></tr>
+{% for c in L.finance.top_committees[:10] %}
+<tr><td><a href="../interest/{{ slugify('c', c.committee_id or c.name) }}.html">{{ c.name }}</a>{% if c.committee_id %} <a class="muted" href="https://www.fec.gov/data/committee/{{ c.committee_id }}/" title="FEC record">FEC</a>{% endif %}</td><td class="r num">{{ c.amount|money }}</td><td class="r num">{{ c.count }}</td></tr>
 {% endfor %}
 </tbody></table></div>
 <p class="meta" style="margin-top:8px">Itemized receipts from committees to {{ L.finance.committee_name or 'the principal campaign committee' }}, {{ L.finance.cycle_label }}.</p>
@@ -77,7 +77,7 @@
 <thead><tr><th>Date</th><th>Reported by</th><th>Paid to</th><th>Type</th><th class="r">Amount</th></tr></thead>
 <tbody>
 {% for c in L.lobbyist_items[:40] %}
-<tr><td class="num">{{ c.date or '' }}</td><td>{{ c.reported_by }}{% if c.contributor and c.contributor != c.reported_by %}<br><span class="muted">{{ c.contributor }}</span>{% endif %}</td><td>{{ c.payee }}</td><td class="muted">{{ c.type }}</td><td class="r num">{% if c.url %}<a href="{{ c.url }}">{{ c.amount|money }}</a>{% else %}{{ c.amount|money }}{% endif %}</td></tr>
+<tr><td class="num">{{ c.date or '' }}</td><td>{% if c.registrant_id %}<a href="../interest/{{ slugify('r', c.registrant_id) }}.html">{{ c.reported_by }}</a>{% else %}{{ c.reported_by }}{% endif %}{% if c.contributor and c.contributor != c.reported_by %}<br><span class="muted">{{ c.contributor }}</span>{% endif %}</td><td>{{ c.payee }}</td><td class="muted">{{ c.type }}</td><td class="r num">{% if c.url %}<a href="{{ c.url }}">{{ c.amount|money }}</a>{% else %}{{ c.amount|money }}{% endif %}</td></tr>
 {% endfor %}
 </tbody></table></div>
 <p class="meta" style="margin-top:8px">Matched by the honoree name on each LD-203 report. Matches marked by name only can be wrong; each amount links to the filing.</p>

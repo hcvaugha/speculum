@@ -114,9 +114,18 @@ def fetch_lobbying(fetch, key: str | None, members: list[dict], run_date: str) -
 def match_reports(reports: list[dict], members: list[dict], years: list[int]) -> dict:
     matcher = HonoreeMatcher(members)
     by_member: dict[str, list[dict]] = defaultdict(list)
+    registrants: dict[str, dict] = {}
     unmatched: dict[str, float] = defaultdict(float)
     for r in reports:
-        filer = (r.get("registrant") or {}).get("name") or ""
+        reg = r.get("registrant") or {}
+        filer = reg.get("name") or ""
+        reg_id = str(reg.get("id")) if reg.get("id") is not None else None
+        if reg_id:
+            entry = registrants.setdefault(reg_id, {"id": reg_id, "name": filer.title(), "description": reg.get("description"),
+                                                    "pacs": []})
+            for pac in r.get("pacs") or []:
+                if pac and pac not in entry["pacs"]:
+                    entry["pacs"].append(pac)
         lob = r.get("lobbyist")
         reported_by = f"{lob['first_name'].title()} {lob['last_name'].title()} ({filer.title()})" if lob else filer.title()
         for it in r.get("contribution_items") or []:
@@ -135,7 +144,7 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
             by_member[m["bioguide"]].append({
                 "date": it.get("date"), "amount": amount, "type": it.get("contribution_type_display"),
                 "contributor": (it.get("contributor_name") or "").title(), "payee": (it.get("payee_name") or "").title(),
-                "honoree": honoree, "reported_by": reported_by, "filing_uuid": r.get("filing_uuid"),
+                "honoree": honoree, "reported_by": reported_by, "registrant_id": reg_id, "filing_uuid": r.get("filing_uuid"),
                 "url": r.get("filing_document_url"), "period": r.get("filing_period_display"),
             })
     return {
@@ -143,5 +152,6 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
         "years_label": f"{years[0]}–{years[-1]}" if len(years) > 1 else str(years[0]),
         "reports": len(reports),
         "by_member": dict(by_member),
+        "registrants": registrants,
         "unmatched_honorees": sorted(({"honoree": h, "amount": a} for h, a in unmatched.items()), key=lambda x: -x["amount"])[:500],
     }

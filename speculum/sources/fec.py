@@ -109,7 +109,7 @@ def _top_committees(fetch, key, committee_id: str, periods: list[int], top_n: in
     return sorted((a for a in agg.values() if a["amount"] > 0), key=lambda a: -a["amount"])[:top_n]
 
 
-def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous: dict | None = None, top_n: int = 10) -> dict:
+def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous: dict | None = None, top_n: int = 50) -> dict:
     today = date.fromisoformat(run_date)
     previous = previous or {}
     out = {}

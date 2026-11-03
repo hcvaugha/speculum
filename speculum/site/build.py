@@ -14,6 +14,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .. import ledger as ledger_mod
 from .. import tide as tide_mod
+from .. import interests as interests_mod
 from ..snapshot import DAY_ZERO, Snapshot, all_dates, latest
 
 HERE = Path(__file__).parent
@@ -22,6 +23,8 @@ PARTY_NAMES = {"D": "Democrat", "R": "Republican", "I": "Independent", "L": "Lib
 
 def money(x) -> str:
     x = float(x or 0)
+    if x < 0:
+        return "−" + money(-x)
     if abs(x) >= 1e6:
         return f"${x / 1e6:,.1f}M"
     if abs(x) >= 1e4:
@@ -118,7 +121,7 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
                 break
         mm = {**m, "party_name": PARTY_NAMES.get(m["party"], m["party"]), "seat_long": seat(m, long=True),
               "caucus": ledger_mod.caucus_party(m)}
-        (prev / "member" / f"{bio}.html").write_text(tmpl.render(
+        (prev / "member" / f"{bio}.html").write_text(tmpl.render(slugify=_interest_slug,
             root="../", page="member", m=mm, L=ledgers[bio], recent=recent,
             parts=ledger_mod.FUNDING_PARTS, lobby_years=lobby_years, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
@@ -131,9 +134,23 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     (prev / "day-zero.html").write_text(E.get_template("dayzero.html").render(
         root="", page="dayzero", meta=_meta_defaults(meta), history=history, **common), encoding="utf-8")
     _build_tide(E, snapshots_root, prev, members, common)
+    _build_interests(E, prev, members, finance, lobbying, common)
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
     (prev / "ledgers.json").write_text(json.dumps({"date": snap.date, "ledgers": ledgers}, default=str), encoding="utf-8")
     return {"members": len(members), "votes": len(vlist)}
+
+
+def _build_interests(E, prev: Path, members, finance, lobbying, common) -> None:
+    all_ = interests_mod.build(members, finance, lobbying)
+    by_id = {m["bioguide"]: m for m in members}
+    rows = sorted(all_.values(), key=lambda e: -e["total"])
+    (prev / "interest").mkdir(exist_ok=True)
+    (prev / "interests.html").write_text(E.get_template("interests.html").render(
+        root="", page="interests", rows=rows, **common), encoding="utf-8")
+    tmpl = E.get_template("interest.html")
+    for slug, e in all_.items():
+        (prev / "interest" / f"{slug}.html").write_text(tmpl.render(
+            root="../", page="interests", e=e, all=all_, by_id=by_id, seat=seat, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
 
 def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict) -> None:
@@ -149,6 +166,11 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
+
+
+def _interest_slug(prefix: str, key) -> str:
+    import re
+    return f"{prefix}-{re.sub(r'[^A-Za-z0-9]+', '-', str(key)).strip('-')[:80]}"
 
 
 def _party_majorities(vlist, positions, by_id):

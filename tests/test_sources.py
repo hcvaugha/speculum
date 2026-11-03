@@ -220,3 +220,20 @@ def test_tide_edition_reports_party_breaks(tmp_path):
     assert s["headline"] == "1 member voted against their party on S. 1"
     assert s["facts"][0] == "Question: On Passage of the Bill."
     assert s["status"] == "draft" and s["sources"][0]["url"] == "https://www.senate.gov/x"
+
+
+def test_interests_aggregate_split_and_link():
+    from speculum import interests
+    ms = members()
+    finance = {
+        "C000127": {"cycle_label": "x", "top_committees": [{"committee_id": "C001", "name": "American Association For Justice Political Action Committee", "entity_type": "PAC", "amount": 5000, "count": 1}]},
+        "P000197": {"cycle_label": "x", "top_committees": [{"committee_id": "C001", "name": "American Association For Justice Political Action Committee", "entity_type": "PAC", "amount": 3000, "count": 2}]},
+    }
+    lob = lda.match_reports(lda._latest_versions([{**LD203[0], "pacs": ["American Association for Justice Political Action Committee"]}]), ms, [2025])
+    out = interests.build(ms, finance, lob)
+    pac = out["c-C001"]
+    assert pac["total"] == 8000 and pac["members"] == 2 and pac["split"] == {"D": 1.0}
+    assert pac["rows"][0]["bioguide"] == "C000127"
+    reg = out["r-1"]
+    assert reg["kind"] == "registrant" and reg["total"] == 2500.0   # 5000 to Markey, -2500 void to Pelosi
+    assert reg["linked_slugs"] == ["c-C001"] and pac["linked_slugs"] == ["r-1"]

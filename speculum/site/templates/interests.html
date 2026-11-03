@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Interests · Speculum{% endblock %}
+{% block body %}
+<h1>Interests</h1>
+<p class="lede">The committees and lobbying organizations that fund members of Congress, read the same way for business, labor, ideological and single-issue groups alike. Open one to see whom it funds and how its money splits by party.</p>
+<p class="meta">{{ rows|length }} interests · committee figures come from the largest itemized gifts collected for each member, so they are a floor, not a full total</p>
+
+<div class="filters">
+  <input id="q" type="search" placeholder="Search by name" aria-label="Search interests">
+  <select id="f-kind" aria-label="Kind"><option value="">All kinds</option><option value="committee">Committees (FEC)</option><option value="registrant">Lobbying organizations (LD-203)</option></select>
+</div>
+
+<div class="tbl-wrap">
+<table id="chamber">
+<thead><tr>
+  <th data-sort="name">Interest</th>
+  <th data-sort="type">Kind</th>
+  <th class="r" data-sort="total" data-num>Given to members</th>
+  <th class="r" data-sort="members" data-num>Members</th>
+  <th class="r" data-sort="d" data-num>To Democrats</th>
+  <th class="r" data-sort="r" data-num>To Republicans</th>
+</tr></thead>
+<tbody>
+{% for e in rows %}
+<tr data-name="{{ e.name }}" data-type="{{ e.type }}" data-kind="{{ e.kind }}" data-total="{{ e.total }}" data-members="{{ e.members }}"
+    data-d="{{ e.split.get('D', 0) }}" data-r="{{ e.split.get('R', 0) }}" data-state="" data-chamber="" data-party="">
+  <td><a href="interest/{{ e.slug }}.html">{{ e.name }}</a>{% if e.linked_slugs %} <span class="muted" title="Linked by PAC name">↔</span>{% endif %}</td>
+  <td class="muted">{{ e.type }}</td>
+  <td class="r num">{{ e.total|money }}</td>
+  <td class="r num">{{ e.members }}</td>
+  <td class="r num">{{ e.split.get('D', 0)|pct }}</td>
+  <td class="r num">{{ e.split.get('R', 0)|pct }}</td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var tbody = document.querySelector('#chamber tbody');
+  var rows = Array.prototype.slice.call(tbody.rows);
+  var q = document.getElementById('q'), fk = document.getElementById('f-kind');
+  function filter() {
+    var t = q.value.trim().toLowerCase();
+    rows.forEach(function (r) {
+      r.style.display = ((!fk.value || r.dataset.kind === fk.value) && (!t || r.dataset.name.toLowerCase().indexOf(t) !== -1)) ? '' : 'none';
+    });
+  }
+  [q, fk].forEach(function (el) { el.addEventListener('input', filter); });
+  var dir = {};
+  document.querySelectorAll('#chamber th[data-sort]').forEach(function (th) {
+    th.addEventListener('click', function () {
+      var key = th.dataset.sort, num = th.hasAttribute('data-num');
+      dir[key] = dir[key] === 'desc' ? 'asc' : 'desc';
+      var d = dir[key] === 'desc' ? -1 : 1;
+      rows.sort(function (a, b) {
+        var x = a.dataset[key], y = b.dataset[key];
+        return num ? d * (parseFloat(x) - parseFloat(y)) : d * x.localeCompare(y);
+      });
+      rows.forEach(function (r) { tbody.appendChild(r); });
+      document.querySelectorAll('#chamber th').forEach(function (h) { h.classList.remove('sorted'); });
+      th.classList.add('sorted');
+    });
+  });
+})();
+</script>
+{% endblock %}
