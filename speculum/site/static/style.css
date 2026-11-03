@@ -116,3 +116,19 @@ footer .wrap { display: flex; gap: 16px; align-items: center; padding-top: 20px;
 }
 
 td.num { white-space: nowrap; }
+
+/* The Tide */
+.tide-mast { text-align: center; border-bottom: 3px double var(--gold-dim); padding: 28px 0 16px; margin-bottom: 8px; }
+.tide-name { font: 600 54px/1 var(--serif); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.tide-mast .meta { margin-top: 10px; }
+.stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0 32px; }
+.story { border-top: 1px solid var(--line); padding: 20px 0 22px; }
+.story .kicker { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.story h3 { font: 600 23px/1.2 var(--serif); margin: 10px 0 8px; color: var(--ink); }
+.story .dek { color: var(--ink-2); margin: 0 0 10px; font-size: 14.5px; }
+.story .facts { margin: 0 0 10px; padding-left: 18px; color: var(--ink-2); font-size: 14px; }
+.story .facts li { margin-bottom: 3px; }
+.story .names { font-size: 13.5px; margin: 0 0 12px; }
+.story-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font: 11.5px/1.4 var(--mono); color: var(--ink-3); }
+.react button { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink-3); border: 1px solid var(--line); padding: 5px 9px; margin-left: 6px; cursor: not-allowed; }
+@media (max-width: 640px) { .tide-name { font-size: 36px; } }

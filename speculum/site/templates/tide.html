@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}The Tide · {{ ed.date }} · Speculum{% endblock %}
+{% block body %}
+<div class="tide-mast">
+  <div class="tide-name">The Tide</div>
+  <div class="meta">Edition of {{ ed.date }} · Day {{ ed_day }} of the record · {% if ed.first %}the {{ ed.roll_calls }} roll calls of the 30 days to Day Zero{% else %}{{ ed.roll_calls }} new roll calls since {{ ed.since }}{% endif %}</div>
+</div>
+
+<div class="notice">Drafts. Every story is generated from the night's filings using fixed templates, and none is published beyond this preview until an editor approves it. Reactions open at public launch.</div>
+
+{% if ed.stories %}
+<div class="stories">
+{% for s in ed.stories %}
+<article class="story" id="{{ s.id }}">
+  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}</div>
+  <h3>{{ s.headline }}</h3>
+  <p class="dek">{{ s.dek }}</p>
+  <ul class="facts">{% for f in s.facts %}<li>{{ f }}</li>{% endfor %}</ul>
+  {% if s.member_names %}
+  <p class="names">{% for b in s.members %}<a href="{{ root }}member/{{ b }}.html">{{ s.member_names[loop.index0] }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  {% elif s.members %}
+  <p class="names">{% for b in s.members %}{% if b in names %}<a href="{{ root }}member/{{ b }}.html">{{ names[b] }}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
+  {% endif %}
+  <div class="story-foot">
+    <span class="srcs">Sources: {% for src in s.sources %}{% if src.url %}<a href="{{ src.url }}">{{ src.label }}</a>{% else %}{{ src.label }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</span>
+    <span class="react" aria-label="Reactions open at public launch"><button disabled>Approve</button><button disabled>Disapprove</button></span>
+  </div>
+</article>
+{% endfor %}
+</div>
+{% if ed.more %}<p class="meta">{{ ed.more }} lower-ranked stories held back from this edition.</p>{% endif %}
+{% else %}
+<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>
+{% endif %}
+
+{% if archive|length > 1 %}
+<h2>Earlier editions</h2>
+<p class="meta">{% for d in archive %}{% if d != ed.date %}<a href="{{ root }}tide/{{ d }}.html">{{ d }}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
+{% endif %}
+{% endblock %}

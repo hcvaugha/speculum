@@ -94,6 +94,13 @@ def cmd_snapshot(args) -> int:
         "errors": errors,
     }
     snap.write("meta.json", meta)
+    try:
+        from . import tide
+        from .snapshot import all_dates
+        earlier = [d for d in all_dates(ROOT / "snapshots") if d < run_date]
+        snap.write("tide.json", tide.build_edition(snap, Snapshot(ROOT / "snapshots", earlier[-1]) if earlier else None))
+    except Exception:
+        log.exception("tide edition failed")
     log.info("snapshot %s done: %s", run_date, json.dumps(meta["counts"]))
     if errors:
         log.warning("sources with errors: %s", ", ".join(errors))

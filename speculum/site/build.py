@@ -13,6 +13,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .. import ledger as ledger_mod
+from .. import tide as tide_mod
 from ..snapshot import DAY_ZERO, Snapshot, all_dates, latest
 
 HERE = Path(__file__).parent
@@ -129,9 +130,25 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     history.reverse()
     (prev / "day-zero.html").write_text(E.get_template("dayzero.html").render(
         root="", page="dayzero", meta=_meta_defaults(meta), history=history, **common), encoding="utf-8")
+    _build_tide(E, snapshots_root, prev, members, common)
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
     (prev / "ledgers.json").write_text(json.dumps({"date": snap.date, "ledgers": ledgers}, default=str), encoding="utf-8")
     return {"members": len(members), "votes": len(vlist)}
+
+
+def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict) -> None:
+    """One edition per snapshot: the stored tide.json if the nightly run wrote one, else built now."""
+    dates = all_dates(snapshots_root)
+    names = {m["bioguide"]: f"{m['name']} ({m['party']}-{m['state']})" for m in members}
+    (prev / "tide").mkdir(exist_ok=True)
+    tmpl = E.get_template("tide.html")
+    for i, d in enumerate(dates):
+        cur = Snapshot(snapshots_root, d)
+        ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
+        ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names, **common)
+        (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
+        if d == dates[-1]:
+            (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
 
 
 def _party_majorities(vlist, positions, by_id):

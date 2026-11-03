@@ -44,7 +44,8 @@ jobs:
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           DATE=$(ls data/snapshots | sort | tail -1)
           git commit -m "Snapshot $DATE"
-          git push
+          # Code may have been pushed while this run was fetching; replay the snapshot on top of it.
+          for i in 1 2 3; do git pull --rebase origin main && git push && break; sleep 5; done
 
       - name: Archive raw filings as a release
         env:

@@ -198,3 +198,25 @@ def test_senate_cycles():
     assert fec.election_cycle({"chamber": "senate", "senate_class": 2}, date(2026, 11, 3)) == (2026, "2021–2026 cycle")
     assert fec.election_cycle({"chamber": "senate", "senate_class": 2}, date(2027, 2, 1))[0] == 2032
     assert fec.election_cycle({"chamber": "house"}, date(2026, 11, 3)) == (2026, "2025–2026 cycle")
+
+
+def test_tide_edition_reports_party_breaks(tmp_path):
+    from speculum import tide
+    from speculum.snapshot import Snapshot
+    ms = members() + [{"bioguide": "X1", "name": "Senator X", "sort_name": "X, S", "party": "R", "caucus": "R",
+                       "state": "XX", "chamber": "senate"}]
+    prev = Snapshot(tmp_path, "2026-11-03")
+    prev.write("members.json", ms)
+    prev.write("votes.json.gz", {"votes": [], "positions": {}})
+    cur = Snapshot(tmp_path, "2026-11-04")
+    cur.write("members.json", ms)
+    cur.write("votes.json.gz", {"votes": [{"id": "s-119-2-300", "chamber": "senate", "number": 300, "date": "2026-11-04T12:00:00",
+                                           "question": "On Passage of the Bill", "result": "Passed", "bill": "S. 1", "url": "https://www.senate.gov/x"}],
+                                "positions": {"s-119-2-300": {"C000127": "Nay", "M000133": "Nay", "S000033": "Yea", "X1": "Yea"}}})
+    ed = tide.build_edition(cur, prev)
+    assert ed["roll_calls"] == 1 and not ed["first"]
+    s = ed["stories"][0]
+    assert s["kind"] == "Broke ranks" and s["members"] == ["S000033"]
+    assert s["headline"] == "1 member voted against their party on S. 1"
+    assert s["facts"][0] == "Question: On Passage of the Bill."
+    assert s["status"] == "draft" and s["sources"][0]["url"] == "https://www.senate.gov/x"
