@@ -1,25 +1,23 @@
 {
- "calls": 5324,
+ "calls": 7746,
  "counts": {
   "finance": 246,
   "house": 433,
-  "lobbying_items": 0,
-  "lobbying_unmatched": 0,
+  "lobbying_items": 169281,
+  "lobbying_unmatched": 500,
   "members": 533,
   "senate": 100,
   "votes": 1591
  },
  "date": "2026-11-03",
  "day_zero": "2026-11-03",
- "errors": {
-  "lobbying": "AttributeError: 'NoneType' object has no attribute 'title'"
- },
+ "errors": {},
  "fec_through": "2026-10-14",
  "finance_partial": {
   "of": 533,
   "reached": 255
  },
  "note": "Day Zero baseline",
- "raw_files": 5319,
+ "raw_files": 7741,
  "votes_through": "2026-09-30"
 }
