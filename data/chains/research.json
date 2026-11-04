@@ -11,13 +11,18 @@
    "Emergency waiver for transmittal 26-32 rests on press reports, not the Federal Register text.",
    "S.J.Res. 41 value ($24M) and notification date come from Reuters only.",
    "No confirmed delivery found for any specific case."
-  ]
+  ],
+  "verified": {
+   "on": "2026-11-04",
+   "by": "Independent Claude checker (fresh context; opened every source)",
+   "result": "31 of 32 items verified or minor; one grade corrected (NSM-20 report: documented → associated); minor wording and date fixes applied"
+  }
  },
  "resolutions": {
   "SJRES33": {
    "bill": "S.J.Res. 33",
    "country": "Israel",
-   "items": "35,529 MK 84 or BLU-117 general-purpose bomb bodies (2,000-lb class) or a combination of both; 4,000 I-2000 penetrator warheads; spares, transportation and support services",
+   "items": "35,529 MK 84 or BLU-117 general-purpose bomb bodies or a combination of both; 4,000 I-2000 penetrator warheads; spares, transportation and support services",
    "value": "$2.04 billion (DSCA estimate)",
    "contractors": [
     "General Dynamics (Garland, TX)",
@@ -85,7 +90,7 @@
    "bill": "S.J.Res. 53",
    "country": "Qatar",
    "items": "8 MQ-9B remotely piloted aircraft; 200 KMU-572 JDAM tail kits; 300 BLU-111 500-lb bombs; 100 MXU-650 air foil groups and 100 MAU-169 computer control groups (Paveway II GBU-12); 110 AGM-114R2 Hellfire II missiles; 8 M36E9 Hellfire captive-air training missiles; 10 Lynx AN/APY-8 synthetic aperture radars; 10 L3 Rio Grande COMINT suites; 40 EGI devices; ground control stations, Honeywell TPE-331 engines and support",
-   "value": "$1.96 billion (DSCA estimate; 'highest estimate')",
+   "value": "$1.96 billion (DSCA estimate, for the 'highest estimated quantity and dollar value')",
    "contractors": [
     "General Atomics Aeronautical Systems",
     "Lockheed Martin",
@@ -296,7 +301,7 @@
  "outcomes": [
   {
    "country": "Israel",
-   "grade": "documented",
+   "grade": "associated",
    "applies_to": [
     "SJRES26",
     "SJRES33",
@@ -391,7 +396,15 @@
     "publisher": "International Court of Justice",
     "date": "2024-05-24"
    },
-   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak voted against. Israel disputes the genocide allegation."
+   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak voted against. Israel disputes the genocide allegation.",
+   "also": [
+    {
+     "title": "Case docket: Application of the Genocide Convention in the Gaza Strip (South Africa v. Israel)",
+     "url": "https://www.icj-cij.org/case/192",
+     "publisher": "International Court of Justice",
+     "date": "2026-09-22"
+    }
+   ]
   },
   {
    "country": "Israel",
@@ -403,7 +416,7 @@
     "publisher": "UN OHCHR / Commission of Inquiry",
     "date": "2025-09-16"
    },
-   "counterpoint": "Israel's Foreign Ministry: 'Israel categorically rejects this distorted and false report' and called for the commission's abolition (Arab News/AFP, 16 Sep 2025)."
+   "counterpoint": "Israel's Foreign Ministry: 'Israel categorically rejects this distorted and false report' and called for the commission's abolition (Arab News/agencies, 16 Sep 2025)."
   },
   {
    "country": "Israel",
@@ -413,7 +426,7 @@
     "title": "Reported impact snapshot | Gaza Strip (28 October 2026)",
     "url": "https://www.ochaopt.org/sites/default/files/Gaza_Reported_Impact_Snapshot_28_October_2026.pdf",
     "publisher": "UN OCHA oPt",
-    "date": "2026-10-30"
+    "date": "2026-10-28"
    },
    "counterpoint": "OCHA notes that figures not yet verified by the UN are attributed to their source. The MoH breakdown is by age and sex, not by combatant status. On 30 Jan 2026 the IDF international spokesperson said media reports of the IDF accepting a ~70,000 toll 'do not reflect official IDF data' (Ynet, 31 Jan 2026)."
   },
@@ -521,12 +534,12 @@
    "grade": "estimated",
    "claim": "A UN Human Rights Office report documented more than 6,000 people killed over three days during the RSF capture of El Fasher: at least 4,400 inside the city on 25-27 Oct 2025 and more than 1,600 while fleeing; it said the true toll is 'undoubtedly significantly higher.'",
    "source": {
-    "title": "At least 6,000 killed over 3 days during RSF attack on Sudan's el-Fasher, UN says (AP)",
+    "title": "At least 6,000 killed over 3 days during RSF attack on Sudan's el-Fasher, UN says",
     "url": "https://www.npr.org/2026/02/15/nx-s1-5715154/6000-killed-during-rsf-attack-sudan-el-fasher-un",
-    "publisher": "NPR / Associated Press",
+    "publisher": "NPR",
     "date": "2026-02-15"
    },
-   "counterpoint": "The RSF did not respond to AP. RSF leader Dagalo has acknowledged abuses but disputed their scale."
+   "counterpoint": "The RSF did not respond to a request for comment. RSF leader Dagalo has acknowledged abuses but disputed their scale."
   },
   {
    "country": "United Arab Emirates",
@@ -583,7 +596,7 @@
     "title": "Reported impact snapshot | Gaza Strip (28 October 2026)",
     "url": "https://www.ochaopt.org/sites/default/files/Gaza_Reported_Impact_Snapshot_28_October_2026.pdf",
     "publisher": "UN OCHA oPt",
-    "date": "2026-10-30"
+    "date": "2026-10-28"
    }
   },
   {

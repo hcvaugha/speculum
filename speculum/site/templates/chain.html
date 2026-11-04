@@ -44,7 +44,7 @@
   <div class="outcome">
     <span class="grade grade-{{ o.grade }}">{{ 'No record found' if o.grade == 'none_found' else o.grade|capitalize }}</span>{% if o.applies_to %}<span class="muted" style="font-size:12px">specific to this sale</span>{% endif %}
     <p>{{ o.claim }}</p>
-    {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.title }}</a>{% if o.source.publisher %}, {{ o.source.publisher }}{% endif %}{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% endif %}
+    {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.title }}</a>{% if o.source.publisher %}, {{ o.source.publisher }}{% endif %}{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% for a in o.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}{% endif %}
     {% if o.counterpoint %}<p class="counter"><b>Response or dispute:</b> {{ o.counterpoint }}</p>{% endif %}
   </div>
   {% else %}<p class="muted">No outcome links yet. A chain with no documented harm is a valid finding and will say so once researched.</p>{% endfor %}
