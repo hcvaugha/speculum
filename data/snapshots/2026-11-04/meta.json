@@ -1,5 +1,5 @@
 {
- "calls": 4095,
+ "calls": 4307,
  "counts": {
   "finance": 0,
   "house": 433,
@@ -12,11 +12,12 @@
  "date": "2026-11-04",
  "day_zero": "2026-11-03",
  "errors": {
+  "advocacy": "RuntimeError: gave up after 5 attempts: api.open.fec.gov",
   "finance": "RuntimeError: gave up after 5 attempts: api.open.fec.gov"
  },
  "fec_through": null,
  "finance_partial": null,
  "note": "",
- "raw_files": 4086,
+ "raw_files": 4292,
  "votes_through": "2026-09-30"
 }
