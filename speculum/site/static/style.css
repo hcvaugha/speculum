@@ -153,3 +153,4 @@ ol.chain > li::before { content: ""; position: absolute; left: -5px; top: 3px; w
 .outcome .counter { font-size: 13px; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; }
 details summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-2); }
 .grade-none_found { color: var(--ink-2); border-color: var(--line); }
+.status.verified { color: var(--cold); border-color: #4d6680; }

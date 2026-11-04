@@ -151,7 +151,9 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         ch["context"] = [x for x in research.get("context", []) if x.get("country") == ch["country"]]
         _contractor_money(ch, sectors)
         rv = reviews.get(ch["id"]) or {}
-        ch["status"] = "approved" if rv.get("approved_by") else "draft"
+        # approved: a person checked it and takes responsibility. verified: an independent AI checker
+        # opened every source and found each claim matches. draft: neither yet.
+        ch["status"] = "approved" if rv.get("approved_by") else ("verified" if rv.get("ai_verified") else "draft")
         ch["review"] = rv
         out.append(ch)
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)

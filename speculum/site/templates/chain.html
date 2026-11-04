@@ -6,6 +6,7 @@
 <h1>{{ c.bill|billname }}{% if c.country %}: arms to {{ 'the ' if c.country in ['United Arab Emirates', 'United Kingdom', 'Philippines', 'Netherlands'] else '' }}{{ c.country }}{% endif %}</h1>
 <p class="lede">{{ c.title }}</p>
 <p>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span> by {{ c.review.approved_by }} on {{ c.review.date }}{% if c.review.note %} · {{ c.review.note }}{% endif %}
+{% elif c.status == 'verified' %}<span class="status verified">AI-verified · awaiting review</span> An independent checker opened every source on {{ c.review.ai_verified.date }} and found each claim matches it{% if c.review.ai_verified.note %} ({{ c.review.ai_verified.note }}){% endif %}. A person has not yet approved it.
 {% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not reviewed</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. Every claim below must be checked against its source before this chain is approved.
 {% elif c.research_by %}<span class="status draft">Draft · not reviewed</span> Researched with AI assistance{% if c.research_meta.on %} on {{ c.research_meta.on }}{% endif %}; each claim is cited to the source it came from and awaits a reviewer.
 {% else %}<span class="status draft">Votes and money only</span> The mechanism and outcome links have not been researched yet.{% endif %}</p>
