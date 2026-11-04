@@ -143,7 +143,7 @@ def member_totals(bio: str, member: dict, finance: dict, config: dict, data: dic
            "complete": True}
     for org in config.get("organizations", []):
         side = org.get("sides", {}).get(bill)
-        if not side:
+        if not side or bill in org.get("after_only", []):   # praise after the vote is not counted
             continue
         amt = 0.0
         for p in org.get("pacs", []):

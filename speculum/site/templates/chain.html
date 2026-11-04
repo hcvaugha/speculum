@@ -5,6 +5,7 @@
   <span class="grade grade-{{ o.grade }}">{{ 'No record found' if o.grade == 'none_found' else o.grade|capitalize }}</span>
   {% if o.when %}<span class="muted" style="font-size:12px">{{ o.when }}{% if o.when_rel %} · {{ o.when_rel }}{% endif %}</span>{% endif %}
   <p>{{ o.claim }}</p>
+  {% if o.grade_note %}<p class="counter" style="border:0;padding-top:0"><b>What the grade covers:</b> {{ o.grade_note }}</p>{% endif %}
   {% if o.scope_note %}<p class="counter" style="border:0;padding-top:0"><b>Scope:</b> {{ o.scope_note }}</p>{% endif %}
   {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.publisher or o.source.title }}{% if o.source.publisher and o.source.title %}: {{ o.source.title }}{% endif %}</a>{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% for a in o.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}{% endif %}
   {% if o.source_note %}<p class="src">Source note: {{ o.source_note }}</p>{% endif %}
@@ -44,39 +45,42 @@
 <ol class="chain">
 <li>
   <div class="step">1 · The decision</div>
-  <p>{{ c.why }}</p>
+  <p>{{ c.why }}{% for s in c.why_sources %} <a href="{{ s.url }}" class="muted" style="font-size:12px">[{{ s.publisher }}]</a>{% endfor %}</p>
   <div class="tbl-wrap"><table>
   <thead><tr><th>Date</th><th>Question</th><th>Result</th><th class="r">Yea</th><th class="r">Nay</th></tr></thead>
   <tbody>{% for x in c.votes %}<tr><td class="num">{{ x.date }}</td><td>{% if x.url %}<a href="{{ x.url }}">{{ x.question }}</a>{% else %}{{ x.question }}{% endif %}</td><td class="muted">{{ x.result }}</td><td class="r num">{{ x.yeas }}</td><td class="r num">{{ x.nays }}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% set sp = c.party_split %}
   <p class="meta" style="margin-top:8px">A Yea was a vote to {{ c.yes_means }}; a Nay, to {{ c.no_means }}.
-  By party (independents with the party they caucus with): Democrats {{ sp.get('D-Y', 0) }} Yea, {{ sp.get('D-N', 0) }} Nay; Republicans {{ sp.get('R-Y', 0) }} Yea, {{ sp.get('R-N', 0) }} Nay{% set pres = sp.get('D-P', 0) + sp.get('R-P', 0) + sp.get('?-P', 0) %}{% if pres %}; {{ pres }} Present{% endif %}.{% if c.former %} Includes {{ c.former|join(' and ') }}, who {{ 'has' if c.former|length == 1 else 'have' }} since left the Senate and {{ 'is' if c.former|length == 1 else 'are' }} not in the money comparison below.{% endif %}
+  By party (independents with the party they caucus with): Democrats {{ sp.get('D-Y', 0) }} Yea, {{ sp.get('D-N', 0) }} Nay; Republicans {{ sp.get('R-Y', 0) }} Yea, {{ sp.get('R-N', 0) }} Nay{% set pres = sp.get('D-P', 0) + sp.get('R-P', 0) + sp.get('?-P', 0) %}{% if pres %}; {{ pres }} Present{% endif %}.{% if c.former_detail %} Includes {% for f in c.former_detail %}{{ f.name }} ({{ f.party }}, {{ {'Y': 'Yea', 'N': 'Nay'}.get(f.side, 'did not vote') }}){% if not loop.last %} and {% endif %}{% endfor %}, who {{ 'has' if c.former_detail|length == 1 else 'have' }} since left the Senate. Their money is not collected, so the money groups below are smaller than these tallies by {{ c.former_detail|length }}.{% endif %}
   Source: Senate roll call via <a href="https://voteview.com/">Voteview</a>.</p>
 </li>
 
 <li>
   <div class="step">2 · What the sale contained</div>
   {% if c.mechanism %}
+  {% if mx.end_use_first %}<p><b>{{ mx.end_use_first }}</b></p>{% endif %}
   <p>{{ mx['items'] }}{% if mx.value %} · {{ mx.value }}{% endif %}</p>
   {% if mx.justification %}<p><b>Stated purpose (executive branch):</b> {{ mx.justification }}</p>{% endif %}
-  {% if mx.sponsor_reasons %}<p><b>Stated reasons for the resolution (sponsors):</b> {{ mx.sponsor_reasons }}</p>{% endif %}
+  {% if mx.sponsor_reasons %}<p><b>Stated reasons for the resolution (sponsors and supporters):</b> {{ mx.sponsor_reasons }}</p>{% endif %}
+  {% if mx.emergency_basis %}<p><b>Emergency basis:</b> {{ mx.emergency_basis }}</p>{% endif %}
   {% if mx.history %}<p class="step" style="margin-top:14px;font-size:11px">Policy record</p>
-  {% for h in mx.history %}<div class="outcome"><span class="muted" style="font-size:12px">{{ h.date }}</span><p>{{ h.claim }}</p>{% if h.note %}<p class="counter">{{ h.note }}</p>{% endif %}<p class="src"><a href="{{ h.source.url }}">{{ h.source.publisher or h.source.title }}{% if h.source.publisher and h.source.title %}: {{ h.source.title }}{% endif %}</a></p></div>{% endfor %}{% endif %}
-  <p class="meta">{% if mx.contractors %}Principal contractors named: {{ mx.contractors|join(', ') }} · {% endif %}{% if mx.proceeded %}{{ mx.proceeded }}{% endif %}</p>
+  {% for h in mx.history %}<div class="outcome"><span class="muted" style="font-size:12px">{{ h.date }}</span><p>{{ h.claim }}</p>{% if h.note %}<p class="counter">{{ h.note }}</p>{% endif %}<p class="src"><a href="{{ h.source.url }}">{{ h.source.publisher or h.source.title }}{% if h.source.publisher and h.source.title %}: {{ h.source.title }}{% endif %}</a></p>{% for a in h.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}</div>{% endfor %}{% endif %}
+  <p class="meta">{% if mx.contractors %}Principal contractors named: {{ mx.contractors|join(', ') }}{% if mx.contractor_note %} ({{ mx.contractor_note }}){% endif %} · {% endif %}{% if mx.proceeded %}{{ mx.proceeded }}{% endif %}</p>
   {% if mx.sources %}<p class="src">{% for s in mx.sources %}<a href="{{ s.url }}">{{ s.title }}</a>{% if s.publisher %}, {{ s.publisher }}{% endif %}{% if s.date %}, {{ s.date }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
   {% else %}<p class="muted">Not yet researched.</p>{% endif %}
 </li>
 
 <li>
   <div class="step">3 · What the record shows</div>
-  <p class="meta" style="margin-top:0">Each item carries two separate judgments. Its <b>grade</b> says how strong the evidence is for the finding itself. Its <b>place on this page</b> says how it relates to this sale. Dates show when each finding was published, before or after the sale and the vote.</p>
+  <p class="meta" style="margin-top:0">Each item carries two separate judgments. Its <b>grade</b> says how strong the evidence is for the finding itself. Its <b>place on this page</b> says how it relates to this sale. Dates show when each finding was published, before or after the sale and the vote. Court orders on provisional measures and arrest warrants are graded Associated: they are court records, but they do not decide the facts.</p>
   {% set same = c.outcomes|selectattr('scope', 'equalto', 'same_type')|list %}
   {% set wider = c.outcomes|selectattr('scope', 'equalto', 'wider')|list %}
   {% set nonef = c.outcomes|selectattr('grade', 'equalto', 'none_found')|list %}
 
   <p class="step" style="margin-top:16px;font-size:11px">Tied to this sale</p>
-  <p class="notice" style="margin-top:0"><b>No source ties weapons or items from this sale to any harm.</b>{% if mx.delivery_estimate %} Deliveries were estimated to begin in {{ mx.delivery_estimate }}{% endif %}{% if not mx.delivery_estimate %} No delivery has been found{% endif %}.{% if same %} The evidence below concerns the same kinds of weapons from earlier US deliveries.{% endif %}</p>
+  <p class="notice" style="margin-top:0"><b>No source ties weapons or items from this sale to any harm.</b>{% if mx.delivery_estimate %} Deliveries were estimated to begin in {{ mx.delivery_estimate }}{% endif %}{% if not mx.delivery_estimate %} No delivery has been found{% endif %}.{% if same %} The evidence below concerns the same kinds of weapons from earlier US deliveries.{% elif mx.no_same_type_note %} {{ mx.no_same_type_note }}{% endif %}</p>
+  {% if c.genocide_note %}<p class="meta">{{ c.genocide_note }}</p>{% endif %}
 
   {% if same %}
   <p class="step" style="margin-top:18px;font-size:11px">Earlier use of the same kinds of weapons (not this sale)</p>
@@ -84,8 +88,13 @@
   {% endif %}
 
   {% if wider %}
-  <p class="step" style="margin-top:18px;font-size:11px">{% if nonef and wider|length == nonef|length %}What research found{% elif c.country == 'United Arab Emirates' %}Allegations about the recipient's conduct (contested; not this sale or weapon type){% else %}The wider record on {{ c.country }} (not tied to this sale){% endif %}</p>
-  {% for o in wider|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
+  <p class="step" style="margin-top:18px;font-size:11px">{% if nonef and wider|length == nonef|length %}What research found{% elif wider|selectattr('group_label')|list|length == wider|length %}The wider record (not tied to this sale){% else %}The wider record on {{ c.country }} (not tied to this sale){% endif %}</p>
+  {% set ungrouped = wider|rejectattr('group_label')|list %}
+  {% for o in ungrouped|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
+  {% for label, items in wider|selectattr('group_label')|groupby('group_label') %}
+  <p class="step" style="margin-top:14px;font-size:10px">{{ label }}</p>
+  {% for o in items|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
+  {% endfor %}
   {% endif %}
 
   {% if c.context %}
@@ -96,13 +105,14 @@
 
 <li>
   <div class="step">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
-  <p>Legal, publicly disclosed contributions reported to each senator's campaign and leadership committees by registered lobbyists and lobbying organizations of companies on the <a href="https://www.sipri.org/databases/armsindustry">SIPRI Top 100 arms producers</a> list (LD-203 reports, {{ lobby_years }}). The window is the same for every senator and is not tied to the vote date, so some contributions came after the vote. <b>PAC money:</b> {% if c.money_pattern.values()|map(attribute='Y')|map(attribute='pac_n')|sum + c.money_pattern.values()|map(attribute='N')|map(attribute='pac_n')|sum %}shown where collected{% else %}not yet collected for senators: unknown, not zero{% endif %}.</p>
+  <p>Legal, publicly disclosed contributions reported to each senator's campaign and leadership committees by registered lobbyists and lobbying organizations of companies on the <a href="https://www.sipri.org/databases/armsindustry">SIPRI Top 100 arms producers</a> list (LD-203 reports). <b>Window:</b> contributions dated {{ c.window_start or 'from the start of the reporting years collected' }} through the vote on {{ c.date }}, the same window for every senator on this vote; nothing given after the vote is counted. <b>PAC money:</b> {% if c.money_pattern.values()|map(attribute='Y')|map(attribute='pac_n')|sum + c.money_pattern.values()|map(attribute='N')|map(attribute='pac_n')|sum %}shown where collected; PAC figures are campaign-cycle totals and cannot be cut at the vote date{% else %}not yet collected for senators: unknown, not zero{% endif %}.</p>
   <p class="notice" style="margin-top:0"><b>These figures do not show that any contribution influenced any vote.</b> Money can follow votes as easily as precede them, and seniority, committee seats, home-state industry and a senator's general stance on arms sales can drive both. Comparisons are made only within a party, a median is shown only for groups of {{ min_n }} or more, and every senator's figure is listed below.</p>
   {{ money_table(c.money_pattern, c.contractor_companies) }}
   <p class="meta" style="margin-top:8px">
-  {% for party, cell in c.money_pattern.items() %}<b>{{ party_names[party] }}s:</b> {{ {'none': 'everyone voted the same way, so there is no within-party comparison.', 'small': 'one side has fewer than ' ~ min_n ~ ' senators, too few to compare.', 'no_difference': 'no clear difference between the two sides.', 'gap_no': 'senators who voted against advancing received more, a difference of at least ' ~ gap ~ 'x at the median. A pattern, not a cause.', 'gap_yes': 'senators who voted to advance received more, a difference of at least ' ~ gap ~ 'x at the median. A pattern, not a cause.'}[cell.verdict] }} {% endfor %}
+  {% for party, cell in c.money_pattern.items() %}{% set y, n = cell.Y, cell.N %}<b>{{ party_names[party] }}s:</b> {% if cell.verdict == 'none' %}No comparison: all {{ party_names[party] }}s who voted took the same side, so there is nothing to compare within the party.{% elif cell.verdict == 'small' %}No comparison: one side has fewer than {{ min_n }} senators.{% else %}{{ y.lobby.any }} of {{ y.n }} who voted to advance and {{ n.lobby.any }} of {{ n.n }} who voted against advancing had any such contribution reported. {% if cell.verdict == 'no_difference' %}No clear difference between the two sides by the fixed rule.{% elif cell.verdict == 'gap_no' %}Those who voted against advancing had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% else %}Those who voted to advance had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% endif %}{% endif %} {% endfor %}
   {% if c.siblings %}This vote was held the same day as {% for s in c.siblings %}<a href="{{ s.id }}.html">{{ s.bill|billname }}</a> ({{ s.same }} of {{ s.both }} senators voted the same way on both){% if not loop.last %}, {% endif %}{% endfor %}, so a money pattern repeated there is the same senators measured again, not an independent finding.{% endif %}
-  {% if c.contractor_companies %}This sale's named contractors on the SIPRI list: {{ c.contractor_companies|join(', ') }}. Contractor figures depend on how many companies a notice names and cannot be compared across chains.{% else %}None of this sale's named contractors is on the SIPRI list, so contractor money is not measured.{% endif %}</p>
+  {% if c.same_recipient_n > 1 %}This page is one of {{ c.same_recipient_n }} votes on arms for {{ c.country }}, held on {{ c.same_recipient|length }} day{{ '' if c.same_recipient|length == 1 else 's' }} ({{ c.same_recipient|join(', ') }}), mostly by the same senators; a gap found on several of them counts as one pattern, not several.{% endif %}
+  {% if c.contractor_companies %}Contractor money covers {{ c.contractor_companies|join(', ') }} only: the named contractors matched to the SIPRI list{% if mx.contractors|length > c.contractor_companies|length %}; the others named are not on it and are not measured{% endif %}. Contractor figures depend on how many companies a notice names and cannot be compared across chains.{% else %}Contractor money: not measured, because none of this sale's named contractors is on the SIPRI list.{% endif %}</p>
 
   {% if c.committee_control %}
   <p class="step" style="margin-top:22px;font-size:11px">Control: without defense-committee senators</p>
@@ -113,9 +123,9 @@
   <p class="step" style="margin-top:22px;font-size:11px">Advocacy on this vote</p>
   {% set ao = c.advocacy_orgs %}
   {% if not ao or (not ao.block and not ao.proceed) %}
-  <p>Research found no advocacy organization lobbying on this resolution or publicly urging senators on it. The same arms-industry money gap among Democrats appears on this vote as on the Israel votes, which suggests the gap follows senators' general stance on arms sales more than any one recipient. The search was not exhaustive.</p>
+  <p>Research found no advocacy organization, on either side, lobbying on this resolution or publicly urging senators on it. Searched: {{ c.advocacy_meta.search }} The search was not exhaustive.</p>
   {% else %}
-  <p class="meta">Organizations count if they lobbied on this resolution (LD-2 filings) or publicly urged senators on it, with their side taken from their own statements, the same rule for both sides. A lopsided list reflects who took a public position, not necessarily who exerted influence; the executive branch, which proposed the sale, is not counted as an advocate.</p>
+  <p class="meta">Organizations count if they lobbied on this resolution (LD-2 filings) or publicly urged senators on it, with their side taken from their own statements, the same rule for both sides. A lopsided list reflects who took a public position, not necessarily who exerted influence; the executive branch, which proposed the sale, is not counted as an advocate. {{ c.advocacy_meta.after_rule }} Searched: {{ c.advocacy_meta.search }} No other organizations were found on either side; the search was not exhaustive.</p>
   <div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
   {% for side, label in [('block', 'Urged advancing the resolution'), ('proceed', 'Urged rejecting it')] %}
     <div class="reading"><div class="label">{{ label }}</div>
@@ -123,6 +133,8 @@
     </div>
   {% endfor %}
   </div>
+  {% if c.advocacy_after %}<p class="meta" style="margin-top:8px"><b>Welcomed the result afterward (not counted):</b> {% for o in c.advocacy_after %}{{ o.name }}{% if o.position %} <span class="muted">({{ o.position }})</span>{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+  {% if c.advocacy_noside %}<p class="meta"><b>Lobbied or commented without a stated side (not counted):</b> {% for o in c.advocacy_noside %}{{ o.name }} <span class="muted">({{ o.position }})</span>{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
   {% if c.advocacy_pattern %}
   <div class="tbl-wrap" style="margin-top:12px"><table>
   <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">From groups urging rejection: received any</th><th class="r">From groups urging advancing: received any</th><th class="r">Super PAC spending for / against</th></tr></thead>
@@ -135,7 +147,7 @@
   {% endif %}{% endfor %}{% endfor %}
   </tbody></table></div>
   <p class="meta" style="margin-top:8px">Federal election cycles 2020–2026, every senator measured over the same window.{% if not c.advocacy_complete %} Some cycles are still being collected.{% endif %} Earmarks sent to joint fundraising committees are not counted toward a senator.</p>
-  {% else %}<p class="muted">Advocacy money: not yet collected. The FEC's data service was intermittently unavailable on the first nights; it is fetched again nightly.</p>{% endif %}
+  {% else %}<p class="muted">Advocacy money: not yet collected (unknown, not zero). The FEC's data service was intermittently unavailable on the first nights; it is fetched again nightly.</p>{% endif %}
   {% endif %}
 
   <details style="margin-top:14px"><summary>Every senator's vote and arms-industry contributions (alphabetical)</summary>

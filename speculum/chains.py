@@ -51,8 +51,15 @@ RULES = [
                "disapproval (Arms Export Control Act, 22 U.S.C. 2776) through both chambers and having it "
                "signed by the President or passed over a veto by two-thirds of each chamber. A motion to "
                "discharge brings the resolution out of committee for a vote; it does not block the sale by "
-               "itself. Where the Secretary of State certified an emergency, congressional review was waived "
-               "and the sale could go ahead regardless.",
+               "itself. Where the Secretary of State certifies an emergency, the review period is waived and the "
+               "sale can proceed at once, though Congress can still pass a resolution against it. Presidents of "
+               "both parties have used the emergency authority: Congress passed resolutions against emergency "
+               "sales to Saudi Arabia and the UAE in 2019, and the President vetoed them; in December 2023 the "
+               "Secretary of State used it for tank ammunition for Israel.",
+        "why_sources": [
+            {"title": "Trump Vetoes Challenge to Arab Arms Sales", "url": "https://www.armscontrol.org/act/2019-09/news/trump-vetoes-challenge-arab-arms-sales", "publisher": "Arms Control Association", "date": "2019-09"},
+            {"title": "The State Department OKs the sale of tank ammunition to Israel in a deal bypassing Congress review", "url": "https://www.click2houston.com/news/politics/2023/12/09/the-state-department-oks-the-sale-of-tank-ammunition-to-israel-in-a-deal-bypassing-congress-review/", "publisher": "AP", "date": "2023-12-09"},
+        ],
     },
 ]
 
@@ -82,7 +89,11 @@ def sector_index(sectors: dict, name: str) -> tuple[dict, dict]:
     return fec, lda
 
 
-def member_sector_money(bio: str, finance: dict, lobbying: dict, fec_ids: dict, lda_ids: dict) -> dict:
+def member_sector_money(bio: str, finance: dict, lobbying: dict, fec_ids: dict, lda_ids: dict,
+                        upto: str | None = None, since: str | None = None) -> dict:
+    """Arms-industry money to one member. LD-203 items are dated, so with `upto` only contributions
+    made on or before that date (the vote) count. FEC committee givers are cycle totals with no date
+    per gift here, so they cannot be cut at the vote and are labeled as such."""
     pac, lob, givers = 0.0, 0.0, {}
     for c in (finance.get(bio) or {}).get("top_committees") or []:
         co = fec_ids.get(c.get("committee_id"))
@@ -91,7 +102,8 @@ def member_sector_money(bio: str, finance: dict, lobbying: dict, fec_ids: dict, 
             givers[co] = givers.get(co, 0) + float(c.get("amount") or 0)
     for it in lobbying.get("by_member", {}).get(bio, []):
         co = lda_ids.get(str(it.get("registrant_id")))
-        if co:
+        d = (it.get("date") or "")[:10]
+        if co and (not upto or d <= upto) and (not since or d >= since):
             lob += float(it.get("amount") or 0)
             givers[co] = givers.get(co, 0) + float(it.get("amount") or 0)
     known = bool((finance.get(bio) or {}).get("top_committees") is not None and bio in finance)
@@ -120,7 +132,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             bill = v.get("bill") or v["id"]
             cid = f"{rule['id']}-{v.get('congress')}-{bill}".lower()
             ch = chains.setdefault(cid, {
-                "id": cid, "rule": rule["id"], "rule_name": rule["name"], "why": rule["why"],
+                "id": cid, "rule": rule["id"], "rule_name": rule["name"], "why": rule["why"], "why_sources": rule.get("why_sources", []),
                 "yes_means": rule["yes_means"], "no_means": rule["no_means"], "sector": rule["sector"],
                 "bill": bill, "congress": v.get("congress"), "title": v.get("title"),
                 "country": country_of(v.get("title")), "votes": []})
@@ -131,8 +143,13 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
                                 "nays": sum(1 for p in pos.values() if ledger.side(p) == "N"),
                                 "_pos": pos})
 
+    # LD-203 window: from the first day of the earliest reporting year collected through the vote date.
+    # Items dated outside the reporting years (typos such as 2029, or late reports of older gifts) are left out.
+    yrs = [int(y) for y in (lobbying.get("years") or []) if str(y).isdigit()]
+    window_start = f"{min(yrs)}-01-01" if yrs else None
     out = []
     for ch in chains.values():
+        ch["window_start"] = window_start
         ch["votes"].sort(key=lambda x: (x["date"], x["id"]))
         decisive = ch["votes"][-1]                      # the last recorded vote on the resolution
         ch["date"] = decisive["date"]
@@ -147,13 +164,16 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             split[key] = split.get(key, 0) + 1
             if not m:
                 continue                                 # no longer serving; counted in the tally only
-            money = member_sector_money(bio, finance, lobbying, fec_ids, lda_ids)
+            money = member_sector_money(bio, finance, lobbying, fec_ids, lda_ids, upto=ch["date"], since=window_start)
             rows.append({"bioguide": bio, "name": m["name"], "party": m["party"], "caucus": party, "state": m["state"],
                          "position": p, "side": s, "defense_seats": on_defense_committee(bio, committees), **money})
         for x in ch["votes"]:
             x.pop("_pos", None)
         ch["members"] = sorted(rows, key=lambda r: (r["side"] or "Z", r["name"]))   # never ranked by amount
         ch["former"] = sorted(((former.get(b) or {}).get("name") or b) for b in decisive_pos if b not in by_id)
+        ch["former_detail"] = sorted(({"name": (former.get(b) or {}).get("name") or b, "party": (former.get(b) or {}).get("party"),
+                                       "side": ledger.side(p)} for b, p in decisive_pos.items() if b not in by_id),
+                                     key=lambda x: x["name"])
         ch["unknown_party"] = sum(n for (p, s), n in split.items() if p == "?")
         ch["party_split"] = {f"{p}-{s}": n for (p, s), n in sorted(split.items())}
         ch["money_pattern"] = _pattern(ch["members"])
@@ -178,14 +198,19 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             rel = ("before this sale was notified" if notified and when and when < notified
                    else "before the vote" if when and when <= ch["date"] else "after the vote" if when else "")
             general = bool(o.get("scope_note"))          # e.g. a general assessment of US-made arms
+            if (o.get("scope_note_by") or {}).get(bkey):   # a note about this sale only; placement unchanged
+                o = {**o, "scope_note": o["scope_note_by"][bkey]}
             if o.get("scope_note_same"):
                 o = {**o, "scope_note": o["scope_note_same"]}
                 general = False
             scope = ("context" if o.get("context_only") else
                      "wider" if general else
                      "same_type" if o.get("applies_to") and bkey in o["applies_to"] else "wider")
-            placed.append({**o, "_order": order.get(o.get("grade"), 4), "when": when, "when_rel": rel, "scope": scope})
+            prio = (o.get("priority") or {}).get(bkey, 50)
+            placed.append({**o, "_order": prio * 10 + order.get(o.get("grade"), 4), "when": when, "when_rel": rel, "scope": scope,
+                           "group_label": (research.get("_meta") or {}).get("groups", {}).get(o.get("group"))})
         ch["outcomes"] = [o for o in placed if o["scope"] != "context"]
+        ch["genocide_note"] = (research.get("_meta") or {}).get("israel_genocide_note") if ch["country"] == "Israel" else None
         ch["context"] = ([o for o in placed if o["scope"] == "context"] +
                          [x for x in research.get("context", []) if x.get("country") == ch["country"]
                           and (not x.get("applies_to") or bkey in x["applies_to"])])
@@ -209,6 +234,8 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             both = [b for b in sides if b in o]
             same = sum(1 for b in both if sides[b] == o[b])
             ch["siblings"].append({"bill": other["bill"], "id": other["id"], "both": len(both), "same": same})
+        ch["same_recipient"] = sorted({o["date"] for o in out if o["country"] == ch["country"]})
+        ch["same_recipient_n"] = sum(1 for o in out if o["country"] == ch["country"])
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)
     return out
 
@@ -250,8 +277,15 @@ def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None
     from .sources import advocacy
     bkey = ch["bill"].upper().replace(" ", "").replace(".", "")
     sides = {"block": [], "proceed": []}
+    ch["advocacy_after"], ch["advocacy_noside"] = [], []
     for org in cfg.get("organizations", []):
         sd = org.get("sides", {}).get(bkey)
+        pos = _position_text(org, bkey)
+        if sd and bkey in org.get("after_only", []):
+            ch["advocacy_after"].append({"name": org["name"], "side": sd, "position": pos})
+            continue
+        if not sd and pos and "not found" not in pos and "not retrieved" not in pos:
+            ch["advocacy_noside"].append({"name": org["name"], "position": pos})
         if sd in sides:
             sides[sd].append({"name": org["name"], "pacs": org.get("pacs", []), "super_pacs": org.get("super_pacs", []),
                               "includes": org.get("includes", []),

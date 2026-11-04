@@ -9,7 +9,9 @@
    "NORPAC, Pro-Israel America PAC and DMFI PAC are excluded because their sponsoring organizations did not qualify under the rule.",
    "Earmarks sent to joint fundraising committees are not allocated to a senator.",
    "United Democracy Project spends independently; its spending is shown separately and is not a contribution."
-  ]
+  ],
+  "after_rule": "A statement made only after the vote that welcomes or praises the result is listed separately and not counted, for every side alike. Advertising after the vote that targets named senators counts, because it is pressure on future votes.",
+  "search": "LD-2 lobbying reports for 2025–2026 naming the resolution, and public statements, letters, action alerts, advertising and scorecards naming the resolution or the sale, from introduction to 30 days after the vote."
  },
  "cycles": [
   2020,
@@ -85,6 +87,10 @@
      "name": "United Democracy Project",
      "fec_id": "C00799031"
     }
+   ],
+   "after_only": [
+    "SJRES34",
+    "SJRES41"
    ]
   },
   {
@@ -166,7 +172,11 @@
      "conduit": true
     }
    ],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "after_only": [
+    "SJRES34",
+    "SJRES41"
+   ]
   },
   {
    "name": "Friends Committee on National Legislation",
@@ -413,6 +423,10 @@
      "name": "Peace, Accountability, and Leadership PAC (hybrid PAC; RELATED only: led by IMEU Policy Project ED Margaret DeReus per The New Arab; FEC page lists no connected org)",
      "fec_id": "C00937888"
     }
+   ],
+   "after_only": [
+    "SJRES26",
+    "SJRES33"
    ]
   },
   {
@@ -566,7 +580,11 @@
    ],
    "lda": [],
    "pacs": [],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "after_only": [
+    "SJRES32",
+    "SJRES138"
+   ]
   },
   {
    "name": "American Jewish Congress",
@@ -587,7 +605,11 @@
    ],
    "lda": [],
    "pacs": [],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "after_only": [
+    "SJRES26",
+    "SJRES33"
+   ]
   }
  ]
 }

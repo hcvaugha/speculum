@@ -26,6 +26,11 @@
     "D9 identification in any source",
     "US-origin equipment re-transfer in Yemen beyond Amnesty"
    ]
+  },
+  "israel_genocide_note": "No court has found that genocide was committed in Gaza. South Africa's case against Israel at the ICJ is at the merits stage; the orders cited here are provisional measures, and the Commission of Inquiry is not a court.",
+  "groups": {
+   "rsf": "Conduct of the RSF in Sudan (not alleged against the UAE directly)",
+   "uae": "Allegations that the UAE supplied the RSF, and the UAE's conduct in Yemen (contested; not this sale or weapon type)"
   }
  },
  "resolutions": {
@@ -97,7 +102,7 @@
      }
     },
     {
-     "claim": "Trump posted 'A lot of things that were ordered and paid for by Israel, but have not been sent by Biden, are now on their way!' He told reporters: 'We released them. We released them today.' Israel's Defense Ministry said on 16 Feb 2025 that the shipment had arrived.",
+     "claim": "Trump posted 'A lot of things that were ordered and paid for by Israel, but have not been sent by Biden, are now on their way!' He told reporters: 'We released them. We released them today.'",
      "date": "2025-01-25",
      "source": {
       "title": "Trump Makes 2,000-Pound Bombs Available to Israel, Undoing Biden Pause",
@@ -105,8 +110,19 @@
       "publisher": "Algemeiner (Reuters)",
       "date": "2025-01-26"
      }
+    },
+    {
+     "claim": "Israel's Defense Ministry said on 16 Feb 2025 that a shipment of MK-84 bombs released by the Trump administration had arrived overnight.",
+     "date": "2025-02-16",
+     "source": {
+      "title": "Shipment of 'heavy' US bombs arrives in Israel: defence ministry",
+      "url": "https://www.ewn.co.za/2025/02/16/shipment-of-heavy-us-bombs-arrives-in-israel-defence-ministry",
+      "publisher": "EWN (AFP)",
+      "date": "2025-02-16"
+     }
     }
-   ]
+   ],
+   "no_same_type_note": "Strikes with bombs of this weight class are reported, and some forensic reports identify US guidance kits used with them, but no source identifies where the bomb bodies came from. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here. The US government's own 2024 pause on this bomb class is shown in the policy record above."
   },
   "SJRES26": {
    "bill": "S.J.Res. 26",
@@ -156,7 +172,7 @@
    "notified": "2025-02-07",
    "delivery_estimate": "2025",
    "emergency": false,
-   "clearance": "No emergency certification; the statutory review period ran before the vote.",
+   "clearance": "No emergency certification; the 15-day review period for Israel ran out before the vote.",
    "justification": "The United States is committed to the security of Israel, and it is vital to U.S. national interests to assist Israel to develop and maintain a strong and ready self-defense capability. This proposed sale is consistent with those objectives. … The proposed sale improves Israel's capability to meet current and future threats, strengthen its homeland defense, and serves as a deterrent to regional threats. Israel already has these weapons in its inventory and will have no difficulty absorbing this equipment into its armed forces.",
    "sponsor_reasons": "Sanders, floor remarks, Congressional Record, 3 Apr 2025: the resolution 'would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs'; 'The United States cannot provide weaponry to countries that violate internationally recognized human rights'. He called the emergency route 'a bogus emergency declaration--an emergency declaration to bypass congressional review'. (A related Sanders media advisory of 3 Apr 2025 gives no reasons.) White House Statement of Administration Policy (SAP), 3 Apr 2025: the sale 'improves Israel's capability to defeat current and future threats and minimize civilian casualties.'"
   },
@@ -166,12 +182,12 @@
    "items": "8 MQ-9B remotely piloted aircraft; 200 KMU-572 JDAM tail kits; 300 BLU-111 500-lb bombs; 100 MXU-650 air foil groups and 100 MAU-169 computer control groups (Paveway II GBU-12); 110 AGM-114R2 Hellfire II missiles; 8 M36E9 Hellfire captive-air training missiles; 10 Lynx AN/APY-8 synthetic aperture radars; 10 L3 Rio Grande COMINT suites; 40 EGI devices; ground control stations, Honeywell TPE-331 engines and support",
    "value": "$1.96 billion (DSCA estimate, for the 'highest estimated quantity and dollar value')",
    "contractors": [
-    "General Atomics Aeronautical Systems",
-    "Lockheed Martin",
-    "RTX Corporation",
-    "L3Harris",
-    "Boeing",
-    "Leonardo SpA"
+    "General Atomics Aeronautical Systems (Poway, CA)",
+    "Lockheed Martin (Bethesda, MD)",
+    "RTX Corporation (Waltham, MA)",
+    "L3Harris (Melbourne, FL)",
+    "Boeing (Arlington, VA)",
+    "Leonardo SpA (Rome, Italy)"
    ],
    "sources": [
     {
@@ -224,7 +240,8 @@
    "emergency": false,
    "clearance": "No emergency certification found; an agreement for the drones was reported signed on 14 May 2025, before the vote.",
    "justification": "This proposed sale will support the foreign policy and national security objectives of the United States by helping to improve the security of a friendly country that continues to be an important force for political stability and economic progress in the Middle East. The proposed sale will improve Qatar's capability to meet current and future threats by providing timely intelligence, surveillance, and reconnaissance, target acquisition, counter-land, and counter-surface sea capabilities for its security and defense. This capability is a deterrent to regional threats and will primarily be used to strengthen its homeland defense. Qatar will have no difficulty absorbing these articles and services into its armed forces.",
-   "sponsor_reasons": "Sponsor Murphy, with Kaine, Sanders, Van Hollen and Schatz, introduced it on 15 May 2025. Van Hollen release, 15 May 2025: 'it's about blocking the sale of the presidency to the highest bidder'. Murphy, on the jet: 'it's an illegal bribe that the President of the United States is champing at the bit to accept'. The release makes no claim about Qatar's conduct in the sale itself. SAP, 10 Jun 2025: 'strongly opposes passage'; veto recommended."
+   "sponsor_reasons": "Sponsor Murphy, with Kaine, Sanders, Van Hollen and Schatz, introduced it on 15 May 2025. Van Hollen release, 15 May 2025: 'it's about blocking the sale of the presidency to the highest bidder'. Murphy, on the jet: 'it's an illegal bribe that the President of the United States is champing at the bit to accept'. The release makes no claim about Qatar's conduct in the sale itself. SAP, 10 Jun 2025: 'strongly opposes passage'; veto recommended.",
+   "contractor_note": "Leonardo SpA files no US campaign reports; money is matched to its US subsidiary, Leonardo DRS."
   },
   "SJRES54": {
    "bill": "S.J.Res. 54",
@@ -266,7 +283,7 @@
    "notified": "2025-05-12",
    "delivery_estimate": null,
    "emergency": false,
-   "clearance": "No emergency certification found.",
+   "clearance": "No emergency certification found. The 30-day review period ended at or about the 11 Jun 2025 vote.",
    "justification": "This proposed sale will support the foreign policy and national security of the United States by helping to improve the security of an important regional partner. The United Arab Emirates is a vital U.S. partner for political stability and economic progress in the Middle East. The proposed sale will improve the United Arab Emirates' capability to meet current and future threats by extending its range of flight operations. The UAE will use these assets in search and rescue, disaster relief, humanitarian support, and counterterrorism operations. The United Arab Emirates will have no difficulty absorbing this equipment and services into its armed forces.",
    "sponsor_reasons": "Murphy sponsored it, with Van Hollen, Kaine, Sanders and Schatz. Van Hollen release, 15 May 2025: no sales 'until they cease arming the murderous RSF', and a 'corrupt Trump family crypto-for-arms deal' (MGX/World Liberty Financial stablecoin). Murphy: the UAE is 'directly enriching the President and his family'. No reason specific to the Chinooks is given."
   },
@@ -315,22 +332,36 @@
    "notified": "2025-03-06",
    "delivery_estimate": null,
    "emergency": false,
-   "clearance": "Direct commercial sale notified under AECA section 36(c); notification date per Reuters.",
+   "clearance": "Direct commercial sale notified under AECA section 36(c); notification date per Reuters. The 15-day review period for Israel ended in March 2025, months before the 30 Jul 2025 vote.",
    "justification": "No DSCA policy justification exists, because this was a direct commercial sale (DDTC 23-077, AECA 36(c)). Bill text: 20,000 fully automatic Colt carbines for 'ultimate end use by the Israel National Police'. The SAP of 30 Jul 2025 gives the purpose as 'providing better equipment for the Israeli National Police.' The State Department's 6 Mar 2025 notification, as reported (The New Arab, citing Reuters), said the government had considered 'political, military, economic, human rights, and arms control considerations.'",
    "sponsor_reasons": "Sanders, 29 Jul 2025: the rifles 'will go to arm a police force overseen by Itamar Ben-Gvir', who 'has distributed weapons to violent settlers in the West Bank'.",
    "history": [
     {
-     "claim": "EO 14115 declared a national emergency over 'the situation in the West Bank-- in particular high levels of extremist settler violence, forced displacement of people and villages, and property destruction--has reached intolerable levels'. An order of 20 Jan 2025 'revoked E.O. 14115'; OFAC 'removed all persons designated under E.O. 14115' and unblocked their property.",
+     "claim": "EO 14115 (1 Feb 2024) declared a national emergency over 'the situation in the West Bank-- in particular high levels of extremist settler violence, forced displacement of people and villages, and property destruction--has reached intolerable levels'. An order of 20 Jan 2025 revoked EO 14115, and on 24 Jan 2025 OFAC removed everyone designated under it from the sanctions list and unblocked their property.",
      "date": "2025-01-20",
      "source": {
-      "title": "Federal Register 2024-02354 (EO 14115); OFAC Recent Actions 20250124",
+      "title": "Federal Register 2024-02354 (EO 14115)",
       "url": "https://www.govinfo.gov/content/pkg/FR-2024-02-05/html/2024-02354.htm",
       "publisher": "Federal Register / Treasury",
       "date": "2024-02-05"
-     }
+     },
+     "also": [
+      {
+       "title": "OFAC: Termination of Emergency With Respect to the Situation in the West Bank; West Bank-related Designation Removals",
+       "url": "https://ofac.treasury.gov/recent-actions/20250124",
+       "publisher": "US Treasury (OFAC)",
+       "date": "2025-01-24"
+      },
+      {
+       "title": "Federal Register notice of West Bank-related removals (citing the 20 Jan 2025 revocation)",
+       "url": "https://www.govinfo.gov/content/pkg/FR-2025-01-29/html/2025-01888.htm",
+       "publisher": "Federal Register",
+       "date": "2025-01-29"
+      }
+     ]
     },
     {
-     "claim": "Israel's stated purpose for post-7 October police arms: Israel's stated purpose for post-7 October arms. On 24 Oct 2023 the National Security Ministry's coordinator said civilian security squads are 'a rapid response [capability] with a broad geographic reach, to provide a sense of security' and are 'overseen by the Israel Police'. Ben-Gvir said the ministry bought '10,000 assault rifles for distribution to civilian security squads'. Squads serve 'small towns and communities in Israel's periphery and the West Bank settlements'.",
+     "claim": "A separate purchase, not this sale: on 24 Oct 2023 Israel's National Security Ministry said it had bought '10,000 assault rifles for distribution to civilian security squads', which its coordinator described as 'a rapid response [capability] with a broad geographic reach, to provide a sense of security', 'overseen by the Israel Police', serving 'small towns and communities in Israel's periphery and the West Bank settlements'. No source says rifles from this sale went to civilian security squads. Asked whether the administration had sought assurances from Israel about how the rifles in this sale would be used, the State Department did not comment (Reuters, via The New Arab).",
      "date": "2023-10-24",
      "source": {
       "title": "600 civil security squads established since Oct. 7 to boost 'sense of security'",
@@ -338,9 +369,10 @@
       "publisher": "Times of Israel",
       "date": "2023-10-25"
      },
-     "note": "US SAP, 30 Jul 2025: the S.J.Res. 41 rifles are for 'providing better equipment for the Israeli National Police.'"
+     "note": null
     }
-   ]
+   ],
+   "end_use_first": "End use stated by the US: 'providing better equipment for the Israeli National Police' (Statement of Administration Policy, 30 Jul 2025)."
   },
   "SJRES34": {
    "bill": "S.J.Res. 34",
@@ -432,7 +464,7 @@
      "date": "2026-04-15"
     }
    ],
-   "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries expected to begin in 2027. Israel's Defense Ministry announced the arrival of 'dozens' of D9s on 9 Jul 2025 (Times of Israel), but did not say whether they came under this case.",
+   "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries expected to begin in 2027. Israel's Defense Ministry announced the arrival on 9 Jul 2025 of 'dozens' of D9s from an earlier shipment that had been held under the previous US administration (Times of Israel); it did not say whether any came under this case.",
    "notification": "DSCA Transmittal No. 24-38, AECA 36(b)(1)",
    "notified": "2025-02-28",
    "delivery_estimate": "2027",
@@ -488,7 +520,9 @@
    "emergency": null,
    "clearance": "Reuters (via Dawn, 8 Mar 2026) reports that Secretary Rubio made an emergency determination; the Federal Register notice cites only section 36(b)(1) and contains no emergency language. Part of the requirement is to come from US stock.",
    "justification": "This proposed sale will contribute to the foreign policy and national security of the United States by helping to improve the security of a strategic regional partner that has been, and continues to be, an important force for political stability and economic progress in the Middle East. The proposed sale will improve Israel's capability to meet current and future threats by improving its ability to defend its borders, vital infrastructure, and population centers. This proposed sale will increase the interoperability with U.S. forces and conveys U.S. commitment to Israel's security and armed forces modernization. Israel will have no difficulty absorbing this equipment into its armed forces.",
-   "sponsor_reasons": "Sanders (cosponsors Van Hollen, Merkley and Welch), 19 Mar 2026: 'No more weapons to support an illegal war.' He cited 'horrific destruction' in Gaza, Iran and Lebanon."
+   "sponsor_reasons": "Sanders (cosponsors Van Hollen, Merkley and Welch), 19 Mar 2026: 'No more weapons to support an illegal war.' He cited 'horrific destruction' in Gaza, Iran and Lebanon. Rep. Gregory Meeks, ranking Democrat on the House Foreign Affairs Committee, said of the emergency: 'This is an emergency of the Trump administration's own creation.' (Dawn/Reuters, 8 Mar 2026)",
+   "no_same_type_note": "Strikes with bombs of this weight class are reported, and some forensic reports identify US guidance kits used with them, but no source identifies where the bomb bodies came from. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here.",
+   "emergency_basis": "Per the press reports, the determination cited 'the national security interests of the United States'."
   }
  },
  "outcomes": [
@@ -529,7 +563,12 @@
    },
    "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication.",
    "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
-   "scope_note": null
+   "scope_note": null,
+   "grade_note": "The grade covers Amnesty's forensic identification of the weapon. That those killed were civilians, and that there was no military objective, is Amnesty's assessment.",
+   "scope_note_by": {
+    "SJRES34": "Amnesty did not identify the JDAM variant. By weight, the al-Najjar bomb (about 2,000 lb) corresponds to the MK-84 kit sold in S.J.Res. 26, not this sale's 1,000-lb MK-83 kits; only the Abu Mu'eileq bomb ('at least 1,000 lb') falls in this sale's weight class.",
+    "SJRES26": "Amnesty did not identify the JDAM variant. By weight, the al-Najjar bomb (about 2,000 lb) corresponds to the MK-84 kit in this sale's class; the Abu Mu'eileq bomb is given only as 'at least 1,000 lb'."
+   }
   },
   {
    "country": "Israel",
@@ -552,7 +591,8 @@
      "publisher": "NPR",
      "date": "2024-05-27"
     }
-   ]
+   ],
+   "grade_note": "The grade covers the experts' identification of the weapon. Civilian status of those killed is as reported by the source."
   },
   {
    "country": "Israel",
@@ -560,14 +600,14 @@
    "applies_to": [
     "SJRES26"
    ],
-   "claim": "CNN, with three explosive-weapons experts, identified, at the 9 Jul 2024 strike, 'consistent with a GBU-39-series tail actuation system'; the GBU-39 is manufactured by Boeing a remnant at the Al-Mutanabbi/Al-Awda school complex sheltering displaced people in Khan Younis; the Gaza Ministry of Health reported at least 27 killed and 53 injured.",
+   "claim": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mutanabbi/Al-Awda school complex, which was sheltering displaced people in Khan Younis, as 'consistent with a GBU-39-series tail actuation system' (the GBU-39 is made by Boeing). Airwars dates the strike to 9 Jul 2024. The Gaza Ministry of Health reported at least 27 killed and 53 injured.",
    "source": {
     "title": "US-made munitions used in deadly Israeli strike on school complex near Khan Younis, CNN analysis finds",
     "url": "https://amp.cnn.com/cnn/2024/07/10/middleeast/israel-us-munitions-school-strike-khan-younis-intl-latam",
     "publisher": "CNN",
     "date": "2024-07-10"
    },
-   "counterpoint": "The IDF said: 'using precise munition, the IAF struck a terrorist from Hamas' military wing who took part, among other terrorist activities, in the October 7 brutal massacre … The incident is under review.' Airwars says the results of the review have not been released.",
+   "counterpoint": "The IDF said: 'using precise munition, the IAF struck a terrorist from Hamas' military wing who took part, among other terrorist activities, in the October 7 brutal massacre' (CNN). Airwars records that the IDF also said 'The incident is under review', and that it had not released the results.",
    "also": [
     {
      "title": "Incident ISPT090724J",
@@ -587,7 +627,9 @@
     "publisher": "International Court of Justice",
     "date": "2024-01-26"
    },
-   "counterpoint": "PM Netanyahu (PMO, 26 Jan 2024): 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians.' Judge ad hoc Barak voted against most measures."
+   "counterpoint": "Dissenting judges: Vice-President Sebutinde voted against every measure; Judge ad hoc Barak voted against most (15-2 on the main measure). Response of the Government of Israel: 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians' (Prime Minister's Office, 26 Jan 2024). The order does not rule on whether violations occurred.",
+   "counter_label": "Dissent and response",
+   "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
    "country": "Israel",
@@ -599,7 +641,9 @@
     "publisher": "International Court of Justice",
     "date": "2024-03-28"
    },
-   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak dissented on the reaffirmation of earlier measures (14-2)."
+   "counterpoint": "Dissenting judges: Vice-President Sebutinde and Judge ad hoc Barak dissented on the reaffirmation of earlier measures (14-2). Response of the Government of Israel: Israel disputes the genocide allegation.",
+   "counter_label": "Response of the Government of Israel",
+   "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
    "country": "Israel",
@@ -611,7 +655,7 @@
     "publisher": "International Court of Justice",
     "date": "2024-05-24"
    },
-   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak voted against. Israel disputes the genocide allegation.",
+   "counterpoint": "Dissenting judges: Vice-President Sebutinde and Judge ad hoc Barak voted against (13-2). Response of the Government of Israel: Israel disputes the genocide allegation. Judges' declarations differ on whether the halt was conditional. Provisional measures are not a ruling on the merits, which remain pending.",
    "also": [
     {
      "title": "Case docket: Application of the Genocide Convention in the Gaza Strip (South Africa v. Israel)",
@@ -619,19 +663,31 @@
      "publisher": "International Court of Justice",
      "date": "2026-09-22"
     }
-   ]
+   ],
+   "counter_label": "Dissent and response",
+   "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
    "country": "Israel",
    "grade": "associated",
-   "claim": "The UN Independent International Commission of Inquiry stated 'Israel is responsible for the commission of genocide in Gaza', finding four of the five acts in the Genocide Convention, and recommended that states 'cease the transfer of arms and other equipment' that may be used for such acts.",
+   "claim": "The UN Human Rights Council's Independent International Commission of Inquiry, a non-judicial body, stated in a conference-room paper 'Israel is responsible for the commission of genocide in Gaza', finding four of the five acts in the Genocide Convention, and recommended that states 'cease the transfer of arms and other equipment' that may be used for such acts.",
    "source": {
     "title": "Israel has committed genocide in the Gaza Strip, UN Commission finds (A/HRC/60/CRP.3)",
     "url": "https://www.un.org/unispal/document/israel-has-committed-genocide-in-the-gaza-strip-un-commission-finds-16sep25/",
     "publisher": "UN OHCHR / Commission of Inquiry",
     "date": "2025-09-16"
    },
-   "counterpoint": "Israel's Foreign Ministry: 'Israel categorically rejects this distorted and false report' and called for the commission's abolition (Arab News/agencies, 16 Sep 2025)."
+   "counterpoint": "Israel's Foreign Ministry: 'Israel categorically rejects this distorted and false report' and called for the commission's abolition (Arab News/agencies, 16 Sep 2025). The United States withdrew from the Human Rights Council, the commission's parent body, in February 2025; US leaders of both parties have long argued that the Council shows a 'bias against Israel' (NPR, 3 Feb 2025).",
+   "counter_label": "Response of the Government of Israel",
+   "also": [
+    {
+     "title": "Trump withdraws the U.S. from the United Nations Human Rights Council",
+     "url": "https://www.nhpr.org/2025-02-03/trump-withdraws-the-u-s-from-the-united-nations-human-rights-council",
+     "publisher": "NPR",
+     "date": "2025-02-03"
+    }
+   ],
+   "grade_note": "A commission conclusion, not a judicial finding."
   },
   {
    "country": "Israel",
@@ -643,7 +699,7 @@
     "publisher": "UN OCHA oPt",
     "date": "2026-10-28"
    },
-   "counterpoint": "On reliability, in both directions. Higher: a capture-recapture study in The Lancet estimated 64,260 traumatic-injury deaths to 30 Jun 2024, suggesting the Ministry under-reported by 41%; OHCHR verified 8,119 deaths from the first seven months, nearly 70% women and children; peer-reviewed correspondence found the Ministry's past counts within 1.5–3.8% of UN analyses. Lower: the IDF said before the October 2025 ceasefire that it had killed at least 22,000 combatants (Times of Israel, undated); a Henry Jackson Society paper (not peer-reviewed) argues the lists include some natural deaths and that about 6,000 names were removed. The Ministry's figures do not distinguish combatants from civilians. On 30 Jan 2026 the IDF said media reports of it accepting a toll near 70,000 'do not reflect official IDF data'.",
+   "counterpoint": "On reliability, in both directions. Higher: a capture-recapture study in The Lancet estimated 64,260 traumatic-injury deaths to 30 Jun 2024, suggesting the Ministry under-reported by 41%; peer-reviewed correspondence (2023, on the war's early counts) found the Ministry's past counts within 1.5–3.8% of UN analyses. Lower: the IDF said it had killed at least 22,000 combatants before the October 2025 ceasefire (Times of Israel, 29 Jan 2026; not independently verified); a Henry Jackson Society paper (not peer-reviewed) argues the lists include some natural deaths and that about 6,000 names were removed. The Ministry's figures do not distinguish combatants from civilians. On the composition of the dead, OHCHR verified 8,119 deaths from the first seven months, nearly 70% of them women and children; this is a verified sample, not a total. On 30 Jan 2026 the IDF said media reports of it accepting a toll near 70,000 'do not reflect official IDF data' (Ynet, 31 Jan 2026).",
    "counter_label": "Reliability",
    "also": [
     {
@@ -659,14 +715,14 @@
      "date": "2024-11-08"
     },
     {
-     "title": "No evidence of inflated mortality reporting from the Gaza Ministry of Health",
+     "title": "No evidence of inflated mortality reporting from the Gaza Ministry of Health (on early-war counts)",
      "url": "https://hopkinshumanitarianhealth.org/research/publications/no-evidence-of-inflated-mortality-reporting-from-the-gaza-ministry-of-healt",
      "publisher": "Johns Hopkins Center for Humanitarian Health (summary of Lancet letter)",
      "date": "2023-12"
     },
     {
      "title": "IDF believes 70,000 Gazans killed in war, as claimed by Hamas; civilian-combatant ratio unclear",
-     "url": "https://www.timesofisrael.com/idf-believes-70000-gazans-killed-in-war-as-claimed-",
+     "url": "https://www.timesofisrael.com/idf-believes-70000-gazans-killed-in-war-as-claimed-by-hamas/",
      "publisher": "Times of Israel",
      "date": "2026-01-29"
     },
@@ -675,6 +731,12 @@
      "url": "https://www.henryjacksonsociety.org/wp-content/uploads/2025/04/HJS-Hamas-Casualty-Reports-Report-WEB-correct.pdf",
      "publisher": "Henry Jackson Society",
      "date": "2025-04"
+    },
+    {
+     "title": "IDF disputes Gaza death toll after reports cite Hamas-run Health Ministry figures",
+     "url": "https://www.ynetnews.com/article/h1jhuacize",
+     "publisher": "Ynet",
+     "date": "2026-01-31"
     }
    ]
   },
@@ -709,7 +771,8 @@
     "publisher": "UNICEF / FAO / WFP / WHO",
     "date": "2025-08-22"
    },
-   "counterpoint": "Israel's Foreign Ministry: 'There is no famine in Gaza' and the IPC had published 'a tailor-made fabricated report' (Axios, 22 Aug 2025). COGAT called it false and political."
+   "counterpoint": "Israel's Foreign Ministry: 'There is no famine in Gaza' and the IPC had published 'a tailor-made fabricated report' (Axios, 22 Aug 2025). COGAT called it false and political.",
+   "counter_label": "Response of the Government of Israel"
   },
   {
    "country": "Israel",
@@ -721,7 +784,8 @@
     "publisher": "IPC",
     "date": "2025-12-19"
    },
-   "counterpoint": "COGAT, 29 Jan 2026 (on a UN characterization): 'Referring to this as a \"modest increase\" while calling conditions \"dire\" is just false.'"
+   "counterpoint": "COGAT, 29 Jan 2026 (on a UN characterization): 'Referring to this as a \"modest increase\" while calling conditions \"dire\" is just false.'",
+   "counter_label": "Response of the Government of Israel"
   },
   {
    "country": "United Arab Emirates",
@@ -733,7 +797,12 @@
     "publisher": "UN Security Council",
     "date": "2024-01-15"
    },
-   "counterpoint": "The UAE told the Panel (21 Dec 2023) that it 'denied any involvement in the shipment of arms and ammunition' and that its flights carried humanitarian aid."
+   "counterpoint": "The UAE told the Panel (21 Dec 2023) that it 'denied any involvement in the shipment of arms and ammunition' and that its flights carried humanitarian aid.",
+   "counter_label": "Response or dispute",
+   "group": "uae",
+   "priority": {
+    "SJRES54": 1
+   }
   },
   {
    "country": "United Arab Emirates",
@@ -745,7 +814,12 @@
     "publisher": "UN Security Council",
     "date": "2025-04-17"
    },
-   "counterpoint": "In S/2025/260 (29 Apr 2025) the UAE said the report 'makes no findings against the United Arab Emirates' and that it 'has not provided and is not providing support or supplies to any of the warring parties.' In Sudan v. UAE the ICJ (5 May 2025) found it 'manifestly lacks jurisdiction', citing the UAE's reservation to Article IX, and removed the case 9-7 without ruling on the merits."
+   "counterpoint": "In S/2025/260 (29 Apr 2025) the UAE said the report 'makes no findings against the United Arab Emirates' and that it 'has not provided and is not providing support or supplies to any of the warring parties.' In Sudan v. UAE the ICJ (5 May 2025) found it 'manifestly lacks jurisdiction', citing the UAE's reservation to Article IX, and removed the case 9-7 without ruling on the merits.",
+   "counter_label": "Response or dispute",
+   "group": "uae",
+   "priority": {
+    "SJRES54": 0
+   }
   },
   {
    "country": "United Arab Emirates",
@@ -758,7 +832,9 @@
     "date": "2025-05-08"
    },
    "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions."
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "counter_label": "Response or dispute",
+   "group": "uae"
   },
   {
    "country": "United Arab Emirates",
@@ -770,7 +846,9 @@
     "publisher": "U.S. Department of State",
     "date": "2025-01-07"
    },
-   "counterpoint": "The determination concerns the RSF, not the UAE government."
+   "counterpoint": "The determination concerns the RSF, not the UAE government.",
+   "counter_label": "Response or dispute",
+   "group": "rsf"
   },
   {
    "country": "United Arab Emirates",
@@ -782,7 +860,9 @@
     "publisher": "UN News reporting OHCHR",
     "date": "2026-02-13"
    },
-   "counterpoint": "The RSF did not respond to a request for comment. RSF leader Dagalo has acknowledged abuses but disputed their scale."
+   "counterpoint": "The RSF did not respond to a request for comment. RSF leader Dagalo has acknowledged abuses but disputed their scale.",
+   "counter_label": "Response or dispute",
+   "group": "rsf"
   },
   {
    "country": "United Arab Emirates",
@@ -794,7 +874,10 @@
     "publisher": "UN in Sudan (FAO/WFP/UNICEF)",
     "date": "2025-11-04"
    },
-   "counterpoint": "None found."
+   "counterpoint": "None found.",
+   "counter_label": "Response or dispute",
+   "scope_note": "Concerns the humanitarian consequences of Sudan's war generally; no source cited here links the famine to the UAE or addresses arms supply.",
+   "group": "rsf"
   },
   {
    "country": "United Arab Emirates",
@@ -807,19 +890,17 @@
     "date": "2019-02-06"
    },
    "counterpoint": "Amnesty's release includes no UAE response.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions."
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "counter_label": "Response or dispute",
+   "group": "uae"
   },
   {
    "country": "Qatar",
    "grade": "none_found",
-   "claim": "Research found no authoritative or credible record linking Qatar's use of US-origin MQ-9B drones, Hellfire missiles or guided bombs to civilian harm. Searched: UN reports, major human-rights organizations, conflict monitors and news reporting, including Qatar's 2015–2017 role in the Yemen coalition.",
-   "source": {
-    "title": "Qatar – MQ-9B Remotely Piloted Aircraft",
-    "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4136302/qatar-mq-9b-remotely-piloted-aircraft",
-    "publisher": "DSCA",
-    "date": "2025-03-26"
-   },
-   "counterpoint": "Not applicable."
+   "claim": "Speculum found no authoritative or credible record, as of 4 Nov 2026, linking Qatar's use of US-origin MQ-9B drones, Hellfire missiles or guided bombs to civilian harm. Searched: UN reports, major human-rights organizations, conflict monitors and news reporting, including Qatar's 2015–2017 role in the Yemen coalition.",
+   "source": null,
+   "counterpoint": "Not applicable.",
+   "date": "2026-11-04"
   },
   {
    "country": "Israel",
@@ -832,23 +913,27 @@
     "publisher": "ICC (reposted by UN UNISPAL)",
     "date": "2024-11-21"
    },
-   "counterpoint": "The same Chamber 'could not determine that all elements of the crime against humanity of extermination were met'. Warrants are not convictions. Israel 'utterly rejects the false and absurd charges' (Prime Minister's Office, 21 Nov 2024) and challenges the Court's jurisdiction; the Appeals Chamber remanded that challenge in April 2025 without suspending the warrants, and it remained pending as of January 2026.",
-   "counter_label": "Dissent, status and response",
+   "counterpoint": "The same Chamber 'could not determine that all elements of the crime against humanity of extermination were met'. Warrants are not convictions. Israel 'utterly rejects the false and absurd charges' (Prime Minister's Office, 21 Nov 2024) and contests the Court's jurisdiction. As of January 2026 two Israeli motions against the warrants remained pending; the Pre-Trial Chamber had rejected a request to suspend them on 17 Oct 2025, and the warrants 'remain in force'. On 15 Dec 2025 the Appeals Chamber, by 3 to 2, upheld the rejection of Israel's admissibility challenge (Just Security). The United States rejects the warrants: Executive Order 14203 (6 Feb 2025) imposed sanctions on the Court, calling them 'baseless arrest warrants'.",
+   "counter_label": "Limits, status and responses",
    "also": [
     {
      "title": "Hollowing Out Complementarity: The ICC Rejects Israel's 'Court of Last Resort' Admissibility Challenge",
      "url": "https://www.justsecurity.org/128238/complementarity-icc-israels-admissibility-challenge/",
      "publisher": "Just Security",
      "date": "2026-01-08"
+    },
+    {
+     "title": "Executive Order 14203: Imposing Sanctions on the International Criminal Court",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2025-02-12/html/2025-02612.htm",
+     "publisher": "Federal Register",
+     "date": "2025-02-12"
     }
-   ]
+   ],
+   "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
    "country": "Israel",
    "grade": "documented",
-   "applies_to": [
-    "SJRES32"
-   ],
    "claim": "Amnesty says Israeli forces, 'Using bulldozers and manually laid explosives', destroyed or severely damaged 'more than 90% of the buildings' (over 3,500 structures) in a roughly 58 km² buffer area along Gaza's perimeter, between Oct 2023 and May 2024. It does not identify the machine model.",
    "date": "2024-09-05",
    "source": {
@@ -859,14 +944,20 @@
    },
    "counterpoint": "Israeli officials described the demolitions as protecting 'Israeli communities from further attacks' and as destroying tunnels and 'terror infrastructure'. Questions Amnesty sent on 2 Jul 2024 went unanswered. Israel's stated rationale for D9 use: combat engineering, tunnel and explosives clearance, and defending borders and infrastructure (DSCA; IDF).",
    "counter_label": "Response of the Government of Israel",
-   "scope_note_same": "Neither source identifies the D9 or Caterpillar; no unit from this case has been traced."
+   "applies_to_wider": [
+    "SJRES32"
+   ],
+   "scope_note": "The source does not identify the D9, Caterpillar or US origin; no unit from this case has been traced.",
+   "scope_note_wider": true,
+   "grade_note": "The grade covers Amnesty's satellite and field documentation of the destruction; that it was wanton or unlawful is Amnesty's assessment.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "priority": {
+    "SJRES32": 0
+   }
   },
   {
    "country": "Israel",
    "grade": "associated",
-   "applies_to": [
-    "SJRES32"
-   ],
    "claim": "The UN Commission of Inquiry found that in most cases it investigated, 'particularly those involving demolitions using explosives and bulldozers, Israeli security forces committed war crimes', and documented bulldozing of heritage and cultural sites. It does not identify the make or model of any bulldozer.",
    "date": "2025-05-06",
    "source": {
@@ -877,7 +968,14 @@
    },
    "counterpoint": "Commission: 'No responses were received' from Israel; for one site, 'Israeli security forces provided no explanation for the attack.' Israel's stated rationale for D9 use: combat engineering, tunnel and explosives clearance, and defending borders and infrastructure (DSCA; IDF).",
    "counter_label": "Response of the Government of Israel",
-   "scope_note_same": "Neither source identifies the D9 or Caterpillar; no unit from this case has been traced."
+   "applies_to_wider": [
+    "SJRES32"
+   ],
+   "scope_note": "The source does not identify the D9, Caterpillar or US origin; no unit from this case has been traced.",
+   "scope_note_wider": true,
+   "priority": {
+    "SJRES32": 1
+   }
   },
   {
    "country": "Israel",
@@ -892,6 +990,10 @@
     "url": "https://www.un.org/unispal/wp-content/uploads/2025/11/OCHA-CBPF-OPT-031_UNOSAT_A3_GazaStrip_CDA_11October2025.pdf",
     "publisher": "UNOSAT",
     "date": "2025-11"
+   },
+   "scope_note": "UNOSAT counts damage from imagery; it does not attribute cause or identify equipment.",
+   "priority": {
+    "SJRES32": 3
    }
   },
   {
@@ -900,13 +1002,26 @@
    "applies_to_wider": [
     "SJRES32"
    ],
-   "claim": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 2,979 Palestinian structures in the West Bank were demolished, 2,781 (93%) for lack of building permits, and 42,322 Palestinians were displaced (12,557 in Jenin and 21,619 in Tulkarm during operations by Israeli or Palestinian forces).",
+   "claim": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 2,979 Palestinian structures in the West Bank were demolished, 2,781 (93%) on the grounds that they lacked Israeli-issued building permits, and 42,322 Palestinians were displaced. Separately, UNRWA reports 12,557 people displaced from Jenin refugee camp in 2025 'due to Palestinian and Israeli forces' operations', and 12,412 from Tulkarm camp and 9,207 from Nur Shams camp 'due to Israeli forces' operations'.",
    "date": "2026-09-30",
    "source": {
     "title": "West Bank info-graphic, 21 October 2026 (v3)",
     "url": "https://www.ochaopt.org/sites/default/files/West%20Bank_info-graphic_21_October_2026_version_3.pdf",
     "publisher": "UN OCHA oPt",
     "date": "2026-10-21"
+   },
+   "counterpoint": "Israel's stated grounds for most demolitions are the lack of Israeli-issued building permits (93% of the total above). Of its January 2025 operation in Jenin, Netanyahu said it was 'another step in achieving the goal we set, strengthening security in Judea and Samaria'; military sources described its aims as neutralizing terror infrastructure and stopping imminent threats (Times of Israel, 21 Jan 2025).",
+   "counter_label": "Stated grounds",
+   "also": [
+    {
+     "title": "IDF launches major counterterror raid in West Bank's Jenin, expected to last days",
+     "url": "https://www.timesofisrael.com/idf-launches-major-counterterror-raid-in-west-banks-jenin-expected-to-last-days/",
+     "publisher": "Times of Israel",
+     "date": "2025-01-21"
+    }
+   ],
+   "priority": {
+    "SJRES32": 2
    }
   },
   {
@@ -915,7 +1030,7 @@
    "applies_to_wider": [
     "SJRES41"
    ],
-   "claim": "The ICJ advisory opinion found 'the State of Israel's continued presence in the Occupied Palestinian Territory is unlawful'. It said Israel must 'cease immediately all new settlement activities, and to evacuate all settlers'. The opinion's contents include a section titled 'Israel's systematic failure to prevent or punish attacks by settlers against the life or bodily integrity of Palestinians' (paras. 148–154; Research could not open the full paragraph text).",
+   "claim": "The ICJ advisory opinion found 'the State of Israel's continued presence in the Occupied Palestinian Territory is unlawful'. It said Israel must 'cease immediately all new settlement activities, and to evacuate all settlers'.",
    "date": "2024-07-19",
    "source": {
     "title": "ICJ press release 2024/57 (UNISPAL copy)",
@@ -923,8 +1038,66 @@
     "publisher": "ICJ",
     "date": "2024-07-19"
    },
-   "counterpoint": "Netanyahu, 19 Jul 2024: 'The Jewish people are not occupiers in their own land'; 'No false decision in The Hague will distort this historical truth' An advisory opinion is not binding.",
-   "counter_label": "Response of the Government of Israel"
+   "counterpoint": "Netanyahu, 19 Jul 2024: 'The Jewish people are not occupiers in their own land'; 'No false decision in The Hague will distort this historical truth.' An advisory opinion is not binding.",
+   "counter_label": "Response of the Government of Israel",
+   "priority": {
+    "SJRES41": 0
+   }
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "applies_to_wider": [
+    "SJRES41"
+   ],
+   "claim": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 331 Palestinians (77 children) were killed in the West Bank: 292 by Israeli forces, 24 by Israeli settlers and 15 by 'Israeli forces or settlers'. OCHA: over the same period, 21 Israelis (1 child, 8 members of Israeli forces) were killed in the West Bank. Separately, 'In Israel, three Israelis were killed by Palestinians from the West Bank in attacks' in 2025.",
+   "date": "2026-09-30",
+   "source": {
+    "title": "West Bank info-graphic, 21 October 2026 (v3)",
+    "url": "https://www.ochaopt.org/sites/default/files/West%20Bank_info-graphic_21_October_2026_version_3.pdf",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-21"
+   },
+   "counterpoint": "No source links the rifles in this sale (DDTC 23-077) to any incident.",
+   "counter_label": "Scope",
+   "priority": {
+    "SJRES41": 0
+   }
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "applies_to_wider": [
+    "SJRES41"
+   ],
+   "claim": "OCHA recorded '2,159 settler attacks resulting in Palestinian casualties, property damage or both' in 2026 up to 19 Oct, averaging '7.4 attacks per day, compared with five per day in 2025'.",
+   "date": "2026-10-19",
+   "source": {
+    "title": "Humanitarian Situation Report, 22 October 2026",
+    "url": "https://www.ochaopt.org/content/humanitarian-situation-report-22-october-2026",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-22"
+   },
+   "counterpoint": "No source links the rifles in this sale (DDTC 23-077) to any incident.",
+   "counter_label": "Scope",
+   "priority": {
+    "SJRES41": 0
+   }
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "The UN Panel of Experts on Yemen found that the UAE 'formed the Forces, selected the commanders, recruited and trained the troops, paid salaries and provided weapons' for the Security Belt, Shabwani and Hadramawt Elite Forces. It listed 'the forces affiliated with the United Arab Emirates' among those responsible for arbitrary detention, enforced disappearance and torture.",
+   "date": "2020-01-27",
+   "source": {
+    "title": "S/2020/70 Final report of the Panel of Experts on Yemen",
+    "url": "https://www.ecoi.net/en/file/local/2024819/s_2020_70_E.pdf",
+    "publisher": "UN Security Council",
+    "date": "2020-01-27"
+   },
+   "counterpoint": "S/2019/83 para. 52: the UAE said control of proxy forces 'rested with the national Government' (https://www.ecoi.net/en/file/local/2002889/S_2019_83_E.pdf).",
+   "counter_label": "Response of the Government of the UAE",
+   "group": "uae"
   }
  ],
  "context": [
@@ -960,37 +1133,8 @@
   },
   {
    "country": "Israel",
-   "applies_to": [
-    "SJRES41"
-   ],
-   "claim": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 331 Palestinians (77 children) were killed in the West Bank: 292 by Israeli forces, 24 by Israeli settlers and 15 by 'Israeli forces or settlers'. OCHA: over the same period, 21 Israelis (1 child, 8 members of Israeli forces) were killed in the West Bank. Separately, 'In Israel, three Israelis were killed by Palestinians from the West Bank in attacks' in 2025.",
-   "date": "2026-09-30",
-   "source": {
-    "title": "West Bank info-graphic, 21 October 2026 (v3)",
-    "url": "https://www.ochaopt.org/sites/default/files/West%20Bank_info-graphic_21_October_2026_version_3.pdf",
-    "publisher": "UN OCHA oPt",
-    "date": "2026-10-21"
-   },
-   "note": "No source links the rifles in this sale (DDTC 23-077) to any incident."
-  },
-  {
-   "country": "Israel",
-   "applies_to": [
-    "SJRES41"
-   ],
-   "claim": "OCHA recorded '2,159 settler attacks resulting in Palestinian casualties, property damage or both' in 2026 up to 19 Oct, averaging '7.4 attacks per day, compared with five per day in 2025'.",
-   "date": "2026-10-19",
-   "source": {
-    "title": "Humanitarian Situation Report, 22 October 2026",
-    "url": "https://www.ochaopt.org/content/humanitarian-situation-report-22-october-2026",
-    "publisher": "UN OCHA oPt",
-    "date": "2026-10-22"
-   }
-  },
-  {
-   "country": "Israel",
    "applies_to": null,
-   "claim": "On 21 Nov 2024 the Chamber issued a warrant for Hamas's Mohammed Deif for crimes against humanity of 'murder; extermination; torture; and rape and other form of sexual violence' and war crimes including 'taking hostages', committed in Israel from 7 October 2023. The release says 'Members of Hamas, notably fighters of the al-Qassam Brigades, carried out mass killings'.",
+   "claim": "On 21 Nov 2024 the Chamber issued a warrant for Hamas's Mohammed Deif for crimes against humanity of 'murder; extermination; torture; and rape and other form of sexual violence' and war crimes including 'taking hostages', committed 'on the territory of the State of Israel and the State of Palestine' from at least 7 October 2023. The release says 'Members of Hamas, notably fighters of the al-Qassam Brigades, carried out mass killings'.",
    "date": "2024-11-21",
    "source": {
     "title": "ICC press release on Deif (UNISPAL copy)",
@@ -1014,14 +1158,22 @@
   {
    "country": "Israel",
    "applies_to": null,
-   "claim": "Of 251 people taken on 7 Oct 2023, the 20 surviving hostages were released on 13 Oct 2025. The remains of the last hostage, Ran Gvili, were recovered on 26 Jan 2026, and Netanyahu told the Knesset 'There are no more hostages in Gaza.'",
+   "claim": "Hamas-led fighters took 251 hostages in Israel on 7 Oct 2023 (Israeli authorities, via NPR). Hamas handed over the last 20 living hostages held in Gaza on 13 Oct 2025. On 26 Jan 2026 Israel said it had identified the body of the final hostage held in Gaza, Ran Gvili, and returned it to Israel; Netanyahu told parliament 'There are no more hostages in Gaza.'",
    "date": "2026-01-26",
    "source": {
     "title": "Israel has recovered the last hostage remains from Gaza",
     "url": "https://www.nhpr.org/2026-01-26/israel-has-recovered-the-last-hostage-remains-from-gaza",
     "publisher": "NPR",
     "date": "2026-01-26"
-   }
+   },
+   "also": [
+    {
+     "title": "Hamas hands over all 20 living Israeli hostages to Red Cross",
+     "url": "https://gulfnews.com/world/mena/hamas-hands-over-all-20-living-israeli-hostages-to-red-cross-1.500305034",
+     "publisher": "Gulf News (AFP/AP)",
+     "date": "2025-10-13"
+    }
+   ]
   },
   {
    "country": "Israel",
@@ -1038,7 +1190,8 @@
     "url": "https://www.fdd.org/analysis/2024/04/14/iran-attacks-israel-with-drone-and-missile-barrage/",
     "publisher": "FDD",
     "date": "2024-04-14"
-   }
+   },
+   "note": "Source note: FDD is a Washington policy institute that advocates a hard line on Iran."
   },
   {
    "country": "Israel",
@@ -1055,7 +1208,8 @@
     "url": "https://jewishinsider.com/2024/10/israel-vows-to-inflict-consequences-after-iran-launches-180-ballistic-missiles/",
     "publisher": "Jewish Insider",
     "date": "2024-10-02"
-   }
+   },
+   "note": "Source note: Jewish Insider is a news outlet covering Jewish and pro-Israel politics."
   },
   {
    "country": "Israel",
@@ -1080,7 +1234,8 @@
     "SJRES26",
     "SJRES33",
     "SJRES34",
-    "SJRES32"
+    "SJRES32",
+    "SJRES138"
    ],
    "claim": "From 8 Oct 2023 there were 'daily exchanges of fire across the Blue Line', with Hizbullah claiming attacks. UNIFIL 'recorded over 1,000 trajectories of projectiles fired in both directions'. 'over 200,000 people were reportedly evacuated from northern Israel' and 'over 20,000 people were displaced from southern Lebanon'.",
    "date": "2023-11-16",
@@ -1116,18 +1271,6 @@
    "note": "UAE Defense Ministry (WAM): 'ready to deal with any threats'."
   },
   {
-   "country": "United Arab Emirates",
-   "claim": "The UN Panel of Experts on Yemen found that the UAE 'formed the Forces, selected the commanders, recruited and trained the troops, paid salaries and provided weapons' for the Security Belt, Shabwani and Hadramawt Elite Forces. It listed 'the forces affiliated with the United Arab Emirates' among those responsible for arbitrary detention, enforced disappearance and torture.",
-   "date": "2020-01-27",
-   "source": {
-    "title": "S/2020/70 Final report of the Panel of Experts on Yemen",
-    "url": "https://www.ecoi.net/en/file/local/2024819/s_2020_70_E.pdf",
-    "publisher": "UN Security Council",
-    "date": "2020-01-27"
-   },
-   "note": "S/2019/83 para. 52: the UAE said control of proxy forces 'rested with the national Government' (https://www.ecoi.net/en/file/local/2002889/S_2019_83_E.pdf)."
-  },
-  {
    "country": "Qatar",
    "claim": "Qatar's MOFA called the Iranian missile attack on Al Udeid Air Base 'a flagrant violation of the sovereignty of the State of Qatar'. It said the base 'had been evacuated earlier', that 'Qatar's air defenses successfully thwarted the attack', and that 'no injuries or human casualties resulted'.",
    "date": "2025-06-23",
@@ -1136,6 +1279,20 @@
     "url": "https://thepeninsulaqatar.com/article/23/06/2025/qatar-strongly-condemns-the-attack-that-targeted-al-udeid-air-base-by-the-iranian-revolutionary-guard",
     "publisher": "The Peninsula (Qatar MOFA statement)",
     "date": "2025-06-23"
+   }
+  },
+  {
+   "country": "Israel",
+   "applies_to": [
+    "SJRES138"
+   ],
+   "date": "2026-03-08",
+   "claim": "The sale was notified during the war that began when the US and Israel launched air strikes on Iran on 28 Feb 2026. Iran retaliated with strikes on Israel and on US bases in the region. By 8 Mar 2026 at least 10 Israeli civilians and 6 US service members (in Kuwait) had been killed, and Iran's UN ambassador said at least 1,332 Iranian civilians had been killed.",
+   "source": {
+    "title": "US skips congressional review to approve munitions sale to Israel",
+    "url": "https://www.dawn.com/news/1979642",
+    "publisher": "Dawn (Reuters)",
+    "date": "2026-03-08"
    }
   }
  ]
