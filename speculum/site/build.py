@@ -136,7 +136,11 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     _build_tide(E, snapshots_root, prev, members, common)
     _build_interests(E, prev, members, finance, lobbying, common)
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
-    (prev / "ledgers.json").write_text(json.dumps({"date": snap.date, "ledgers": ledgers}, default=str), encoding="utf-8")
+    # The readings only: itemized contributions live on each member's page and in the raw archive
+    # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
+    slim = {bio: {**{k: v for k, v in L.items() if k != "lobbyist_items"}, "lobbyist_count": len(L.get("lobbyist_items") or [])}
+            for bio, L in ledgers.items()}
+    (prev / "ledgers.json").write_text(json.dumps({"date": snap.date, "ledgers": slim}, default=str), encoding="utf-8")
     return {"members": len(members), "votes": len(vlist)}
 
 
