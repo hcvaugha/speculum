@@ -93,7 +93,8 @@ def _median(xs):
 
 
 def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, sectors: dict,
-          research: dict, reviews: dict) -> list[dict]:
+          research: dict, reviews: dict, committees: dict | None = None) -> list[dict]:
+    from .sources.committees import on_defense_committee
     by_id = {m["bioguide"]: m for m in members}
     positions = votes.get("positions", {})
     chains: dict[str, dict] = {}
@@ -133,12 +134,17 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
                 continue                                 # no longer serving; counted in the tally only
             money = member_sector_money(bio, finance, lobbying, fec_ids, lda_ids)
             rows.append({"bioguide": bio, "name": m["name"], "party": m["party"], "caucus": party, "state": m["state"],
-                         "position": p, "side": s, **money})
+                         "position": p, "side": s, "defense_seats": on_defense_committee(bio, committees), **money})
         for x in ch["votes"]:
             x.pop("_pos", None)
         ch["members"] = sorted(rows, key=lambda r: (r["side"] or "Z", -r["total"]))
         ch["party_split"] = {f"{p}-{s}": n for (p, s), n in sorted(split.items())}
         ch["money_pattern"] = _pattern(ch["members"])
+        # Control: the same comparison without senators on Armed Services, Foreign Relations or the
+        # Defense appropriations subcommittee, who draw defense money whatever they vote.
+        ch["committee_control"] = (_pattern([r for r in ch["members"] if not r["defense_seats"]])
+                                   if committees and committees.get("seats") else None)
+        ch["defense_committees"] = sorted(set((committees or {}).get("defense_codes", {}).values()))
         bkey = ch["bill"].upper().replace(" ", "").replace(".", "")
         r = (research.get("resolutions") or {}).get(bkey, {})
         ch["mechanism"] = r or None
@@ -207,13 +213,13 @@ def _pattern(rows: list[dict]) -> dict:
     return out
 
 
-def for_site(members, finance, lobbying, votes, data_root: Path) -> list[dict]:
+def for_site(members, finance, lobbying, votes, data_root: Path, committees: dict | None = None) -> list[dict]:
     """Chains with everything a page needs: reviewed research where it exists, otherwise the AI
     drafter's output, clearly marked as an unreviewed draft."""
     data_root = Path(data_root)
     research = load_json(data_root / "chains" / "research.json", {})
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
-                load_json(data_root / "chains" / "reviews.json", {}))
+                load_json(data_root / "chains" / "reviews.json", {}), committees)
     for ch in out:
         ch["research_by"] = "research" if ch["mechanism"] or ch["outcomes"] else None
         d = load_json(data_root / "chains" / "drafts" / f"{ch['id']}.json", None)

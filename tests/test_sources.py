@@ -312,3 +312,24 @@ def test_chains_rule_country_and_money():
     d = ch["money_pattern"]["D"]
     assert d["Y"]["n"] == 2 and d["Y"]["pac_n"] == 1      # D has no FEC record: unknown, not zero
     assert d["N"]["pac_median"] == 5000
+
+
+def test_committee_control():
+    from speculum.sources import committees
+    data = committees.normalize(
+        {"SSAS": [{"bioguide": "A", "rank": 1}], "SSAP02": [{"bioguide": "B"}], "SSJU": [{"bioguide": "C"}]},
+        [{"thomas_id": "SSAS", "name": "Armed Services"}, {"thomas_id": "SSJU", "name": "Judiciary"},
+         {"thomas_id": "SSAP", "name": "Appropriations", "subcommittees": [{"thomas_id": "02", "name": "Defense"}]}])
+    assert committees.on_defense_committee("A", data) == ["Armed Services"]
+    assert committees.on_defense_committee("B", data) == ["Appropriations: Defense"]
+    assert committees.on_defense_committee("C", data) == []
+    from speculum import chains
+    title = "A joint resolution providing for congressional disapproval of the proposed foreign military sale to Israel of certain defense articles and services."
+    members = [{"bioguide": b, "name": b, "party": "D", "state": "OH", "chamber": "senate"} for b in "ABC"]
+    votes = {"votes": [{"id": "s1", "congress": 119, "bill": "SJRES1", "date": "2025-01-01", "title": title}],
+             "positions": {"s1": {"A": "Nay", "B": "Nay", "C": "Nay"}}}
+    lob = {"by_member": {"A": [{"registrant_id": "9", "amount": 9000}], "B": [{"registrant_id": "9", "amount": 7000}],
+                         "C": [{"registrant_id": "9", "amount": 1000}]}}
+    [ch] = chains.build(members, {}, lob, votes, {"arms": {"companies": [{"name": "X", "fec": [], "lda": [9]}]}}, {}, {}, data)
+    assert ch["money_pattern"]["D"]["N"]["lobby_median"] == 7000
+    assert ch["committee_control"]["D"]["N"]["n"] == 1 and ch["committee_control"]["D"]["N"]["lobby_median"] == 1000

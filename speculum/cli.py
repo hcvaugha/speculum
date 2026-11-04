@@ -47,6 +47,12 @@ def cmd_snapshot(args) -> int:
     members = legislators.fetch_members(fetch)
     snap.write("members.json", members)
     log.info("members: %d", len(members))
+    try:
+        from .sources import committees
+        snap.write("committees.json", committees.fetch_committees(fetch))
+    except Exception as exc:  # a control, not a source of record: never sink the night over it
+        log.exception("committees failed")
+        errors["committees"] = f"{type(exc).__name__}: {exc}"
 
     def step(name, fn):
         if args.only and name not in args.only:

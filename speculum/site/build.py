@@ -172,7 +172,10 @@ def _build_interests(E, prev: Path, members, finance, lobbying, common) -> None:
 
 
 def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common) -> None:
-    chains = chains_mod.for_site(members, finance, lobbying, votes, data_root)
+    from ..snapshot import latest as _latest
+    snap = _latest(data_root / "snapshots")
+    chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
+                                 committees=snap.read("committees.json", None) if snap else None)
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,

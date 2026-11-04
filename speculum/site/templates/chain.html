@@ -68,12 +68,25 @@
   </tbody></table></div>
   {% if c.contractor_companies %}<p class="meta" style="margin-top:8px">This sale's principal contractors on the SIPRI list: {{ c.contractor_companies|join(', ') }}. Matched by company name to the contractors DSCA named.</p>{% endif %}
 
+  {% if c.committee_control %}
+  <p class="step" style="margin-top:22px;font-size:11px">Control: without defense-committee senators</p>
+  <p class="meta">Senators on {{ c.defense_committees|join(', ') }} draw defense money whatever they vote. The same comparison without them shows whether the pattern is a committee effect.</p>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">Median lobbyist money</th><th class="r">Median PAC money</th></tr></thead>
+  <tbody>
+  {% for party, cell in c.committee_control.items() %}{% for side, label in [('Y', 'Voted to block'), ('N', 'Voted against blocking')] %}{% set x = cell[side] %}{% if x.n %}
+  <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td><td class="r num">{{ x.lobby_median|money }}</td>
+  <td class="r num">{% if x.pac_n %}{{ x.pac_median|money }} <span class="muted">({{ x.pac_n }} known)</span>{% else %}<span class="muted">not yet fetched</span>{% endif %}</td></tr>
+  {% endif %}{% endfor %}{% endfor %}
+  </tbody></table></div>
+  {% endif %}
+
   <details style="margin-top:14px"><summary>Every senator's vote and arms-industry money</summary>
   <div class="tbl-wrap"><table>
   <thead><tr><th>Senator</th><th>Vote</th><th class="r">Lobbyist money</th><th class="r">PAC money</th>{% if c.contractor_companies %}<th class="r">From contractors</th>{% endif %}<th>Largest arms givers</th></tr></thead>
   <tbody>{% for r in c.members %}
   <tr><td><a href="../member/{{ r.bioguide }}.html">{{ r.name }}</a> <span class="party-{{ r.party }} num">{{ r.party }}-{{ r.state }}</span></td>
-  <td><span class="pos pos-{{ r.side or 'X' }}">{{ r.position }}</span></td>
+  <td><span class="pos pos-{{ r.side or 'X' }}">{{ r.position }}</span>{% if r.defense_seats %} <span class="muted" title="{{ r.defense_seats|join(', ') }}">◆</span>{% endif %}</td>
   <td class="r num">{{ r.lobby|money }}</td><td class="r num">{% if r.finance_known %}{{ r.pac|money }}{% else %}<span class="muted">—</span>{% endif %}</td>
   {% if c.contractor_companies %}<td class="r num">{{ r.contractor|money }}</td>{% endif %}
   <td class="muted">{% for g in r.givers[:3] %}{{ g.company }}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
