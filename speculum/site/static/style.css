@@ -154,3 +154,34 @@ ol.chain > li::before { content: ""; position: absolute; left: -5px; top: 3px; w
 details summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-2); }
 .grade-none_found { color: var(--ink-2); border-color: var(--line); }
 .status.verified { color: var(--cold); border-color: #4d6680; }
+
+/* The Tide No. 1: the founding front page */
+.founding { margin: 6px 0 10px; }
+.fd-strap { font: 500 11px/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); text-align: center; margin: 14px 0; }
+.fd-head { font: 600 52px/1.04 var(--serif); text-align: center; margin: 4px auto 12px; max-width: 18ch; color: var(--ink); }
+.fd-dek { font: italic 500 21px/1.4 var(--serif); color: var(--ink-2); text-align: center; max-width: 52ch; margin: 0 auto 26px; }
+.fd-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 36px; border-top: 1px solid var(--line); padding-top: 22px; }
+.fd-lead { columns: 2 300px; column-gap: 32px; font-size: 15.5px; line-height: 1.62; color: var(--ink); }
+.fd-lead p { margin: 0 0 14px; break-inside: avoid-column; }
+.fd-drop::first-letter { float: left; font: 600 64px/.82 var(--serif); color: var(--gold); padding: 6px 8px 0 0; }
+.fd-sub { font: 600 12px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); border: 0; margin: 20px 0 8px; padding: 0; break-after: avoid; }
+.fd-close { font: italic 500 18px/1.5 var(--serif); color: var(--ink); border-top: 1px solid var(--line); padding-top: 12px; }
+.fd-side { display: grid; gap: 16px; align-content: start; }
+.fd-box { border: 1px solid var(--line); background: var(--panel); padding: 14px 16px; }
+.fd-box-head { font: 600 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.fd-stats { margin: 0; display: grid; gap: 12px; }
+.fd-stats dt { font: 500 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.fd-stats dd { margin: 2px 0 0; font: 600 26px/1.1 var(--serif); color: var(--ink); }
+.fd-stats dd.fd-note, .fd-note { font: 13px/1.45 var(--sans); color: var(--ink-2); }
+.fd-how { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-2); }
+.fd-how li { margin-bottom: 6px; }
+.fd-glass { border: 1px solid var(--gold-dim); padding: 16px 18px; background:
+  linear-gradient(180deg, rgba(201,162,74,.07), rgba(159,195,230,.04)); }
+.fd-glass p { font: italic 500 16.5px/1.5 var(--serif); color: var(--ink-2); margin: 0 0 10px; }
+.fd-sign { font: 11px/1.4 var(--mono) !important; font-style: normal !important; letter-spacing: .08em; color: var(--gold-dim) !important; text-align: right; }
+.fd-rule { border-top: 3px double var(--gold-dim); margin: 30px 0 0; }
+@media (max-width: 860px) {
+  .fd-grid { grid-template-columns: 1fr; }
+  .fd-head { font-size: 36px; }
+  .fd-dek { font-size: 18px; }
+}

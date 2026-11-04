@@ -201,10 +201,29 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
     for i, d in enumerate(dates):
         cur = Snapshot(snapshots_root, d)
         ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
-        ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names, **common)
+        ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names,
+                   day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, **common)
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
+
+
+def _founding_stats(snap: Snapshot) -> dict:
+    """The figures on No. 1's front page, read from the Day Zero snapshot itself, cleaned the same
+    way as every other page."""
+    from ..sources.lda import clean
+    members = snap.read("members.json", [])
+    lob = clean(snap.read("lobbying.json", {"by_member": {}}), members)
+    meta = snap.read("meta.json", {})
+    items = [i for v in lob.get("by_member", {}).values() for i in v]
+    votes = snap.read("votes.json.gz", {"votes": []}).get("votes", [])
+    from ..sources.fec import clean_finance
+    interests = interests_mod.build(members, clean_finance(snap.read("finance.json", {}), members), lob)
+    return {"members": len(members), "house": sum(1 for m in members if m["chamber"] == "house"),
+            "senate": sum(1 for m in members if m["chamber"] == "senate"), "votes": len(votes),
+            "votes_through": meta.get("votes_through") or "—", "lobby_items": len(items),
+            "lobby_total": sum(float(i.get("amount") or 0) for i in items), "lobby_years": lob.get("years_label", ""),
+            "interests": len(interests), "raw_files": meta.get("raw_files") or 0}
 
 
 def _interest_slug(prefix: str, key) -> str:

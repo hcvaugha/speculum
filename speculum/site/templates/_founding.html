@@ -1,0 +1,71 @@
+{# No. 1 of The Tide: the founding front page, dated Day Zero. The lore stays in "Across the Glass";
+   everything else on this page is plain fact drawn from the Day Zero snapshot. #}
+<section class="founding">
+  <div class="fd-strap">No. 1 · Founding edition · Tuesday, November 3, 2026 · Election Day</div>
+
+  <h1 class="fd-head">A mirror is raised on Election Day</h1>
+  <p class="fd-dek">Today the country chose who will sit in Congress. From today, Speculum keeps the record of what they do with the seat, and of who stands behind them while they do it.</p>
+
+  <div class="fd-grid">
+    <div class="fd-lead">
+      <p class="fd-drop">The record begins the moment the choice is made. On the morning of the vote, Speculum took a full reading of the outgoing Congress: every sitting member, every roll call of the session, the money their campaigns reported raising, and every contribution registered lobbyists reported giving them. That reading is Day Zero. From tonight, every night, the record is read again and set beside it, so that a change in behavior shows as a change, and nothing has to be remembered to be seen.</p>
+
+      <p>Nothing here is new information. All of it is public: filed with the Federal Election Commission, reported to the Clerk of the House and the Secretary of the Senate, recorded in the roll. What is new is that it stands in one place, in plain view, and every figure links back to the filing it came from. A reader who doubts a number is one click from checking it.</p>
+
+      <h2 class="fd-sub">What it shows</h2>
+      <p>Each member has a page that reads like a ledger. It shows where their money comes from, by share: small donors, large donors, political action committees, their party, themselves. It shows how often they vote and how often they vote with their party, and the lobbyist money reported in their name. Every reading is set against the whole chamber and against the member's own party, so a figure is never shown without the means to judge it.</p>
+      <p>The other side of the glass shows the interests: every committee and lobbying organization that funds members of Congress, read the same way for business, labor and every cause in between. Open one to see whom it funds and how its money splits between the parties.</p>
+
+      <h2 class="fd-sub">What it refuses to do</h2>
+      <p>Speculum does not call anyone good or evil. The question that brought it into being is whether a member of Congress serves as a statesperson or as a politician, and it is the reader's question to answer. Every reading here has a counter-reading; every pattern is shown with what might explain it besides influence. Rules, not editors, decide what gets traced, and the same rule applies to every party, every interest and every side. Where the evidence is thin, the page says so.</p>
+
+      <h2 class="fd-sub">The daily paper</h2>
+      <p>This is the first issue of The Tide, the paper of the record. Each night it is written from what changed: members who broke from their party, votes decided by a handful, new lobbyist money, new campaign filings. At launch, readers will be able to approve or disapprove of each development. Over time the paper keeps two tides side by side: what Congress does, and how the people it answers to judge it.</p>
+
+      <h2 class="fd-sub">The Dependents</h2>
+      <p>Some decisions outlive the people who make them. The Dependents follows recorded decisions forward, from the vote, to what it changed, to what happened to the people who live with it, with the money that stood around it. Each link carries a grade for how strongly the evidence ties it, and a source. It judges decisions, never people.</p>
+
+      <p class="fd-close">A Congress reflects the society that tolerates it. That is the hard half of the mirror, and the hopeful half: a reflection changes when the thing in front of the glass does. Read a filing. Call an office. Give a small amount to someone you believe in. The record will show it.</p>
+    </div>
+
+    <aside class="fd-side">
+      <div class="fd-box">
+        <div class="fd-box-head">Day Zero, by the record</div>
+        <dl class="fd-stats">
+          <div><dt>Members of Congress</dt><dd>{{ fs.members }}</dd><dd class="fd-note">{{ fs.house }} House · {{ fs.senate }} Senate</dd></div>
+          <div><dt>Roll calls recorded</dt><dd>{{ '{:,}'.format(fs.votes) }}</dd><dd class="fd-note">119th Congress, through {{ fs.votes_through }}</dd></div>
+          <div><dt>Lobbyist contributions</dt><dd>{{ fs.lobby_total|money }}</dd><dd class="fd-note">{{ '{:,}'.format(fs.lobby_items) }} reported gifts to sitting members, {{ fs.lobby_years }}, each counted once</dd></div>
+          <div><dt>Interests on file</dt><dd>{{ '{:,}'.format(fs.interests) }}</dd><dd class="fd-note">committees and lobbying organizations</dd></div>
+          <div><dt>Source files archived</dt><dd>{{ '{:,}'.format(fs.raw_files) }}</dd><dd class="fd-note">untouched, with checksums, as fetched</dd></div>
+        </dl>
+        <p class="fd-note" style="margin-top:10px">Campaign totals for every member fill in over the first nights, as the Federal Election Commission's limits allow.</p>
+      </div>
+
+      <div class="fd-box">
+        <div class="fd-box-head">How to read Speculum</div>
+        <ol class="fd-how">
+          <li>Start with a member, an interest or a party, and follow the links.</li>
+          <li>Every reading is set against the chamber and the member's party. Read the number with its scale.</li>
+          <li>Every figure links to its filing. Check anything.</li>
+          <li>A pattern is not a verdict. The verdict is yours.</li>
+        </ol>
+      </div>
+
+      <div class="fd-box">
+        <div class="fd-box-head">Coming tides</div>
+        <p class="fd-note"><b>Mid-November.</b> The lame-duck session: members who lost or are leaving vote one last time, measured against their own Day Zero.</p>
+        <p class="fd-note"><b>January 3, 2027.</b> The 120th Congress is sworn in. New members begin their own record.</p>
+      </div>
+
+      <div class="fd-glass">
+        <div class="fd-box-head">Across the Glass</div>
+        <p>Beneath the golden stair the auditor lit the lantern and opened the ledger to a clean page. The tall ones did not turn. They never do; they lean toward whichever pane burns brightest and call it their own face.</p>
+        <p>In the hall of panes every debt is written in the hand of the one who took it. Most meant to repay. The Catedral keeps no prison for those who did not, only glass, and the glass forgets nothing.</p>
+        <p>Tonight a new pane was hung, facing out. On the other side of it a hand opened a ledger of its own, and for a moment the two pages were the same page.</p>
+        <p class="fd-sign">— entered in the auditor's ledger, the first night</p>
+      </div>
+    </aside>
+  </div>
+  <div class="fd-rule"></div>
+  <p class="fd-strap" style="text-align:left">The record, Day 1 · drafts from the night's filings</p>
+</section>

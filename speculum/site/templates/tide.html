@@ -3,8 +3,10 @@
 {% block body %}
 <div class="tide-mast">
   <div class="tide-name">The Tide</div>
-  <div class="meta">Edition of {{ ed.date }} · Day {{ ed_day }} of the record · {% if ed.first %}the {{ ed.roll_calls }} roll calls of the 30 days to Day Zero{% else %}{{ ed.roll_calls }} new roll calls since {{ ed.since }}{% endif %}</div>
+  <div class="meta">Edition of {{ ed.date }} · Day {{ ed_day }} of the record{% if fs %}{% elif ed.first %} · the {{ ed.roll_calls }} roll calls of the 30 days to Day Zero{% else %} · {{ ed.roll_calls }} new roll calls since {{ ed.since }}{% endif %}</div>
 </div>
+
+{% if fs %}{% include "_founding.html" %}{% endif %}
 
 <div class="notice">Drafts. Every story is generated from the night's filings using fixed templates, and none is published beyond this preview until an editor approves it. Reactions open at public launch.</div>
 
@@ -30,11 +32,12 @@
 </div>
 {% if ed.more %}<p class="meta">{{ ed.more }} lower-ranked stories held back from this edition.</p>{% endif %}
 {% else %}
-<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>
+{% if fs %}<p class="lede">Congress has been away campaigning since its last roll call on {{ fs.votes_through }}, so Day 1 brings no new votes to report. The first stories of the record come with the next filings, and the first votes with the lame-duck session.</p>
+{% else %}<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>{% endif %}
 {% endif %}
 
 {% if archive|length > 1 %}
 <h2>Earlier editions</h2>
-<p class="meta">{% for d in archive %}{% if d != ed.date %}<a href="{{ root }}tide/{{ d }}.html">{{ d }}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
+<p class="meta">{% for d in archive %}{% if d != ed.date %}<a href="{{ root }}tide/{{ d }}.html">{{ d }}{% if d == day_zero %} · No. 1, the founding edition{% endif %}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
 {% endif %}
 {% endblock %}
