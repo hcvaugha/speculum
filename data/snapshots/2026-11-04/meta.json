@@ -1,0 +1,22 @@
+{
+ "calls": 4095,
+ "counts": {
+  "finance": 0,
+  "house": 433,
+  "lobbying_items": 169281,
+  "lobbying_unmatched": 500,
+  "members": 533,
+  "senate": 100,
+  "votes": 1591
+ },
+ "date": "2026-11-04",
+ "day_zero": "2026-11-03",
+ "errors": {
+  "finance": "RuntimeError: gave up after 5 attempts: api.open.fec.gov"
+ },
+ "fec_through": null,
+ "finance_partial": null,
+ "note": "",
+ "raw_files": 4086,
+ "votes_through": "2026-09-30"
+}
