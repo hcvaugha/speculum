@@ -107,7 +107,11 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
                 if c < cur and prior and prior.get("complete"):
                     data = prior
                 else:
-                    data = pac_disbursements(fetch, key, cid, c, deadline=deadline)
+                    try:
+                        data = pac_disbursements(fetch, key, cid, c, deadline=deadline)
+                    except Exception as exc:   # an FEC outage costs one cycle, not the whole source
+                        log.warning("advocacy %s %s failed (%s); keeping prior", cid, c, exc)
+                        data = {**(prior or {"rows": {}}), "complete": False}
                 out["pacs"].setdefault(cid, {})[str(c)] = data
             log.info("advocacy PAC %s: %d recipients; complete cycles %s", cid,
                      len({r for c in out["pacs"][cid].values() for r in c["rows"]}),
@@ -116,7 +120,14 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
             cid = sp["fec_id"]
             for c in cycles:
                 prior = (previous.get("super_pacs", {}).get(cid) or {}).get(str(c))
-                data = prior if (c < cur and prior and prior.get("complete")) else super_pac_spending(fetch, key, cid, c, deadline=deadline)
+                if c < cur and prior and prior.get("complete"):
+                    data = prior
+                else:
+                    try:
+                        data = super_pac_spending(fetch, key, cid, c, deadline=deadline)
+                    except Exception as exc:
+                        log.warning("super PAC %s %s failed (%s); keeping prior", cid, c, exc)
+                        data = {**(prior or {"rows": {}}), "complete": False}
                 out["super_pacs"].setdefault(cid, {})[str(c)] = data
     return out
 

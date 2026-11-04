@@ -32,7 +32,7 @@ class Fetcher:
         self._last[host] = time.monotonic()
 
     def get(self, source: str, name: str, url: str, params: dict | None = None,
-            headers: dict | None = None, retries: int = 5) -> bytes:
+            headers: dict | None = None, retries: int = 7) -> bytes:
         full = url + ("?" + urlencode(params, doseq=True) if params else "")
         host = urlparse(url).netloc
         delay = 2.0
@@ -50,7 +50,7 @@ class Fetcher:
                 retry_after = resp.headers.get("Retry-After")
                 pause = float(retry_after) if retry_after and retry_after.isdigit() else delay
                 log.warning("%s returned %s; waiting %.0fs", host, resp.status_code, pause)
-                time.sleep(min(pause, 900))
+                time.sleep(min(pause, 120))
                 delay *= 2
                 continue
             if resp.status_code == 404:
