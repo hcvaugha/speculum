@@ -29,8 +29,8 @@
   },
   "israel_genocide_note": "No court has found that genocide was committed in Gaza. South Africa's case against Israel at the ICJ is at the merits stage; the orders cited here are provisional measures, and the Commission of Inquiry is not a court.",
   "groups": {
-   "rsf": "Conduct of the RSF in Sudan (not alleged against the UAE directly)",
-   "uae": "Allegations that the UAE supplied the RSF, and the UAE's conduct in Yemen (contested; not this sale or weapon type)"
+   "rsf": "Conduct of the RSF in Sudan (not alleged against the UAE directly; any UAE link rests on the contested supply allegations above, which the UAE denies)",
+   "uae": "Allegations that the UAE supplied the RSF, and the UAE's conduct in Yemen (contested: the UAE denies supplying the RSF, the 2025 Panel could not confirm transfers, and no US-origin weapons are alleged; not this sale or weapon type)"
   }
  },
  "resolutions": {
@@ -122,7 +122,13 @@
      }
     }
    ],
-   "no_same_type_note": "Strikes with bombs of this weight class are reported, and some forensic reports identify US guidance kits used with them, but no source identifies where the bomb bodies came from. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here. The US government's own 2024 pause on this bomb class is shown in the policy record above."
+   "no_same_type_note": "Strikes with bombs of this weight class are reported, including in areas of southern Gaza that Israel had indicated were safe for civilians (New York Times visual investigation, Dec 2023, as reported by Dawn), and some forensic reports identify US guidance kits used with them, but no source identifies where the bomb bodies came from. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here. The US government's own 2024 pause on this bomb class is shown in the policy record above.",
+   "no_same_type_source": {
+    "title": "Israel used one of its biggest and most destructive bombs in southern Gaza: report",
+    "url": "https://www.dawn.com/news/1799916/israel-used-one-of-its-biggest-and-most-destructive-bombs-in-southern-gaza-report",
+    "publisher": "Dawn",
+    "date": "2023-12-22"
+   }
   },
   "SJRES26": {
    "bill": "S.J.Res. 26",
@@ -174,7 +180,7 @@
    "emergency": false,
    "clearance": "No emergency certification; the 15-day review period for Israel ran out before the vote.",
    "justification": "The United States is committed to the security of Israel, and it is vital to U.S. national interests to assist Israel to develop and maintain a strong and ready self-defense capability. This proposed sale is consistent with those objectives. … The proposed sale improves Israel's capability to meet current and future threats, strengthen its homeland defense, and serves as a deterrent to regional threats. Israel already has these weapons in its inventory and will have no difficulty absorbing this equipment into its armed forces.",
-   "sponsor_reasons": "Sanders, floor remarks, Congressional Record, 3 Apr 2025: the resolution 'would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs'; 'The United States cannot provide weaponry to countries that violate internationally recognized human rights'. He called the emergency route 'a bogus emergency declaration--an emergency declaration to bypass congressional review'. (A related Sanders media advisory of 3 Apr 2025 gives no reasons.) White House Statement of Administration Policy (SAP), 3 Apr 2025: the sale 'improves Israel's capability to defeat current and future threats and minimize civilian casualties.'"
+   "sponsor_reasons": "Sanders, floor remarks, Congressional Record, 3 Apr 2025: the resolution 'would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs'; 'The United States cannot provide weaponry to countries that violate internationally recognized human rights'. He called the emergency route 'a bogus emergency declaration--an emergency declaration to bypass congressional review'. (That remark concerns the companion emergency sales, such as the one covered by S.J.Res. 33; this sale did not use the emergency route.) (A related Sanders media advisory of 3 Apr 2025 gives no reasons.) White House Statement of Administration Policy (SAP), 3 Apr 2025: the sale 'improves Israel's capability to defeat current and future threats and minimize civilian casualties.'"
   },
   "SJRES53": {
    "bill": "S.J.Res. 53",
@@ -283,7 +289,7 @@
    "notified": "2025-05-12",
    "delivery_estimate": null,
    "emergency": false,
-   "clearance": "No emergency certification found. The 30-day review period ended at or about the 11 Jun 2025 vote.",
+   "clearance": "No emergency certification found. The 30-day review period, counted from the 12 May 2025 notification, ran through 11 Jun 2025, the day of the vote.",
    "justification": "This proposed sale will support the foreign policy and national security of the United States by helping to improve the security of an important regional partner. The United Arab Emirates is a vital U.S. partner for political stability and economic progress in the Middle East. The proposed sale will improve the United Arab Emirates' capability to meet current and future threats by extending its range of flight operations. The UAE will use these assets in search and rescue, disaster relief, humanitarian support, and counterterrorism operations. The United Arab Emirates will have no difficulty absorbing this equipment and services into its armed forces.",
    "sponsor_reasons": "Murphy sponsored it, with Van Hollen, Kaine, Sanders and Schatz. Van Hollen release, 15 May 2025: no sales 'until they cease arming the murderous RSF', and a 'corrupt Trump family crypto-for-arms deal' (MGX/World Liberty Financial stablecoin). Murphy: the UAE is 'directly enriching the President and his family'. No reason specific to the Chinooks is given."
   },
@@ -327,13 +333,13 @@
      "date": "2025-07-29"
     }
    ],
-   "proceeded": "Congressional Record 24 Mar 2025 (Executive Communication 510). Reuters reported that State notified Congress on 6 Mar 2025, and that the Biden administration had held this sale over concern the rifles could reach extremist settlers. No delivery information found.",
+   "proceeded": "Congressional Record 24 Mar 2025 (Executive Communication 510). Reuters reported that State notified Congress on 6 Mar 2025, and that the Biden administration had held this sale over concern the rifles 'could end up in the hands of Israeli settlers'. No delivery information found.",
    "notification": "DDTC 23-077, direct commercial sale under AECA 36(c)",
    "notified": "2025-03-06",
    "delivery_estimate": null,
    "emergency": false,
    "clearance": "Direct commercial sale notified under AECA section 36(c); notification date per Reuters. The 15-day review period for Israel ended in March 2025, months before the 30 Jul 2025 vote.",
-   "justification": "No DSCA policy justification exists, because this was a direct commercial sale (DDTC 23-077, AECA 36(c)). Bill text: 20,000 fully automatic Colt carbines for 'ultimate end use by the Israel National Police'. The SAP of 30 Jul 2025 gives the purpose as 'providing better equipment for the Israeli National Police.' The State Department's 6 Mar 2025 notification, as reported (The New Arab, citing Reuters), said the government had considered 'political, military, economic, human rights, and arms control considerations.'",
+   "justification": "No DSCA policy justification exists, because this was a direct commercial sale (DDTC 23-077, AECA 36(c)). Bill text: 20,000 fully automatic Colt carbines for 'ultimate end use by the Israel National Police'. The SAP of 30 Jul 2025 gives the purpose as 'providing better equipment for the Israeli National Police.' The State Department's 6 Mar 2025 notification, as reported (The New Arab, citing Reuters), said the government had considered 'political, military, economic, human rights, and arms control considerations.' Speculum's search (4 Nov 2026) found no Israeli government statement on this specific sale; Israel's stated purpose for police and civilian-squad arms generally is in the policy record.",
    "sponsor_reasons": "Sanders, 29 Jul 2025: the rifles 'will go to arm a police force overseen by Itamar Ben-Gvir', who 'has distributed weapons to violent settlers in the West Bank'.",
    "history": [
     {
@@ -566,7 +572,7 @@
    "scope_note": null,
    "grade_note": "The grade covers Amnesty's forensic identification of the weapon. That those killed were civilians, and that there was no military objective, is Amnesty's assessment.",
    "scope_note_by": {
-    "SJRES34": "Amnesty did not identify the JDAM variant. By weight, the al-Najjar bomb (about 2,000 lb) corresponds to the MK-84 kit sold in S.J.Res. 26, not this sale's 1,000-lb MK-83 kits; only the Abu Mu'eileq bomb ('at least 1,000 lb') falls in this sale's weight class.",
+    "SJRES34": "Amnesty did not identify the JDAM variant. By weight, the al-Najjar bomb (about 2,000 lb) corresponds to the MK-84 kit sold in S.J.Res. 26, not this sale's 1,000-lb MK-83 kits; only the Abu Mu'eileq bomb ('at least 1,000 lb') could fall in this sale's weight class.",
     "SJRES26": "Amnesty did not identify the JDAM variant. By weight, the al-Najjar bomb (about 2,000 lb) corresponds to the MK-84 kit in this sale's class; the Abu Mu'eileq bomb is given only as 'at least 1,000 lb'."
    }
   },
@@ -600,7 +606,7 @@
    "applies_to": [
     "SJRES26"
    ],
-   "claim": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mutanabbi/Al-Awda school complex, which was sheltering displaced people in Khan Younis, as 'consistent with a GBU-39-series tail actuation system' (the GBU-39 is made by Boeing). Airwars dates the strike to 9 Jul 2024. The Gaza Ministry of Health reported at least 27 killed and 53 injured.",
+   "claim": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mutanabbi/Al-Awda school complex, which was sheltering displaced people in Khan Younis, as 'consistent with a GBU-39-series tail actuation system' (CNN reports that the GBU-39 is manufactured by Boeing, which DSCA also names as a principal contractor for this sale). Airwars dates the strike to 9 Jul 2024. The Gaza Ministry of Health reported at least 27 killed and 53 injured.",
    "source": {
     "title": "US-made munitions used in deadly Israeli strike on school complex near Khan Younis, CNN analysis finds",
     "url": "https://amp.cnn.com/cnn/2024/07/10/middleeast/israel-us-munitions-school-strike-khan-younis-intl-latam",
@@ -615,7 +621,8 @@
      "publisher": "Airwars",
      "date": "2024-07-09"
     }
-   ]
+   ],
+   "grade_note": "The grade covers the experts' identification of the remnant, which CNN reports as 'consistent with' a GBU-39-series tail, a hedged identification. The death toll is the Gaza Ministry of Health's."
   },
   {
    "country": "Israel",
@@ -628,7 +635,7 @@
     "date": "2024-01-26"
    },
    "counterpoint": "Dissenting judges: Vice-President Sebutinde voted against every measure; Judge ad hoc Barak voted against most (15-2 on the main measure). Response of the Government of Israel: 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians' (Prime Minister's Office, 26 Jan 2024). The order does not rule on whether violations occurred.",
-   "counter_label": "Dissent and response",
+   "counter_label": "Dissenting judges and response",
    "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
@@ -642,7 +649,7 @@
     "date": "2024-03-28"
    },
    "counterpoint": "Dissenting judges: Vice-President Sebutinde and Judge ad hoc Barak dissented on the reaffirmation of earlier measures (14-2). Response of the Government of Israel: Israel disputes the genocide allegation.",
-   "counter_label": "Response of the Government of Israel",
+   "counter_label": "Dissenting judges and response",
    "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
@@ -664,7 +671,7 @@
      "date": "2026-09-22"
     }
    ],
-   "counter_label": "Dissent and response",
+   "counter_label": "Dissenting judges and response",
    "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits."
   },
   {
@@ -699,7 +706,7 @@
     "publisher": "UN OCHA oPt",
     "date": "2026-10-28"
    },
-   "counterpoint": "On reliability, in both directions. Higher: a capture-recapture study in The Lancet estimated 64,260 traumatic-injury deaths to 30 Jun 2024, suggesting the Ministry under-reported by 41%; peer-reviewed correspondence (2023, on the war's early counts) found the Ministry's past counts within 1.5–3.8% of UN analyses. Lower: the IDF said it had killed at least 22,000 combatants before the October 2025 ceasefire (Times of Israel, 29 Jan 2026; not independently verified); a Henry Jackson Society paper (not peer-reviewed) argues the lists include some natural deaths and that about 6,000 names were removed. The Ministry's figures do not distinguish combatants from civilians. On the composition of the dead, OHCHR verified 8,119 deaths from the first seven months, nearly 70% of them women and children; this is a verified sample, not a total. On 30 Jan 2026 the IDF said media reports of it accepting a toll near 70,000 'do not reflect official IDF data' (Ynet, 31 Jan 2026).",
+   "counterpoint": "On reliability, in both directions. Higher: a capture-recapture study in The Lancet estimated 64,260 traumatic-injury deaths to 30 Jun 2024, suggesting the Ministry under-reported by 41%; peer-reviewed correspondence (2023, on the war's early counts) found the Ministry's past counts within 1.5–3.8% of UN analyses. Lower: the IDF said it had killed at least 22,000 combatants before the October 2025 ceasefire (Times of Israel, 29 Jan 2026; not independently verified); a Henry Jackson Society paper (not peer-reviewed) argues the lists include some natural deaths and that about 6,000 names were removed. The Ministry's figures do not distinguish combatants from civilians. On the composition of the dead, OHCHR verified 8,119 deaths from the first seven months, nearly 70% of them women and children; this is a verified subset (8,119 of more than 34,500 then reported), not a total, and in 88% of the verified cases five or more people were killed in the same attack. Israel rejected the report as based on 'unverified information' (Al Jazeera, 8 Nov 2024). On 30 Jan 2026 the IDF said media reports of it accepting a toll near 70,000 'do not reflect official IDF data' (Ynet, 31 Jan 2026).",
    "counter_label": "Reliability",
    "also": [
     {
@@ -737,6 +744,12 @@
      "url": "https://www.ynetnews.com/article/h1jhuacize",
      "publisher": "Ynet",
      "date": "2026-01-31"
+    },
+    {
+     "title": "Nearly 70 percent of deaths in Gaza are women and children: UN",
+     "url": "https://www.aljazeera.com/news/2024/11/8/nearly-70-percent-of-deaths-in-gaza-are-women-and-children-un",
+     "publisher": "Al Jazeera",
+     "date": "2024-11-08"
     }
    ]
   },
@@ -958,7 +971,7 @@
   {
    "country": "Israel",
    "grade": "associated",
-   "claim": "The UN Commission of Inquiry found that in most cases it investigated, 'particularly those involving demolitions using explosives and bulldozers, Israeli security forces committed war crimes', and documented bulldozing of heritage and cultural sites. It does not identify the make or model of any bulldozer.",
+   "claim": "The Commission of Inquiry appointed by the UN Human Rights Council (a non-judicial body, not a court) found that in most cases it investigated, 'particularly those involving demolitions using explosives and bulldozers, Israeli security forces committed war crimes', and documented bulldozing of heritage and cultural sites. It does not identify the make or model of any bulldozer.",
    "date": "2025-05-06",
    "source": {
     "title": "A/HRC/59/26 Report of the Independent International Commission of Inquiry on the OPT and Israel",
@@ -1030,7 +1043,7 @@
    "applies_to_wider": [
     "SJRES41"
    ],
-   "claim": "The ICJ advisory opinion found 'the State of Israel's continued presence in the Occupied Palestinian Territory is unlawful'. It said Israel must 'cease immediately all new settlement activities, and to evacuate all settlers'.",
+   "claim": "The ICJ advisory opinion found 'the State of Israel's continued presence in the Occupied Palestinian Territory is unlawful'. It said Israel must 'cease immediately all new settlement activities, and to evacuate all settlers'. Press reports of the opinion say the Court found that settler violence, with Israel's 'failure to prevent and punish it effectively', contributes to a 'coercive environment' against Palestinians (Times of Israel, 19 Jul 2024).",
    "date": "2024-07-19",
    "source": {
     "title": "ICJ press release 2024/57 (UNISPAL copy)",
@@ -1042,7 +1055,15 @@
    "counter_label": "Response of the Government of Israel",
    "priority": {
     "SJRES41": 0
-   }
+   },
+   "also": [
+    {
+     "title": "Ruling that settlement policy violates international law, ICJ raps Israel for failing to prevent settler violence",
+     "url": "https://www.timesofisrael.com/liveblog_entry/ruling-that-settlement-policy-violates-international-law-icj-raps-israel-for-failing-to-prevent-settler-violence/",
+     "publisher": "Times of Israel",
+     "date": "2024-07-19"
+    }
+   ]
   },
   {
    "country": "Israel",
@@ -1095,9 +1116,17 @@
     "publisher": "UN Security Council",
     "date": "2020-01-27"
    },
-   "counterpoint": "S/2019/83 para. 52: the UAE said control of proxy forces 'rested with the national Government' (https://www.ecoi.net/en/file/local/2002889/S_2019_83_E.pdf).",
+   "counterpoint": "The UAE told the Panel of Experts that control of these forces 'rested with the national Government' of Yemen (Panel report S/2019/83, para. 52).",
    "counter_label": "Response of the Government of the UAE",
-   "group": "uae"
+   "group": "uae",
+   "also": [
+    {
+     "title": "S/2019/83 Final report of the Panel of Experts on Yemen (2019)",
+     "url": "https://www.ecoi.net/en/file/local/2002889/S_2019_83_E.pdf",
+     "publisher": "UN Security Council",
+     "date": "2019-01-25"
+    }
+   ]
   }
  ],
  "context": [

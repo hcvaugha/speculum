@@ -3,7 +3,7 @@
 {% block body %}
 <h1>The Dependents</h1>
 <p class="lede">Every decision has dependents: the people who live with what it set in motion, often far from the chamber and long after the vote. Each chain here follows one recorded decision forward, from the vote, to what it changed, to what happened next, with the money that stood around it.</p>
-<p class="meta">{{ chains|length }} chain{{ '' if chains|length == 1 else 's' }} · decisions are chosen by fixed rules, not by topic or party · {{ approved }} reviewed, {{ chains|length - approved }} in draft</p>
+<p class="meta">{{ chains|length }} chain{{ '' if chains|length == 1 else 's' }} · decisions are chosen by fixed rules, not by topic or party · {% if approved %}{{ approved }} reviewed by a person, {% endif %}{{ chains|length - approved }} awaiting review</p>
 
 <div class="grades">
   {% for g, desc in grades.items() %}<div class="grade-key"><span class="grade grade-{{ g }}">{{ g|capitalize }}</span> {{ desc }}</div>{% endfor %}
@@ -28,5 +28,5 @@
 </tbody></table></div>
 {% endfor %}
 
-<div class="notice">A chain judges a decision, never a person. It names who voted and who was funded, and lets the record of what followed speak. Every link carries an evidence grade and a source, outcomes a decision prevented are recorded as faithfully as outcomes it caused, and a member who voted to block a sale is not tied to what the sale did. Drafts are visible here, to reviewers only, and are not published until approved.</div>
+<div class="notice">A chain judges a decision, never a person. It names who voted and who was funded, and lets the record of what followed speak. Every link carries an evidence grade and a source, outcomes a decision prevented are recorded as faithfully as outcomes it caused, and a member who voted to block a sale is not tied to what the sale did. Drafts are visible here, to reviewers only, and are not published until a person has approved them.</div>
 {% endblock %}

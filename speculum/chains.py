@@ -233,7 +233,8 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             o = {r["bioguide"]: r["side"] for r in other["members"] if r["side"]}
             both = [b for b in sides if b in o]
             same = sum(1 for b in both if sides[b] == o[b])
-            ch["siblings"].append({"bill": other["bill"], "id": other["id"], "both": len(both), "same": same})
+            ch["siblings"].append({"bill": other["bill"], "id": other["id"], "both": len(both), "same": same,
+                                   "verdicts": {p: cell["verdict"] for p, cell in other["money_pattern"].items()}})
         ch["same_recipient"] = sorted({o["date"] for o in out if o["country"] == ch["country"]})
         ch["same_recipient_n"] = sum(1 for o in out if o["country"] == ch["country"])
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)
@@ -330,7 +331,8 @@ GAP = 2.0         # medians this far apart (ratio), with both groups at least MI
 def _stats(xs: list[float]) -> dict:
     xs = sorted(xs)
     return {"n": len(xs), "median": _median(xs) if len(xs) >= MIN_N else None, "median_any": _median(xs),
-            "low": xs[0] if xs else None, "high": xs[-1] if xs else None, "any": sum(1 for x in xs if x > 0)}
+            "low": xs[0] if xs else None, "high": xs[-1] if xs else None, "any": sum(1 for x in xs if x > 0),
+            "each": xs}
 
 
 def _pattern(rows: list[dict]) -> dict:

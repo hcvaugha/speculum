@@ -19,7 +19,7 @@
 {% for party, cell in pattern.items() %}{% for side, label in [('Y', 'Voted to advance'), ('N', 'Voted against advancing')] %}{% set x = cell[side] %}{% if x.n %}
 <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td>
 <td class="r num">{% if x.lobby.median is not none %}{{ x.lobby.median|money }}{% else %}<span class="muted">too few for a median</span>{% endif %} <span class="muted">({{ x.lobby.low|money }}–{{ x.lobby.high|money }})</span></td>
-<td class="r num">{{ x.lobby.any }} of {{ x.n }}</td>
+<td class="r num">{{ x.lobby.any }} of {{ x.n }}{% if x.n >= min_n and x.n <= 15 and x.lobby.each %}<div class="muted" style="font-size:11px">each: {{ x.lobby.each|map('money')|join(', ') }}</div>{% endif %}</td>
 {% if show_contractor %}<td class="r num">{{ x.contractor_any }} of {{ x.n }}</td>{% endif %}</tr>
 {% endif %}{% endfor %}{% endfor %}
 </tbody></table></div>
@@ -79,9 +79,13 @@
   {% set nonef = c.outcomes|selectattr('grade', 'equalto', 'none_found')|list %}
 
   <p class="step" style="margin-top:16px;font-size:11px">Tied to this sale</p>
-  <p class="notice" style="margin-top:0"><b>No source ties weapons or items from this sale to any harm.</b>{% if mx.delivery_estimate %} Deliveries were estimated to begin in {{ mx.delivery_estimate }}{% endif %}{% if not mx.delivery_estimate %} No delivery has been found{% endif %}.{% if same %} The evidence below concerns the same kinds of weapons from earlier US deliveries.{% elif mx.no_same_type_note %} {{ mx.no_same_type_note }}{% endif %}</p>
+  <p class="notice" style="margin-top:0"><b>No source ties weapons or items from this sale to any harm.</b>{% if mx.delivery_estimate %} Deliveries were estimated to begin in {{ mx.delivery_estimate }}{% endif %}{% if not mx.delivery_estimate %} No delivery has been found{% endif %}.{% if same %} The evidence below concerns the same kinds of weapons from earlier US deliveries.{% endif %}</p>
   {% if c.genocide_note %}<p class="meta">{{ c.genocide_note }}</p>{% endif %}
 
+  {% if not same and mx.no_same_type_note %}
+  <p class="step" style="margin-top:18px;font-size:11px">Earlier use of the same kinds of weapons (not this sale)</p>
+  <div class="outcome"><p>{{ mx.no_same_type_note }}</p>{% if mx.no_same_type_source %}<p class="src"><a href="{{ mx.no_same_type_source.url }}">{{ mx.no_same_type_source.publisher }}: {{ mx.no_same_type_source.title }}</a>, {{ mx.no_same_type_source.date }}</p>{% endif %}</div>
+  {% endif %}
   {% if same %}
   <p class="step" style="margin-top:18px;font-size:11px">Earlier use of the same kinds of weapons (not this sale)</p>
   {% for o in same|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
@@ -99,7 +103,7 @@
 
   {% if c.context %}
   <p class="step" style="margin-top:18px;font-size:11px">Context</p>
-  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p></div>{% endif %}{% endfor %}
+  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p>{% for a in x.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}</div>{% endif %}{% endfor %}
   {% endif %}
 </li>
 
@@ -110,7 +114,7 @@
   {{ money_table(c.money_pattern, c.contractor_companies) }}
   <p class="meta" style="margin-top:8px">
   {% for party, cell in c.money_pattern.items() %}{% set y, n = cell.Y, cell.N %}<b>{{ party_names[party] }}s:</b> {% if cell.verdict == 'none' %}No comparison: all {{ party_names[party] }}s who voted took the same side, so there is nothing to compare within the party.{% elif cell.verdict == 'small' %}No comparison: one side has fewer than {{ min_n }} senators.{% else %}{{ y.lobby.any }} of {{ y.n }} who voted to advance and {{ n.lobby.any }} of {{ n.n }} who voted against advancing had any such contribution reported. {% if cell.verdict == 'no_difference' %}No clear difference between the two sides by the fixed rule.{% elif cell.verdict == 'gap_no' %}Those who voted against advancing had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% else %}Those who voted to advance had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% endif %}{% endif %} {% endfor %}
-  {% if c.siblings %}This vote was held the same day as {% for s in c.siblings %}<a href="{{ s.id }}.html">{{ s.bill|billname }}</a> ({{ s.same }} of {{ s.both }} senators voted the same way on both){% if not loop.last %}, {% endif %}{% endfor %}, so a money pattern repeated there is the same senators measured again, not an independent finding.{% endif %}
+  {% if c.siblings %}This vote was held the same day as {% for s in c.siblings %}<a href="{{ s.id }}.html">{{ s.bill|billname }}</a> ({{ s.same }} of {{ s.both }} senators voted the same way on both){% if not loop.last %}, {% endif %}{% endfor %}, so a money pattern repeated there is the same senators measured again, not an independent finding.{% for s in c.siblings %}{% for party, v in s.verdicts.items() %}{% if c.money_pattern[party] and c.money_pattern[party].verdict != v and (v in ['gap_no', 'gap_yes'] or c.money_pattern[party].verdict in ['gap_no', 'gap_yes']) %} Among {{ party_names[party] }}s, {{ s.bill|billname }} {{ 'shows a gap' if v in ['gap_no', 'gap_yes'] else 'shows no gap or is too small to compare' }} while this page {{ 'shows one' if c.money_pattern[party].verdict in ['gap_no', 'gap_yes'] else 'does not' }}, with nearly the same senators: the difference comes from a few senators moving across the fixed group-size threshold, so the two pages are one observation.{% endif %}{% endfor %}{% endfor %}{% endif %}
   {% if c.same_recipient_n > 1 %}This page is one of {{ c.same_recipient_n }} votes on arms for {{ c.country }}, held on {{ c.same_recipient|length }} day{{ '' if c.same_recipient|length == 1 else 's' }} ({{ c.same_recipient|join(', ') }}), mostly by the same senators; a gap found on several of them counts as one pattern, not several.{% endif %}
   {% if c.contractor_companies %}Contractor money covers {{ c.contractor_companies|join(', ') }} only: the named contractors matched to the SIPRI list{% if mx.contractors|length > c.contractor_companies|length %}; the others named are not on it and are not measured{% endif %}. Contractor figures depend on how many companies a notice names and cannot be compared across chains.{% else %}Contractor money: not measured, because none of this sale's named contractors is on the SIPRI list.{% endif %}</p>
 
