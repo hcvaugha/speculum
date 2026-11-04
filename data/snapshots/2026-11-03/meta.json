@@ -1,5 +1,5 @@
 {
- "calls": 7746,
+ "calls": 7755,
  "counts": {
   "finance": 246,
   "house": 433,
@@ -18,6 +18,6 @@
   "reached": 255
  },
  "note": "Day Zero baseline",
- "raw_files": 7741,
+ "raw_files": 7749,
  "votes_through": "2026-09-30"
 }
