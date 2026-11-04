@@ -28,35 +28,56 @@ def current_cycle(d: date) -> int:
 
 
 class _Pager:
-    """Keyset pages from an FEC schedule; .complete says whether it reached the end."""
-    def __init__(self, fetch, key, name, path, params, max_pages, deadline=None):
+    """Keyset pages from an FEC schedule. .complete says whether it reached the end; when it stops
+    early (time budget, page cap, or an FEC error that outlasts the retries), .cursor holds the keyset
+    of the next unread page so a later run can resume there instead of starting over."""
+    def __init__(self, fetch, key, name, path, params, max_pages, deadline=None, cursor=None):
         self.args = (fetch, key, name, path, params, max_pages, deadline)
         self.complete = False
+        self.cursor = cursor
+        self.error = None
 
     def __iter__(self):
         import time
         fetch, key, name, path, params, max_pages, deadline = self.args
+        if self.cursor:
+            params, name = {**params, **self.cursor}, f"{name}_resume"
         for page in range(max_pages):
             if deadline is not None and time.monotonic() > deadline:
                 log.warning("%s: stopped at the time budget after %d pages", name, page)
                 return
-            data = _get(fetch, key, f"{name}_p{page}.json", path, **params)
+            try:
+                data = _get(fetch, key, f"{name}_p{page}.json", path, **params)
+            except Exception as exc:   # keep what was read; the cursor marks where to pick up
+                self.error = str(exc)
+                log.warning("%s: stopped after %d pages (%s); will resume from here", name, page, exc)
+                return
             rows = data.get("results", [])
             yield from rows
             last = (data.get("pagination") or {}).get("last_indexes")
             if not rows or not last:
-                self.complete = True
+                self.complete, self.cursor = True, None
                 return
-            params = {**params, **last}
+            params, self.cursor = {**params, **last}, last
         log.warning("%s: hit the page cap", name)
 
 
-def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int = 1500, deadline=None) -> dict:
-    """{"complete": bool, "rows": {recipient committee id: {"total", "earmarked", "direct", "count", "name"}}}"""
-    out: dict[str, dict] = {}
+def _resumable(prior: dict | None) -> tuple[dict, dict | None]:
+    """Rows and cursor to continue from, when the prior fetch stopped part way with a cursor."""
+    if prior and not prior.get("complete") and prior.get("cursor"):
+        return {k: dict(v) for k, v in prior["rows"].items()}, prior["cursor"]
+    return {}, None
+
+
+def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int = 1500, deadline=None,
+                      prior: dict | None = None) -> dict:
+    """{"complete": bool, "cursor": next page or None, "rows": {recipient committee id: {"total",
+    "earmarked", "direct", "count", "name"}}}. Continues a prior partial fetch when it left a cursor."""
+    out, cursor = _resumable(prior)
     params = {"committee_id": committee_id, "two_year_transaction_period": cycle, "per_page": 100,
               "sort": "-disbursement_date"}
-    pager = _Pager(fetch, key, f"sched_b_{committee_id}_{cycle}", "/schedules/schedule_b/", params, max_pages, deadline)
+    pager = _Pager(fetch, key, f"sched_b_{committee_id}_{cycle}", "/schedules/schedule_b/", params, max_pages,
+                   deadline, cursor)
     for r in pager:
         if r.get("memo_code") == "X" or r.get("memoed_subtotal"):
             continue
@@ -68,12 +89,13 @@ def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int 
         e["total"] += amt
         e["earmarked" if _EARMARK.search(r.get("disbursement_description") or "") else "direct"] += amt
         e["count"] += 1
-    return {"complete": pager.complete, "rows": out}
+    return {"complete": pager.complete, "cursor": pager.cursor, "rows": out}
 
 
 def super_pac_spending(fetch, key, committee_id: str, cycle: int, max_pages: int = 500, deadline=None) -> dict:
     """{candidate id: {"support", "oppose"}} for one super PAC and cycle. The same expenditure can
-    appear on a 24/48-hour notice and again on the periodic report; each is counted once."""
+    appear on a 24/48-hour notice and again on the periodic report; each is counted once, so this one
+    always starts over (the de-duplication needs every row in one pass); it is small."""
     seen, out = set(), {}
     params = {"committee_id": committee_id, "cycle": cycle, "per_page": 100, "sort": "-expenditure_date"}
     pager = _Pager(fetch, key, f"sched_e_{committee_id}_{cycle}", "/schedules/schedule_e/", params, max_pages, deadline)
@@ -107,11 +129,9 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
                 if c < cur and prior and prior.get("complete"):
                     data = prior
                 else:
-                    try:
-                        data = pac_disbursements(fetch, key, cid, c, deadline=deadline)
-                    except Exception as exc:   # an FEC outage costs one cycle, not the whole source
-                        log.warning("advocacy %s %s failed (%s); keeping prior", cid, c, exc)
-                        data = {**(prior or {"rows": {}}), "complete": False}
+                    data = pac_disbursements(fetch, key, cid, c, deadline=deadline, prior=prior)
+                    if not data["complete"] and not data["cursor"] and prior and prior.get("rows"):
+                        data = {**prior, "complete": False}   # stopped before the first page: keep the prior read
                 out["pacs"].setdefault(cid, {})[str(c)] = data
             log.info("advocacy PAC %s: %d recipients; complete cycles %s", cid,
                      len({r for c in out["pacs"][cid].values() for r in c["rows"]}),
@@ -123,11 +143,9 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
                 if c < cur and prior and prior.get("complete"):
                     data = prior
                 else:
-                    try:
-                        data = super_pac_spending(fetch, key, cid, c, deadline=deadline)
-                    except Exception as exc:
-                        log.warning("super PAC %s %s failed (%s); keeping prior", cid, c, exc)
-                        data = {**(prior or {"rows": {}}), "complete": False}
+                    data = super_pac_spending(fetch, key, cid, c, deadline=deadline)
+                    if not data["complete"] and prior and len(prior.get("rows", {})) > len(data["rows"]):
+                        data = {**prior, "complete": False}   # a cut-short read is not better than the last full one
                 out["super_pacs"].setdefault(cid, {})[str(c)] = data
     return out
 

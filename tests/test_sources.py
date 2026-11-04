@@ -445,3 +445,34 @@ def test_principal_committee_falls_back_for_future_cycle():
             return {"results": [{"committee_id": "C1", "name": "OLD", "cycles": [2018, 2020]},
                                 {"committee_id": "C2", "name": "NOW", "cycles": [2022, 2024, 2026]}]}
     assert fec._principal_committee(F(), "k", "S0", 2028) == {"id": "C2", "name": "NOW"}
+
+
+def test_advocacy_resumes_after_an_fec_error():
+    from speculum.sources import advocacy
+
+    def row(i, rid):
+        return {"recipient_committee_id": rid, "disbursement_amount": 100, "recipient_name": rid,
+                "disbursement_description": "EARMARK" if i % 2 else "CONTRIBUTION"}
+
+    pages = [[row(0, "C1"), row(1, "C2")], [row(2, "C1")], [row(3, "C3")]]
+
+    class F:
+        def __init__(self, fail_at=None):
+            self.fail_at, self.calls = fail_at, []
+
+        def get_json(self, src, name, url, params=None):
+            i = int(params.get("last_index", 0))
+            self.calls.append(i)
+            if i == self.fail_at:
+                raise RuntimeError("504")
+            last = {"last_index": str(i + 1)} if i + 1 < len(pages) else None
+            return {"results": pages[i], "pagination": {"last_indexes": last}}
+
+    first = advocacy.pac_disbursements(F(fail_at=1), "k", "PAC", 2024)
+    assert not first["complete"] and first["cursor"] == {"last_index": "1"}
+    assert first["rows"]["C1"]["total"] == 100
+    f2 = F()
+    second = advocacy.pac_disbursements(f2, "k", "PAC", 2024, prior=first)
+    assert f2.calls == [1, 2] and second["complete"] and second["cursor"] is None
+    assert second["rows"]["C1"]["total"] == 200 and second["rows"]["C3"]["total"] == 100
+    assert first["rows"]["C1"]["total"] == 100   # the prior read is not changed in place
