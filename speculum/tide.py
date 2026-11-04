@@ -161,7 +161,8 @@ def build_edition(cur, prev=None) -> dict:
     """cur and prev are Snapshot objects (prev may be None)."""
     members = cur.read("members.json", [])
     by_id = {m["bioguide"]: m for m in members}
-    votes = cur.read("votes.json.gz", {"votes": [], "positions": {}})
+    from .sources.senate import clean_votes
+    votes = clean_votes(cur.read("votes.json.gz", {"votes": [], "positions": {}}))
     pvotes = prev.read("votes.json.gz", {"votes": []}) if prev else None
     if pvotes is not None:
         seen = {v["id"] for v in pvotes.get("votes", [])}

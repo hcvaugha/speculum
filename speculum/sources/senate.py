@@ -106,6 +106,8 @@ def _from_voteview(fetch, members: list[dict], today: date | None = None) -> dic
     positions: dict[str, dict] = {vid: {} for vid in key_to_id.values()}
     for r in csv.DictReader(io.StringIO(fetch.get("voteview", f"S{congress}_votes.csv",
                                                   VV_VOTES.format(c=congress)).decode("utf-8"))):
+        if (r.get("chamber") or "Senate") != "Senate" or (r.get("icpsr") or "").startswith("999"):
+            continue        # Voteview also records the President's announced position; he is not a senator
         vid = key_to_id.get(r.get("rollnumber"))
         cast = VV_CAST.get((r.get("cast_code") or "").split(".")[0])
         if vid and cast:
@@ -139,3 +141,12 @@ def _from_senate_gov(fetch, members: list[dict], previous: dict | None, today: d
                           "url": PAGE.format(c=congress, s=session, n=n), "type": None, **meta})
             positions[vid] = pos
     return {"votes": votes, "positions": positions}
+
+
+def clean_votes(votes: dict) -> dict:
+    """Remove non-senators from saved Senate positions (the President's announced position, which
+    Voteview records with ICPSR 999xx). Idempotent."""
+    pos = votes.get("positions", {})
+    if not any(k.startswith("icpsr:999") for p in pos.values() for k in p):
+        return votes
+    return {**votes, "positions": {vid: {k: v for k, v in p.items() if not k.startswith("icpsr:999")} for vid, p in pos.items()}}

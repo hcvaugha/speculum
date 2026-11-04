@@ -90,7 +90,8 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     members = snap.read("members.json", [])
     from ..sources.fec import clean_finance
     finance = clean_finance(snap.read("finance.json", {}), members)
-    votes = snap.read("votes.json.gz", {"votes": [], "positions": {}})
+    from ..sources.senate import clean_votes
+    votes = clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}}))
     from ..sources.lda import clean
     lobbying = clean(snap.read("lobbying.json", {"by_member": {}}), snap.read("members.json", []))
     meta = snap.read("meta.json", {})

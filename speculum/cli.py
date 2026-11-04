@@ -201,8 +201,9 @@ def cmd_chains(args) -> int:
         return 1
     from .sources.lda import clean
     from .sources.fec import clean_finance
+    from .sources.senate import clean_votes
     out = chains.for_site(snap.read("members.json", []), clean_finance(snap.read("finance.json", {}), snap.read("members.json", [])), clean(snap.read("lobbying.json", {}), snap.read("members.json", [])),
-                          snap.read("votes.json.gz", {"votes": [], "positions": {}}), ROOT)
+                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT)
     log.info("chains: %d (%d with reviewed research)", len(out), sum(1 for c in out if c["research_by"] == "research"))
     if args.check:
         log.info("drafter check: %s", interpret.check())

@@ -24,7 +24,7 @@ FUNDING_PARTS = [
     ("large", "Larger individual donors", "Itemized individual contributions"),
     ("pac", "PACs and other committees", "Contributions from political action committees and other non-party committees"),
     ("party", "Party committees", "Contributions from party committees"),
-    ("self", "The candidate", "Contributions and loans from the candidate"),
+    ("self", "The candidate (incl. loans)", "The candidate's own contributions and loans to the campaign; loans can be repaid"),
 ]
 
 
@@ -47,7 +47,12 @@ def funding_shares(fin: dict | None) -> dict | None:
     total = sum(parts.values())
     if total <= 0:
         return None
-    return {"total": total, "parts": {k: v / total for k, v in parts.items()}, "dollars": parts}
+    receipts = float(fin.get("receipts") or 0)
+    # Receipts also hold transfers from the member's own fundraising committees, refunds and other
+    # receipts, which are not contributions; shown as a note so the breakdown visibly adds up.
+    other = max(receipts - total, 0.0)
+    return {"total": total, "parts": {k: v / total for k, v in parts.items()}, "dollars": parts,
+            "receipts": receipts, "other_receipts": other}
 
 
 def party_unity(members: list[dict], votes: dict) -> dict[str, dict]:

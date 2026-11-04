@@ -48,7 +48,7 @@
 
 <h2>Where the money came from</h2>
 {% if L.funding %}
-<p class="meta">{{ L.funding.total|money }} in contributions · {{ L.finance.cycle_label }} · through {{ L.finance.coverage_end or 'latest report' }}</p>
+<p class="meta">{{ L.funding.total|money }} in contributions · {{ L.finance.cycle_label }} · through {{ L.finance.coverage_end or 'latest report' }}{% if L.funding.other_receipts >= 1000 %} · total receipts {{ L.funding.receipts|money }}, including {{ L.funding.other_receipts|money }} in transfers from the member's own fundraising committees and other receipts that are not contributions{% endif %}</p>
 <div class="fbar" role="img" aria-label="Contributions by source">
   {% for key, label, desc in parts %}<span style="width:{{ '%.2f'|format(L.funding.parts[key] * 100) }}%;background:var(--{{ key }})" title="{{ label }}"></span>{% endfor %}
 </div>

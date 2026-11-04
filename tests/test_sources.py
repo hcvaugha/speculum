@@ -257,7 +257,7 @@ def test_voteview_fallback_when_senate_refuses():
     rollcalls = ("congress,chamber,rollnumber,date,session,clerk_rollnumber,yea_count,nay_count,bill_number,vote_result,vote_desc,vote_question,dtl_desc\n"
                  "119,Senate,1,2025-01-07,1,1,52,47,S5,Agreed to,A bill,On the Motion,\n"
                  "119,Senate,700,2026-01-06,2,3,50,50,,Rejected,Nomination,On the Cloture Motion,\n")
-    votes = "congress,chamber,rollnumber,icpsr,cast_code,prob\n119,Senate,1,41301,1,99\n119,Senate,1,41302,6.0,99\n119,Senate,700,41301,9,\n119,Senate,700,41303,1,\n"
+    votes = "congress,chamber,rollnumber,icpsr,cast_code,prob\n119,President,1,99912,1,\n119,Senate,1,99912,1,\n119,Senate,1,41301,1,99\n119,Senate,1,41302,6.0,99\n119,Senate,700,41301,9,\n119,Senate,700,41303,1,\n"
 
     class F:
         def get(self, source, name, url, params=None, headers=None, retries=5):
