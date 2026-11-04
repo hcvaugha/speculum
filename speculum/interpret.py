@@ -75,6 +75,24 @@ def draft(chain: dict, key: str, max_searches: int = 8) -> dict:
     return out
 
 
+def check() -> str:
+    """One small live request with one web search, to prove the key, model and tool all work."""
+    key = os.environ.get("ANTHROPIC_API_KEY")
+    if not key:
+        raise RuntimeError("ANTHROPIC_API_KEY is not set")
+    resp = requests.post(API, timeout=120, headers={
+        "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"}, json={
+        "model": MODEL, "max_tokens": 300,
+        "tools": [{"type": "web_search_20250305", "name": "web_search", "max_uses": 1}],
+        "messages": [{"role": "user", "content": "Search once for the DSCA major arms sales page and reply with its URL only."}]})
+    if resp.status_code != 200:
+        raise RuntimeError(f"{resp.status_code}: {resp.text[:500]}")
+    body = resp.json()
+    used = sum(1 for b in body.get("content", []) if b.get("type") == "server_tool_use")
+    text = "".join(b.get("text", "") for b in body.get("content", []) if b.get("type") == "text").strip()
+    return f"model={body.get('model')} searches={used} usage={body.get('usage')} reply={text[:200]!r}"
+
+
 def draft_missing(chains: list[dict], drafts_dir: Path, limit: int = 3) -> list[str]:
     """Draft research for up to `limit` chains that have neither reviewed research nor a draft."""
     key = os.environ.get("ANTHROPIC_API_KEY")
