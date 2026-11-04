@@ -1,0 +1,56 @@
+{
+ "contact": {
+  "address": "corrections@speculum.vote",
+  "status": "pending"
+ },
+ "entries": [
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Senate roll calls",
+   "wrong": "On 145 of 915 Senate roll calls, the count of Yea votes was one too high. The Senate vote source (Voteview) also records the President's announced position, and it was being counted as a senator's vote.",
+   "changed": "The President's position is excluded from every Senate tally. Counts now match the Senate's official record.",
+   "scope": "Affected: Senate vote counts on member pages, Tide stories and Dependents chains (for example, the Qatar and UAE arms-sale votes now read 39\u201356)."
+  },
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Lobbyist contributions",
+   "wrong": "The same contribution was sometimes counted several times. A lobbying firm and each of its lobbyists file separate LD-203 reports, and many list the firm PAC's same check.",
+   "changed": "Each contribution is counted once across filings. Two identical lines on a single filing (usually a primary and a general-election check) still both count.",
+   "scope": "About $12 million in duplicate entries removed from lobbyist totals across all members."
+  },
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Lobbyist contributions",
+   "wrong": "Payments made in a member's honor (gifts to charities, events and institutions, reported as honorary or meeting expenses) were added to the member's lobbyist contribution total, which otherwise counts campaign money.",
+   "changed": "These payments are shown separately on each member's page under \"Paid in their honor\" and are not counted in lobbyist totals.",
+   "scope": "About $10 million moved out of totals."
+  },
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Matching lobbyist reports to members",
+   "wrong": "Some contributions were matched to the wrong member: money for senators who have since left was matched to members with the same surname (including their successors), names given as \"Last, First\" were misread, a first name that did not match was ignored when only one member had the surname, and lists naming many people were attributed to one of them.",
+   "changed": "The matcher now requires a named senator to be a senator, checks first names (allowing common nicknames and initials), reads \"Last, First\", and leaves lists of several people unattributed. A wrong match is treated as worse than no match.",
+   "scope": "About $16 million moved off pages where it did not belong."
+  },
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Committee givers",
+   "wrong": "Lists of each member's largest committee givers included the member's own money: their personal contributions and loans to their campaign, and transfers from their own joint fundraising and leadership committees.",
+   "changed": "A member's own money is excluded from their committee givers and from the Interests pages.",
+   "scope": "158 entries removed, about $60 million."
+  },
+  {
+   "date": "2026-11-04",
+   "prelaunch": true,
+   "area": "Consequence chains",
+   "wrong": "The State Department's May 2024 report under National Security Memorandum 20 was graded Documented, though it states that it could not tie U.S. weapons to specific strikes.",
+   "changed": "Regraded to Associated after an independent check of every source in the chains.",
+   "scope": "Affected: the Dependents chains on arms sales to Israel (in review, not yet public)."
+  }
+ ]
+}

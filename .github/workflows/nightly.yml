@@ -3,6 +3,8 @@ name: Nightly snapshot
 on:
   schedule:
     - cron: "17 10 * * *"   # 10:17 UTC: 5:17am Eastern in winter, after overnight filings post
+    - cron: "47 13 * * *"   # backup: GitHub sometimes delays or drops scheduled runs; the gate below
+                            # lets this one run only if no nightly run has started or succeeded today
   workflow_dispatch:
     inputs:
       date:
@@ -14,13 +16,33 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: nightly
   cancel-in-progress: false
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          TODAY=$(date -u +%F)
+          N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion \
+            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.createdAt[0:10] == \"$TODAY\")
+                  | select(.status != \"completed\" or .conclusion == \"success\")] | length")
+          echo "other nightly runs today that are running or succeeded: $N"
+          if [ "$N" -gt 0 ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi
+
   snapshot:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 340
     steps:

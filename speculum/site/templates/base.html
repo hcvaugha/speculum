@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
+{% if not public %}<meta name="robots" content="noindex, nofollow">{% endif %}
 <title>{% block title %}Speculum{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,11 +17,11 @@
     <a href="{{ root }}tide.html" {% if page == 'tide' %}class="on"{% endif %}>The Tide</a>
     <a href="{{ root }}index.html" {% if page == 'chamber' %}class="on"{% endif %}>The Chamber</a>
     <a href="{{ root }}interests.html" {% if page == 'interests' %}class="on"{% endif %}>Interests</a>
-    <a href="{{ root }}dependents.html" {% if page == 'dependents' %}class="on"{% endif %}>The Dependents</a>
+    {% if not public %}<a href="{{ root }}dependents.html" {% if page == 'dependents' %}class="on"{% endif %}>The Dependents</a>{% endif %}
     <a href="{{ root }}day-zero.html" {% if page == 'dayzero' %}class="on"{% endif %}>Day Zero</a>
     <a href="{{ root }}method.html" {% if page == 'method' %}class="on"{% endif %}>Method</a>
   </nav>
-  <span class="preview-flag">Private preview · not for distribution</span>
+  {% if not public %}<span class="preview-flag">Private preview · not for distribution</span>{% endif %}
 </div></header>
 <main class="wrap">
 {% block body %}{% endblock %}
@@ -29,7 +29,8 @@
 <footer><div class="wrap">
   {% include "_seal.html" %}
   <div>Snapshot {{ snapshot_date }} · Day {{ day_number }} since November 3, 2026<br>
-  Every figure is drawn from public filings and links to its source. Readings describe; they do not accuse.</div>
+  Every figure is drawn from public filings and links to its source. Readings describe; they do not accuse.<br>
+  <a href="{{ root }}about.html">About</a> · <a href="{{ root }}corrections.html">Corrections</a> · <a href="{{ root }}method.html">Method</a></div>
 </div></footer>
 {% block scripts %}{% endblock %}
 </body>

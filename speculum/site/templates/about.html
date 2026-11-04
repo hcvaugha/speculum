@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}About · Speculum{% endblock %}
+{% block body %}
+<h1>About Speculum</h1>
+<p class="lede">Speculum is a public record of the United States Congress: how each member votes, where their campaign money comes from, and what registered lobbyists report giving them, read the same way for every member and every party, and updated every night from public filings.</p>
+
+<h2>Why it exists</h2>
+<p>The filings that show who funds Congress, and how Congress votes, are public. They are also scattered across agencies, formats and years, which makes them public in name more than in practice. Speculum gathers them in one place, reads them the same way for everyone, and links every figure to the document it came from. The record began on Election Day, November 3, 2026, with a full reading of the sitting Congress, so that every change after it can be seen as a change.</p>
+
+<h2>What it is not</h2>
+<p>Speculum does not endorse or oppose any candidate, party or cause, and it does not tell readers how to vote. It does not call anyone good or evil. A reading on a member's page is a measurement, shown with its scale: against the whole chamber and against the member's own party. Patterns are shown with what else might explain them. The judgment belongs to the reader.</p>
+
+<h2>Where the data comes from</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Record</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Members, offices and ID crosswalk</td><td><a href="https://github.com/unitedstates/congress-legislators">congress-legislators</a> (public domain)</td></tr>
+<tr><td>House roll calls</td><td><a href="https://api.congress.gov/">Congress.gov</a> (Library of Congress)</td></tr>
+<tr><td>Senate roll calls</td><td>Senate.gov, and <a href="https://voteview.com/">Voteview</a> (UCLA) when Senate.gov is unavailable</td></tr>
+<tr><td>Campaign money</td><td><a href="https://api.open.fec.gov/developers/">Federal Election Commission</a></td></tr>
+<tr><td>Lobbyist contributions</td><td><a href="https://lda.gov/">LD-203 reports</a>, Lobbying Disclosure Act filings</td></tr>
+</tbody></table></div>
+<p class="meta" style="margin-top:8px">Every night's untouched source files are archived with checksums, so any figure can be traced to the exact file it was read from. See the <a href="method.html">method</a> for how each reading is computed.</p>
+
+<h2>How AI is used</h2>
+<p>Speculum uses AI (Anthropic's Claude) to write and run the code that collects and reads the filings, to draft the daily stories in The Tide, and to draft research that traces decisions to their consequences. AI drafts are checked: research is verified claim by claim against its sources by an independent check, and nothing an AI drafted is published until a person has reviewed it. Figures on member and interest pages are computed directly from the filings, not written by AI.</p>
+
+<h2>Independence and funding</h2>
+<p>Speculum is independent and nonpartisan. It takes no money from parties, campaigns, political action committees, lobbying organizations or anyone who appears in its record. It carries no advertising. It is currently funded by its founder; when reader donations open, the people and organizations who fund it will be listed here.</p>
+
+<h2>Errors</h2>
+<p>The record will sometimes be wrong: a filing amended, a name matched to the wrong member, a rule that misses a case. Every correction is made in the open and logged with what was wrong and what changed. See <a href="corrections.html">corrections</a>.</p>
+{% endblock %}

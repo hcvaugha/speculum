@@ -8,13 +8,14 @@
 
 {% if fs %}{% include "_founding.html" %}{% endif %}
 
-<div class="notice">Drafts. Every story is generated from the night's filings using fixed templates, and none is published beyond this preview until an editor approves it. Reactions open at public launch.</div>
+{% if public %}<div class="notice">Every story is written from the night's public filings using fixed templates, and published only after an editor checks it against its sources. Reactions open soon.</div>
+{% else %}<div class="notice">Drafts. Every story is generated from the night's filings using fixed templates. On the public site only stories an editor has approved appear; each story below shows its status.</div>{% endif %}
 
 {% if ed.stories %}
 <div class="stories">
 {% for s in ed.stories %}
 <article class="story" id="{{ s.id }}">
-  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}</div>
+  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}{% if not public %} · <span class="story-status st-{{ s.status }}">{{ {'approved': 'Approved', 'held': 'Held back', 'pending': 'Awaiting editor'}[s.status] }}</span> <span class="muted">{{ s.id }}</span>{% endif %}</div>
   <h3>{{ s.headline }}</h3>
   <p class="dek">{{ s.dek }}</p>
   <ul class="facts">{% for f in s.facts %}<li>{{ f }}</li>{% endfor %}</ul>

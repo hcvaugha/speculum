@@ -185,3 +185,7 @@ details summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacin
   .fd-head { font-size: 36px; }
   .fd-dek { font-size: 18px; }
 }
+.story-status { letter-spacing: .08em; }
+.st-approved { color: var(--gold); }
+.st-held { color: #d99a8f; }
+.st-pending { color: var(--ink-3); }

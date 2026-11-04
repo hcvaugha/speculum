@@ -1,0 +1,4 @@
+{
+ "public": "holding",
+ "_how": "Set public to \"launch\" to publish the full site at speculum.vote; \"holding\" keeps the holding page."
+}

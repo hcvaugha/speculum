@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Corrections · Speculum{% endblock %}
+{% block body %}
+<h1>Corrections</h1>
+<p class="lede">Speculum is a record, and a record is only as good as its corrections. Nothing here is changed silently: every fix is logged below with the date, what was wrong, and what changed.</p>
+
+<h2>Report an error</h2>
+{% if contact and contact.status == 'active' %}
+<p>Write to <a href="mailto:{{ contact.address }}">{{ contact.address }}</a>. Include the page, the figure you think is wrong, and if you can, the filing that shows the right one.</p>
+{% else %}
+<p>A corrections address opens at public launch. Until then, errors found in review are logged here as they are fixed.</p>
+{% endif %}
+
+<h2>What happens next</h2>
+<ol>
+  <li>We check the figure against the original filing, which is archived for every night.</li>
+  <li>If it is wrong, we fix the cause, not only the number, so the same error cannot return the next night.</li>
+  <li>We log the correction here. If the error changed what a page said about someone, the page itself notes the correction.</li>
+  <li>If it is right, we reply with the filing that shows it.</li>
+</ol>
+
+<h2>Correction log</h2>
+{% if entries %}
+{% for e in entries %}
+<div class="outcome" style="margin-bottom:12px">
+  <div class="kicker meta">{{ e.date }}{% if e.prelaunch %} · before public launch{% endif %} · {{ e.area }}</div>
+  <p style="margin-top:6px"><b>What was wrong.</b> {{ e.wrong }}</p>
+  <p><b>What changed.</b> {{ e.changed }}</p>
+  {% if e.scope %}<p class="src">{{ e.scope }}</p>{% endif %}
+</div>
+{% endfor %}
+{% else %}<p class="muted">No corrections yet.</p>{% endif %}
+{% endblock %}

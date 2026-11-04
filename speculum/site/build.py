@@ -87,6 +87,23 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
         (prev / "index.html").write_text("<p>No snapshot yet.</p>", encoding="utf-8")
         return {"members": 0}
 
+    mode = (chains_mod.load_json(snapshots_root.parent / "site.json", {}) or {}).get("public", "holding")
+    result = _render_site(E, prev, snapshots_root, snap, public=False)
+    if mode == "launch":
+        for f in pub.iterdir():
+            if f.is_file():
+                f.unlink()
+        (pub / "member").mkdir(exist_ok=True)
+        _render_site(E, pub, snapshots_root, snap, public=True)
+        (pub / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+    result["public"] = mode
+    return result
+
+
+def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dict:
+    """The full site into one directory. public=True is speculum.vote after launch: no preview
+    banner, indexable, and nothing a reviewer has not approved (no Dependents, no unapproved
+    Tide stories)."""
     members = snap.read("members.json", [])
     from ..sources.fec import clean_finance
     finance = clean_finance(snap.read("finance.json", {}), members)
@@ -97,7 +114,7 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     meta = snap.read("meta.json", {})
     ledgers = ledger_mod.build(members, finance, votes, lobbying.get("by_member", {}))
 
-    common = {"snapshot_date": snap.date, "day_number": day_number(snap.date)}
+    common = {"snapshot_date": snap.date, "day_number": day_number(snap.date), "public": public}
     rows = []
     for m in members:
         L = ledgers[m["bioguide"]]
@@ -150,9 +167,11 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
     history.reverse()
     (prev / "day-zero.html").write_text(E.get_template("dayzero.html").render(
         root="", page="dayzero", meta=_meta_defaults(meta), history=history, **common), encoding="utf-8")
-    _build_tide(E, snapshots_root, prev, members, common)
+    _build_tide(E, snapshots_root, prev, members, common, public)
     _build_interests(E, prev, members, finance, lobbying, common)
-    _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common)
+    if not public:
+        _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common)
+    _build_pages(E, snapshots_root.parent, prev, common)
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
@@ -192,20 +211,43 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
             lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")
 
 
-def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict) -> None:
+def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict, public: bool = False) -> None:
     """One edition per snapshot: the stored tide.json if the nightly run wrote one, else built now."""
     dates = all_dates(snapshots_root)
+    approvals = {k: v for k, v in chains_mod.load_json(snapshots_root.parent / "tide" / "approvals.json", {}).items()
+                 if not k.startswith("_")}
     names = {m["bioguide"]: f"{m['name']} ({m['party']}-{m['state']})" for m in members}
     (prev / "tide").mkdir(exist_ok=True)
     tmpl = E.get_template("tide.html")
     for i, d in enumerate(dates):
         cur = Snapshot(snapshots_root, d)
         ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
+        ed = _apply_approvals(ed, approvals.get(d, {}), public)
         ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names,
                    day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, **common)
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
+
+
+def _apply_approvals(ed: dict, marks: dict, public: bool) -> dict:
+    """Editor approvals (data/tide/approvals.json, {date: {story id: "approved" | "held"}}).
+    The preview shows every story with its status; the public site shows approved stories only."""
+    stories = []
+    for st in ed.get("stories", []):
+        status = marks.get(st.get("id"), "pending")
+        if public and status != "approved":
+            continue
+        stories.append({**st, "status": status})
+    return {**ed, "stories": stories}
+
+
+def _build_pages(E, data_root: Path, prev: Path, common: dict) -> None:
+    corrections = chains_mod.load_json(data_root / "corrections.json", {"entries": []})
+    entries = sorted(corrections.get("entries", []), key=lambda e: e.get("date", ""), reverse=True)
+    (prev / "about.html").write_text(E.get_template("about.html").render(root="", page="about", **common), encoding="utf-8")
+    (prev / "corrections.html").write_text(E.get_template("corrections.html").render(
+        root="", page="corrections", entries=entries, contact=corrections.get("contact"), **common), encoding="utf-8")
 
 
 def _founding_stats(snap: Snapshot) -> dict:
