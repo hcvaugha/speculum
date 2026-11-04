@@ -13,8 +13,11 @@ again only when their coverage date moves.
 """
 from __future__ import annotations
 
+import logging
 import re
 from datetime import date
+
+log = logging.getLogger("speculum.fec")
 
 BASE = "https://api.open.fec.gov/v1"
 NEXT_ELECTION = {1: 2030, 2: 2026, 3: 2028}   # Senate classes as of the 2026 election
@@ -119,6 +122,7 @@ def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous:
     today = date.fromisoformat(run_date)
     previous = previous or {}
     out = {}
+    failures = 0
     order = sorted(members, key=lambda m: m["bioguide"] in previous)
     for idx, m in enumerate(order):
         if deadline is not None and time.monotonic() > deadline:
@@ -127,36 +131,48 @@ def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous:
                     out[rest["bioguide"]] = {**previous[rest["bioguide"]], "carried_forward": True}
             out["_partial"] = {"reached": idx, "of": len(order)}
             break
-        cycle, label = election_cycle(m, today)
-        best = None
-        for cand in _ids_for(m):
-            row = _totals(fetch, key, cand, cycle, election_full=True)
-            if row and (best is None or _num(row.get("receipts")) > _num(best[1].get("receipts"))):
-                best = (cand, row)
-        if not best and m["chamber"] == "senate":
-            # Fallback when no full-cycle row exists yet for a seat not up this year: the current two years.
-            cycle = today.year + (today.year % 2)
-            label = f"{cycle - 1}–{cycle} only"
+        try:
+            cycle, label = election_cycle(m, today)
+            best = None
             for cand in _ids_for(m):
-                row = _totals(fetch, key, cand, cycle, election_full=False)
+                row = _totals(fetch, key, cand, cycle, election_full=True)
                 if row and (best is None or _num(row.get("receipts")) > _num(best[1].get("receipts"))):
                     best = (cand, row)
-        if not best:
-            continue
-        cand, row = best
-        rec = {"candidate_id": cand, "cycle": cycle, "cycle_label": label, **parse_totals(row)}
-        prev = previous.get(m["bioguide"], {})
-        if prev.get("coverage_end") == rec["coverage_end"] and prev.get("cycle") == cycle and "top_committees" in prev:
-            rec["committee_id"], rec["committee_name"] = prev.get("committee_id"), prev.get("committee_name")
-            rec["top_committees"] = prev["top_committees"]
-        else:
-            pc = _principal_committee(fetch, key, cand, cycle)
-            if pc:
-                rec["committee_id"], rec["committee_name"] = pc["id"], pc["name"]
-                span = 4 if (m["chamber"] == "senate" and not label.endswith("only")) else 0
-                periods = [p for p in range(cycle - span, cycle + 1, 2) if p <= today.year + (today.year % 2)]
-                rec["top_committees"] = _top_committees(fetch, key, pc["id"], periods, top_n)
-        out[m["bioguide"]] = rec
+            if not best and m["chamber"] == "senate":
+                # Fallback when no full-cycle row exists yet for a seat not up this year: the current two years.
+                cycle = today.year + (today.year % 2)
+                label = f"{cycle - 1}–{cycle} only"
+                for cand in _ids_for(m):
+                    row = _totals(fetch, key, cand, cycle, election_full=False)
+                    if row and (best is None or _num(row.get("receipts")) > _num(best[1].get("receipts"))):
+                        best = (cand, row)
+            if not best:
+                continue
+            cand, row = best
+            rec = {"candidate_id": cand, "cycle": cycle, "cycle_label": label, **parse_totals(row)}
+            prev = previous.get(m["bioguide"], {})
+            if prev.get("coverage_end") == rec["coverage_end"] and prev.get("cycle") == cycle and "top_committees" in prev:
+                rec["committee_id"], rec["committee_name"] = prev.get("committee_id"), prev.get("committee_name")
+                rec["top_committees"] = prev["top_committees"]
+            else:
+                pc = _principal_committee(fetch, key, cand, cycle)
+                if pc:
+                    rec["committee_id"], rec["committee_name"] = pc["id"], pc["name"]
+                    span = 4 if (m["chamber"] == "senate" and not label.endswith("only")) else 0
+                    periods = [p for p in range(cycle - span, cycle + 1, 2) if p <= today.year + (today.year % 2)]
+                    rec["top_committees"] = _top_committees(fetch, key, pc["id"], periods, top_n)
+            out[m["bioguide"]] = rec
+        except Exception as exc:   # one member's failed request never costs the night everyone else's figures
+            failures += 1
+            log.warning("finance for %s failed (%s); carrying forward", m["bioguide"], exc)
+            if m["bioguide"] in previous:
+                out[m["bioguide"]] = {**previous[m["bioguide"]], "carried_forward": True}
+            if failures >= 25:       # the API itself is down: stop asking, keep what we have
+                for rest in order[idx + 1:]:
+                    if rest["bioguide"] in previous:
+                        out[rest["bioguide"]] = {**previous[rest["bioguide"]], "carried_forward": True}
+                out["_partial"] = {"reached": idx + 1, "of": len(order), "reason": "FEC API errors"}
+                break
     return out
 
 

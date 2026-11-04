@@ -50,3 +50,14 @@ def all_dates(root: Path) -> list[str]:
     if not Path(root).exists():
         return []
     return sorted(p.name for p in Path(root).iterdir() if p.is_dir() and (p / "meta.json").exists())
+
+
+def read_newest(root: Path, name: str, upto: str, default=None):
+    """The newest copy of one file on or before a date: a night whose fetch of one source failed
+    shows the last good copy of that source instead of nothing."""
+    for d in reversed(all_dates(root)):
+        if d <= upto:
+            v = Snapshot(root, d).read(name)
+            if v:
+                return v
+    return default

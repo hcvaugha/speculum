@@ -17,7 +17,7 @@ from .. import ledger as ledger_mod
 from .. import tide as tide_mod
 from .. import interests as interests_mod
 from .. import chains as chains_mod
-from ..snapshot import DAY_ZERO, Snapshot, all_dates, latest
+from ..snapshot import DAY_ZERO, Snapshot, all_dates, latest, read_newest
 
 HERE = Path(__file__).parent
 PARTY_NAMES = {"D": "Democrat", "R": "Republican", "I": "Independent", "L": "Libertarian", None: "Independent"}
@@ -106,11 +106,11 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     Tide stories)."""
     members = snap.read("members.json", [])
     from ..sources.fec import clean_finance
-    finance = clean_finance(snap.read("finance.json", {}), members)
+    finance = clean_finance(read_newest(snapshots_root, "finance.json", snap.date, {}), members)
     from ..sources.senate import clean_votes
-    votes = clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}}))
+    votes = clean_votes(read_newest(snapshots_root, "votes.json.gz", snap.date, {"votes": [], "positions": {}}))
     from ..sources.lda import clean
-    lobbying = clean(snap.read("lobbying.json", {"by_member": {}}), snap.read("members.json", []))
+    lobbying = clean(read_newest(snapshots_root, "lobbying.json", snap.date, {"by_member": {}}), members)
     meta = snap.read("meta.json", {})
     ledgers = ledger_mod.build(members, finance, votes, lobbying.get("by_member", {}))
 
@@ -129,7 +129,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     rows.sort(key=lambda r: r["sort_name"])
     (prev / "index.html").write_text(E.get_template("chamber.html").render(
         root="", page="chamber", rows=rows, members=members,
-        fec_through=meta.get("fec_through"), votes_through=meta.get("votes_through"), **common), encoding="utf-8")
+        fec_through=max((f.get("coverage_end") or "" for f in finance.values()), default=None) or meta.get("fec_through"),
+        votes_through=meta.get("votes_through"), **common), encoding="utf-8")
 
     # Index each member's recent votes, newest first.
     vlist = sorted(votes.get("votes", []), key=lambda v: (v.get("date") or "", v["id"]), reverse=True)
@@ -169,7 +170,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
                         "calls": smeta.get("calls", "—"), "note": smeta.get("note", "")})
     history.reverse()
     (prev / "day-zero.html").write_text(E.get_template("dayzero.html").render(
-        root="", page="dayzero", meta=_meta_defaults(meta), history=history, **common), encoding="utf-8")
+        root="", page="dayzero", meta=_meta_defaults(Snapshot(snapshots_root, DAY_ZERO).read("meta.json", meta) if DAY_ZERO in all_dates(snapshots_root) else meta), history=history, **common), encoding="utf-8")
     _build_tide(E, snapshots_root, prev, members, common, public)
     _build_interests(E, prev, members, finance, lobbying, common)
     if not public:
@@ -207,8 +208,8 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
     from ..snapshot import latest as _latest
     snap = _latest(data_root / "snapshots")
     chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
-                                 committees=snap.read("committees.json", None) if snap else None,
-                                 advocacy_data=snap.read("advocacy.json", None) if snap else None)
+                                 committees=read_newest(data_root / "snapshots", "committees.json", snap.date) if snap else None,
+                                 advocacy_data=read_newest(data_root / "snapshots", "advocacy.json", snap.date) if snap else None)
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
