@@ -1,7 +1,7 @@
 {
- "calls": 4307,
+ "calls": 6595,
  "counts": {
-  "finance": 0,
+  "finance": 517,
   "house": 433,
   "lobbying_items": 169281,
   "lobbying_unmatched": 500,
@@ -12,12 +12,11 @@
  "date": "2026-11-04",
  "day_zero": "2026-11-03",
  "errors": {
-  "advocacy": "RuntimeError: gave up after 5 attempts: api.open.fec.gov",
-  "finance": "RuntimeError: gave up after 5 attempts: api.open.fec.gov"
+  "advocacy": "RuntimeError: gave up after 5 attempts: api.open.fec.gov"
  },
- "fec_through": null,
+ "fec_through": "2026-10-22",
  "finance_partial": null,
  "note": "",
- "raw_files": 4292,
+ "raw_files": 6575,
  "votes_through": "2026-09-30"
 }
