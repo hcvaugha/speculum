@@ -34,35 +34,47 @@
 
 <li>
   <div class="step">3 · What followed</div>
-  {% for o in c.outcomes %}
+  {% if c.outcomes %}{% set docs = c.outcomes|selectattr('grade', 'equalto', 'documented')|list %}
+  <p class="notice" style="margin-top:0">{% if docs %}<b>Strongest tie: Documented.</b> {{ docs|length }} source{{ '' if docs|length == 1 else 's' }} tie{{ 's' if docs|length == 1 else '' }} US-supplied weapons or this recipient's use of them to specific harm.{% if c.outcomes|selectattr('applies_to')|list %} Links marked "specific to this sale" concern the kinds of weapons in it.{% endif %}
+  {% elif c.outcomes|selectattr('grade', 'equalto', 'none_found')|list and c.outcomes|length == 1 %}<b>No record found.</b> Research found no credible record tying this sale or the recipient's use of US weapons to harm.
+  {% else %}<b>No source found ties US-supplied weapons from this sale to the harm below.</b> These links describe the conflict and the recipient's alleged role in it, each graded on its own.{% endif %}</p>
+  {% endif %}
+  {% for o in c.outcomes|sort(attribute='_order') %}
   <div class="outcome">
-    <span class="grade grade-{{ o.grade }}">{{ o.grade|capitalize }}</span>
+    <span class="grade grade-{{ o.grade }}">{{ 'No record found' if o.grade == 'none_found' else o.grade|capitalize }}</span>{% if o.applies_to %}<span class="muted" style="font-size:12px">specific to this sale</span>{% endif %}
     <p>{{ o.claim }}</p>
     {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.title }}</a>{% if o.source.publisher %}, {{ o.source.publisher }}{% endif %}{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% endif %}
     {% if o.counterpoint %}<p class="counter"><b>Response or dispute:</b> {{ o.counterpoint }}</p>{% endif %}
   </div>
   {% else %}<p class="muted">No outcome links yet. A chain with no documented harm is a valid finding and will say so once researched.</p>{% endfor %}
+  {% if c.context %}
+  <p class="step" style="margin-top:18px;font-size:11px">Context</p>
+  {% for x in c.context %}<div class="outcome"><p style="margin-top:0">{{ x.claim }}</p><p class="src"><a href="{{ x.source.url }}">{{ x.source.title }}</a>{% if x.source.publisher %}, {{ x.source.publisher }}{% endif %}{% if x.source.date %}, {{ x.source.date }}{% endif %}</p></div>{% endfor %}
+  {% endif %}
 </li>
 
 <li>
   <div class="step">4 · The money around it <span class="grade grade-associated">Associated</span></div>
   <p>Arms-industry money received by each senator still serving, from companies on the <a href="https://www.sipri.org/databases/armsindustry">SIPRI Top 100 arms producers</a>: their PACs' gifts to the senator's campaign (FEC) and contributions their lobbyists reported (LD-203, {{ lobby_years }}). Medians are compared within each party, so the party line is not mistaken for a money effect. This is a pattern, not a cause.</p>
   <div class="tbl-wrap"><table>
-  <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">Median lobbyist money</th><th class="r">Median PAC money</th></tr></thead>
+  <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">Median lobbyist money</th><th class="r">Median PAC money</th>{% if c.contractor_companies %}<th class="r">Median from this sale's contractors</th>{% endif %}</tr></thead>
   <tbody>
   {% for party, cell in c.money_pattern.items() %}{% for side, label in [('Y', 'Voted to block'), ('N', 'Voted against blocking')] %}{% set x = cell[side] %}{% if x.n %}
   <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td><td class="r num">{{ x.lobby_median|money }}</td>
-  <td class="r num">{% if x.pac_n %}{{ x.pac_median|money }} <span class="muted">({{ x.pac_n }} known)</span>{% else %}<span class="muted">not yet fetched</span>{% endif %}</td></tr>
+  <td class="r num">{% if x.pac_n %}{{ x.pac_median|money }} <span class="muted">({{ x.pac_n }} known)</span>{% else %}<span class="muted">not yet fetched</span>{% endif %}</td>
+  {% if c.contractor_companies %}<td class="r num">{{ x.contractor_median|money }} <span class="muted">({{ x.contractor_any }} of {{ x.n }} received any)</span></td>{% endif %}</tr>
   {% endif %}{% endfor %}{% endfor %}
   </tbody></table></div>
+  {% if c.contractor_companies %}<p class="meta" style="margin-top:8px">This sale's principal contractors on the SIPRI list: {{ c.contractor_companies|join(', ') }}. Matched by company name to the contractors DSCA named.</p>{% endif %}
 
   <details style="margin-top:14px"><summary>Every senator's vote and arms-industry money</summary>
   <div class="tbl-wrap"><table>
-  <thead><tr><th>Senator</th><th>Vote</th><th class="r">Lobbyist money</th><th class="r">PAC money</th><th>Largest arms givers</th></tr></thead>
+  <thead><tr><th>Senator</th><th>Vote</th><th class="r">Lobbyist money</th><th class="r">PAC money</th>{% if c.contractor_companies %}<th class="r">From contractors</th>{% endif %}<th>Largest arms givers</th></tr></thead>
   <tbody>{% for r in c.members %}
   <tr><td><a href="../member/{{ r.bioguide }}.html">{{ r.name }}</a> <span class="party-{{ r.party }} num">{{ r.party }}-{{ r.state }}</span></td>
   <td><span class="pos pos-{{ r.side or 'X' }}">{{ r.position }}</span></td>
   <td class="r num">{{ r.lobby|money }}</td><td class="r num">{% if r.finance_known %}{{ r.pac|money }}{% else %}<span class="muted">—</span>{% endif %}</td>
+  {% if c.contractor_companies %}<td class="r num">{{ r.contractor|money }}</td>{% endif %}
   <td class="muted">{% for g in r.givers[:3] %}{{ g.company }}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
   {% endfor %}</tbody></table></div>
   </details>

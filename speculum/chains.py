@@ -22,7 +22,7 @@ from pathlib import Path
 from . import ledger
 
 HERE = Path(__file__).parent
-GRADES = {
+GRADES = {  # "none_found" is also used: research looked and found no credible record, itself a finding
     "documented": "The decision did it directly, and an official or investigative record shows the result.",
     "estimated": "An official or peer-reviewed estimate of the effect, not tied to this decision alone.",
     "associated": "A pattern only. Shown so readers can see it; never presented as cause.",
@@ -138,16 +138,52 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             x.pop("_pos", None)
         ch["members"] = sorted(rows, key=lambda r: (r["side"] or "Z", -r["total"]))
         ch["party_split"] = {f"{p}-{s}": n for (p, s), n in sorted(split.items())}
-        ch["money_pattern"] = _pattern(rows)
-        r = (research.get("resolutions") or {}).get(ch["bill"].upper().replace(" ", "").replace(".", ""), {})
+        ch["money_pattern"] = _pattern(ch["members"])
+        bkey = ch["bill"].upper().replace(" ", "").replace(".", "")
+        r = (research.get("resolutions") or {}).get(bkey, {})
         ch["mechanism"] = r or None
-        ch["outcomes"] = [o for o in research.get("outcomes", []) if o.get("country") == ch["country"]]
+        # An outcome belongs to a chain when it concerns the recipient and either names no specific
+        # sale or names this one.
+        ch["outcomes"] = [o for o in research.get("outcomes", []) if o.get("country") == ch["country"]
+                          and (not o.get("applies_to") or bkey in o["applies_to"])]
+        order = {"documented": 0, "estimated": 1, "associated": 2, "none_found": 3}
+        ch["outcomes"] = [{**o, "_order": order.get(o.get("grade"), 4)} for o in ch["outcomes"]]
+        ch["context"] = [x for x in research.get("context", []) if x.get("country") == ch["country"]]
+        _contractor_money(ch, sectors)
         rv = reviews.get(ch["id"]) or {}
         ch["status"] = "approved" if rv.get("approved_by") else "draft"
         ch["review"] = rv
         out.append(ch)
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)
     return out
+
+
+def _company_key(name: str) -> str:
+    n = re.sub(r"\(.*?\)", " ", name.lower())
+    n = re.sub(r"\b(the|company|corp|corporation|inc|international|technologies|group|holdings|systems)\b", " ", n)
+    return re.sub(r"\s+", " ", n).strip()
+
+
+def _contractor_money(ch: dict, sectors: dict) -> None:
+    """Money from the companies named as principal contractors for this sale: the firms that build
+    what was sold. Matched by company name against the sector list; the match is shown, not hidden."""
+    named = (ch.get("mechanism") or {}).get("contractors") or []
+    cos = sectors.get(ch["sector"], {}).get("companies", [])
+    hits = set()
+    for c in named:
+        low = c.lower().replace("raytheon", "rtx")
+        for co in cos:
+            k = _company_key(co["name"])
+            if k and re.search(r"\b" + re.escape(k) + r"\b", low):
+                hits.add(co["name"])
+    ch["contractor_companies"] = sorted(hits)
+    for r in ch["members"]:
+        r["contractor"] = sum(g["amount"] for g in r["givers"] if g["company"] in hits)
+    for party, cell in ch["money_pattern"].items():
+        for side in ("Y", "N"):
+            group = [r for r in ch["members"] if r["caucus"] == party and r["side"] == side]
+            cell[side]["contractor_median"] = _median([r["contractor"] for r in group]) if hits else None
+            cell[side]["contractor_any"] = sum(1 for r in group if r["contractor"] > 0)
 
 
 def _pattern(rows: list[dict]) -> dict:

@@ -1,15 +1,16 @@
 {
  "arms": {
   "name": "Arms industry",
-  "rule": "Companies on the SIPRI Top 100 Arms-Producing and Military Services Companies list, with their US PACs (FEC) and lobbying registrations (LDA). Membership is by that list, not by judgment.",
+  "rule": "Companies on the SIPRI Top 100 Arms-Producing and Military Services Companies list (2024 edition, published December 2025), with the US PACs (FEC) and lobbying registrations (LDA) found for them in Speculum's data. Membership is by that list, not by judgment. Listed companies without a PAC or registration in the data are not shown.",
   "source": {
-   "title": "SIPRI Top 100 Arms-Producing and Military Services Companies",
-   "url": "https://www.sipri.org/databases/armsindustry"
+   "title": "SIPRI Top 100 Arms-Producing and Military Services Companies, 2024",
+   "url": "https://www.sipri.org/sites/default/files/2025-11/fs_2512_top_100_2024.pdf"
   },
   "verified": false,
   "companies": [
    {
     "name": "Lockheed Martin",
+    "sipri_rank": 1,
     "fec": [
      "C00303024"
     ],
@@ -19,6 +20,7 @@
    },
    {
     "name": "RTX (Raytheon)",
+    "sipri_rank": 2,
     "fec": [
      "C00097568"
     ],
@@ -28,6 +30,7 @@
    },
    {
     "name": "Northrop Grumman",
+    "sipri_rank": 3,
     "fec": [
      "C00088591"
     ],
@@ -36,7 +39,18 @@
     ]
    },
    {
+    "name": "BAE Systems",
+    "sipri_rank": 4,
+    "fec": [
+     "C00281212"
+    ],
+    "lda": [
+     15907
+    ]
+   },
+   {
     "name": "General Dynamics",
+    "sipri_rank": 5,
     "fec": [
      "C00078451"
     ],
@@ -46,6 +60,7 @@
    },
    {
     "name": "Boeing",
+    "sipri_rank": 6,
     "fec": [
      "C00142711"
     ],
@@ -55,6 +70,7 @@
    },
    {
     "name": "L3Harris Technologies",
+    "sipri_rank": 10,
     "fec": [
      "C00100321"
     ],
@@ -63,7 +79,36 @@
     ]
    },
    {
-    "name": "Huntington Ingalls Industries",
+    "name": "Leonardo (DRS)",
+    "sipri_rank": 12,
+    "fec": [
+     "C00275123"
+    ],
+    "lda": [
+     58157
+    ]
+   },
+   {
+    "name": "Airbus",
+    "sipri_rank": 13,
+    "fec": [
+     "C00421230"
+    ],
+    "lda": [
+     330
+    ]
+   },
+   {
+    "name": "Thales",
+    "sipri_rank": 15,
+    "fec": [
+     "C00828905"
+    ],
+    "lda": []
+   },
+   {
+    "name": "HII (Huntington Ingalls)",
+    "sipri_rank": 16,
     "fec": [
      "C00325092"
     ],
@@ -73,6 +118,7 @@
    },
    {
     "name": "Leidos",
+    "sipri_rank": 18,
     "fec": [
      "C00546234"
     ],
@@ -81,43 +127,70 @@
     ]
    },
    {
-    "name": "General Atomics",
+    "name": "Amentum",
+    "sipri_rank": 19,
     "fec": [
-     "C00215285"
+     "C00731414"
     ],
     "lda": [
-     15931
+     401105604
     ]
    },
    {
-    "name": "Textron",
+    "name": "Rheinmetall",
+    "sipri_rank": 20,
     "fec": [
-     "C00123612"
+     "C00890830"
     ],
+    "lda": []
+   },
+   {
+    "name": "Hanwha",
+    "sipri_rank": 21,
+    "fec": [],
     "lda": [
-     37948
+     401110019
     ]
    },
    {
-    "name": "BAE Systems",
+    "name": "Booz Allen Hamilton",
+    "sipri_rank": 22,
     "fec": [
-     "C00281212"
+     "C00709816"
     ],
     "lda": [
-     15907
+     401104961
     ]
    },
    {
-    "name": "Leonardo DRS",
+    "name": "Rolls-Royce",
+    "sipri_rank": 23,
     "fec": [
-     "C00275123"
+     "C00296822"
     ],
     "lda": [
-     58157
+     33647
+    ]
+   },
+   {
+    "name": "CACI International",
+    "sipri_rank": 24,
+    "fec": [
+     "C00783423"
+    ],
+    "lda": []
+   },
+   {
+    "name": "Elbit Systems",
+    "sipri_rank": 25,
+    "fec": [],
+    "lda": [
+     400411942
     ]
    },
    {
     "name": "Honeywell",
+    "sipri_rank": 27,
     "fec": [
      "C00096156"
     ],
@@ -127,16 +200,52 @@
     ]
    },
    {
-    "name": "Booz Allen Hamilton",
+    "name": "Saab",
+    "sipri_rank": 28,
+    "fec": [],
+    "lda": [
+     401104275
+    ]
+   },
+   {
+    "name": "Safran",
+    "sipri_rank": 29,
+    "fec": [],
+    "lda": [
+     72097
+    ]
+   },
+   {
+    "name": "GE Aerospace",
+    "sipri_rank": 33,
     "fec": [
-     "C00709816"
+     "C00024869"
     ],
     "lda": [
-     401104961
+     15997
+    ]
+   },
+   {
+    "name": "Rafael",
+    "sipri_rank": 34,
+    "fec": [],
+    "lda": [
+     71850
+    ]
+   },
+   {
+    "name": "KBR",
+    "sipri_rank": 35,
+    "fec": [
+     "C00431114"
+    ],
+    "lda": [
+     401108293
     ]
    },
    {
     "name": "SAIC",
+    "sipri_rank": 43,
     "fec": [
      "C00300418"
     ],
@@ -145,7 +254,43 @@
     ]
    },
    {
+    "name": "V2X",
+    "sipri_rank": 45,
+    "fec": [],
+    "lda": [
+     401106068
+    ]
+   },
+   {
+    "name": "Textron",
+    "sipri_rank": 48,
+    "fec": [
+     "C00123612"
+    ],
+    "lda": [
+     37948
+    ]
+   },
+   {
+    "name": "TransDigm",
+    "sipri_rank": 49,
+    "fec": [
+     "C00714329"
+    ],
+    "lda": []
+   },
+   {
+    "name": "Bechtel",
+    "sipri_rank": 56,
+    "fec": [],
+    "lda": [
+     5723,
+     5734
+    ]
+   },
+   {
     "name": "Parsons",
+    "sipri_rank": 63,
     "fec": [
      "C00103549"
     ],
@@ -155,6 +300,7 @@
    },
    {
     "name": "Oshkosh",
+    "sipri_rank": 66,
     "fec": [
      "C00304477"
     ],
@@ -163,33 +309,93 @@
     ]
    },
    {
-    "name": "Airbus",
+    "name": "BWX Technologies",
+    "sipri_rank": 68,
     "fec": [
-     "C00421230"
+     "C00365502"
     ],
     "lda": [
-     330
+     293277
     ]
    },
    {
-    "name": "Elbit Systems of America",
-    "fec": [],
+    "name": "Sierra Nevada",
+    "sipri_rank": 72,
+    "fec": [
+     "C00367995"
+    ],
     "lda": [
-     400411942
+     400899626
     ]
    },
    {
-    "name": "Rafael USA",
-    "fec": [],
+    "name": "General Atomics",
+    "sipri_rank": 74,
+    "fec": [
+     "C00215285"
+    ],
     "lda": [
-     71850
+     15931
     ]
    },
    {
-    "name": "Saab",
+    "name": "Eaton",
+    "sipri_rank": 75,
     "fec": [],
     "lda": [
-     401104275
+     302698
+    ]
+   },
+   {
+    "name": "SpaceX",
+    "sipri_rank": 77,
+    "fec": [
+     "C00411116"
+    ],
+    "lda": [
+     86595
+    ]
+   },
+   {
+    "name": "United Launch Alliance",
+    "sipri_rank": 84,
+    "fec": [],
+    "lda": [
+     400879573
+    ]
+   },
+   {
+    "name": "ViaSat",
+    "sipri_rank": 92,
+    "fec": [],
+    "lda": [
+     78697
+    ]
+   },
+   {
+    "name": "Howmet Aerospace",
+    "sipri_rank": 94,
+    "fec": [],
+    "lda": [
+     1238
+    ]
+   },
+   {
+    "name": "Keysight Technologies",
+    "sipri_rank": 95,
+    "fec": [],
+    "lda": [
+     401103416
+    ]
+   },
+   {
+    "name": "TTM Technologies",
+    "sipri_rank": 97,
+    "fec": [
+     "C00752766"
+    ],
+    "lda": [
+     401105807
     ]
    }
   ]

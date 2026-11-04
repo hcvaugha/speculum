@@ -1,0 +1,600 @@
+{
+ "_meta": {
+  "on": "2026-11-04",
+  "by": "Claude (research agent), with each claim opened at its source",
+  "status": "draft, awaiting reviewer",
+  "notes": [
+   "NSM-20 graded documented: a hedged general assessment, verifying no specific incident.",
+   "ICJ orders and the UN Commission of Inquiry graded associated: authoritative, but they do not name US weapons and the ICJ has made no merits finding.",
+   "Gaza casualty figures are Ministry of Health figures reported by UN OCHA, not independently verified by the UN.",
+   "UAE/Sudan: no source ties US-origin weapons to the RSF; the 2024 UN panel found arms-flight allegations credible, the 2025 panel could not confirm transfers. Contested.",
+   "Emergency waiver for transmittal 26-32 rests on press reports, not the Federal Register text.",
+   "S.J.Res. 41 value ($24M) and notification date come from Reuters only.",
+   "No confirmed delivery found for any specific case."
+  ]
+ },
+ "resolutions": {
+  "SJRES33": {
+   "bill": "S.J.Res. 33",
+   "country": "Israel",
+   "items": "35,529 MK 84 or BLU-117 general-purpose bomb bodies (2,000-lb class) or a combination of both; 4,000 I-2000 penetrator warheads; spares, transportation and support services",
+   "value": "$2.04 billion (DSCA estimate)",
+   "contractors": [
+    "General Dynamics (Garland, TX)",
+    "Ellwood National Forge Company (Irvine, PA)",
+    "McAlester Army Ammunition Plant (McAlester, OK)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.33 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres33is/html/BILLS-119sjres33is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-03-10"
+    },
+    {
+     "title": "Israel – Munitions and Munitions Support",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4088258/israel-munitions-and-munitions-support",
+     "publisher": "DSCA",
+     "date": "2025-02-28"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.33",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres33.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-04-03"
+    }
+   ],
+   "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. The Secretary of State certified an emergency, which waived congressional review. DSCA: deliveries estimated to begin in 2026.",
+   "notification": "DSCA Transmittal No. 25-34, AECA 36(b)(1)"
+  },
+  "SJRES26": {
+   "bill": "S.J.Res. 26",
+   "country": "Israel",
+   "items": "2,166 GBU-39/B Small Diameter Bombs Inc. 1; 2,800 MK 82 500-lb bomb bodies; 13,000 KMU-556 JDAM guidance kits (MK-84); 3,475 KMU-557 JDAM kits (BLU-109); 1,004 KMU-572 JDAM kits (GBU-38); 17,475 FMU-152A/B fuzes; FMU-139 fuzes and support",
+   "value": "$6.75 billion (DSCA estimate)",
+   "contractors": [
+    "The Boeing Company (St. Louis, MO)",
+    "ATK Tactical Systems Company LLC (Rocket Center, WV)",
+    "L3Harris Fuzing and Ordnance Systems (Cincinnati, OH)",
+    "McAlester Army Ammunition Plant (McAlester, OK)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.26 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres26is/html/BILLS-119sjres26is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-02-25"
+    },
+    {
+     "title": "Israel – Munitions, Guidance Kits, Fuzes, and Munitions Support",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4060920/israel-munitions-guidance-kits-fuzes-and-munitions-support",
+     "publisher": "DSCA",
+     "date": "2025-02-07"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.26",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres26.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-04-03"
+    }
+   ],
+   "proceeded": "DSCA release 7 Feb 2025; Congressional Record 10 Feb 2025. No emergency language. DSCA: deliveries estimated to begin in 2025.",
+   "notification": "DSCA Transmittal No. 24-13, AECA 36(b)(1)"
+  },
+  "SJRES53": {
+   "bill": "S.J.Res. 53",
+   "country": "Qatar",
+   "items": "8 MQ-9B remotely piloted aircraft; 200 KMU-572 JDAM tail kits; 300 BLU-111 500-lb bombs; 100 MXU-650 air foil groups and 100 MAU-169 computer control groups (Paveway II GBU-12); 110 AGM-114R2 Hellfire II missiles; 8 M36E9 Hellfire captive-air training missiles; 10 Lynx AN/APY-8 synthetic aperture radars; 10 L3 Rio Grande COMINT suites; 40 EGI devices; ground control stations, Honeywell TPE-331 engines and support",
+   "value": "$1.96 billion (DSCA estimate; 'highest estimate')",
+   "contractors": [
+    "General Atomics Aeronautical Systems",
+    "Lockheed Martin",
+    "RTX Corporation",
+    "L3Harris",
+    "Boeing",
+    "Leonardo SpA"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.53 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres53is/html/BILLS-119sjres53is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-05-15"
+    },
+    {
+     "title": "Qatar – MQ-9B Remotely Piloted Aircraft",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4136302/qatar-mq-9b-remotely-piloted-aircraft",
+     "publisher": "DSCA",
+     "date": "2025-03-26"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.53",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres53.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-06-11"
+    },
+    {
+     "title": "Trump, Qatar sign agreements to go ahead with $2B MQ-9B, $1B counter-drone orders",
+     "url": "https://breakingdefense.com/2025/05/trump-qatar-sign-agreements-to-go-ahead-with-2b-mq-9b-1b-counter-drone-orders/",
+     "publisher": "Breaking Defense",
+     "date": "2025-05-14"
+    }
+   ],
+   "proceeded": "DSCA release 26 Mar 2025; Congressional Record 26 Mar 2025. Breaking Defense, citing a White House fact sheet, reported that an agreement for the drones (about $2B) was signed on 14 May 2025. No delivery information found.",
+   "notification": "DSCA Transmittal No. 25-16, AECA 36(b)(1)"
+  },
+  "SJRES54": {
+   "bill": "S.J.Res. 54",
+   "country": "United Arab Emirates",
+   "items": "6 CH-47F Block II Chinook helicopters (with air-to-air refuel probes and extended-range tanks); 16 T-55-GA-714A engines; 14 EGI M-Code devices; 8 AN/AAR-57 missile warning systems; 20 AN/ARC-231A radios; 20 M-240 machine guns; WESCAM MX-15HDi sensors, survivability equipment and support",
+   "value": "$1.32 billion (DSCA estimate)",
+   "contractors": [
+    "Boeing Helicopter Aircraft Company (Ridley Park, PA)",
+    "Honeywell Engine Company (Phoenix, AZ)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.54 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres54is/html/BILLS-119sjres54is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-05-15"
+    },
+    {
+     "title": "United Arab Emirates – CH-47F Chinook Helicopters",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4182033/united-arab-emirates-ch-47f-chinook-helicopters",
+     "publisher": "DSCA",
+     "date": "2025-05-12"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.54",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres54.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-06-11"
+    }
+   ],
+   "proceeded": "DSCA release 12 May 2025; Congressional Record 13 May 2025. DSCA's stated UAE uses are search and rescue, disaster relief, humanitarian support and counterterrorism. No delivery information found.",
+   "notification": "DSCA Transmittal No. 24-118, AECA 36(b)(1)"
+  },
+  "SJRES41": {
+   "bill": "S.J.Res. 41",
+   "country": "Israel",
+   "items": "20,000 Colt Carbine fully automatic rifles (11.5-inch barrel, 5.56mm) to M.R.D. Efram Investments Ltd in Israel, for end use by the Israel National Police",
+   "value": "Not stated in the official text (the resolution covers exports of '$1,000,000 or more'); Reuters reported $24 million",
+   "contractors": [
+    "Colt (manufacturer named in the item description; the notification text does not name a US exporter)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.41 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres41is/html/BILLS-119sjres41is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-03-27"
+    },
+    {
+     "title": "US sending Israel 20,000 assault rifles delayed by Biden, say sources (Reuters)",
+     "url": "https://www.newarab.com/news/us-sending-israel-20000-assault-rifles-delayed-biden",
+     "publisher": "The New Arab / Reuters",
+     "date": "2025-04-04"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.41",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres41.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-07-30"
+    }
+   ],
+   "proceeded": "Congressional Record 24 Mar 2025 (Executive Communication 510). Reuters reported that State notified Congress on 6 Mar 2025, and that the Biden administration had held this sale over concern the rifles could reach extremist settlers. No delivery information found.",
+   "notification": "DDTC 23-077, direct commercial sale under AECA 36(c)"
+  },
+  "SJRES34": {
+   "bill": "S.J.Res. 34",
+   "country": "Israel",
+   "items": "201 MK 83 MOD 4/5 1,000-lb bomb bodies; 4,799 BLU-110A/B 1,000-lb bomb bodies; 1,500 KMU-559C/B and 3,500 KMU-559J/B JDAM guidance kits for the MK 83; support services",
+   "value": "$675.7 million (DSCA estimate)",
+   "contractors": [
+    "Repkon USA (Tampa, FL)",
+    "The Boeing Company (St. Charles, MO)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.34 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres34is/html/BILLS-119sjres34is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-03-10"
+    },
+    {
+     "title": "Israel – Munitions, Guidance Kits, and Munitions Support",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4088252/israel-munitions-guidance-kits-and-munitions-support",
+     "publisher": "DSCA",
+     "date": "2025-02-28"
+    },
+    {
+     "title": "BILLSTATUS S.J.Res.34",
+     "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/sjres/BILLSTATUS-119sjres34.xml",
+     "publisher": "GPO/govinfo",
+     "date": "2025-07-30"
+    }
+   ],
+   "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries estimated to begin in 2028.",
+   "notification": "DSCA Transmittal No. 25-26, AECA 36(b)(1)"
+  },
+  "SJRES32": {
+   "bill": "S.J.Res. 32",
+   "country": "Israel",
+   "items": "Caterpillar D9R and D9T bulldozers, spare and repair parts, corrosion protection, inspections, storage and support (quantity not stated)",
+   "value": "$295 million (DSCA maximum estimate)",
+   "contractors": [
+    "Caterpillar Inc. (Irving, TX)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.32 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres32is/html/BILLS-119sjres32is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2025-03-10"
+    },
+    {
+     "title": "Israel – Caterpillar D9 Bulldozers",
+     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4088243/israel-caterpillar-d9-bulldozers",
+     "publisher": "DSCA",
+     "date": "2025-02-28"
+    },
+    {
+     "title": "Roll Call Vote 119th Congress 2nd Session, Vote 80",
+     "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00080.htm",
+     "publisher": "U.S. Senate",
+     "date": "2026-04-15"
+    },
+    {
+     "title": "IDF receives bulldozer shipment from US that was reportedly held up by Biden administration",
+     "url": "https://www.timesofisrael.com/liveblog_entry/idf-receives-bulldozer-shipment-from-us-that-was-held-up-by-biden-administration/",
+     "publisher": "Times of Israel",
+     "date": "2025-07-09"
+    }
+   ],
+   "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries expected to begin in 2027. Israel's Defense Ministry announced the arrival of 'dozens' of D9s on 9 Jul 2025 (Times of Israel), but did not say whether they came under this case.",
+   "notification": "DSCA Transmittal No. 24-38, AECA 36(b)(1)"
+  },
+  "SJRES138": {
+   "bill": "S.J.Res. 138",
+   "country": "Israel",
+   "items": "12,000 BLU-110A/B general-purpose 1,000-lb bomb bodies; support services",
+   "value": "$151.8 million ($150.0M major defense equipment, $1.8M other)",
+   "contractors": [
+    "Repkon USA (Garland, TX)"
+   ],
+   "sources": [
+    {
+     "title": "S.J.Res.138 (Introduced) text",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres138is/html/BILLS-119sjres138is.htm",
+     "publisher": "GPO/govinfo",
+     "date": "2026-03-19"
+    },
+    {
+     "title": "Arms Sales Notification (Transmittal 26-32), FR Doc. 2026-07238",
+     "url": "https://www.govinfo.gov/content/pkg/FR-2026-04-14/pdf/2026-07238.pdf",
+     "publisher": "Federal Register / DoD",
+     "date": "2026-04-14"
+    },
+    {
+     "title": "US skips congressional review to approve munitions sale to Israel",
+     "url": "https://www.dawn.com/news/1979642",
+     "publisher": "Dawn (Reuters)",
+     "date": "2026-03-08"
+    },
+    {
+     "title": "Roll Call Vote 119th Congress 2nd Session, Vote 81",
+     "url": "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1192/vote_119_2_00081.htm",
+     "publisher": "U.S. Senate",
+     "date": "2026-04-15"
+    }
+   ],
+   "proceeded": "report delivered to Congress 6 Mar 2026; Federal Register 14 Apr 2026. The notice says part of the requirement will come from US stock. Press reports citing the State Department (Dawn, 8 Mar 2026) say Secretary Rubio certified an emergency, which bypassed congressional review.",
+   "notification": "Transmittal No. 26-32, AECA 36(b)(1)"
+  }
+ },
+ "outcomes": [
+  {
+   "country": "Israel",
+   "grade": "documented",
+   "applies_to": [
+    "SJRES26",
+    "SJRES33",
+    "SJRES34"
+   ],
+   "claim": "The State Department's NSM-20 report said that, given Israel's significant reliance on US-made defense articles, it is 'reasonable to assess' that covered defense articles 'have been used by Israeli security forces since October 7 in instances inconsistent with its IHL obligations or with established best practices for mitigating civilian harm'; it also said the USG was 'not able to reach definitive conclusions' on specific incidents.",
+   "source": {
+    "title": "Report to Congress under Section 2 of NSM-20 (unclassified; copy hosted by Just Security)",
+    "url": "https://www.justsecurity.org/wp-content/uploads/2024/05/Report-to-Congress-under-Section-2-of-the-National-Security-Memorandum-on-Safeguards-and-Accountability-with-Respect-to-Transferred-Defense.pdf",
+    "publisher": "U.S. Department of State",
+    "date": "2024-05-10"
+   },
+   "counterpoint": "The same report assessed Israel's assurances to be 'credible and reliable' and said 'we do not currently assess that the Israeli government is prohibiting or otherwise restricting' US humanitarian assistance. NSM-20 was revoked on 21 Feb 2025 (Arms Control Association, Apr 2025)."
+  },
+  {
+   "country": "Israel",
+   "grade": "documented",
+   "applies_to": [
+    "SJRES26",
+    "SJRES34"
+   ],
+   "claim": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated with Boeing, at two strikes in Deir al-Balah: the al-Najjar home (10 Oct 2023, 24 killed) and the Abu Mu'eileq home (22 Oct 2023, 19 killed). It reported 43 civilians killed in total (19 children, 14 women, 10 men) and said it found no indication of military objectives at either site.",
+   "source": {
+    "title": "Israel/OPT: US-made munitions killed 43 civilians in two documented Israeli air strikes in Gaza",
+    "url": "https://www.amnesty.org/en/latest/news/2023/12/israel-opt-us-made-munitions-killed-43-civilians-in-two-documented-israeli-air-strikes-in-gaza-new-investigation/",
+    "publisher": "Amnesty International",
+    "date": "2023-12-05"
+   },
+   "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication."
+  },
+  {
+   "country": "Israel",
+   "grade": "documented",
+   "applies_to": [
+    "SJRES26"
+   ],
+   "claim": "Washington Post analysis with four weapons experts concluded that the 26 May 2024 strike on a displacement encampment in Tal al-Sultan, Rafah, which killed at least 45 people, used a US-made GBU-39 small-diameter bomb; one fragment bore a cage code linked to the US firm Woodward HRT.",
+   "source": {
+    "title": "Israel used a U.S.-made bomb in deadly Rafah strike, experts say (Washington Post, republished)",
+    "url": "https://www.stripes.com/theaters/middle_east/2024-05-29/israel-us-made-bomb-rafah-14023186.html",
+    "publisher": "Stars and Stripes / The Washington Post",
+    "date": "2024-05-30"
+   },
+   "counterpoint": "Israel said it was a targeted strike on two Hamas militants using 'the smallest munition' its jets can carry ('17 kilos of explosive material'), called the fire 'unexpected and unintended', and said it was investigating possible secondary explosions."
+  },
+  {
+   "country": "Israel",
+   "grade": "documented",
+   "applies_to": [
+    "SJRES26"
+   ],
+   "claim": "CNN, with three explosive-weapons experts, identified a remnant 'consistent with a GBU-39-series tail actuation system' (made by Boeing) at the strike on the Al-Mutanabbi/Al-Awda school complex sheltering displaced people in Khan Younis; the Gaza Ministry of Health reported at least 27 killed and 53 injured.",
+   "source": {
+    "title": "US-made munitions used in deadly Israeli strike on school complex near Khan Younis, CNN analysis finds",
+    "url": "https://amp.cnn.com/cnn/2024/07/10/middleeast/israel-us-munitions-school-strike-khan-younis-intl-latam",
+    "publisher": "CNN",
+    "date": "2024-07-10"
+   },
+   "counterpoint": "Israel said it targeted a Hamas military-wing operative who took part in the 7 October attack and used a 'precise munition.'"
+  },
+  {
+   "country": "Israel",
+   "grade": "associated",
+   "claim": "In its 26 Jan 2024 order the ICJ found 'at least some of the rights claimed by South Africa ... are plausible' and ordered Israel (15-2) to 'take all measures within its power to prevent the commission of all acts within the scope of Article II' of the Genocide Convention; the order does not rule on whether violations occurred.",
+   "source": {
+    "title": "Summary of the Order of 26 January 2024 (South Africa v. Israel)",
+    "url": "https://www.icj-cij.org/node/203454",
+    "publisher": "International Court of Justice",
+    "date": "2024-01-26"
+   },
+   "counterpoint": "PM Netanyahu (PMO, 26 Jan 2024): 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians.' Judge ad hoc Barak voted against most measures."
+  },
+  {
+   "country": "Israel",
+   "grade": "associated",
+   "claim": "In its 28 Mar 2024 order the ICJ said 'Palestinians in Gaza are no longer facing only a risk of famine' and unanimously ordered Israel to ensure, without delay, unhindered provision of basic services and humanitarian aid, including by opening more land crossings.",
+   "source": {
+    "title": "Press release: The Court indicates additional provisional measures",
+    "url": "https://api.icj-cij.org/sites/default/files/case-related/192/192-20240328-pre-01-00-en.pdf",
+    "publisher": "International Court of Justice",
+    "date": "2024-03-28"
+   },
+   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak dissented on the reaffirmation of earlier measures (14-2)."
+  },
+  {
+   "country": "Israel",
+   "grade": "associated",
+   "claim": "In its 24 May 2024 order the ICJ ordered Israel (13-2) to 'immediately halt its military offensive, and any other action in the Rafah Governorate, which may inflict on the Palestinian group in Gaza conditions of life that could bring about its physical destruction in whole or in part'; as of the court's docket (last entry 22 Sep 2026), the case is in the written phase with no merits judgment.",
+   "source": {
+    "title": "Press release: Order of 24 May 2024; case docket",
+    "url": "https://api.icj-cij.org/sites/default/files/case-related/192/192-20240524-pre-01-00-en.pdf",
+    "publisher": "International Court of Justice",
+    "date": "2024-05-24"
+   },
+   "counterpoint": "Vice-President Sebutinde and Judge ad hoc Barak voted against. Israel disputes the genocide allegation."
+  },
+  {
+   "country": "Israel",
+   "grade": "associated",
+   "claim": "The UN Independent International Commission of Inquiry stated 'Israel is responsible for the commission of genocide in Gaza', finding four of the five acts in the Genocide Convention, and recommended that states 'cease the transfer of arms and other equipment' that may be used for such acts.",
+   "source": {
+    "title": "Israel has committed genocide in the Gaza Strip, UN Commission finds (A/HRC/60/CRP.3)",
+    "url": "https://www.un.org/unispal/document/israel-has-committed-genocide-in-the-gaza-strip-un-commission-finds-16sep25/",
+    "publisher": "UN OHCHR / Commission of Inquiry",
+    "date": "2025-09-16"
+   },
+   "counterpoint": "Israel's Foreign Ministry: 'Israel categorically rejects this distorted and false report' and called for the commission's abolition (Arab News/AFP, 16 Sep 2025)."
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "claim": "OCHA reports, citing the Gaza Ministry of Health, 74,564 reported Palestinian fatalities as of 28 Oct 2026. Of these, MoH had fully identified 74,237 as of 7 Oct 2026: 35,555 men, 21,976 children, 11,301 women and 5,405 elderly.",
+   "source": {
+    "title": "Reported impact snapshot | Gaza Strip (28 October 2026)",
+    "url": "https://www.ochaopt.org/sites/default/files/Gaza_Reported_Impact_Snapshot_28_October_2026.pdf",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-30"
+   },
+   "counterpoint": "OCHA notes that figures not yet verified by the UN are attributed to their source. The MoH breakdown is by age and sex, not by combatant status. On 30 Jan 2026 the IDF international spokesperson said media reports of the IDF accepting a ~70,000 toll 'do not reflect official IDF data' (Ynet, 31 Jan 2026)."
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "claim": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since the ceasefire agreement (which OCHA dates to 10 Oct 2025), including 33 killed between 20 and 26 Oct 2026.",
+   "source": {
+    "title": "Humanitarian Situation Report | 29 October 2026",
+    "url": "https://www.ochaopt.org/content/humanitarian-situation-report-29-october-2026",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-31"
+   },
+   "counterpoint": "MoH-sourced figures; not independently verified by OCHA."
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "claim": "FAO, UNICEF, WFP and WHO reported that the IPC confirmed Famine in Gaza Governorate, projected to spread to Deir al-Balah and Khan Younis, with more than 640,000 people projected in Catastrophe (IPC Phase 5) by end-September 2025.",
+   "source": {
+    "title": "Famine confirmed for first time in Gaza (joint statement)",
+    "url": "https://www.unicef.org/press-releases/famine-confirmed-first-time-gaza",
+    "publisher": "UNICEF / FAO / WFP / WHO",
+    "date": "2025-08-22"
+   },
+   "counterpoint": "Israel's Foreign Ministry: 'There is no famine in Gaza' and the IPC had published 'a tailor-made fabricated report' (Axios, 22 Aug 2025). COGAT called it false and political."
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "claim": "The IPC update reported on 19 Dec 2025 classified no area of Gaza as Famine. It estimated over 100,000 people in Phase 5 and about 1.6 million in Phase 3+ (mid-Oct to end-Nov 2025), and warned that in a worst case the whole Strip could face famine again by mid-April 2026.",
+   "source": {
+    "title": "Famine reversed in Gaza but hunger crisis remains acute, UN-backed analysis finds",
+    "url": "https://www.thenationalnews.com/news/mena/2025/12/19/famine-reversed-in-gaza-but-hunger-crisis-remains-acute-un-backed-analysis-finds",
+    "publisher": "The National (reporting IPC)",
+    "date": "2025-12-19"
+   },
+   "counterpoint": "COGAT criticised the report for 'blatant, biased, and deliberate disregard for the volumes of food that entered during the ceasefire.'"
+  },
+  {
+   "country": "Israel",
+   "grade": "estimated",
+   "applies_to": [
+    "SJRES41"
+   ],
+   "claim": "OCHA recorded 331 Palestinian fatalities in the West Bank, including 77 children, and 3,684 settler attacks causing casualties and/or property damage, between 1 Jan 2025 and 30 Sep 2026.",
+   "source": {
+    "title": "West Bank Monthly Snapshot – September 2026 (infographic)",
+    "url": "https://www.ochaopt.org/content/west-bank-monthly-snapshot-casualties-property-damage-and-displacement-september-2026",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-27"
+   },
+   "counterpoint": "This is context only. No source I found links the DDTC 23-077 rifles to any incident."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "The UN Panel of Experts on the Sudan found allegations 'credible' that weapons and ammunition were unloaded from cargo planes arriving at Am Djarass, Chad, for the RSF, and cited intelligence sources estimating that 10,000-15,000 people were killed in El Geneina; the report does not identify US-origin weapons.",
+   "source": {
+    "title": "Final report of the Panel of Experts on the Sudan (S/2024/65)",
+    "url": "https://www.ecoi.net/en/file/local/2105266/n2400564.pdf",
+    "publisher": "UN Security Council",
+    "date": "2024-01-15"
+   },
+   "counterpoint": "The UAE told the Panel (21 Dec 2023) that it 'denied any involvement in the shipment of arms and ammunition' and that its flights carried humanitarian aid."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military materiel from Am Djarass to Darfur', while describing supply routes for ammunition and military equipment from eastern Chad and southern Libya.",
+   "source": {
+    "title": "Final report of the Panel of Experts on the Sudan (S/2025/239)",
+    "url": "https://www.ecoi.net/en/file/local/2124824/n2442101.pdf",
+    "publisher": "UN Security Council",
+    "date": "2025-04-17"
+   },
+   "counterpoint": "In S/2025/260 (29 Apr 2025) the UAE said the report 'makes no findings against the United Arab Emirates' and that it 'has not provided and is not providing support or supplies to any of the warring parties.' In Sudan v. UAE the ICJ (5 May 2025) found it 'manifestly lacks jurisdiction', citing the UAE's reservation to Article IX, and removed the case 9-7 without ruling on the merits."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025) and AH-4 howitzers (Khartoum, Mar 2025) that it said were 'almost certainly re-exported to Sudan by the UAE'; these are not US-made weapons.",
+   "source": {
+    "title": "Sudan: Advanced Chinese weaponry provided by UAE identified in breach of arms embargo",
+    "url": "https://www.amnesty.org/en/latest/news/2025/05/sudan-advanced-chinese-weaponry-provided-by-uae-identified-in-breach-of-arms-embargo-new-investigation/",
+    "publisher": "Amnesty International",
+    "date": "2025-05-08"
+   },
+   "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "Secretary of State Blinken determined that 'members of the RSF and allied militias have committed genocide in Sudan' and sanctioned seven RSF-owned companies located in the UAE.",
+   "source": {
+    "title": "Genocide Determination in Sudan and Imposing Accountability Measures",
+    "url": "https://2021-2025.state.gov/genocide-determination-in-sudan-and-imposing-accountability-measures/",
+    "publisher": "U.S. Department of State",
+    "date": "2025-01-07"
+   },
+   "counterpoint": "The determination concerns the RSF, not the UAE government."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "estimated",
+   "claim": "A UN Human Rights Office report documented more than 6,000 people killed over three days during the RSF capture of El Fasher: at least 4,400 inside the city on 25-27 Oct 2025 and more than 1,600 while fleeing; it said the true toll is 'undoubtedly significantly higher.'",
+   "source": {
+    "title": "At least 6,000 killed over 3 days during RSF attack on Sudan's el-Fasher, UN says (AP)",
+    "url": "https://www.npr.org/2026/02/15/nx-s1-5715154/6000-killed-during-rsf-attack-sudan-el-fasher-un",
+    "publisher": "NPR / Associated Press",
+    "date": "2026-02-15"
+   },
+   "counterpoint": "The RSF did not respond to AP. RSF leader Dagalo has acknowledged abuses but disputed their scale."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "estimated",
+   "claim": "FAO, WFP and UNICEF reported that the IPC Famine Review Committee found famine conditions (Phase 5) in El Fasher and Kadugli, with 21.2 million people (45% of the population) in IPC Phase 3+ by Sep 2025.",
+   "source": {
+    "title": "Famine conditions confirmed in Sudan's El Fasher and Kadugli",
+    "url": "https://sudan.un.org/en/305234-famine-conditions-confirmed-sudans-el-fasher-and-kadugli-hunger-and-malnutrition-ease-where",
+    "publisher": "UN in Sudan (FAO/WFP/UNICEF)",
+    "date": "2025-11-04"
+   },
+   "counterpoint": "None found."
+  },
+  {
+   "country": "United Arab Emirates",
+   "grade": "associated",
+   "claim": "Amnesty International documented US-supplied armoured vehicles (M-ATV, Caiman, MaxxPro) held by UAE-backed Yemeni groups (Security Belt, Shabwani Elite Forces, 'The Giants'), which it described as known to be committing war crimes; this is a different weapon type from the CH-47F sale.",
+   "source": {
+    "title": "Yemen: UAE recklessly supplying militias with windfall of Western arms",
+    "url": "https://www.amnesty.org/en/latest/news/2019/02/yemen-uae-recklessly-supplying-militias-with-windfall-of-western-arms/",
+    "publisher": "Amnesty International",
+    "date": "2019-02-06"
+   },
+   "counterpoint": "Amnesty's release includes no UAE response."
+  },
+  {
+   "country": "Qatar",
+   "grade": "none_found",
+   "claim": "I found no authoritative or credible record linking Qatar's use of US-origin MQ-9B drones, Hellfire missiles or guided bombs to civilian harm; the DSCA notice describes the package mainly as strengthening Qatar's homeland defense.",
+   "source": {
+    "title": "Qatar – MQ-9B Remotely Piloted Aircraft",
+    "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4136302/qatar-mq-9b-remotely-piloted-aircraft",
+    "publisher": "DSCA",
+    "date": "2025-03-26"
+   },
+   "counterpoint": "Not applicable."
+  }
+ ],
+ "context": [
+  {
+   "country": "Israel",
+   "claim": "Israel told the UN Committee on the Rights of the Child that 'more than 1,200 people' were killed on 7 October 2023 and in the days after, most of them civilians, including 43 under age 18. It said 251 people were taken to Gaza as hostages, including 32 minors, and that 115 hostages remained as of 30 July 2024.",
+   "source": {
+    "title": "Additional replies of Israel to the list of issues (CRC/C/ISR/RQ/5-6/Add.1)",
+    "url": "https://www.un.org/unispal/wp-content/uploads/2024/09/G2414896.pdf",
+    "publisher": "Government of Israel (UN CRC document)",
+    "date": "2024-08-21"
+   }
+  },
+  {
+   "country": "Israel",
+   "claim": "OCHA, citing Israeli media quoting official sources, reports over 1,200 Israeli fatalities (including 7 October and its immediate aftermath, including foreign nationals) as of 28 Oct 2026.",
+   "source": {
+    "title": "Reported impact snapshot | Gaza Strip (28 October 2026)",
+    "url": "https://www.ochaopt.org/sites/default/files/Gaza_Reported_Impact_Snapshot_28_October_2026.pdf",
+    "publisher": "UN OCHA oPt",
+    "date": "2026-10-30"
+   }
+  },
+  {
+   "country": "Israel",
+   "claim": "Israel's stated position (PMO, 26 Jan 2024): 'Like every country, Israel has an inherent right to defend itself' and 'We will continue to facilitate humanitarian assistance, and to do our utmost to keep civilians out of harm's way.'",
+   "source": {
+    "title": "PM Netanyahu's Comments on the Decision of the International Court of Justice in The Hague (PMO, via GlobalSecurity)",
+    "url": "https://www.globalsecurity.org/military/library/news/2024/01/mil-240126-israel-pm01.htm",
+    "publisher": "Israel Prime Minister's Office",
+    "date": "2024-01-26"
+   }
+  }
+ ]
+}
