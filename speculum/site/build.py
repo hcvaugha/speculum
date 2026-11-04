@@ -137,6 +137,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     by_id = {m["bioguide"]: m for m in members}
     majority = _party_majorities(vlist, positions, by_id)
     tmpl = E.get_template("member.html")
+    from .. import lameduck as _ld
+    leaving = {e["bioguide"]: e for e in _ld.match(chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []}).get("members", []), members) if e["bioguide"]}
     lobby_years = lobbying.get("years_label")
     for m in members:
         bio = m["bioguide"]
@@ -155,7 +157,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         mm = {**m, "party_name": PARTY_NAMES.get(m["party"], m["party"]), "seat_long": seat(m, long=True),
               "caucus": ledger_mod.caucus_party(m)}
         (prev / "member" / f"{bio}.html").write_text(tmpl.render(slugify=_interest_slug,
-            root="../", page="member", m=mm, L=ledgers[bio], recent=recent,
+            root="../", page="member", m=mm, L=ledgers[bio], recent=recent, leaving=leaving.get(bio),
+            leaving_label=_ld.REASONS.get((leaving.get(bio) or {}).get("reason"), ""),
             honors=sorted(lobbying.get("honors", {}).get(bio, []), key=lambda c: -float(c.get("amount") or 0)),
             parts=ledger_mod.FUNDING_PARTS, lobby_years=lobby_years, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
@@ -172,6 +175,12 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     if not public:
         _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common)
     _build_pages(E, snapshots_root.parent, prev, common)
+    from .. import lameduck as lameduck_mod
+    ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
+    ld_rows = lameduck_mod.build(members, votes, ld.get("members", []))
+    (prev / "lameduck.html").write_text(E.get_template("lameduck.html").render(
+        root="", page="lameduck", rows=ld_rows, as_of=(ld.get("as_of") or "")[:10] or "—",
+        min_after=lameduck_mod.MIN_AFTER, **common), encoding="utf-8")
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).

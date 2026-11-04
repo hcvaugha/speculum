@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Lame-duck watch · Speculum{% endblock %}
+{% block body %}
+<h1>Lame-duck watch</h1>
+<p class="lede">Members who will not return when the next Congress is sworn in on January 3, 2027, still vote until then. This page sets each one's votes after Election Day against their own record before it: how often they voted with their party when the parties split, and how often they voted at all.</p>
+<p class="meta">{{ rows|length }} members · list as of {{ as_of }} · a change appears once a member has cast {{ min_after }} party-splitting votes after November 3 · comparing each member with themselves, not with anyone else</p>
+
+{% if not rows %}
+<p class="muted">The list of departing members is being compiled from the House Press Gallery and called races.</p>
+{% else %}
+{% for chamber, group in rows|groupby('member.chamber') %}
+<h2>{{ 'Senate' if chamber == 'senate' else 'House' }}</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Member</th><th>Why not returning</th><th class="r">With party, before</th><th class="r">With party, since</th><th class="r">Change</th><th class="r">Voted, before</th><th class="r">Voted, since</th></tr></thead>
+<tbody>
+{% for r in group %}{% set m = r.member %}
+<tr>
+  <td><a href="member/{{ m.bioguide }}.html">{{ m.name }}</a> <span class="party-{{ m.party }} num">{{ m.party }}-{{ m.state }}</span></td>
+  <td class="muted">{% if r.source %}<a href="{{ r.source.url }}" class="muted">{{ r.reason_label }}</a>{% else %}{{ r.reason_label }}{% endif %}{% if r.detail %}<br><span style="font-size:12px">{{ r.detail }}</span>{% endif %}</td>
+  <td class="r num">{{ r.unity_before|pct if r.unity_before is not none else '—' }} <span class="muted">({{ r.unity_votes_before }})</span></td>
+  <td class="r num">{% if r.unity_after is not none %}{{ r.unity_after|pct }} <span class="muted">({{ r.unity_votes_after }})</span>{% else %}<span class="muted">{{ r.unity_votes_after }} so far</span>{% endif %}</td>
+  <td class="r num">{% if r.change is not none %}{{ '+' if r.change > 0 else '−' if r.change < 0 else '' }}{{ (r.change|abs * 100)|round|int }} pts{% else %}—{% endif %}</td>
+  <td class="r num">{{ r.attend_before|pct if r.attend_before is not none else '—' }}</td>
+  <td class="r num">{{ r.attend_after|pct if r.attend_after is not none else '—' }}</td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+{% endfor %}
+{% endif %}
+
+<div class="notice">Members leave for many reasons, and a change in how someone votes on the way out can be read many ways: freedom from the next campaign, a last stand on principle, or simply fewer votes cast. The page shows the change; it does not say why.</div>
+{% endblock %}

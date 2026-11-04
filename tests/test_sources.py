@@ -416,3 +416,20 @@ def test_own_money_filter():
     assert not is_own_money({"name": "Plains Cotton Growers Inc. Pac", "entity_type": "PAC"}, scott)
     assert not is_own_money({"name": "Transdigm Group Inc Employee Pac", "entity_type": "PAC"}, tran)
     assert not is_own_money({"name": "Lockheed Martin Employees Pac", "entity_type": "PAC"}, scalise)
+
+
+def test_lameduck_compares_member_with_themselves():
+    from speculum import lameduck
+    members = [{"bioguide": b, "name": b, "last": b, "party": p, "state": "OH", "chamber": "house"}
+               for b, p in [("A", "D"), ("B", "D"), ("F", "D"), ("C", "R"), ("E", "R")]]
+    votes = {"votes": [], "positions": {}}
+    for i in range(12):
+        d = "2025-05-01" if i < 6 else "2026-11-20"
+        vid = f"h{i}"
+        votes["votes"].append({"id": vid, "date": d})
+        # A votes with Democrats before Day Zero, against them after
+        a = "Yea" if i < 6 else "Nay"
+        votes["positions"][vid] = {"A": a, "B": "Yea", "F": "Yea", "C": "Nay", "E": "Nay"}
+    rows = lameduck.build(members, votes, [{"name": "Ann A", "state": "OH", "chamber": "house", "reason": "retiring"}])
+    [r] = rows
+    assert r["unity_before"] == 1.0 and r["unity_after"] == 0.0 and r["change"] == -1.0

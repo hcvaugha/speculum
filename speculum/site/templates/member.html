@@ -4,6 +4,7 @@
 {% block body %}
 <h1>{{ m.name }}</h1>
 <p class="lede"><span class="party-{{ m.party }}">{{ m.party_name }}{% if m.party != m.caucus %} (caucuses with {{ party_names[m.caucus] }}s){% endif %}</span> · {{ m.seat_long }} · {{ 'Senator' if m.chamber == 'senate' else 'Representative' }}{% if m.chamber_since or m.start %} since {{ (m.chamber_since or m.start)[:4] }}{% endif %}</p>
+{% if leaving %}<p class="notice" style="margin-top:0">Not returning in January: {{ leaving_label|lower }}{% if leaving.detail %} ({{ leaving.detail }}){% endif %}. Votes after Election Day are compared with this member's own record on the <a href="../lameduck.html">lame-duck watch</a>.</p>{% endif %}
 <p class="meta">Bioguide {{ m.bioguide }}{% if L.finance and L.finance.candidate_id %} · FEC <a href="https://www.fec.gov/data/candidate/{{ L.finance.candidate_id }}/">{{ L.finance.candidate_id }}</a>{% endif %} · <a href="https://bioguide.congress.gov/search/bio/{{ m.bioguide }}">Congressional biography</a></p>
 
 <h2>The Ledger</h2>
