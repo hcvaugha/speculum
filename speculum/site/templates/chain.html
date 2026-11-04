@@ -81,6 +81,34 @@
   </tbody></table></div>
   {% endif %}
 
+  <p class="step" style="margin-top:22px;font-size:11px">Advocacy money on this vote</p>
+  {% set ao = c.advocacy_orgs %}
+  {% if not ao or (not ao.block and not ao.proceed) %}
+  <p>Research found no advocacy organization taking a public side on this vote{% if c.country != 'Israel' %}, unlike the votes on sales to Israel{% endif %}. So the arms-industry pattern above is not advocacy money in disguise here. The search was not exhaustive.</p>
+  {% else %}
+  <p class="meta">Organizations count if they lobbied on this resolution (LD-2 filings) or publicly urged senators on it, with their side taken from their own statements, the same rule for both sides. Their PACs' gifts to each senator's campaign are counted from the PAC's own reports, so bundled (earmarked) donations count too. Super PAC spending is independent of the campaign and shown apart.</p>
+  <div class="readings" style="grid-template-columns:1fr 1fr">
+  {% for side, label in [('block', 'Urged blocking the sale'), ('proceed', 'Urged letting it proceed')] %}
+    <div class="reading"><div class="label">{{ label }}</div>
+    {% for o in ao[side] %}<div class="context" style="margin-top:6px">{% if o.evidence %}<a href="{{ o.evidence[0].url }}">{{ o.name }}</a>{% else %}{{ o.name }}{% endif %} <span class="muted">· {% if o.pacs %}{{ o.pacs|map(attribute='name')|join(', ') }}{% else %}no federal PAC{% endif %}{% if o.super_pacs %}; super PAC {{ o.super_pacs|map(attribute='name')|join(', ') }}{% endif %}</span>{% if o.includes %}<div class="muted" style="font-size:12px">{{ o.includes|join(', ') }}</div>{% endif %}</div>{% else %}<div class="context muted">None found</div>{% endfor %}
+    </div>
+  {% endfor %}
+  </div>
+  {% if c.advocacy_pattern %}
+  <div class="tbl-wrap" style="margin-top:12px"><table>
+  <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">Median from groups urging proceed</th><th class="r">Median from groups urging block</th><th class="r">Super PAC spending for / against</th></tr></thead>
+  <tbody>
+  {% for party, cell in c.advocacy_pattern.items() %}{% for side, label in [('Y', 'Voted to block'), ('N', 'Voted against blocking')] %}{% set x = cell[side] %}{% if x.n %}
+  <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}{% if x.n_known < x.n %} <span class="muted">({{ x.n_known }} known)</span>{% endif %}</td>
+  <td class="r num">{% if x.n_known %}{{ x.proceed_median|money }} <span class="muted">({{ x.proceed_any }} received any)</span>{% else %}—{% endif %}</td>
+  <td class="r num">{% if x.n_known %}{{ x.block_median|money }} <span class="muted">({{ x.block_any }})</span>{% else %}—{% endif %}</td>
+  <td class="r num">{{ x.ie_support|money }} / {{ x.ie_oppose|money }}</td></tr>
+  {% endif %}{% endfor %}{% endfor %}
+  </tbody></table></div>
+  <p class="meta" style="margin-top:8px">Federal election cycles 2020–2026, every senator measured over the same window.{% if not c.advocacy_complete %} Some cycles are still being collected; figures will rise as they complete.{% endif %} Earmarks sent to joint fundraising committees are not counted toward a senator.</p>
+  {% else %}<p class="muted">Advocacy money arrives with the next data run.</p>{% endif %}
+  {% endif %}
+
   <details style="margin-top:14px"><summary>Every senator's vote and arms-industry money</summary>
   <div class="tbl-wrap"><table>
   <thead><tr><th>Senator</th><th>Vote</th><th class="r">Lobbyist money</th><th class="r">PAC money</th>{% if c.contractor_companies %}<th class="r">From contractors</th>{% endif %}<th>Largest arms givers</th></tr></thead>

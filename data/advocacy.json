@@ -1,0 +1,593 @@
+{
+ "_meta": {
+  "on": "2026-11-04",
+  "rule": "Keep your two-prong rule, tightened so it runs mechanically. (1) Qualify if (a) a 2025–2026 LD-2 lists one of the 8 bill numbers in its specific issues text. Match the number with a regex that ignores spacing and dots, and require the filing year to be 2025–26, because 2025 Q1 filings also list 118th-Congress S.J.Res.111–118. Or (b) a public statement, letter, action alert, ad or scorecard names the resolution, the specific sale, or 'the Joint Resolutions of Disapproval' between introduction and 30 days after the vote. Post-vote ads or praise aimed at named senators count, because they are accountability pressure. (2) Set side per bill, from a statement about that bill or the same-day pair. If none exists, side = 'unknown': report the money but assign it to no side. An LD-2 listing proves the group lobbied, not which way. J Street's filings list S.J.Res.26/33 even though it took no position on them. (3) 'Affiliated PAC' means the PAC lists the org as its connected organization on FEC Form 1, or bears the org's name. PACs linked only by shared staff are flagged 'related'. (4) Report super PAC independent expenditures separately from contributions. (5) Use the same lookback window for both sides, e.g. the senator's current six-year term. A better rule mainly fixes the side problem: today an LD-2-only org (Hadassah, FDD Action) qualifies but cannot be assigned a side.",
+  "status": "draft, awaiting reviewer",
+  "known_gaps": [
+   "LD-2 search was not exhaustive (lda.gov API was unreachable from research); more organizations may qualify.",
+   "No advocacy organization was found lobbying on the Qatar (S.J.Res. 53) or UAE (S.J.Res. 54) votes.",
+   "NORPAC, Pro-Israel America PAC and DMFI PAC are excluded because their sponsoring organizations did not qualify under the rule.",
+   "Earmarks sent to joint fundraising committees are not allocated to a senator.",
+   "United Democracy Project spends independently; its spending is shown separately and is not a contribution."
+  ]
+ },
+ "cycles": [
+  2020,
+  2022,
+  2024,
+  2026
+ ],
+ "organizations": [
+  {
+   "name": "AIPAC",
+   "sides": {
+    "SJRES26": "proceed",
+    "SJRES33": "proceed",
+    "SJRES34": "proceed",
+    "SJRES41": "proceed",
+    "SJRES32": "proceed",
+    "SJRES138": "proceed"
+   },
+   "positions": {
+    "SJRES26": "opposes (post-vote ad blitz against the 15 yes-voters)",
+    "SJRES33": "opposes (same)",
+    "SJRES34": "opposes (press release applauding rejection)",
+    "SJRES41": "opposes (same)",
+    "SJRES32": "opposes",
+    "SJRES138": "opposes",
+    "SJRES53": "not found",
+    "SJRES54": "not found"
+   },
+   "evidence": [
+    {
+     "title": "AIPAC launches ad blitz against senators who voted to block arms sales to Israel (six-figure buy, 11 states, 15 senators)",
+     "url": "https://jewishinsider.com/2025/04/aipac-ad-blitz-senators-arms-sales-israel-vote-bernie-sanders/",
+     "date": "2025-04-09"
+    },
+    {
+     "title": "AIPAC press release: 'AIPAC applauds the U.S. Senate for ... again resoundingly rejecting proposed bans' (page dated 7/29; vote was 7/30)",
+     "url": "https://aipac.org/press-release/senate-rejects-sanders-israel-arms-ban",
+     "date": "2025-07-29/30"
+    },
+    {
+     "title": "Jewish Insider: AIPAC 'We appreciate the senators who opposed these misguided and dangerous resolutions'",
+     "url": "https://jewishinsider.com/2026/04/majority-senate-democrats-vote-block-arm-sales-israel/",
+     "date": "2026-04-15"
+    }
+   ],
+   "lda": [
+    {
+     "registrant": "American Israel Public Affairs Committee",
+     "client": "Self",
+     "filing_uuid_or_url": "https://lda.gov/filings/public/filing/f91b0c9f-3424-470e-96ff-76e61de5b45e/print/ (signed 4/18/2025; lists 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "American Israel Public Affairs Committee",
+     "client": "Self",
+     "filing_uuid_or_url": "https://lda.gov/filings/public/filing/3cf55620-b4ec-4bf7-9c23-771dbe9a4681/print/ (signed 7/17/2025; lists 26, 33)"
+    },
+    {
+     "registrant": "American Israel Public Affairs Committee (inferred: 251 H St NW address, signer Rachel Hirsch; name not in extracted text)",
+     "client": "Self",
+     "filing_uuid_or_url": "https://lda.gov/filings/public/filing/af43001f-9acf-4ea4-a5c2-4caf2b85814a/print/ (2026, signed 7/14/2026; lists 32, 138)"
+    }
+   ],
+   "pacs": [
+    {
+     "name": "AIPAC PAC",
+     "fec_id": "C00797670",
+     "conduit": true
+    }
+   ],
+   "related_pacs_excluded": [],
+   "super_pacs": [
+    {
+     "name": "United Democracy Project",
+     "fec_id": "C00799031"
+    }
+   ]
+  },
+  {
+   "name": "J Street",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block",
+    "SJRES34": "block",
+    "SJRES41": "block"
+   },
+   "positions": {
+    "SJRES26": "no position: 'some Senators will decide to vote yes and others to vote no'; opposed only the emergency bypass of Congress",
+    "SJRES33": "same as 26",
+    "SJRES34": "pre-vote position not found; welcomed the votes afterward",
+    "SJRES41": "pre-vote position not found; welcomed the votes afterward (the release mentions the rifles vote)",
+    "SJRES32": "supports (signed 9 Apr 2026 coalition letter)",
+    "SJRES138": "supports (same letter)",
+    "SJRES53": "not found",
+    "SJRES54": "not found"
+   },
+   "evidence": [
+    {
+     "title": "J Street Statement on the Joint Resolutions of Disapproval",
+     "url": "https://jstreet.org/press-releases/j-street-statement-on-the-joint-resolutions-of-disapproval/",
+     "date": "2025-04-03"
+    },
+    {
+     "title": "J Street Welcomes Over Half of Democratic Caucus in the Senate Sending Vital Message of Disapproval to Netanyahu",
+     "url": "https://jstreet.org/press-releases/j-street-welcomes-over-half-of-democratic-caucus-in-the-senate-sending-vital-message-of-disapproval-to-netanyahu/",
+     "date": "2025-07-30"
+    },
+    {
+     "title": "Coalition letter urging support for the JRDs (23 signers incl. J Street)",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    },
+    {
+     "title": "Jewish Currents: J Street (Hannah Morris) backing both April 2026 JRDs",
+     "url": "https://jewishcurrents.org/democratic-senators-face-pressure-on-israel-arms-sales-vote",
+     "date": "2026-04-14"
+    }
+   ],
+   "lda": [
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "a660cc75-4b7b-4d7f-9bfd-767e8d96d1eb (2025 Q1; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "da1c9c4d-7d29-42ad-9060-d9b4eb2a1bc9 (signed 7/18/2025; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "8d23d1c9-ca96-41c8-9e4a-6fa8877c7334 (signed 10/20/2025; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "4b6131dd-bf2c-4457-bc36-a7a8871bc386 (signed 1/16/2026; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "2b16883f-04a1-49fa-b83f-e19f92ce8bfc (2026 Q1; 32, 33, 34, 137, 138)"
+    },
+    {
+     "registrant": "J Street",
+     "client": "Self",
+     "filing_uuid_or_url": "a888f8b8-f319-4885-a41b-1270a718b84b (signed 7/20/2026; 26, 32, 33, 34, 41, 138)"
+    }
+   ],
+   "pacs": [
+    {
+     "name": "JStreetPAC",
+     "fec_id": "C00441949",
+     "conduit": true
+    }
+   ],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Friends Committee on National Legislation",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports (Apr 2026 letter)",
+    "SJRES138": "supports (Apr 2026 letter)",
+    "SJRES26": "lobbied per LD-2; 2025 public position not retrieved",
+    "SJRES33": "same as 26",
+    "SJRES34": "same as 26",
+    "SJRES41": "same as 26",
+    "SJRES53": "not found",
+    "SJRES54": "not found"
+   },
+   "evidence": [
+    {
+     "title": "National coalition letter urging congressional action to block arms transfers to Israel",
+     "url": "https://www.fcnl.org/updates/2026-04/national-coalition-letter-urging-congressional-action-block-arms-transfers-israel",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [
+    {
+     "registrant": "Friends Committee on National Legislation",
+     "client": "Self",
+     "filing_uuid_or_url": "b6147b76-4055-42be-b4ab-86d5539ce519 (2025 Q1; 26, 32, 33, 34; also the 118th-Congress UAE resolution S.J.Res.118)"
+    },
+    {
+     "registrant": "Friends Committee on National Legislation",
+     "client": "Self",
+     "filing_uuid_or_url": "bd35b5e4-1468-47c0-9a04-65c1a6a4e2a5 (signed 7/18/2025; 26, 32, 33, 34)"
+    },
+    {
+     "registrant": "Friends Committee on National Legislation",
+     "client": "Self",
+     "filing_uuid_or_url": "39995164-63bd-4de0-a614-8d725804abc8 (signed 10/22/2025; 34, 41)"
+    }
+   ],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "A New Policy Inc.",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports (Apr 2026 letter)",
+    "SJRES138": "supports (Apr 2026 letter)",
+    "others": "lobbied per LD-2; 2025 public position not retrieved"
+   },
+   "evidence": [
+    {
+     "title": "Coalition letter (signer)",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [
+    {
+     "registrant": "A NEW POLICY INC.",
+     "client": "Self",
+     "filing_uuid_or_url": "e140eb33-c7c4-4aaf-9c3b-2f45b6069de0 (signed 4/18/2025; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "A NEW POLICY INC.",
+     "client": "Self",
+     "filing_uuid_or_url": "77420296-0344-45af-a0c0-f7a3d59fe772 (signed 7/14/2025; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "A NEW POLICY INC.",
+     "client": "Self",
+     "filing_uuid_or_url": "4171e1ec-b0de-46db-b5ff-dfb25df09711 (signed 10/17/2025; 26, 32, 33, 34, 41)"
+    },
+    {
+     "registrant": "A NEW POLICY INC.",
+     "client": "Self",
+     "filing_uuid_or_url": "292dffdf-4b60-4186-8d75-ab7d03a0f02c (2026 first_quarter per API JSON; 32, 33, 34, 41, 137, 138)"
+    },
+    {
+     "registrant": "A NEW POLICY INC.",
+     "client": "Self",
+     "filing_uuid_or_url": "f9eac3a0-58cf-4898-baee-33d9c22e8dc0 (signed 7/14/2026; 32, 33)"
+    }
+   ],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Amnesty International USA",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports",
+    "SJRES138": "supports",
+    "SJRES26/33/34": "lobbied per Q1 2025 LD-2; position not retrieved"
+   },
+   "evidence": [
+    {
+     "title": "Senators urged to vote yes on Joint Resolutions of Disapproval (names S.J.Res.32 bulldozers, S.J.Res.138 BLU-110)",
+     "url": "https://www.amnestyusa.org/press-releases/senators-urged-to-vote-yes-on-joint-resolutions-of-disapproval-and-end-arms-transfers-to-israel/",
+     "date": "2026-04-14"
+    }
+   ],
+   "lda": [
+    {
+     "registrant": "Amnesty International of the USA, Inc.",
+     "client": "Self",
+     "filing_uuid_or_url": "5ba50cd0-09c0-4e08-9872-c24741a2c580 (signed 4/21/2025; 26, 32, 33, 34)"
+    }
+   ],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Hadassah, The Women's Zionist Organization of America",
+   "sides": {},
+   "positions": {
+    "SJRES26": "lobbied (LD-2); public position not found",
+    "SJRES33": "lobbied (LD-2); public position not found"
+   },
+   "evidence": [],
+   "lda": [
+    {
+     "registrant": "Hadassah",
+     "client": "Self",
+     "filing_uuid_or_url": "dc51bee1-4512-4301-a0b1-90bc3bcd888d (signed 7/16/2025; 26, 33)"
+    }
+   ],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "FDD Action",
+   "sides": {},
+   "positions": {
+    "SJRES26/32/33/34/41": "lobbied (LD-2, DEF issue code); public position not found"
+   },
+   "evidence": [],
+   "lda": [
+    {
+     "registrant": "FDD Action",
+     "client": "FDD Action",
+     "filing_uuid_or_url": "ec39fc69-b32f-488e-8550-5f18af978bae (signed 4/21/2025; 20–27, 32–35, 40–42)"
+    }
+   ],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "CAIR",
+   "sides": {
+    "SJRES34": "block",
+    "SJRES41": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES34": "supports",
+    "SJRES41": "supports",
+    "SJRES138": "supports (alert names the 12,000 BLU-110 sale)",
+    "SJRES32": "bulldozer resolution not named in the alert found",
+    "SJRES26/33": "not retrieved"
+   },
+   "evidence": [
+    {
+     "title": "CAIR Action Alert: Tell the Senate to vote YES on Sanders resolutions (names S.J.Res.34 and S.J.Res.41)",
+     "url": "https://www.cair.com/action_alerts/cair-action-alert-tell-the-senate-to-vote-yes-on-sanders-resolutions-to-block-u-s-bombs-and-guns-for-genocide-in-gaza/",
+     "date": "late Jul 2025 (undated page)"
+    },
+    {
+     "title": "CAIR Action Alert: Tell the Senate to Vote 'YES' This Week on Resolution Opposing More U.S. Bombs for Israel",
+     "url": "https://www.cair.com/?p=75882",
+     "date": "~Apr 2026 (undated page)"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Jewish Voice for Peace Action",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports",
+    "SJRES138": "supports",
+    "2025 votes": "not retrieved"
+   },
+   "evidence": [
+    {
+     "title": "Jewish Currents: Democratic Senators Face Pressure on Israel Arms Sales Vote",
+     "url": "https://jewishcurrents.org/democratic-senators-face-pressure-on-israel-arms-sales-vote",
+     "date": "2026-04-14"
+    }
+   ],
+   "lda": [],
+   "pacs": [
+    {
+     "name": "JVP Action PAC",
+     "fec_id": "C00747691",
+     "conduit": false
+    }
+   ],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "IMEU Policy Project",
+   "sides": {
+    "SJRES26": "block",
+    "SJRES33": "block",
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES26": "supports (post-vote roundup)",
+    "SJRES33": "supports (post-vote roundup)",
+    "SJRES32": "supports",
+    "SJRES138": "supports"
+   },
+   "evidence": [
+    {
+     "title": "US Complicity in Gaza Deepens as Only 15 Senators Vote to Block Weapons to Israel",
+     "url": "https://www.imeupolicyproject.org/newsletters/us-complicity-in-gaza-deepens-as-only-15-senators-vote-to-block-weapons-to-israel",
+     "date": "2025-04-07"
+    },
+    {
+     "title": "Jewish Currents (Hamid Bendaas quote)",
+     "url": "https://jewishcurrents.org/democratic-senators-face-pressure-on-israel-arms-sales-vote",
+     "date": "2026-04-14"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": [
+    {
+     "name": "Peace, Accountability, and Leadership PAC (hybrid PAC; RELATED only: led by IMEU Policy Project ED Margaret DeReus per The New Arab; FEC page lists no connected org)",
+     "fec_id": "C00937888"
+    }
+   ]
+  },
+  {
+   "name": "Arab American Institute",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports (letter)",
+    "SJRES138": "supports (letter)",
+    "2025 votes": "not retrieved"
+   },
+   "evidence": [
+    {
+     "title": "Coalition letter (signer)",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Demand Progress",
+   "sides": {
+    "SJRES41": "block",
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES41": "supports (ran a campaign urging senators)",
+    "SJRES32": "supports (letter)",
+    "SJRES138": "supports (letter)"
+   },
+   "evidence": [
+    {
+     "title": "Turning Tide: 27 Senators Vote to Limit Israeli Arms Sales",
+     "url": "https://www.demandprogress.org/turning-tide-27-senators-vote-to-limit-israeli-arms-sales",
+     "date": "2025-07-31"
+    },
+    {
+     "title": "Coalition letter (signer)",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "Global Ministries (Christian Church (Disciples of Christ) & United Church of Christ)",
+   "sides": {
+    "SJRES34": "block",
+    "SJRES41": "block"
+   },
+   "positions": {
+    "SJRES34": "supports",
+    "SJRES41": "supports"
+   },
+   "evidence": [
+    {
+     "title": "TODAY (7/30/25) – Senate Voting on Arms Sales to Israel",
+     "url": "https://www.globalministries.org/?p=59762",
+     "date": "2025-07-30"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "New Jewish Narrative",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports",
+    "SJRES138": "supports"
+   },
+   "evidence": [
+    {
+     "title": "Coalition letter (signer)",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "17 other signers of the April 9, 2026 coalition letter",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "supports",
+    "SJRES138": "supports"
+   },
+   "evidence": [
+    {
+     "title": "Coalition letter JRD",
+     "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
+     "date": "2026-04-09"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": [],
+   "includes": [
+    "American Committee for Middle East Rights",
+    "Arms Control Association",
+    "Center for Civilians in Conflict",
+    "Center for International Policy Advocacy",
+    "Churches for Middle East Peace",
+    "Common Defense",
+    "DAWN",
+    "Foreign Policy for America",
+    "Indivisible",
+    "MoveOn",
+    "Muslim Public Affairs Council",
+    "NIAC Action",
+    "Oxfam America",
+    "Peace Action",
+    "Refugees International",
+    "TIMEP",
+    "Win Without War"
+   ]
+  },
+  {
+   "name": "IfNotNow",
+   "sides": {
+    "SJRES32": "block",
+    "SJRES138": "block"
+   },
+   "positions": {
+    "SJRES32": "post-vote praise only",
+    "SJRES138": "post-vote praise only"
+   },
+   "evidence": [
+    {
+     "title": "Forward: Democrats vote to block weapons sales to Israel (Morriah Kaplan quote)",
+     "url": "https://forward.com/fast-forward/819118/democrats-vote-to-block-weapons-sales-to-israel/",
+     "date": "2026-04-15/16"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  },
+  {
+   "name": "American Jewish Congress",
+   "sides": {
+    "SJRES26": "proceed",
+    "SJRES33": "proceed"
+   },
+   "positions": {
+    "SJRES26": "opposes (post-vote: 'a powerful rejection of efforts to undermine our closest ally')",
+    "SJRES33": "same"
+   },
+   "evidence": [
+    {
+     "title": "Bernie Sanders' reckless anti-Israel measures are defeated once again",
+     "url": "https://ajcongress.org/statements/bernie-sanders-reckless-anti-israel-measures-are-defeated-once-again/",
+     "date": "2025-04-04"
+    }
+   ],
+   "lda": [],
+   "pacs": [],
+   "related_pacs_excluded": []
+  }
+ ]
+}

@@ -72,6 +72,15 @@ def cmd_snapshot(args) -> int:
     lobbying = step("lobbying", lambda: lda.fetch_lobbying(fetch, keys["lda"], members, run_date))
     if lobbying is not None:
         snap.write("lobbying.json", lobbying)
+    def _advocacy():
+        from .sources import advocacy
+        from .chains import load_json
+        cfg = load_json(ROOT / "advocacy.json", {})
+        return advocacy.fetch_advocacy(fetch, keys["fec"], cfg, run_date, previous=_latest(snap, "advocacy.json"),
+                                       deadline=deadline - 60 * 60)   # leave finance at least an hour
+    adv = step("advocacy", _advocacy)
+    if adv is not None:
+        snap.write("advocacy.json", adv)
     finance = step("finance", lambda: fec.fetch_finance(fetch, keys["fec"], members, run_date,
                                                          previous=_latest(snap, "finance.json"),
                                                          top_n=args.top_committees, deadline=deadline))
@@ -110,7 +119,7 @@ def cmd_snapshot(args) -> int:
         # A partial rerun fills in sources for a night already saved: keep what that night recorded
         # about the sources this run did not touch.
         prior = snap.read("meta.json", {}) or {}
-        skipped = [k for k in ("votes", "finance", "lobbying") if k not in args.only]
+        skipped = [k for k in ("votes", "finance", "lobbying", "advocacy") if k not in args.only]
         meta["errors"] = {**{k: v for k, v in (prior.get("errors") or {}).items()
                              if any(k == s or k.startswith(s + "_") for s in skipped)}, **errors}
         if "finance" not in args.only:
@@ -208,7 +217,7 @@ def main(argv=None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("snapshot", help="fetch every source and write today's snapshot")
     s.add_argument("--date", help="override the snapshot date (YYYY-MM-DD)")
-    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying"])
+    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying", "advocacy"])
     s.add_argument("--top-committees", type=int, default=50, help="committee givers kept per member (pages show the top 10)")
     b = sub.add_parser("build", help="render the site from the latest snapshot")
     b.add_argument("--out", default="dist")

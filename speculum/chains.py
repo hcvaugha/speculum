@@ -93,7 +93,8 @@ def _median(xs):
 
 
 def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, sectors: dict,
-          research: dict, reviews: dict, committees: dict | None = None) -> list[dict]:
+          research: dict, reviews: dict, committees: dict | None = None,
+          advocacy_cfg: dict | None = None, advocacy_data: dict | None = None) -> list[dict]:
     from .sources.committees import on_defense_committee
     by_id = {m["bioguide"]: m for m in members}
     positions = votes.get("positions", {})
@@ -156,6 +157,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         ch["outcomes"] = [{**o, "_order": order.get(o.get("grade"), 4)} for o in ch["outcomes"]]
         ch["context"] = [x for x in research.get("context", []) if x.get("country") == ch["country"]]
         _contractor_money(ch, sectors)
+        _advocacy(ch, by_id, finance, advocacy_cfg or {}, advocacy_data)
         rv = reviews.get(ch["id"]) or {}
         # approved: a person checked it and takes responsibility. verified: an independent AI checker
         # opened every source and found each claim matches. draft: neither yet.
@@ -194,6 +196,50 @@ def _contractor_money(ch: dict, sectors: dict) -> None:
             cell[side]["contractor_any"] = sum(1 for r in group if r["contractor"] > 0)
 
 
+def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None) -> None:
+    """Money from organizations that took a public side on this bill, both sides by one rule."""
+    from .sources import advocacy
+    bkey = ch["bill"].upper().replace(" ", "").replace(".", "")
+    sides = {"block": [], "proceed": []}
+    for org in cfg.get("organizations", []):
+        sd = org.get("sides", {}).get(bkey)
+        if sd in sides:
+            sides[sd].append({"name": org["name"], "pacs": org.get("pacs", []), "super_pacs": org.get("super_pacs", []),
+                              "includes": org.get("includes", []),
+                              "evidence": org.get("evidence", []), "position": _position_text(org, bkey)})
+    ch["advocacy_orgs"] = sides
+    ch["advocacy_meta"] = cfg.get("_meta", {})
+    if not data or not (sides["block"] or sides["proceed"]):
+        ch["advocacy_pattern"] = None
+        return
+    for r in ch["members"]:
+        r["adv"] = advocacy.member_totals(r["bioguide"], by_id[r["bioguide"]], finance, cfg, data, bkey)
+    out = {}
+    for party in sorted({r["caucus"] for r in ch["members"] if r["caucus"]}):
+        cell = {}
+        for side in ("Y", "N"):
+            group = [r for r in ch["members"] if r["caucus"] == party and r["side"] == side]
+            known = [r for r in group if r["adv"]["known"]]
+            cell[side] = {"n": len(group), "n_known": len(known),
+                          "proceed_median": _median([r["adv"]["proceed"] for r in known]),
+                          "proceed_any": sum(1 for r in known if r["adv"]["proceed"] > 0),
+                          "block_median": _median([r["adv"]["block"] for r in known]),
+                          "block_any": sum(1 for r in known if r["adv"]["block"] > 0),
+                          "ie_support": sum(r["adv"]["ie_support"] for r in group),
+                          "ie_oppose": sum(r["adv"]["ie_oppose"] for r in group)}
+        out[party] = cell
+    ch["advocacy_pattern"] = out
+    ch["advocacy_complete"] = all(r["adv"]["complete"] for r in ch["members"])
+
+
+def _position_text(org: dict, bkey: str) -> str:
+    pos = org.get("positions", {})
+    for k, v in pos.items():
+        if bkey in k.upper().replace(".", "").replace(" ", "").replace("/", "/SJRES").split("/"):
+            return v
+    return ""
+
+
 def _pattern(rows: list[dict]) -> dict:
     """Median arms-industry money for each side of the vote, within each party: an associated-grade
     reading. Comparing inside a party keeps the party line itself from masquerading as a money effect.
@@ -213,13 +259,15 @@ def _pattern(rows: list[dict]) -> dict:
     return out
 
 
-def for_site(members, finance, lobbying, votes, data_root: Path, committees: dict | None = None) -> list[dict]:
+def for_site(members, finance, lobbying, votes, data_root: Path, committees: dict | None = None,
+             advocacy_data: dict | None = None) -> list[dict]:
     """Chains with everything a page needs: reviewed research where it exists, otherwise the AI
     drafter's output, clearly marked as an unreviewed draft."""
     data_root = Path(data_root)
     research = load_json(data_root / "chains" / "research.json", {})
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
-                load_json(data_root / "chains" / "reviews.json", {}), committees)
+                load_json(data_root / "chains" / "reviews.json", {}), committees,
+                load_json(data_root / "advocacy.json", {}), advocacy_data)
     for ch in out:
         ch["research_by"] = "research" if ch["mechanism"] or ch["outcomes"] else None
         d = load_json(data_root / "chains" / "drafts" / f"{ch['id']}.json", None)

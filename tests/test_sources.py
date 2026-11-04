@@ -333,3 +333,34 @@ def test_committee_control():
     [ch] = chains.build(members, {}, lob, votes, {"arms": {"companies": [{"name": "X", "fec": [], "lda": [9]}]}}, {}, {}, data)
     assert ch["money_pattern"]["D"]["N"]["lobby_median"] == 7000
     assert ch["committee_control"]["D"]["N"]["n"] == 1 and ch["committee_control"]["D"]["N"]["lobby_median"] == 1000
+
+
+def test_advocacy_counts_earmarks_once_and_tracks_completeness():
+    from speculum.sources import advocacy
+
+    pages = [
+        {"results": [
+            {"recipient_committee_id": "CAMP1", "disbursement_amount": 5000, "disbursement_description": "Contribution to committee"},
+            {"recipient_committee_id": "CAMP1", "disbursement_amount": 2500, "disbursement_description": "Earmark of Jane Doe"},
+            {"recipient_committee_id": "CAMP1", "disbursement_amount": 7500, "memo_code": "X", "disbursement_description": "memo subtotal"},
+            {"recipient_committee_id": "CAMP2", "disbursement_amount": -1000, "disbursement_description": "Refund"}],
+         "pagination": {"last_indexes": {"last_index": "1"}}},
+        {"results": [], "pagination": {}}]
+
+    class F:
+        n = 0
+        def get_json(self, source, name, url, params=None, **kw):
+            p = pages[self.n]; self.n += 1; return p
+
+    out = advocacy.pac_disbursements(F(), "k", "PAC1", 2026)
+    assert out["complete"] is True
+    assert out["rows"]["CAMP1"]["total"] == 7500 and out["rows"]["CAMP1"]["earmarked"] == 2500
+    assert out["rows"]["CAMP2"]["total"] == -1000
+
+    cfg = {"organizations": [{"name": "Group P", "sides": {"SJRES1": "proceed"}, "pacs": [{"fec_id": "PAC1"}]},
+                             {"name": "Group B", "sides": {"SJRES1": "block"}, "pacs": [{"fec_id": "PAC2"}]}]}
+    data = {"pacs": {"PAC1": {"2026": out}, "PAC2": {"2026": {"complete": False, "rows": {"CAMP1": {"total": 300}}}}}}
+    t = advocacy.member_totals("A", {"fec_ids": []}, {"A": {"committee_id": "CAMP1"}}, cfg, data, "SJRES1")
+    assert t["proceed"] == 7500 and t["block"] == 300 and t["complete"] is False
+    t2 = advocacy.member_totals("B", {"fec_ids": []}, {}, cfg, data, "SJRES1")
+    assert t2["known"] is False and t2["proceed"] == 0
