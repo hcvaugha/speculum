@@ -19,10 +19,11 @@
 {% for party, cell in pattern.items() %}{% for side, label in [('Y', 'Voted to advance'), ('N', 'Voted against advancing')] %}{% set x = cell[side] %}{% if x.n %}
 <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td>
 <td class="r num">{% if x.lobby.median is not none %}{{ x.lobby.median|money }}{% else %}<span class="muted">too few for a median</span>{% endif %} <span class="muted">({{ x.lobby.low|money }}–{{ x.lobby.high|money }})</span></td>
-<td class="r num">{{ x.lobby.any }} of {{ x.n }}{% if x.n >= min_n and x.n <= 15 and x.lobby.each %}<div class="muted" style="font-size:11px">each: {{ x.lobby.each|map('money')|join(', ') }}</div>{% endif %}</td>
+<td class="r num">{{ x.lobby.any }} of {{ x.n }}</td>
 {% if show_contractor %}<td class="r num">{{ x.contractor_any }} of {{ x.n }}</td>{% endif %}</tr>
 {% endif %}{% endfor %}{% endfor %}
 </tbody></table></div>
+{% for party, cell in pattern.items() %}{% for side, label in [('Y', 'voted to advance'), ('N', 'voted against advancing')] %}{% set x = cell[side] %}{% if x.n >= min_n and x.n <= 15 %}<p class="meta" style="margin-top:6px">Each of the {{ x.n }} {{ party_names[party] }}s who {{ label }}, smallest to largest: {{ x.lobby.each|map('money')|join(', ') }}.</p>{% endif %}{% endfor %}{% endfor %}
 {% endmacro %}
 {% block body %}
 {% set v = c.votes[-1] %}{% set mx = c.mechanism or {} %}
