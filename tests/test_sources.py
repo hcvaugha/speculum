@@ -434,3 +434,14 @@ def test_lameduck_compares_member_with_themselves():
     rows = lameduck.build(members, votes, [{"name": "Ann A", "state": "OH", "chamber": "house", "reason": "retiring"}])
     [r] = rows
     assert r["unity_before"] == 1.0 and r["unity_after"] == 0.0 and r["change"] == -1.0
+
+
+def test_principal_committee_falls_back_for_future_cycle():
+    from speculum.sources import fec
+    class F:
+        def get_json(self, src, name, url, params=None):
+            if "cycle" in (params or {}):
+                return {"results": []}
+            return {"results": [{"committee_id": "C1", "name": "OLD", "cycles": [2018, 2020]},
+                                {"committee_id": "C2", "name": "NOW", "cycles": [2022, 2024, 2026]}]}
+    assert fec._principal_committee(F(), "k", "S0", 2028) == {"id": "C2", "name": "NOW"}

@@ -80,10 +80,17 @@ def _totals(fetch, key, cand: str, cycle: int, election_full: bool) -> dict | No
 
 
 def _principal_committee(fetch, key, cand: str, cycle: int) -> dict | None:
+    """The candidate's principal campaign committee. A senator not up until a later election has a
+    full-cycle label (e.g. 2028) that no committee lists yet among its two-year periods, so when the
+    cycle query finds nothing, ask again without it and take the committee active most recently."""
     data = _get(fetch, key, f"committees_{cand}_{cycle}.json", f"/candidate/{cand}/committees/",
                 cycle=cycle, designation="P", per_page=20)
     rows = data.get("results", [])
     rows = [r for r in rows if cycle in (r.get("cycles") or [])] or rows
+    if not rows:
+        data = _get(fetch, key, f"committees_{cand}_any.json", f"/candidate/{cand}/committees/",
+                    designation="P", per_page=20)
+        rows = sorted(data.get("results", []), key=lambda r: max(r.get("cycles") or [0]), reverse=True)
     return {"id": rows[0]["committee_id"], "name": rows[0].get("name")} if rows else None
 
 
