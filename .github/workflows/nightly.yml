@@ -39,11 +39,17 @@ jobs:
           LDA_API_KEY: ${{ secrets.LDA_API_KEY }}
         run: python -m speculum snapshot ${{ inputs.date && format('--date {0}', inputs.date) || '' }} ${{ inputs.only && format('--only {0}', inputs.only) || '' }}
 
+      - name: Draft research for new consequence chains (only when an Anthropic key is set)
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m speculum chains --draft --limit 3
+
       - name: Commit the snapshot
         run: |
           git config user.name "speculum-bot"
           git config user.email "speculum-bot@users.noreply.github.com"
-          git add data/snapshots
+          git add data/snapshots data/chains/drafts 2>/dev/null || git add data/snapshots
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           DATE=$(ls data/snapshots | sort | tail -1)
           git commit -m "Snapshot $DATE"
