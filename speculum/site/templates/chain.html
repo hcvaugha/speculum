@@ -140,7 +140,8 @@
   </div>
   {% if c.advocacy_after %}<p class="meta" style="margin-top:8px"><b>Welcomed the result afterward (not counted):</b> {% for o in c.advocacy_after %}{{ o.name }}{% if o.position %} <span class="muted">({{ o.position }})</span>{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
   {% if c.advocacy_noside %}<p class="meta"><b>Lobbied or commented without a stated side (not counted):</b> {% for o in c.advocacy_noside %}{{ o.name }} <span class="muted">({{ o.position }})</span>{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
-  {% if c.advocacy_pattern %}
+  {% if c.advocacy_pattern and not c.advocacy_complete %}<p class="muted">Advocacy money for this vote: still being collected (unknown, not zero). Some of these organizations' FEC filings have not yet been read in full through the vote date, and a partial count would understate one side; the table appears once every filing is in.</p>
+  {% elif c.advocacy_pattern %}
   <div class="tbl-wrap" style="margin-top:12px"><table>
   <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">From groups urging rejection: received any</th><th class="r">From groups urging advancing: received any</th><th class="r">Super PAC spending for / against</th></tr></thead>
   <tbody>
@@ -151,7 +152,7 @@
   <td class="r num">{{ x.ie_support|money }} / {{ x.ie_oppose|money }}</td></tr>
   {% endif %}{% endfor %}{% endfor %}
   </tbody></table></div>
-  <p class="meta" style="margin-top:8px">Federal election cycles 2020–2026, every senator measured over the same window.{% if not c.advocacy_complete %} Some cycles are still being collected.{% endif %} Earmarks sent to joint fundraising committees are not counted toward a senator.</p>
+  <p class="meta" style="margin-top:8px">PAC contributions dated 1 January 2019 (the start of the 2020 cycle) through the vote on {{ c.date }}, every senator measured over the same window; nothing given after the vote is counted. Super PAC spending is shown as cycle totals, which are not cut at the vote. Earmarks sent to joint fundraising committees are not counted toward a senator.</p>
   {% else %}<p class="muted">Advocacy money: not yet collected (unknown, not zero). The FEC's data service was intermittently unavailable on the first nights; it is fetched again nightly.</p>{% endif %}
   {% endif %}
 

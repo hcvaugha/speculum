@@ -70,10 +70,13 @@ def _resumable(prior: dict | None) -> tuple[dict, dict | None]:
 
 
 def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int = 1500, deadline=None,
-                      prior: dict | None = None) -> dict:
+                      prior: dict | None = None, cut_dates: list[str] | None = None) -> dict:
     """{"complete": bool, "cursor": next page or None, "rows": {recipient committee id: {"total",
-    "earmarked", "direct", "count", "name"}}}. Continues a prior partial fetch when it left a cursor."""
+    "earmarked", "direct", "count", "name", "upto": {cut date: amount dated on or before it}}}}.
+    Continues a prior partial fetch when it left a cursor. cut_dates are the vote dates, so a chain
+    can count only what was given through its vote."""
     out, cursor = _resumable(prior)
+    cut_dates = sorted(set(cut_dates or []))
     params = {"committee_id": committee_id, "two_year_transaction_period": cycle, "per_page": 100,
               "sort": "-disbursement_date"}
     pager = _Pager(fetch, key, f"sched_b_{committee_id}_{cycle}", "/schedules/schedule_b/", params, max_pages,
@@ -89,7 +92,12 @@ def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int 
         e["total"] += amt
         e["earmarked" if _EARMARK.search(r.get("disbursement_description") or "") else "direct"] += amt
         e["count"] += 1
-    return {"complete": pager.complete, "cursor": pager.cursor, "rows": out}
+        day = (r.get("disbursement_date") or "")[:10]
+        for d in cut_dates:
+            if day and day <= d:
+                e.setdefault("upto", {})
+                e["upto"][d] = e["upto"].get(d, 0.0) + amt
+    return {"complete": pager.complete, "cursor": pager.cursor, "rows": out, "cut_dates": cut_dates}
 
 
 def super_pac_spending(fetch, key, committee_id: str, cycle: int, max_pages: int = 500, deadline=None) -> dict:
@@ -121,6 +129,7 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
     cur = current_cycle(date.fromisoformat(run_date))
     cycles = [c for c in config.get("cycles", [2020, 2022, 2024, 2026]) if c <= cur]
     out = {"cycles": cycles, "fetched": run_date, "pacs": {}, "super_pacs": {}}
+    cut_dates = sorted(set(config.get("vote_dates", {}).values()))
     for org in config.get("organizations", []):
         for p in org.get("pacs", []):
             cid = p["fec_id"]
@@ -129,7 +138,7 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
                 if c < cur and prior and prior.get("complete"):
                     data = prior
                 else:
-                    data = pac_disbursements(fetch, key, cid, c, deadline=deadline, prior=prior)
+                    data = pac_disbursements(fetch, key, cid, c, deadline=deadline, prior=prior, cut_dates=cut_dates)
                     if not data["complete"] and not data["cursor"] and prior and prior.get("rows"):
                         data = {**prior, "complete": False}   # stopped before the first page: keep the prior read
                 out["pacs"].setdefault(cid, {})[str(c)] = data
@@ -150,12 +159,27 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
     return out
 
 
+def _through(cycle: str, cyc: dict, row: dict, vote_date: str | None) -> float | None:
+    """What one recipient row holds through the vote: the whole cycle when the cycle ended before the
+    vote, nothing when it began after, else the amount dated on or before the vote (None when the
+    cycle was read before that cut was recorded)."""
+    if not vote_date or f"{cycle}-12-31" < vote_date:
+        return row["total"]
+    if vote_date < f"{int(cycle) - 1}-01-01":
+        return 0.0
+    if vote_date not in (cyc.get("cut_dates") or []):
+        return None
+    return (row.get("upto") or {}).get(vote_date, 0.0)
+
+
 def member_totals(bio: str, member: dict, finance: dict, config: dict, data: dict, bill: str) -> dict:
-    """Money to one member from the organizations on each side of one bill, summed over all cycles.
-    PAC money is matched to the member's principal campaign committee; super PAC spending to their
-    FEC candidate IDs. Returns None values where the member's committee is not yet known."""
+    """Money to one member from the organizations on each side of one bill, from the first cycle
+    through the vote (nothing dated after the vote counts). PAC money is matched to the member's
+    principal campaign committee; super PAC spending (cycle totals, which cannot be cut by date here)
+    to their FEC candidate IDs. Returns None values where the member's committee is not yet known."""
     fin = finance.get(bio) or {}
     committee = fin.get("committee_id")
+    vote_date = config.get("vote_dates", {}).get(bill)
     cands = set(member.get("fec_ids") or []) | ({fin["candidate_id"]} if fin.get("candidate_id") else set())
     res = {"block": 0.0, "proceed": 0.0, "known": bool(committee), "ie_support": 0.0, "ie_oppose": 0.0, "by_org": {},
            "complete": True}
@@ -165,10 +189,14 @@ def member_totals(bio: str, member: dict, finance: dict, config: dict, data: dic
             continue
         amt = 0.0
         for p in org.get("pacs", []):
-            for cyc in (data.get("pacs", {}).get(p["fec_id"]) or {}).values():
+            for cyc_label, cyc in (data.get("pacs", {}).get(p["fec_id"]) or {}).items():
                 res["complete"] &= bool(cyc.get("complete"))
                 if committee and committee in cyc["rows"]:
-                    amt += cyc["rows"][committee]["total"]
+                    v = _through(cyc_label, cyc, cyc["rows"][committee], vote_date)
+                    if v is None:    # a cycle read before vote dates were recorded: not yet cut
+                        res["complete"] = False
+                        continue
+                    amt += v
         if amt:
             res[side] += amt
             res["by_org"][org["name"]] = amt

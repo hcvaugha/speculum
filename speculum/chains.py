@@ -15,11 +15,14 @@ in data/chains/reviews.json. A chain judges a decision; it never calls a person 
 from __future__ import annotations
 
 import json
+import logging
 import re
 import statistics
 from pathlib import Path
 
 from . import ledger
+
+log = logging.getLogger("speculum.chains")
 
 HERE = Path(__file__).parent
 # Two separate questions about every link. The evidence grade says how strong the finding is on its own
@@ -296,6 +299,9 @@ def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None
     if not data or not (sides["block"] or sides["proceed"]):
         ch["advocacy_pattern"] = None
         return
+    vd = cfg.get("vote_dates", {}).get(bkey)
+    if vd != ch["date"]:
+        log.warning("advocacy vote date for %s is %s in data/advocacy.json but %s in the roll call", bkey, vd, ch["date"])
     for r in ch["members"]:
         r["adv"] = advocacy.member_totals(r["bioguide"], by_id[r["bioguide"]], finance, cfg, data, bkey)
     out = {}

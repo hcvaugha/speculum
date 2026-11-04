@@ -476,3 +476,25 @@ def test_advocacy_resumes_after_an_fec_error():
     assert f2.calls == [1, 2] and second["complete"] and second["cursor"] is None
     assert second["rows"]["C1"]["total"] == 200 and second["rows"]["C3"]["total"] == 100
     assert first["rows"]["C1"]["total"] == 100   # the prior read is not changed in place
+
+
+def test_advocacy_counts_only_through_the_vote():
+    from speculum.sources import advocacy
+
+    rows = [{"recipient_committee_id": "CAMP", "disbursement_amount": 10, "disbursement_date": "2025-03-01T00:00:00"},
+            {"recipient_committee_id": "CAMP", "disbursement_amount": 20, "disbursement_date": "2025-04-03T00:00:00"},
+            {"recipient_committee_id": "CAMP", "disbursement_amount": 40, "disbursement_date": "2025-05-01T00:00:00"}]
+
+    class F:
+        def get_json(self, *a, **k):
+            return {"results": rows, "pagination": {"last_indexes": None}}
+
+    cur = advocacy.pac_disbursements(F(), "k", "PAC", 2026, cut_dates=["2025-04-03"])
+    data = {"pacs": {"PAC": {"2024": {"complete": True, "rows": {"CAMP": {"total": 5}}}, "2026": cur}}}
+    cfg = {"vote_dates": {"SJRES1": "2025-04-03"},
+           "organizations": [{"name": "O", "sides": {"SJRES1": "proceed"}, "pacs": [{"fec_id": "PAC"}]}]}
+    t = advocacy.member_totals("A", {"fec_ids": []}, {"A": {"committee_id": "CAMP"}}, cfg, data, "SJRES1")
+    assert t["proceed"] == 35 and t["complete"]          # 5 from 2024 + 30 through the vote; 40 after it is not counted
+    old = {"pacs": {"PAC": {"2026": {"complete": True, "rows": {"CAMP": {"total": 70}}}}}}
+    t2 = advocacy.member_totals("A", {"fec_ids": []}, {"A": {"committee_id": "CAMP"}}, cfg, old, "SJRES1")
+    assert t2["proceed"] == 0 and not t2["complete"]     # read before cuts were recorded: incomplete, not the full total
