@@ -6,6 +6,7 @@ dist/preview/   preview.speculum.vote  (Chamber, member Ledgers, Day Zero, Metho
 from __future__ import annotations
 
 import json
+import re
 import shutil
 from datetime import date
 from pathlib import Path
@@ -15,6 +16,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .. import ledger as ledger_mod
 from .. import tide as tide_mod
 from .. import interests as interests_mod
+from .. import chains as chains_mod
 from ..snapshot import DAY_ZERO, Snapshot, all_dates, latest
 
 HERE = Path(__file__).parent
@@ -40,8 +42,19 @@ def day_number(d: str) -> int:
     return (date.fromisoformat(d) - date.fromisoformat(DAY_ZERO)).days + 1
 
 
+def billname(code: str) -> str:
+    """SJRES54 -> S.J.Res. 54, HR1234 -> H.R. 1234."""
+    m = re.match(r"^(HCONRES|SCONRES|HJRES|SJRES|HRES|SRES|HR|S)\s*(\d+)$", (code or "").upper().replace(".", "").replace(" ", ""))
+    if not m:
+        return code or ""
+    names = {"HCONRES": "H.Con.Res.", "SCONRES": "S.Con.Res.", "HJRES": "H.J.Res.", "SJRES": "S.J.Res.",
+             "HRES": "H.Res.", "SRES": "S.Res.", "HR": "H.R.", "S": "S."}
+    return f"{names[m.group(1)]} {m.group(2)}"
+
+
 def env() -> Environment:
     e = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
+    e.filters["billname"] = billname
     e.filters["money"] = money
     e.filters["pct"] = pct
     return e
@@ -135,6 +148,7 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
         root="", page="dayzero", meta=_meta_defaults(meta), history=history, **common), encoding="utf-8")
     _build_tide(E, snapshots_root, prev, members, common)
     _build_interests(E, prev, members, finance, lobbying, common)
+    _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common)
     (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
@@ -155,6 +169,19 @@ def _build_interests(E, prev: Path, members, finance, lobbying, common) -> None:
     for slug, e in all_.items():
         (prev / "interest" / f"{slug}.html").write_text(tmpl.render(
             root="../", page="interests", e=e, all=all_, by_id=by_id, seat=seat, party_names=PARTY_NAMES, **common), encoding="utf-8")
+
+
+def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common) -> None:
+    chains = chains_mod.for_site(members, finance, lobbying, votes, data_root)
+    (prev / "chain").mkdir(exist_ok=True)
+    (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
+        root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
+        approved=sum(1 for c in chains if c["status"] == "approved"), **common), encoding="utf-8")
+    tmpl = E.get_template("chain.html")
+    for c in chains:
+        (prev / "chain" / f"{c['id']}.html").write_text(tmpl.render(
+            root="../", page="dependents", c=c, party_names=PARTY_NAMES,
+            lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")
 
 
 def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict) -> None:

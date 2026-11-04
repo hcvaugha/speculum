@@ -288,3 +288,27 @@ def test_lda_tolerates_blank_lobbyist_names():
     assert out["reports"] == 2
     for items in out["by_member"].values():
         assert items[0]["reported_by"] == "Doe (Acme Lobbying)"
+
+
+def test_chains_rule_country_and_money():
+    from speculum import chains
+    title = "A joint resolution providing for congressional disapproval of the proposed foreign military sale to the Government of the United Arab Emirates of certain defense articles and services."
+    assert chains.RULES[0]["test"].search(title)
+    assert not chains.RULES[0]["test"].search("A joint resolution providing for congressional disapproval under chapter 8 of title 5")
+    assert chains.country_of(title) == "United Arab Emirates"
+    assert chains.country_of("disapproval of the proposed export of certain defense articles to Israel.") == "Israel"
+    members = [{"bioguide": b, "name": b, "party": p, "state": "OH", "chamber": "senate"} for b, p in
+               [("A", "D"), ("B", "D"), ("C", "R"), ("D", "D")]]
+    votes = {"votes": [{"id": "s-119-1-1", "congress": 119, "bill": "SJRES54", "date": "2025-06-11", "title": title,
+                        "question": "On the Motion to Discharge", "result": "Rejected"}],
+             "positions": {"s-119-1-1": {"A": "Yea", "B": "Nay", "C": "Nay", "D": "Yea"}}}
+    finance = {"B": {"top_committees": [{"committee_id": "C1", "amount": 5000}]}, "A": {"top_committees": []}}
+    lobbying = {"by_member": {"C": [{"registrant_id": "9", "amount": 1000}]}}
+    sectors = {"arms": {"companies": [{"name": "Acme Arms", "fec": ["C1"], "lda": [9]}]}}
+    [ch] = chains.build(members, finance, lobbying, votes, sectors, {}, {})
+    assert ch["country"] == "United Arab Emirates" and ch["status"] == "draft"
+    by = {r["bioguide"]: r for r in ch["members"]}
+    assert by["B"]["pac"] == 5000 and by["C"]["lobby"] == 1000 and by["C"]["givers"][0]["company"] == "Acme Arms"
+    d = ch["money_pattern"]["D"]
+    assert d["Y"]["n"] == 2 and d["Y"]["pac_n"] == 1      # D has no FEC record: unknown, not zero
+    assert d["N"]["pac_median"] == 5000

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ c.bill|billname }} · The Dependents · Speculum{% endblock %}
+{% block body %}
+{% set v = c.votes[-1] %}
+<p class="meta"><a href="../dependents.html">The Dependents</a> · {{ c.rule_name }}</p>
+<h1>{{ c.bill|billname }}{% if c.country %}: arms to {{ 'the ' if c.country in ['United Arab Emirates', 'United Kingdom', 'Philippines', 'Netherlands'] else '' }}{{ c.country }}{% endif %}</h1>
+<p class="lede">{{ c.title }}</p>
+<p>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span> by {{ c.review.approved_by }} on {{ c.review.date }}{% if c.review.note %} · {{ c.review.note }}{% endif %}
+{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not reviewed</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. Every claim below must be checked against its source before this chain is approved.
+{% elif c.research_by %}<span class="status draft">Draft · not reviewed</span> Researched with AI assistance{% if c.research_meta.on %} on {{ c.research_meta.on }}{% endif %}; each claim is cited to the source it came from and awaits a reviewer.
+{% else %}<span class="status draft">Votes and money only</span> The mechanism and outcome links have not been researched yet.{% endif %}</p>
+
+<ol class="chain">
+<li>
+  <div class="step">1 · The decision</div>
+  <p>{{ c.why }}</p>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Date</th><th>Question</th><th>Result</th><th class="r">Yea</th><th class="r">Nay</th></tr></thead>
+  <tbody>{% for x in c.votes %}<tr><td class="num">{{ x.date }}</td><td>{% if x.url %}<a href="{{ x.url }}">{{ x.question }}</a>{% else %}{{ x.question }}{% endif %}</td><td class="muted">{{ x.result }}</td><td class="r num">{{ x.yeas }}</td><td class="r num">{{ x.nays }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  <p class="meta" style="margin-top:8px">A Yea was a vote to {{ c.yes_means }}; a Nay, to {{ c.no_means }}.
+  {% set sp = c.party_split %}By party (independents with the party they caucus with): Democrats {{ sp.get('D-Y', 0) }} to block, {{ sp.get('D-N', 0) }} against; Republicans {{ sp.get('R-Y', 0) }} to block, {{ sp.get('R-N', 0) }} against.
+  Source: Senate roll call via <a href="https://voteview.com/">Voteview</a>.</p>
+</li>
+
+<li>
+  <div class="step">2 · What it changed</div>
+  {% if c.mechanism %}{% set mx = c.mechanism %}
+  <p>{{ mx['items'] }}{% if mx.value %} · {{ mx.value }}{% endif %}</p>
+  <p class="meta">{% if mx.contractors %}Contractors named: {{ mx.contractors|join(', ') }} · {% endif %}{% if mx.notification %}Notification {{ mx.notification }} · {% endif %}{% if mx.proceeded %}{{ mx.proceeded }}{% endif %}</p>
+  {% if mx.sources %}<p class="src">{% for s in mx.sources %}<a href="{{ s.url }}">{{ s.title }}</a>{% if s.publisher %}, {{ s.publisher }}{% endif %}{% if s.date %}, {{ s.date }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  {% else %}<p class="muted">Not yet researched.</p>{% endif %}
+</li>
+
+<li>
+  <div class="step">3 · What followed</div>
+  {% for o in c.outcomes %}
+  <div class="outcome">
+    <span class="grade grade-{{ o.grade }}">{{ o.grade|capitalize }}</span>
+    <p>{{ o.claim }}</p>
+    {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.title }}</a>{% if o.source.publisher %}, {{ o.source.publisher }}{% endif %}{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% endif %}
+    {% if o.counterpoint %}<p class="counter"><b>Response or dispute:</b> {{ o.counterpoint }}</p>{% endif %}
+  </div>
+  {% else %}<p class="muted">No outcome links yet. A chain with no documented harm is a valid finding and will say so once researched.</p>{% endfor %}
+</li>
+
+<li>
+  <div class="step">4 · The money around it <span class="grade grade-associated">Associated</span></div>
+  <p>Arms-industry money received by each senator still serving, from companies on the <a href="https://www.sipri.org/databases/armsindustry">SIPRI Top 100 arms producers</a>: their PACs' gifts to the senator's campaign (FEC) and contributions their lobbyists reported (LD-203, {{ lobby_years }}). Medians are compared within each party, so the party line is not mistaken for a money effect. This is a pattern, not a cause.</p>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">Median lobbyist money</th><th class="r">Median PAC money</th></tr></thead>
+  <tbody>
+  {% for party, cell in c.money_pattern.items() %}{% for side, label in [('Y', 'Voted to block'), ('N', 'Voted against blocking')] %}{% set x = cell[side] %}{% if x.n %}
+  <tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td><td class="r num">{{ x.lobby_median|money }}</td>
+  <td class="r num">{% if x.pac_n %}{{ x.pac_median|money }} <span class="muted">({{ x.pac_n }} known)</span>{% else %}<span class="muted">not yet fetched</span>{% endif %}</td></tr>
+  {% endif %}{% endfor %}{% endfor %}
+  </tbody></table></div>
+
+  <details style="margin-top:14px"><summary>Every senator's vote and arms-industry money</summary>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Senator</th><th>Vote</th><th class="r">Lobbyist money</th><th class="r">PAC money</th><th>Largest arms givers</th></tr></thead>
+  <tbody>{% for r in c.members %}
+  <tr><td><a href="../member/{{ r.bioguide }}.html">{{ r.name }}</a> <span class="party-{{ r.party }} num">{{ r.party }}-{{ r.state }}</span></td>
+  <td><span class="pos pos-{{ r.side or 'X' }}">{{ r.position }}</span></td>
+  <td class="r num">{{ r.lobby|money }}</td><td class="r num">{% if r.finance_known %}{{ r.pac|money }}{% else %}<span class="muted">—</span>{% endif %}</td>
+  <td class="muted">{% for g in r.givers[:3] %}{{ g.company }}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
+  {% endfor %}</tbody></table></div>
+  </details>
+</li>
+</ol>
+
+<div class="notice">This chain follows a decision, not a person: the Senate's choice to let the sale proceed. Each senator's vote is shown as the record of their part in that choice, beside the money around them; neither is a verdict on their character. Every step stands on its own source and grade. To dispute a link, send the source that contradicts it.</div>
+{% endblock %}

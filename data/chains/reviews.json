@@ -1,0 +1,3 @@
+{
+ "_how": "To approve a chain, add an entry keyed by its id: {\"approved_by\": \"name\", \"date\": \"YYYY-MM-DD\", \"note\": \"...\"}. Remove it to send the chain back to draft."
+}

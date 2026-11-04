@@ -1,0 +1,197 @@
+{
+ "arms": {
+  "name": "Arms industry",
+  "rule": "Companies on the SIPRI Top 100 Arms-Producing and Military Services Companies list, with their US PACs (FEC) and lobbying registrations (LDA). Membership is by that list, not by judgment.",
+  "source": {
+   "title": "SIPRI Top 100 Arms-Producing and Military Services Companies",
+   "url": "https://www.sipri.org/databases/armsindustry"
+  },
+  "verified": false,
+  "companies": [
+   {
+    "name": "Lockheed Martin",
+    "fec": [
+     "C00303024"
+    ],
+    "lda": [
+     23031
+    ]
+   },
+   {
+    "name": "RTX (Raytheon)",
+    "fec": [
+     "C00097568"
+    ],
+    "lda": [
+     39267
+    ]
+   },
+   {
+    "name": "Northrop Grumman",
+    "fec": [
+     "C00088591"
+    ],
+    "lda": [
+     29551
+    ]
+   },
+   {
+    "name": "General Dynamics",
+    "fec": [
+     "C00078451"
+    ],
+    "lda": [
+     15986
+    ]
+   },
+   {
+    "name": "Boeing",
+    "fec": [
+     "C00142711"
+    ],
+    "lda": [
+     6597
+    ]
+   },
+   {
+    "name": "L3Harris Technologies",
+    "fec": [
+     "C00100321"
+    ],
+    "lda": [
+     17636
+    ]
+   },
+   {
+    "name": "Huntington Ingalls Industries",
+    "fec": [
+     "C00325092"
+    ],
+    "lda": [
+     400752252
+    ]
+   },
+   {
+    "name": "Leidos",
+    "fec": [
+     "C00546234"
+    ],
+    "lda": [
+     34694
+    ]
+   },
+   {
+    "name": "General Atomics",
+    "fec": [
+     "C00215285"
+    ],
+    "lda": [
+     15931
+    ]
+   },
+   {
+    "name": "Textron",
+    "fec": [
+     "C00123612"
+    ],
+    "lda": [
+     37948
+    ]
+   },
+   {
+    "name": "BAE Systems",
+    "fec": [
+     "C00281212"
+    ],
+    "lda": [
+     15907
+    ]
+   },
+   {
+    "name": "Leonardo DRS",
+    "fec": [
+     "C00275123"
+    ],
+    "lda": [
+     58157
+    ]
+   },
+   {
+    "name": "Honeywell",
+    "fec": [
+     "C00096156"
+    ],
+    "lda": [
+     57453,
+     401110806
+    ]
+   },
+   {
+    "name": "Booz Allen Hamilton",
+    "fec": [
+     "C00709816"
+    ],
+    "lda": [
+     401104961
+    ]
+   },
+   {
+    "name": "SAIC",
+    "fec": [
+     "C00300418"
+    ],
+    "lda": [
+     401103141
+    ]
+   },
+   {
+    "name": "Parsons",
+    "fec": [
+     "C00103549"
+    ],
+    "lda": [
+     401103402
+    ]
+   },
+   {
+    "name": "Oshkosh",
+    "fec": [
+     "C00304477"
+    ],
+    "lda": [
+     401109665
+    ]
+   },
+   {
+    "name": "Airbus",
+    "fec": [
+     "C00421230"
+    ],
+    "lda": [
+     330
+    ]
+   },
+   {
+    "name": "Elbit Systems of America",
+    "fec": [],
+    "lda": [
+     400411942
+    ]
+   },
+   {
+    "name": "Rafael USA",
+    "fec": [],
+    "lda": [
+     71850
+    ]
+   },
+   {
+    "name": "Saab",
+    "fec": [],
+    "lda": [
+     401104275
+    ]
+   }
+  ]
+ }
+}

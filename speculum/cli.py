@@ -176,6 +176,23 @@ def cmd_build(args) -> int:
     return 0
 
 
+def cmd_chains(args) -> int:
+    from . import chains, interpret
+    from .snapshot import latest
+
+    snap = latest(ROOT / "snapshots")
+    if snap is None:
+        log.error("no snapshot yet")
+        return 1
+    out = chains.for_site(snap.read("members.json", []), snap.read("finance.json", {}), snap.read("lobbying.json", {}),
+                          snap.read("votes.json.gz", {"votes": [], "positions": {}}), ROOT)
+    log.info("chains: %d (%d with reviewed research)", len(out), sum(1 for c in out if c["research_by"] == "research"))
+    if args.draft:
+        done = interpret.draft_missing(out, ROOT / "chains" / "drafts", limit=args.limit)
+        log.info("drafted: %s", ", ".join(done) or "none")
+    return 0
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
     p = argparse.ArgumentParser(prog="speculum")
@@ -186,8 +203,11 @@ def main(argv=None) -> int:
     s.add_argument("--top-committees", type=int, default=50, help="committee givers kept per member (pages show the top 10)")
     b = sub.add_parser("build", help="render the site from the latest snapshot")
     b.add_argument("--out", default="dist")
+    c = sub.add_parser("chains", help="build consequence chains; with --draft, ask the AI drafter for missing research")
+    c.add_argument("--draft", action="store_true")
+    c.add_argument("--limit", type=int, default=3, help="most chains to draft in one run")
     args = p.parse_args(argv)
-    return {"snapshot": cmd_snapshot, "build": cmd_build}[args.cmd](args)
+    return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains}[args.cmd](args)
 
 
 if __name__ == "__main__":

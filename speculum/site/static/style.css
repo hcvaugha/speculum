@@ -132,3 +132,23 @@ td.num { white-space: nowrap; }
 .story-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font: 11.5px/1.4 var(--mono); color: var(--ink-3); }
 .react button { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--ink-3); border: 1px solid var(--line); padding: 5px 9px; margin-left: 6px; cursor: not-allowed; }
 @media (max-width: 640px) { .tide-name { font-size: 36px; } }
+
+/* The Dependents: consequence chains */
+.grades { display: grid; gap: 6px; margin: 18px 0 8px; font-size: 13px; color: var(--ink-2); }
+.grade { display: inline-block; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 4px 6px; border: 1px solid; margin-right: 6px; vertical-align: 1px; }
+.grade-documented { color: #e8d9b0; border-color: var(--gold); background: rgba(201,162,74,.14); }
+.grade-estimated { color: var(--cold); border-color: #4d6680; }
+.grade-associated { color: var(--ink-3); border-color: var(--line); border-style: dashed; }
+.status { display: inline-block; font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; margin-right: 8px; border: 1px solid; }
+.status.ok { color: var(--gold); border-color: var(--gold-dim); }
+.status.draft { color: var(--ink-2); border-color: var(--line); border-style: dashed; }
+ol.chain { list-style: none; padding: 0; margin: 28px 0 0; counter-reset: none; }
+ol.chain > li { position: relative; padding: 0 0 30px 26px; border-left: 1px solid var(--gold-dim); margin-left: 6px; }
+ol.chain > li:last-child { border-left-color: transparent; }
+ol.chain > li::before { content: ""; position: absolute; left: -5px; top: 3px; width: 9px; height: 9px; background: var(--ground); border: 1px solid var(--gold); transform: rotate(45deg); }
+.step { font: 600 12px/1.2 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.outcome { border: 1px solid var(--line); background: var(--panel); padding: 12px 14px; margin: 0 0 10px; }
+.outcome p { margin: 8px 0 0; }
+.outcome .src, ol.chain .src { font: 11.5px/1.5 var(--mono); color: var(--ink-3); }
+.outcome .counter { font-size: 13px; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 8px; }
+details summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacing: .08em; color: var(--ink-2); }
