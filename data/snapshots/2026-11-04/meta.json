@@ -1,7 +1,7 @@
 {
- "calls": 7926,
+ "calls": 9113,
  "counts": {
-  "finance": 517,
+  "finance": 518,
   "house": 433,
   "lobbying_items": 169281,
   "lobbying_unmatched": 500,
@@ -15,6 +15,6 @@
  "fec_through": "2026-10-22",
  "finance_partial": null,
  "note": "",
- "raw_files": 7899,
+ "raw_files": 9065,
  "votes_through": "2026-09-30"
 }
