@@ -257,13 +257,15 @@ def test_voteview_fallback_when_senate_refuses():
     rollcalls = ("congress,chamber,rollnumber,date,session,clerk_rollnumber,yea_count,nay_count,bill_number,vote_result,vote_desc,vote_question,dtl_desc\n"
                  "119,Senate,1,2025-01-07,1,1,52,47,S5,Agreed to,A bill,On the Motion,\n"
                  "119,Senate,700,2026-01-06,2,3,50,50,,Rejected,Nomination,On the Cloture Motion,\n")
-    votes = "congress,chamber,rollnumber,icpsr,cast_code,prob\n119,Senate,1,41301,1,99\n119,Senate,1,41302,6.0,99\n119,Senate,700,41301,9,\n"
+    votes = "congress,chamber,rollnumber,icpsr,cast_code,prob\n119,Senate,1,41301,1,99\n119,Senate,1,41302,6.0,99\n119,Senate,700,41301,9,\n119,Senate,700,41303,1,\n"
 
     class F:
         def get(self, source, name, url, params=None, headers=None, retries=5):
             if "senate.gov" in url:
                 r = requests.Response(); r.status_code = 403
                 raise requests.HTTPError("403 Forbidden", response=r)
+            if "members" in url:
+                return b"congress,chamber,icpsr,bioname,bioguide_id\n119,Senate,41303,\"NEW, Senator\",C000003\n"
             return (rollcalls if "rollcalls" in url else votes).encode()
 
     members = [{"bioguide": "A000001", "icpsr": "41301", "lis": "S1"}, {"bioguide": "B000002", "icpsr": "41302", "lis": "S2"}]
@@ -271,7 +273,7 @@ def test_voteview_fallback_when_senate_refuses():
     assert out["source"] == "voteview"
     assert [v["id"] for v in out["votes"]] == ["s-119-1-1", "s-119-2-3"]
     assert out["positions"]["s-119-1-1"] == {"A000001": "Yea", "B000002": "Nay"}
-    assert out["positions"]["s-119-2-3"] == {"A000001": "Not Voting"}
+    assert out["positions"]["s-119-2-3"] == {"A000001": "Not Voting", "C000003": "Yea"}
     assert out["votes"][0]["bill"] == "S5"
 
 

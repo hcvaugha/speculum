@@ -25,6 +25,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; Speculum/0.1; +https://specul
 # Fallback: Voteview (UCLA) republishes every Senate roll call, keyed by ICPSR ID, usually within days.
 VV_ROLLCALLS = "https://voteview.com/static/data/out/rollcalls/S{c}_rollcalls.csv"
 VV_VOTES = "https://voteview.com/static/data/out/votes/S{c}_votes.csv"
+VV_MEMBERS = "https://voteview.com/static/data/out/members/S{c}_members.csv"
 VV_CAST = {"1": "Yea", "2": "Yea", "3": "Yea", "4": "Nay", "5": "Nay", "6": "Nay",
            "7": "Present", "8": "Present", "9": "Not Voting"}
 
@@ -78,6 +79,15 @@ def _from_voteview(fetch, members: list[dict], today: date | None = None) -> dic
     today = today or date.today()
     congress, _ = congress_for(today)
     icpsr_to_bio = {m["icpsr"]: m["bioguide"] for m in members if m.get("icpsr")}
+    # The crosswalk lacks ICPSR IDs for some newer senators; Voteview's own member list carries Bioguide IDs.
+    try:
+        for r in csv.DictReader(io.StringIO(fetch.get("voteview", f"S{congress}_members.csv",
+                                                      VV_MEMBERS.format(c=congress)).decode("utf-8"))):
+            icpsr = (r.get("icpsr") or "").split(".")[0]
+            if icpsr and r.get("bioguide_id"):
+                icpsr_to_bio.setdefault(icpsr, r["bioguide_id"].strip())
+    except Exception as exc:
+        log.warning("Voteview member list unavailable (%s); matching by crosswalk only", exc)
     rows = csv.DictReader(io.StringIO(fetch.get("voteview", f"S{congress}_rollcalls.csv",
                                                 VV_ROLLCALLS.format(c=congress)).decode("utf-8")))
     key_to_id, votes = {}, []
