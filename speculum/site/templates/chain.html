@@ -61,6 +61,8 @@
   <p>{{ mx['items'] }}{% if mx.value %} · {{ mx.value }}{% endif %}</p>
   {% if mx.justification %}<p><b>Stated purpose (executive branch):</b> {{ mx.justification }}</p>{% endif %}
   {% if mx.sponsor_reasons %}<p><b>Stated reasons for the resolution (sponsors):</b> {{ mx.sponsor_reasons }}</p>{% endif %}
+  {% if mx.history %}<p class="step" style="margin-top:14px;font-size:11px">Policy record</p>
+  {% for h in mx.history %}<div class="outcome"><span class="muted" style="font-size:12px">{{ h.date }}</span><p>{{ h.claim }}</p>{% if h.note %}<p class="counter">{{ h.note }}</p>{% endif %}<p class="src"><a href="{{ h.source.url }}">{{ h.source.publisher or h.source.title }}{% if h.source.publisher and h.source.title %}: {{ h.source.title }}{% endif %}</a></p></div>{% endfor %}{% endif %}
   <p class="meta">{% if mx.contractors %}Principal contractors named: {{ mx.contractors|join(', ') }} · {% endif %}{% if mx.proceeded %}{{ mx.proceeded }}{% endif %}</p>
   {% if mx.sources %}<p class="src">{% for s in mx.sources %}<a href="{{ s.url }}">{{ s.title }}</a>{% if s.publisher %}, {{ s.publisher }}{% endif %}{% if s.date %}, {{ s.date }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
   {% else %}<p class="muted">Not yet researched.</p>{% endif %}
@@ -88,7 +90,7 @@
 
   {% if c.context %}
   <p class="step" style="margin-top:18px;font-size:11px">Context</p>
-  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome"><p style="margin-top:0">{{ x.claim }}</p><p class="src"><a href="{{ x.source.url }}">{{ x.source.title }}</a>{% if x.source.publisher %}, {{ x.source.publisher }}{% endif %}{% if x.source.date %}, {{ x.source.date }}{% endif %}</p></div>{% endif %}{% endfor %}
+  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p></div>{% endif %}{% endfor %}
   {% endif %}
 </li>
 

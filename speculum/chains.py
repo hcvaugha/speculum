@@ -168,7 +168,8 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         # An outcome belongs to a chain when it concerns the recipient and either names no specific
         # sale or names this one.
         ch["outcomes"] = [o for o in research.get("outcomes", []) if o.get("country") == ch["country"]
-                          and (not o.get("applies_to") or bkey in o["applies_to"])]
+                          and (not o.get("applies_to") or bkey in o["applies_to"])
+                          and (not o.get("applies_to_wider") or bkey in o["applies_to_wider"])]
         order = {"documented": 0, "estimated": 1, "associated": 2, "none_found": 3}
         notified = (r or {}).get("notified")
         placed = []
@@ -177,13 +178,17 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
             rel = ("before this sale was notified" if notified and when and when < notified
                    else "before the vote" if when and when <= ch["date"] else "after the vote" if when else "")
             general = bool(o.get("scope_note"))          # e.g. a general assessment of US-made arms
+            if o.get("scope_note_same"):
+                o = {**o, "scope_note": o["scope_note_same"]}
+                general = False
             scope = ("context" if o.get("context_only") else
                      "wider" if general else
                      "same_type" if o.get("applies_to") and bkey in o["applies_to"] else "wider")
             placed.append({**o, "_order": order.get(o.get("grade"), 4), "when": when, "when_rel": rel, "scope": scope})
         ch["outcomes"] = [o for o in placed if o["scope"] != "context"]
         ch["context"] = ([o for o in placed if o["scope"] == "context"] +
-                         [x for x in research.get("context", []) if x.get("country") == ch["country"]])
+                         [x for x in research.get("context", []) if x.get("country") == ch["country"]
+                          and (not x.get("applies_to") or bkey in x["applies_to"])])
         _contractor_money(ch, sectors)
         _advocacy(ch, by_id, finance, advocacy_cfg or {}, advocacy_data)
         rv = reviews.get(ch["id"]) or {}
