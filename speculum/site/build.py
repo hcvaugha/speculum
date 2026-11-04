@@ -114,7 +114,9 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     meta = snap.read("meta.json", {})
     ledgers = ledger_mod.build(members, finance, votes, lobbying.get("by_member", {}))
 
-    common = {"snapshot_date": snap.date, "day_number": day_number(snap.date), "public": public}
+    site_cfg = chains_mod.load_json(snapshots_root.parent / "site.json", {}) or {}
+    common = {"snapshot_date": snap.date, "day_number": day_number(snap.date), "public": public,
+              "show_dependents": (not public) or bool(site_cfg.get("dependents_public"))}
     rows = []
     for m in members:
         L = ledgers[m["bioguide"]]
@@ -173,8 +175,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         root="", page="dayzero", meta=_meta_defaults(Snapshot(snapshots_root, DAY_ZERO).read("meta.json", meta) if DAY_ZERO in all_dates(snapshots_root) else meta), history=history, **common), encoding="utf-8")
     _build_tide(E, snapshots_root, prev, members, common, public)
     _build_interests(E, prev, members, finance, lobbying, common)
-    if not public:
-        _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common)
+    if common["show_dependents"]:
+        _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common, public)
     _build_pages(E, snapshots_root.parent, prev, common)
     from .. import lameduck as lameduck_mod
     ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
@@ -204,12 +206,14 @@ def _build_interests(E, prev: Path, members, finance, lobbying, common) -> None:
             root="../", page="interests", e=e, all=all_, by_id=by_id, seat=seat, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
 
-def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common) -> None:
+def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common, public: bool = False) -> None:
     from ..snapshot import latest as _latest
     snap = _latest(data_root / "snapshots")
     chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
                                  committees=read_newest(data_root / "snapshots", "committees.json", snap.date) if snap else None,
                                  advocacy_data=read_newest(data_root / "snapshots", "advocacy.json", snap.date) if snap else None)
+    if public:   # the public site shows only chains a person approved
+        chains = [c for c in chains if c["status"] == "approved"]
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
