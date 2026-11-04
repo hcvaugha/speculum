@@ -364,3 +364,55 @@ def test_advocacy_counts_earmarks_once_and_tracks_completeness():
     assert t["proceed"] == 7500 and t["block"] == 300 and t["complete"] is False
     t2 = advocacy.member_totals("B", {"fec_ids": []}, {}, cfg, data, "SJRES1")
     assert t2["known"] is False and t2["proceed"] == 0
+
+
+def test_lda_clean_dedupes_across_filings_only():
+    from speculum.sources import lda
+    pac = {"date": "2025-06-23", "amount": 2500.0, "payee": "Aderholt For Congress", "contributor": "Firm PAC", "type": "FECA"}
+    items = [{**pac, "filing_uuid": "firm", "reported_by": "Firm"},
+             {**pac, "filing_uuid": "lob1", "reported_by": "Ann Lee (Firm)"},
+             {**pac, "filing_uuid": "lob2", "reported_by": "Bo Kim (Firm)"},
+             # primary and general checks on one filing: both count
+             {**pac, "contributor": "Other PAC", "filing_uuid": "o", "reported_by": "Other"},
+             {**pac, "contributor": "Other PAC", "filing_uuid": "o", "reported_by": "Other"},
+             # two different lobbyists each giving "Self" the same amount the same day: both count
+             {**pac, "contributor": "Self", "filing_uuid": "x", "reported_by": "Cy Doe (Firm)"},
+             {**pac, "contributor": "Self", "filing_uuid": "y", "reported_by": "Di Roe (Firm)"},
+             {"date": "2025-01-01", "amount": 50000.0, "payee": "Habitat", "contributor": "Self", "type": "Honorary Expenses",
+              "filing_uuid": "h", "reported_by": "Corp"}]
+    out = lda.clean({"by_member": {"A": items}})
+    assert sum(i["amount"] for i in out["by_member"]["A"]) == 2500 * 5
+    assert out["honors"]["A"][0]["amount"] == 50000.0
+    assert out["_cleaned"]["duplicates_removed"] == 2
+    assert lda.clean(out) is out
+
+
+def test_honoree_matcher_fixes():
+    from speculum.sources.lda import HonoreeMatcher
+    mem = lambda b, first, last, ch, name=None, nick=None: {"bioguide": b, "first": first, "last": last, "chamber": ch,
+                                                            "name": name or f"{first} {last}", "nickname": nick}
+    mt = HonoreeMatcher([mem("K", "Kevin", "Mullin", "house"), mem("G", "Darline", "Graham", "house"),
+                         mem("B", "Shontel", "Brown", "house", "Shontel M. Brown"), mem("J", "John", "James", "house"),
+                         mem("R", "Deborah", "Ross", "house", "Deborah K. Ross"), mem("MJ", "Mike", "Johnson", "house"),
+                         mem("F", "Randy", "Feenstra", "house"), mem("H", "J.", "Hill", "house", "J. French Hill")])
+    assert mt.match("Sen. Markwayne Mullin") is None        # a named senator is never a representative
+    assert mt.match("Sen. Lindsey Graham") is None
+    assert mt.match("Sherrod Brown") is None                # one member with the surname, wrong first name
+    assert mt.match("Clyburn, James") is None               # "Last, First"
+    assert mt.match("Trump, Donald J.; Vance, JD; Worthington, Ross") is None
+    assert mt.match("Rep. Mike Johnson (R)")["bioguide"] == "MJ"
+    assert mt.match("Randall Feenstra")["bioguide"] == "F"
+    assert mt.match("Rep. French Hill")["bioguide"] == "H"
+    assert mt.match("Friends of Shontel Brown")["bioguide"] == "B"
+    assert mt.match("Rep. Kevin Mullin")["bioguide"] == "K"
+
+
+def test_own_money_filter():
+    from speculum.sources.fec import is_own_money
+    scott = {"last": "Scott"}; tran = {"last": "Tran"}; scalise = {"last": "Scalise"}
+    assert is_own_money({"name": "Fine, Randy", "entity_type": "CAN"}, {"last": "Fine"})
+    assert is_own_money({"name": "Team Scalise", "entity_type": "COM"}, scalise)
+    assert is_own_money({"name": "Hoyer'S Majority Fund", "entity_type": "COM"}, {"last": "Hoyer"})
+    assert not is_own_money({"name": "Plains Cotton Growers Inc. Pac", "entity_type": "PAC"}, scott)
+    assert not is_own_money({"name": "Transdigm Group Inc Employee Pac", "entity_type": "PAC"}, tran)
+    assert not is_own_money({"name": "Lockheed Martin Employees Pac", "entity_type": "PAC"}, scalise)

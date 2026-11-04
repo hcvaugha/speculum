@@ -199,7 +199,9 @@ def cmd_chains(args) -> int:
     if snap is None:
         log.error("no snapshot yet")
         return 1
-    out = chains.for_site(snap.read("members.json", []), snap.read("finance.json", {}), snap.read("lobbying.json", {}),
+    from .sources.lda import clean
+    from .sources.fec import clean_finance
+    out = chains.for_site(snap.read("members.json", []), clean_finance(snap.read("finance.json", {}), snap.read("members.json", [])), clean(snap.read("lobbying.json", {}), snap.read("members.json", [])),
                           snap.read("votes.json.gz", {"votes": [], "positions": {}}), ROOT)
     log.info("chains: %d (%d with reviewed research)", len(out), sum(1 for c in out if c["research_by"] == "research"))
     if args.check:

@@ -88,9 +88,11 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
         return {"members": 0}
 
     members = snap.read("members.json", [])
-    finance = snap.read("finance.json", {})
+    from ..sources.fec import clean_finance
+    finance = clean_finance(snap.read("finance.json", {}), members)
     votes = snap.read("votes.json.gz", {"votes": [], "positions": {}})
-    lobbying = snap.read("lobbying.json", {"by_member": {}})
+    from ..sources.lda import clean
+    lobbying = clean(snap.read("lobbying.json", {"by_member": {}}), snap.read("members.json", []))
     meta = snap.read("meta.json", {})
     ledgers = ledger_mod.build(members, finance, votes, lobbying.get("by_member", {}))
 
@@ -136,6 +138,7 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
               "caucus": ledger_mod.caucus_party(m)}
         (prev / "member" / f"{bio}.html").write_text(tmpl.render(slugify=_interest_slug,
             root="../", page="member", m=mm, L=ledgers[bio], recent=recent,
+            honors=sorted(lobbying.get("honors", {}).get(bio, []), key=lambda c: -float(c.get("amount") or 0)),
             parts=ledger_mod.FUNDING_PARTS, lobby_years=lobby_years, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
     history = []

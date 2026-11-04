@@ -25,7 +25,7 @@
   <div class="reading">
     <div class="label">Lobbyist money</div>
     <div class="value">{{ L.lobbyist_total|money if L.lobbyist_total else '$0' }}</div>
-    <div class="context">reported by registered lobbyists and their PACs as given to or honoring this member{% if lobby_years %} ({{ lobby_years }}){% endif %}.</div>
+    <div class="context">given to this member's campaign and PACs by registered lobbyists and their organizations' PACs{% if lobby_years %} ({{ lobby_years }}){% endif %}, each contribution counted once.</div>
     {{ rule(L.pct.lobbyist_total, L.party_pct.lobbyist_total, m.caucus) }}
     <div class="src">Source: LD-203 reports, lda.gov</div>
   </div>
@@ -83,6 +83,16 @@
 <p class="meta" style="margin-top:8px">Matched by the honoree name on each LD-203 report. Matches marked by name only can be wrong; each amount links to the filing.</p>
 {% else %}
 <p class="muted">No LD-203 contributions matched to this member in the years collected.</p>
+{% endif %}
+
+{% if honors %}
+<h2>Paid in their honor</h2>
+<p class="meta">Money lobbying organizations reported spending to honor this member: gifts to charities, events and institutions named for or honoring them. Not campaign money, and not counted in the totals above.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Date</th><th>Reported by</th><th>Paid to</th><th>Type</th><th class="r">Amount</th></tr></thead>
+<tbody>{% for c in honors[:20] %}
+<tr><td class="num">{{ c.date or '' }}</td><td>{{ c.reported_by }}</td><td>{{ c.payee }}</td><td class="muted">{{ c.type }}</td><td class="r num">{% if c.url %}<a href="{{ c.url }}">{{ c.amount|money }}</a>{% else %}{{ c.amount|money }}{% endif %}</td></tr>
+{% endfor %}</tbody></table></div>
 {% endif %}
 
 <h2>Recent roll calls</h2>

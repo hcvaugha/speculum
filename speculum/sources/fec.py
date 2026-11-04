@@ -13,6 +13,7 @@ again only when their coverage date moves.
 """
 from __future__ import annotations
 
+import re
 from datetime import date
 
 BASE = "https://api.open.fec.gov/v1"
@@ -156,4 +157,34 @@ def fetch_finance(fetch, key: str, members: list[dict], run_date: str, previous:
                 periods = [p for p in range(cycle - span, cycle + 1, 2) if p <= today.year + (today.year % 2)]
                 rec["top_committees"] = _top_committees(fetch, key, pc["id"], periods, top_n)
         out[m["bioguide"]] = rec
+    return out
+
+
+_OWN_WORDS = re.compile(r"\b(team|victory|leadership|majority|fund|committee|for congress|for senate|friends|pac|"
+                        r"builders|action|alliance)\b", re.I)
+
+
+def is_own_money(giver: dict, member: dict) -> bool:
+    """A member's own money is not an outside interest: the candidate's personal contributions and
+    loans (entity type CAN), and transfers from committees named for the member (their joint
+    fundraising and leadership committees, e.g. "Team Scalise", "Emmer Victory Committee")."""
+    if giver.get("entity_type") == "CAN":
+        return True
+    last = re.sub(r"[^a-z ]", "", (member.get("last") or "").lower().replace("-", " ")).strip()
+    name = (giver.get("name") or "")
+    words = " " + re.sub(r"[^a-z]+", " ", name.lower().replace("'s", "")) + " "
+    return bool(len(last) > 3 and f" {last} " in words and giver.get("entity_type") in ("COM", "CCM", "PAC", None)
+                and _OWN_WORDS.search(name))
+
+
+def clean_finance(finance: dict, members: list[dict]) -> dict:
+    """Drop members' own money from their lists of committee givers. Idempotent."""
+    by_id = {m["bioguide"]: m for m in members}
+    out = {}
+    for bio, f in finance.items():
+        m = by_id.get(bio)
+        if m and f.get("top_committees") and not f.get("_own_removed"):
+            kept = [c for c in f["top_committees"] if not is_own_money(c, m)]
+            f = {**f, "top_committees": kept, "_own_removed": len(f["top_committees"]) - len(kept)}
+        out[bio] = f
     return out

@@ -172,7 +172,9 @@ def build_edition(cur, prev=None) -> dict:
         window = [v for v in votes.get("votes", []) if start <= (v.get("date") or "")[:10] <= cur.date]
         since = start
     stories = _vote_stories(window, votes.get("positions", {}), by_id)
-    for s in (_lobbying_story(cur.read("lobbying.json", {}), prev.read("lobbying.json") if prev else None, by_id),
+    from .sources.lda import clean
+    for s in (_lobbying_story(clean(cur.read("lobbying.json", {}), cur.read("members.json", [])),
+                               clean(prev.read("lobbying.json", {}), prev.read("members.json", [])) if prev else None, by_id),
               _finance_story(cur.read("finance.json", {}), prev.read("finance.json") if prev else None, by_id)):
         if s:
             stories.append(s)
