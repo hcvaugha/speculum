@@ -35,9 +35,14 @@ def match(entries: list[dict], members: list[dict]) -> list[dict]:
     for e in entries:
         m = by_id.get(e.get("bioguide") or "")
         if not m:
-            last = _norm((e.get("name") or "").split()[-1] if e.get("name") else "")
+            words = [w for w in (e.get("name") or "").replace(",", " ").split()
+                     if _norm(w) not in ("jr", "sr", "ii", "iii", "iv")]
+            last = _norm(words[-1]) if words else ""
             cands = [x for x in members if x["state"] == e.get("state") and x["chamber"] == e.get("chamber")
-                     and (_norm(x.get("last")) == last or last in _norm(x.get("last")))]
+                     and last and (_norm(x.get("last")) == last or last in _norm(x.get("last")))]
+            if len(cands) > 1 and e.get("district") not in (None, ""):
+                want = "0" if str(e["district"]).upper() in ("AL", "0") else str(e["district"])
+                cands = [x for x in cands if str(x.get("district") or 0) == want]
             m = cands[0] if len(cands) == 1 else None
         out.append({**e, "bioguide": m["bioguide"] if m else None, "member": m})
     return out

@@ -2,29 +2,48 @@
 {% block title %}Method · Speculum{% endblock %}
 {% block body %}
 <h1>Method</h1>
-<p class="lede">Speculum describes; it does not accuse. Every reading below is a rate or a dollar figure computed the same way for every member, compared with the chamber and with the member's own party.</p>
+<p class="lede">Speculum describes; it does not accuse. Every reading below is a rate or a dollar figure computed the same way for every member, compared with the chamber and with the member's own party. Where a rule had to be chosen, the rule is written here.</p>
 
 <h2>Readings in this version</h2>
 <div class="tbl-wrap"><table>
 <thead><tr><th>Reading</th><th>How it is computed</th><th>Source</th></tr></thead>
 <tbody>
 <tr><td>Small donors</td><td>Unitemized individual contributions (donors giving $200 or less in the cycle) as a share of all contributions: individuals, committees, party, and the candidate.</td><td>FEC candidate totals</td></tr>
-<tr><td>PACs and committees</td><td>Contributions from PACs and other non-party committees as a share of the same total.</td><td>FEC candidate totals</td></tr>
-<tr><td>Lobbyist money</td><td>Sum of contributions listed on LD-203 reports whose honoree is this member, matched by name.</td><td>lda.gov</td></tr>
+<tr><td>PACs and committees</td><td>Contributions from PACs and other non-party committees as a share of the same total. Transfers from the member's own fundraising committees are not contributions and are not counted here; each page states how much of total receipts they make up.</td><td>FEC candidate totals</td></tr>
+<tr><td>The candidate</td><td>The candidate's own contributions and loans to the campaign. Loans can be repaid.</td><td>FEC candidate totals</td></tr>
+<tr><td>Lobbyist money</td><td>Campaign contributions listed on LD-203 reports whose honoree is this member, each contribution counted once (see below). Money spent in a member's honor (charities, events, institutions) is listed separately and not counted.</td><td>lda.gov</td></tr>
 <tr><td>Party unity</td><td>On votes where most Democrats opposed most Republicans, the share of the member's yes-or-no votes cast with their party's majority. Independents count with the party they caucus with.</td><td>Roll calls</td></tr>
 <tr><td>Voted</td><td>Roll calls the member voted on, as a share of roll calls held while they served.</td><td>Roll calls</td></tr>
 </tbody></table></div>
 
 <h2>Campaign cycles</h2>
-<p class="lede">House figures cover the current two-year cycle. Senate figures cover the senator's full six-year election cycle, because senators raise money across their whole term.</p>
+<p>House figures cover the current two-year cycle. Senate figures cover the senator's full six-year election cycle, because senators raise money across their whole term; where no six-year figure exists yet, the page says it shows the current two years only.</p>
+
+<h2>Counting lobbyist contributions once</h2>
+<p>LD-203 reports are filed by each lobbying organization and by each of its lobbyists, and the same check is often listed on several of them. A contribution counts once when it appears on several filings with the same date, amount, recipient and giver. Two identical lines on one filing both count: they are usually a primary and a general-election check.</p>
+
+<h2>Matching names to members</h2>
+<p>Reports name the honoree in free text. A name is matched to a member only when it is unambiguous: a senator's title must point to a senator; a first name, initial or common nickname given on the report must agree with the member's; "Last, First" is read as written; a line naming several people is left unattributed. A wrong match is treated as worse than no match, so some real contributions go unmatched. Every amount links to its filing.</p>
+
+<h2>Committee givers and interests</h2>
+<p>Each member's largest committee givers come from itemized receipts on FEC Schedule A. The member's own money is excluded: their personal contributions and loans, and transfers from committees named for them (their joint fundraising and leadership committees). Because only each member's largest givers are collected, interest totals are a floor, not a full count.</p>
+
+<h2>Senate roll calls</h2>
+<p>Senate votes come from Senate.gov, or from Voteview (UCLA) when Senate.gov does not respond to automated requests. Voteview also records the President's announced position on some votes; it is excluded from every tally. Senators are matched by their ICPSR identifiers.</p>
+
+<h2>The Dependents</h2>
+<p>Decisions are chosen by fixed rules applied to official vote titles, never by topic or party. Each link from a decision to an outcome carries an evidence grade: <b>Documented</b> (the source ties the weapons or actions in question to specific harm), <b>Estimated</b> (authoritative aggregate figures), <b>Associated</b> (a pattern or allegation without direct linkage), or <b>No record found</b>. Money around a decision is compared within each party, with a control that leaves out members of the committees that oversee the area. Advocacy groups count when they lobbied on the measure or publicly urged senators on it, with their side taken from their own statements, the same rule for every side; their PAC gifts are counted from the PAC's own reports, so bundled gifts are included. Research drafted with AI is checked claim by claim against its sources and published only after a person approves it.</p>
+
+<h2>Lame-duck watch</h2>
+<p>Members not returning in the next Congress are listed from the House Press Gallery's record and called races. Each one's votes after Election Day are compared with their own record before it; a change is shown once they have cast five party-splitting votes since.</p>
 
 <h2>Known limits</h2>
-<ul class="lede">
-  <li>Lobbyist contributions are matched to members by the honoree name written on each report. Names vary, so some matches will be missed and a few may be wrong. Every amount links to its filing.</li>
+<ul>
   <li>A high share of PAC money or a high party-unity rate is not evidence of wrongdoing. They describe how a member is funded and how they vote.</li>
+  <li>Campaign figures arrive at the pace the FEC's request limits allow; a night that cannot reach a member carries their last figures forward and says so.</li>
   <li>Readings that need coded funder positions (Independence, Exposure, Timing) are not shown until those positions have been reviewed by people.</li>
 </ul>
 
-<h2>Archive</h2>
-<p class="lede">Each night every raw file fetched from a source is saved untouched, hashed with SHA-256, and listed in a manifest attached to that night's release, so any figure can be traced to the exact bytes it came from.</p>
+<h2>Archive and corrections</h2>
+<p>Each night every raw file fetched from a source is saved untouched, hashed with SHA-256, and listed in a manifest attached to that night's release, so any figure can be traced to the exact bytes it came from. Fixes are made in the rules that read the files, never by editing saved data, and every fix is logged on the <a href="corrections.html">corrections</a> page.</p>
 {% endblock %}
