@@ -4,7 +4,6 @@
   "by": "Claude (research agent), with each claim opened at its source",
   "status": "draft, awaiting reviewer",
   "notes": [
-   "NSM-20 graded documented: a hedged general assessment, verifying no specific incident.",
    "ICJ orders and the UN Commission of Inquiry graded associated: authoritative, but they do not name US weapons and the ICJ has made no merits finding.",
    "Gaza casualty figures are Ministry of Health figures reported by UN OCHA, not independently verified by the UN.",
    "UAE/Sudan: no source ties US-origin weapons to the RSF; the 2024 UN panel found arms-flight allegations credible, the 2025 panel could not confirm transfers. Contested.",
@@ -50,7 +49,11 @@
     }
    ],
    "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. The Secretary of State certified an emergency, which waived congressional review. DSCA: deliveries estimated to begin in 2026.",
-   "notification": "DSCA Transmittal No. 25-34, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 25-34, AECA 36(b)(1)",
+   "notified": "2025-02-28",
+   "delivery_estimate": "2026",
+   "emergency": true,
+   "clearance": "Emergency certified by the Secretary of State, waiving congressional review (DSCA)."
   },
   "SJRES26": {
    "bill": "S.J.Res. 26",
@@ -84,7 +87,11 @@
     }
    ],
    "proceeded": "DSCA release 7 Feb 2025; Congressional Record 10 Feb 2025. No emergency language. DSCA: deliveries estimated to begin in 2025.",
-   "notification": "DSCA Transmittal No. 24-13, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 24-13, AECA 36(b)(1)",
+   "notified": "2025-02-07",
+   "delivery_estimate": "2025",
+   "emergency": false,
+   "clearance": "No emergency certification; the statutory review period ran before the vote."
   },
   "SJRES53": {
    "bill": "S.J.Res. 53",
@@ -126,7 +133,11 @@
     }
    ],
    "proceeded": "DSCA release 26 Mar 2025; Congressional Record 26 Mar 2025. Breaking Defense, citing a White House fact sheet, reported that an agreement for the drones (about $2B) was signed on 14 May 2025. No delivery information found.",
-   "notification": "DSCA Transmittal No. 25-16, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 25-16, AECA 36(b)(1)",
+   "notified": "2025-03-26",
+   "delivery_estimate": null,
+   "emergency": false,
+   "clearance": "No emergency certification found; an agreement for the drones was reported signed on 14 May 2025, before the vote."
   },
   "SJRES54": {
    "bill": "S.J.Res. 54",
@@ -158,7 +169,11 @@
     }
    ],
    "proceeded": "DSCA release 12 May 2025; Congressional Record 13 May 2025. DSCA's stated UAE uses are search and rescue, disaster relief, humanitarian support and counterterrorism. No delivery information found.",
-   "notification": "DSCA Transmittal No. 24-118, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 24-118, AECA 36(b)(1)",
+   "notified": "2025-05-12",
+   "delivery_estimate": null,
+   "emergency": false,
+   "clearance": "No emergency certification found."
   },
   "SJRES41": {
    "bill": "S.J.Res. 41",
@@ -189,7 +204,11 @@
     }
    ],
    "proceeded": "Congressional Record 24 Mar 2025 (Executive Communication 510). Reuters reported that State notified Congress on 6 Mar 2025, and that the Biden administration had held this sale over concern the rifles could reach extremist settlers. No delivery information found.",
-   "notification": "DDTC 23-077, direct commercial sale under AECA 36(c)"
+   "notification": "DDTC 23-077, direct commercial sale under AECA 36(c)",
+   "notified": "2025-03-06",
+   "delivery_estimate": null,
+   "emergency": false,
+   "clearance": "Direct commercial sale notified under AECA section 36(c); notification date per Reuters."
   },
   "SJRES34": {
    "bill": "S.J.Res. 34",
@@ -221,7 +240,11 @@
     }
    ],
    "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries estimated to begin in 2028.",
-   "notification": "DSCA Transmittal No. 25-26, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 25-26, AECA 36(b)(1)",
+   "notified": "2025-02-28",
+   "delivery_estimate": "2028",
+   "emergency": true,
+   "clearance": "Emergency certified by the Secretary of State, waiving congressional review (DSCA)."
   },
   "SJRES32": {
    "bill": "S.J.Res. 32",
@@ -258,7 +281,11 @@
     }
    ],
    "proceeded": "DSCA release 28 Feb 2025; Congressional Record 3 Mar 2025. Emergency certified, which waived congressional review. DSCA: deliveries expected to begin in 2027. Israel's Defense Ministry announced the arrival of 'dozens' of D9s on 9 Jul 2025 (Times of Israel), but did not say whether they came under this case.",
-   "notification": "DSCA Transmittal No. 24-38, AECA 36(b)(1)"
+   "notification": "DSCA Transmittal No. 24-38, AECA 36(b)(1)",
+   "notified": "2025-02-28",
+   "delivery_estimate": "2027",
+   "emergency": true,
+   "clearance": "Emergency certified by the Secretary of State, waiving congressional review (DSCA)."
   },
   "SJRES138": {
    "bill": "S.J.Res. 138",
@@ -295,7 +322,11 @@
     }
    ],
    "proceeded": "report delivered to Congress 6 Mar 2026; Federal Register 14 Apr 2026. The notice says part of the requirement will come from US stock. Press reports citing the State Department (Dawn, 8 Mar 2026) say Secretary Rubio certified an emergency, which bypassed congressional review.",
-   "notification": "Transmittal No. 26-32, AECA 36(b)(1)"
+   "notification": "Transmittal No. 26-32, AECA 36(b)(1)",
+   "notified": "2026-03-06",
+   "delivery_estimate": null,
+   "emergency": null,
+   "clearance": "Press reports citing the State Department say an emergency was certified, bypassing congressional review; the Federal Register notice does not state this. Part of the requirement is to come from US stock."
   }
  },
  "outcomes": [
@@ -305,7 +336,10 @@
    "applies_to": [
     "SJRES26",
     "SJRES33",
-    "SJRES34"
+    "SJRES34",
+    "SJRES32",
+    "SJRES138",
+    "SJRES41"
    ],
    "claim": "The State Department's NSM-20 report said that, given Israel's significant reliance on US-made defense articles, it is 'reasonable to assess' that covered defense articles 'have been used by Israeli security forces since October 7 in instances inconsistent with its IHL obligations or with established best practices for mitigating civilian harm'; it also said the USG was 'not able to reach definitive conclusions' on specific incidents.",
    "source": {
@@ -314,7 +348,8 @@
     "publisher": "U.S. Department of State",
     "date": "2024-05-10"
    },
-   "counterpoint": "The same report assessed Israel's assurances to be 'credible and reliable' and said 'we do not currently assess that the Israeli government is prohibiting or otherwise restricting' US humanitarian assistance. NSM-20 was revoked on 21 Feb 2025 (Arms Control Association, Apr 2025)."
+   "counterpoint": "The same report assessed Israel's assurances to be 'credible and reliable' and said 'we do not currently assess that the Israeli government is prohibiting or otherwise restricting' US humanitarian assistance. NSM-20 was revoked on 21 Feb 2025 (Arms Control Association, Apr 2025).",
+   "scope_note": "A general assessment of US-made defense articles; it identifies no specific incident or transfer."
   },
   {
    "country": "Israel",
@@ -330,7 +365,8 @@
     "publisher": "Amnesty International",
     "date": "2023-12-05"
    },
-   "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication."
+   "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions."
   },
   {
    "country": "Israel",
@@ -479,7 +515,8 @@
     "publisher": "UN OCHA oPt",
     "date": "2026-10-27"
    },
-   "counterpoint": "This is context only. No source I found links the DDTC 23-077 rifles to any incident."
+   "counterpoint": "No source found links the rifles in this sale (DDTC 23-077) to any incident.",
+   "context_only": true
   },
   {
    "country": "United Arab Emirates",
@@ -515,7 +552,8 @@
     "publisher": "Amnesty International",
     "date": "2025-05-08"
    },
-   "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response."
+   "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions."
   },
   {
    "country": "United Arab Emirates",
@@ -563,12 +601,13 @@
     "publisher": "Amnesty International",
     "date": "2019-02-06"
    },
-   "counterpoint": "Amnesty's release includes no UAE response."
+   "counterpoint": "Amnesty's release includes no UAE response.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions."
   },
   {
    "country": "Qatar",
    "grade": "none_found",
-   "claim": "I found no authoritative or credible record linking Qatar's use of US-origin MQ-9B drones, Hellfire missiles or guided bombs to civilian harm; the DSCA notice describes the package mainly as strengthening Qatar's homeland defense.",
+   "claim": "Research found no authoritative or credible record linking Qatar's use of US-origin MQ-9B drones, Hellfire missiles or guided bombs to civilian harm; the DSCA notice describes the package mainly as strengthening Qatar's homeland defense.",
    "source": {
     "title": "Qatar – MQ-9B Remotely Piloted Aircraft",
     "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4136302/qatar-mq-9b-remotely-piloted-aircraft",

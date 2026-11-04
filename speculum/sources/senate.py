@@ -79,6 +79,7 @@ def _from_voteview(fetch, members: list[dict], today: date | None = None) -> dic
     today = today or date.today()
     congress, _ = congress_for(today)
     icpsr_to_bio = {m["icpsr"]: m["bioguide"] for m in members if m.get("icpsr")}
+    people: dict[str, dict] = {}      # name and party for senators no longer in the roster
     # The crosswalk lacks ICPSR IDs for some newer senators; Voteview's own member list carries Bioguide IDs.
     try:
         for r in csv.DictReader(io.StringIO(fetch.get("voteview", f"S{congress}_members.csv",
@@ -86,6 +87,8 @@ def _from_voteview(fetch, members: list[dict], today: date | None = None) -> dic
             icpsr = (r.get("icpsr") or "").split(".")[0]
             if icpsr and r.get("bioguide_id"):
                 icpsr_to_bio.setdefault(icpsr, r["bioguide_id"].strip())
+                party = {"100": "D", "200": "R", "328": "I"}.get((r.get("party_code") or "").split(".")[0])
+                people[r["bioguide_id"].strip()] = {"name": (r.get("bioname") or "").title(), "party": party}
     except Exception as exc:
         log.warning("Voteview member list unavailable (%s); matching by crosswalk only", exc)
     rows = csv.DictReader(io.StringIO(fetch.get("voteview", f"S{congress}_rollcalls.csv",
@@ -114,7 +117,7 @@ def _from_voteview(fetch, members: list[dict], today: date | None = None) -> dic
             icpsr = (r.get("icpsr") or "").split(".")[0]
             positions[vid][icpsr_to_bio.get(icpsr, f"icpsr:{icpsr}")] = cast
     votes.sort(key=lambda v: (v["session"], v["number"]))
-    return {"votes": votes, "positions": positions}
+    return {"votes": votes, "positions": positions, "people": people}
 
 
 def _from_senate_gov(fetch, members: list[dict], previous: dict | None, today: date | None = None) -> dict:

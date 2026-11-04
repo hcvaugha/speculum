@@ -159,12 +159,13 @@ def _votes(fetch, keys, members, snap, errors):
 
     house = chamber("house", lambda: congress.fetch_house_votes(fetch, keys["congress"], previous))
     sen = chamber("senate", lambda: senate.fetch_senate_votes(fetch, members, previous))
-    merged = {"votes": house["votes"] + sen["votes"], "positions": {**house["positions"], **sen["positions"]}}
+    merged = {"votes": house["votes"] + sen["votes"], "positions": {**house["positions"], **sen["positions"]},
+              "people": sen.get("people") or (previous or {}).get("people", {})}
     # A back-dated run (e.g. stamping Day Zero after the fact) keeps only roll calls held by that date.
     if snap.date < today_et():
         keep = [v for v in merged["votes"] if (v.get("date") or "")[:10] <= snap.date]
         ids = {v["id"] for v in keep}
-        merged = {"votes": keep, "positions": {k: p for k, p in merged["positions"].items() if k in ids}}
+        merged = {"votes": keep, "positions": {k: p for k, p in merged["positions"].items() if k in ids}, "people": merged.get("people", {})}
     snap.write("votes.json.gz", merged)
     return merged
 

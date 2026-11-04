@@ -1,0 +1,15 @@
+{
+ "_how": "Members who voted in the record but are no longer serving, so party tallies reconcile. Nightly Senate data from Voteview fills this automatically from now on.",
+ "G000359": {
+  "name": "Lindsey Graham",
+  "party": "R",
+  "state": "SC",
+  "chamber": "senate"
+ },
+ "M001190": {
+  "name": "Markwayne Mullin",
+  "party": "R",
+  "state": "OK",
+  "chamber": "senate"
+ }
+}

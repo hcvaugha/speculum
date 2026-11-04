@@ -30,9 +30,9 @@
    },
    "positions": {
     "SJRES26": "opposes (post-vote ad blitz against the 15 yes-voters)",
-    "SJRES33": "opposes (same)",
+    "SJRES33": "opposes (post-vote ad blitz against the 15 yes-voters)",
     "SJRES34": "opposes (press release applauding rejection)",
-    "SJRES41": "opposes (same)",
+    "SJRES41": "opposes (press release applauding rejection)",
     "SJRES32": "opposes",
     "SJRES138": "opposes",
     "SJRES53": "not found",
@@ -97,11 +97,11 @@
    },
    "positions": {
     "SJRES26": "no position: 'some Senators will decide to vote yes and others to vote no'; opposed only the emergency bypass of Congress",
-    "SJRES33": "same as 26",
+    "SJRES33": "no position: 'some Senators will decide to vote yes and others to vote no'; opposed only the emergency bypass of Congress",
     "SJRES34": "pre-vote position not found; welcomed the votes afterward",
     "SJRES41": "pre-vote position not found; welcomed the votes afterward (the release mentions the rifles vote)",
     "SJRES32": "supports (signed 9 Apr 2026 coalition letter)",
-    "SJRES138": "supports (same letter)",
+    "SJRES138": "supports (signed 9 Apr 2026 coalition letter)",
     "SJRES53": "not found",
     "SJRES54": "not found"
    },
@@ -178,9 +178,9 @@
     "SJRES32": "supports (Apr 2026 letter)",
     "SJRES138": "supports (Apr 2026 letter)",
     "SJRES26": "lobbied per LD-2; 2025 public position not retrieved",
-    "SJRES33": "same as 26",
-    "SJRES34": "same as 26",
-    "SJRES41": "same as 26",
+    "SJRES33": "lobbied per LD-2; 2025 public position not retrieved",
+    "SJRES34": "lobbied per LD-2; 2025 public position not retrieved",
+    "SJRES41": "lobbied per LD-2; 2025 public position not retrieved",
     "SJRES53": "not found",
     "SJRES54": "not found"
    },
@@ -576,7 +576,7 @@
    },
    "positions": {
     "SJRES26": "opposes (post-vote: 'a powerful rejection of efforts to undermine our closest ally')",
-    "SJRES33": "same"
+    "SJRES33": "opposes (post-vote: 'a powerful rejection of efforts to undermine our closest ally')"
    },
    "evidence": [
     {

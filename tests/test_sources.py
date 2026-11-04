@@ -311,7 +311,7 @@ def test_chains_rule_country_and_money():
     assert by["B"]["pac"] == 5000 and by["C"]["lobby"] == 1000 and by["C"]["givers"][0]["company"] == "Acme Arms"
     d = ch["money_pattern"]["D"]
     assert d["Y"]["n"] == 2 and d["Y"]["pac_n"] == 1      # D has no FEC record: unknown, not zero
-    assert d["N"]["pac_median"] == 5000
+    assert d["N"]["pac"]["median_any"] == 5000 and d["N"]["pac_median"] is None   # n < MIN_N: no median shown
 
 
 def test_committee_control():
@@ -331,8 +331,9 @@ def test_committee_control():
     lob = {"by_member": {"A": [{"registrant_id": "9", "amount": 9000}], "B": [{"registrant_id": "9", "amount": 7000}],
                          "C": [{"registrant_id": "9", "amount": 1000}]}}
     [ch] = chains.build(members, {}, lob, votes, {"arms": {"companies": [{"name": "X", "fec": [], "lda": [9]}]}}, {}, {}, data)
-    assert ch["money_pattern"]["D"]["N"]["lobby_median"] == 7000
-    assert ch["committee_control"]["D"]["N"]["n"] == 1 and ch["committee_control"]["D"]["N"]["lobby_median"] == 1000
+    assert ch["money_pattern"]["D"]["N"]["lobby"]["median_any"] == 7000
+    assert ch["committee_control"]["D"]["N"]["n"] == 1 and ch["committee_control"]["D"]["N"]["lobby"]["median_any"] == 1000
+    assert ch["money_pattern"]["D"]["verdict"] == "none"
 
 
 def test_advocacy_counts_earmarks_once_and_tracks_completeness():

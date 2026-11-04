@@ -22,10 +22,18 @@ from pathlib import Path
 from . import ledger
 
 HERE = Path(__file__).parent
+# Two separate questions about every link. The evidence grade says how strong the finding is on its own
+# terms; the tie says how it relates to this sale. A forensic finding about earlier deliveries of the
+# same weapon can be Documented as evidence and still not be tied to this sale.
 GRADES = {  # "none_found" is also used: research looked and found no credible record, itself a finding
-    "documented": "The decision did it directly, and an official or investigative record shows the result.",
-    "estimated": "An official or peer-reviewed estimate of the effect, not tied to this decision alone.",
-    "associated": "A pattern only. Shown so readers can see it; never presented as cause.",
+    "documented": "The finding rests on direct evidence: forensic identification, an official record or a court document.",
+    "estimated": "An official or peer-reviewed estimate, such as a casualty count or a famine classification.",
+    "associated": "An assessment, allegation or pattern without direct evidence for the specific claim.",
+}
+TIES = {
+    "this_sale": "Weapons or items from this sale",
+    "same_type": "The same kind of weapon from earlier US deliveries, not this sale",
+    "wider": "The wider record on the recipient; not tied to this sale",
 }
 
 # Rules decide which votes become chains. Each is a fixed text test on the vote's official title,
@@ -37,11 +45,14 @@ RULES = [
         "test": re.compile(r"disapproval of the proposed (foreign military sale|export|direct commercial sale|transfer)"
                            r"[^.]*defense articles", re.I),
         "sector": "arms",
-        "yes_means": "block the sale",
-        "no_means": "let the sale proceed",
-        "why": "Congress can block a notified foreign arms sale by joint resolution of disapproval "
-               "(Arms Export Control Act, 22 U.S.C. 2776). A vote for the resolution, or to discharge it "
-               "from committee, is a vote to block; a vote against lets the sale go ahead.",
+        "yes_means": "advance a resolution to block the sale",
+        "no_means": "decline to advance it",
+        "why": "Congress can block a notified foreign arms sale only by passing a joint resolution of "
+               "disapproval (Arms Export Control Act, 22 U.S.C. 2776) through both chambers and having it "
+               "signed by the President or passed over a veto by two-thirds of each chamber. A motion to "
+               "discharge brings the resolution out of committee for a vote; it does not block the sale by "
+               "itself. Where the Secretary of State certified an emergency, congressional review was waived "
+               "and the sale could go ahead regardless.",
     },
 ]
 
@@ -94,9 +105,11 @@ def _median(xs):
 
 def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, sectors: dict,
           research: dict, reviews: dict, committees: dict | None = None,
-          advocacy_cfg: dict | None = None, advocacy_data: dict | None = None) -> list[dict]:
+          advocacy_cfg: dict | None = None, advocacy_data: dict | None = None,
+          former_members: dict | None = None) -> list[dict]:
     from .sources.committees import on_defense_committee
     by_id = {m["bioguide"]: m for m in members}
+    former = {**{k: v for k, v in (votes.get("people") or {}).items()}, **(former_members or {})}
     positions = votes.get("positions", {})
     chains: dict[str, dict] = {}
     for rule in RULES:
@@ -125,11 +138,12 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         ch["date"] = decisive["date"]
         rows, split = [], {}
         fec_ids, lda_ids = sector_index(sectors, ch["sector"])
-        for bio, p in decisive.pop("_pos").items():
+        decisive_pos = decisive.pop("_pos")
+        for bio, p in decisive_pos.items():
             s = ledger.side(p)
             m = by_id.get(bio)
-            party = ledger.caucus_party(m) if m else None
-            key = (party or "?", s or "-")
+            party = ledger.caucus_party(m) if m else (former.get(bio) or {}).get("party")
+            key = (party or "?", s or ("P" if p == "Present" else "-"))
             split[key] = split.get(key, 0) + 1
             if not m:
                 continue                                 # no longer serving; counted in the tally only
@@ -138,7 +152,9 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
                          "position": p, "side": s, "defense_seats": on_defense_committee(bio, committees), **money})
         for x in ch["votes"]:
             x.pop("_pos", None)
-        ch["members"] = sorted(rows, key=lambda r: (r["side"] or "Z", -r["total"]))
+        ch["members"] = sorted(rows, key=lambda r: (r["side"] or "Z", r["name"]))   # never ranked by amount
+        ch["former"] = sorted(((former.get(b) or {}).get("name") or b) for b in decisive_pos if b not in by_id)
+        ch["unknown_party"] = sum(n for (p, s), n in split.items() if p == "?")
         ch["party_split"] = {f"{p}-{s}": n for (p, s), n in sorted(split.items())}
         ch["money_pattern"] = _pattern(ch["members"])
         # Control: the same comparison without senators on Armed Services, Foreign Relations or the
@@ -154,8 +170,20 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         ch["outcomes"] = [o for o in research.get("outcomes", []) if o.get("country") == ch["country"]
                           and (not o.get("applies_to") or bkey in o["applies_to"])]
         order = {"documented": 0, "estimated": 1, "associated": 2, "none_found": 3}
-        ch["outcomes"] = [{**o, "_order": order.get(o.get("grade"), 4)} for o in ch["outcomes"]]
-        ch["context"] = [x for x in research.get("context", []) if x.get("country") == ch["country"]]
+        notified = (r or {}).get("notified")
+        placed = []
+        for o in ch["outcomes"]:
+            when = o.get("date") or (o.get("source") or {}).get("date") or ""
+            rel = ("before this sale was notified" if notified and when and when < notified
+                   else "before the vote" if when and when <= ch["date"] else "after the vote" if when else "")
+            general = bool(o.get("scope_note"))          # e.g. a general assessment of US-made arms
+            scope = ("context" if o.get("context_only") else
+                     "wider" if general else
+                     "same_type" if o.get("applies_to") and bkey in o["applies_to"] else "wider")
+            placed.append({**o, "_order": order.get(o.get("grade"), 4), "when": when, "when_rel": rel, "scope": scope})
+        ch["outcomes"] = [o for o in placed if o["scope"] != "context"]
+        ch["context"] = ([o for o in placed if o["scope"] == "context"] +
+                         [x for x in research.get("context", []) if x.get("country") == ch["country"]])
         _contractor_money(ch, sectors)
         _advocacy(ch, by_id, finance, advocacy_cfg or {}, advocacy_data)
         rv = reviews.get(ch["id"]) or {}
@@ -164,6 +192,18 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         ch["status"] = "approved" if rv.get("approved_by") else "verified" if rv.get("ai_verified") else "draft"
         ch["review"] = rv
         out.append(ch)
+    # Votes held the same day are mostly the same senators: say how much they overlap, so a repeated
+    # money gap is not read as an independent confirmation.
+    for ch in out:
+        sides = {r["bioguide"]: r["side"] for r in ch["members"] if r["side"]}
+        ch["siblings"] = []
+        for other in out:
+            if other is ch or other["date"] != ch["date"]:
+                continue
+            o = {r["bioguide"]: r["side"] for r in other["members"] if r["side"]}
+            both = [b for b in sides if b in o]
+            same = sum(1 for b in both if sides[b] == o[b])
+            ch["siblings"].append({"bill": other["bill"], "id": other["id"], "both": len(both), "same": same})
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)
     return out
 
@@ -182,6 +222,9 @@ def _contractor_money(ch: dict, sectors: dict) -> None:
     hits = set()
     for c in named:
         low = c.lower().replace("raytheon", "rtx")
+        for alias, parent in (("atk tactical systems", "northrop grumman"), ("orbital atk", "northrop grumman"),
+                              ("general atomics aeronautical", "general atomics")):
+            low = low.replace(alias, parent)    # subsidiaries named in notices, matched to their parent
         for co in cos:
             k = _company_key(co["name"])
             if k and re.search(r"\b" + re.escape(k) + r"\b", low):
@@ -192,8 +235,9 @@ def _contractor_money(ch: dict, sectors: dict) -> None:
     for party, cell in ch["money_pattern"].items():
         for side in ("Y", "N"):
             group = [r for r in ch["members"] if r["caucus"] == party and r["side"] == side]
-            cell[side]["contractor_median"] = _median([r["contractor"] for r in group]) if hits else None
-            cell[side]["contractor_any"] = sum(1 for r in group if r["contractor"] > 0)
+            st = _stats([r["contractor"] for r in group])
+            cell[side]["contractor_median"] = st["median"] if hits else None
+            cell[side]["contractor_any"] = st["any"]
 
 
 def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None) -> None:
@@ -240,21 +284,41 @@ def _position_text(org: dict, bkey: str) -> str:
     return ""
 
 
+MIN_N = 10        # smallest group a median is shown for
+GAP = 2.0         # medians this far apart (ratio), with both groups at least MIN_N, count as a gap
+
+
+def _stats(xs: list[float]) -> dict:
+    xs = sorted(xs)
+    return {"n": len(xs), "median": _median(xs) if len(xs) >= MIN_N else None, "median_any": _median(xs),
+            "low": xs[0] if xs else None, "high": xs[-1] if xs else None, "any": sum(1 for x in xs if x > 0)}
+
+
 def _pattern(rows: list[dict]) -> dict:
-    """Median arms-industry money for each side of the vote, within each party: an associated-grade
-    reading. Comparing inside a party keeps the party line itself from masquerading as a money effect.
-    Lobbyist money (LD-203) is known for every member; PAC money only once FEC data is fetched, and a
-    member whose FEC data is missing is left out of the PAC median rather than counted as zero."""
+    """Arms-industry money for each side of the vote, within each party: an associated-grade reading.
+    Comparing inside a party keeps the party line from masquerading as a money effect. A median is
+    shown only for groups of at least MIN_N senators; each group shows its size, range and how many
+    received anything. PAC money counts only members whose FEC data has been collected (unknown is
+    not zero). The verdict follows one fixed rule for every chain."""
     out = {}
     for party in sorted({r["caucus"] for r in rows if r["caucus"]}):
         cell = {}
         for side in ("Y", "N"):
             group = [r for r in rows if r["caucus"] == party and r["side"] == side]
             known = [r["pac"] for r in group if r["finance_known"]]
-            cell[side] = {"n": len(group),
-                          "lobby_median": _median([r["lobby"] for r in group]),
-                          "lobby_any": sum(1 for r in group if r["lobby"] > 0),
-                          "pac_n": len(known), "pac_median": _median(known)}
+            lob = _stats([r["lobby"] for r in group])
+            cell[side] = {"n": len(group), "lobby": lob, "lobby_median": lob["median"], "lobby_any": lob["any"],
+                          "pac_n": len(known), "pac": _stats(known), "pac_median": _stats(known)["median"]}
+        y, n = cell["Y"], cell["N"]
+        if not y["n"] or not n["n"]:
+            verdict = "none"            # everyone in the party voted the same way
+        elif y["n"] < MIN_N or n["n"] < MIN_N:
+            verdict = "small"
+        else:
+            a, b = y["lobby"]["median_any"] or 0, n["lobby"]["median_any"] or 0
+            hi, lo = max(a, b), min(a, b)
+            verdict = ("gap_no" if b > a else "gap_yes") if (lo == 0 and hi > 0) or (lo and hi / lo >= GAP) else "no_difference"
+        cell["verdict"] = verdict
         out[party] = cell
     return out
 
@@ -267,7 +331,8 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
     research = load_json(data_root / "chains" / "research.json", {})
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
                 load_json(data_root / "chains" / "reviews.json", {}), committees,
-                load_json(data_root / "advocacy.json", {}), advocacy_data)
+                load_json(data_root / "advocacy.json", {}), advocacy_data,
+                {k: v for k, v in load_json(data_root / "former_members.json", {}).items() if not k.startswith("_")})
     for ch in out:
         ch["research_by"] = "research" if ch["mechanism"] or ch["outcomes"] else None
         d = load_json(data_root / "chains" / "drafts" / f"{ch['id']}.json", None)

@@ -221,7 +221,7 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
     tmpl = E.get_template("chain.html")
     for c in chains:
         (prev / "chain" / f"{c['id']}.html").write_text(tmpl.render(
-            root="../", page="dependents", c=c, party_names=PARTY_NAMES,
+            root="../", page="dependents", c=c, party_names=PARTY_NAMES, min_n=chains_mod.MIN_N, gap=int(chains_mod.GAP),
             lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")
 
 
