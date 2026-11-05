@@ -1,0 +1,76 @@
+name: Maintenance
+
+# One-off housekeeping that needs the repository's own token: move release tags, delete
+# Actions runs, and prune old preview deployments on Cloudflare (keeping the live one).
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Tags to move, space-separated tag=sha pairs"
+        required: false
+      runs:
+        description: "Actions run IDs to delete, space-separated"
+        required: false
+      prune_preview:
+        description: "Delete every preview deployment except the live one"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Move tags
+        if: inputs.tags != ''
+        run: |
+          for pair in ${{ inputs.tags }}; do
+            t="${pair%%=*}"; sha="${pair#*=}"
+            git tag -f "$t" "$sha"
+            git push -f origin "refs/tags/$t"
+          done
+
+      - name: Delete runs
+        if: inputs.runs != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for id in ${{ inputs.runs }}; do
+            gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/runs/$id" && echo "deleted run $id"
+          done
+
+      - name: Prune old preview deployments
+        if: inputs.prune_preview
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.request
+          base = f"https://api.cloudflare.com/client/v4/accounts/{os.environ['CF_ACCOUNT']}/pages/projects/speculum-preview"
+          def call(url, method="GET"):
+              req = urllib.request.Request(url, method=method, headers={"Authorization": f"Bearer {os.environ['CF_TOKEN']}"})
+              with urllib.request.urlopen(req) as r:
+                  return json.load(r)
+          live = call(base)["result"]["canonical_deployment"]["id"]
+          ids, page = [], 1
+          while True:
+              res = call(f"{base}/deployments?per_page=25&page={page}")
+              ids += [d["id"] for d in res["result"]]
+              info = res.get("result_info") or {}
+              if page >= (info.get("total_pages") or 1):
+                  break
+              page += 1
+          old = [i for i in ids if i != live]
+          print(f"{len(ids)} deployments; keeping the live one, deleting {len(old)}")
+          for i in old:
+              call(f"{base}/deployments/{i}?force=true", "DELETE")
+          print("done")
+          EOF
