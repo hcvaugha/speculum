@@ -187,10 +187,10 @@
    "positions": {
     "SJRES32": "supports (Apr 2026 letter)",
     "SJRES138": "supports (Apr 2026 letter)",
-    "SJRES26": "lobbied per LD-2; 2025 public position not retrieved",
-    "SJRES33": "lobbied per LD-2; 2025 public position not retrieved",
-    "SJRES34": "lobbied per LD-2; 2025 public position not retrieved",
-    "SJRES41": "lobbied per LD-2; 2025 public position not retrieved",
+    "SJRES26": "2025 position not found",
+    "SJRES33": "2025 position not found",
+    "SJRES34": "2025 position not found",
+    "SJRES41": "2025 position not found",
     "SJRES53": "not found",
     "SJRES54": "not found"
    },
@@ -230,7 +230,7 @@
    "positions": {
     "SJRES32": "supports (Apr 2026 letter)",
     "SJRES138": "supports (Apr 2026 letter)",
-    "others": "lobbied per LD-2; 2025 public position not retrieved"
+    "others": "2025 position not found"
    },
    "evidence": [
     {
@@ -277,8 +277,7 @@
    },
    "positions": {
     "SJRES32": "supports",
-    "SJRES138": "supports",
-    "SJRES26/33/34": "lobbied per Q1 2025 LD-2; position not retrieved"
+    "SJRES138": "supports"
    },
    "evidence": [
     {
@@ -292,41 +291,6 @@
      "registrant": "Amnesty International of the USA, Inc.",
      "client": "Self",
      "filing_uuid_or_url": "5ba50cd0-09c0-4e08-9872-c24741a2c580 (signed 4/21/2025; 26, 32, 33, 34)"
-    }
-   ],
-   "pacs": [],
-   "related_pacs_excluded": []
-  },
-  {
-   "name": "Hadassah, The Women's Zionist Organization of America",
-   "sides": {},
-   "positions": {
-    "SJRES26": "lobbied (LD-2); public position not found",
-    "SJRES33": "lobbied (LD-2); public position not found"
-   },
-   "evidence": [],
-   "lda": [
-    {
-     "registrant": "Hadassah",
-     "client": "Self",
-     "filing_uuid_or_url": "dc51bee1-4512-4301-a0b1-90bc3bcd888d (signed 7/16/2025; 26, 33)"
-    }
-   ],
-   "pacs": [],
-   "related_pacs_excluded": []
-  },
-  {
-   "name": "FDD Action",
-   "sides": {},
-   "positions": {
-    "SJRES26/32/33/34/41": "lobbied (LD-2, DEF issue code); public position not found"
-   },
-   "evidence": [],
-   "lda": [
-    {
-     "registrant": "FDD Action",
-     "client": "FDD Action",
-     "filing_uuid_or_url": "ec39fc69-b32f-488e-8550-5f18af978bae (signed 4/21/2025; 20–27, 32–35, 40–42)"
     }
    ],
    "pacs": [],
@@ -519,7 +483,8 @@
    ],
    "lda": [],
    "pacs": [],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "mapping_note": "The letter names the sales it opposes (1,000-pound bombs and Caterpillar D9 bulldozers), not resolution numbers; it is matched to S.J.Res. 138 and 32 by those items."
   },
   {
    "name": "17 other signers of the April 9, 2026 coalition letter",

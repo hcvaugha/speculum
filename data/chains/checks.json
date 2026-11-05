@@ -1,0 +1,788 @@
+{
+ "_how": "Source-check results keyed by claim fingerprint (written by speculum.verify). A claim is published only when its result is 'supported'. Delete an entry to have it checked again.",
+ "checks": {
+  "e6bae5cb8eaaec48": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items, $2.04B, contractors, Transmittal 25-34, 28 Feb notification, CR 3 Mar 2025, emergency waiver, 2026 delivery, justification, Sanders and SAP quotes, Trump quotes and the 16 Feb arrival all match. But the first history entry misquotes Military Times: the article has Austin saying only 'one shipment of high payload munitions' (the words 'we have paused' are not in his quote), and the Rafah quote 'shouldn't launch a major attack into Rafah without accounting for and protecting the civilians' does not appear in the cited article. In addition, the no_same_type_note says 'some forensic reports identify US guidance kits', which the cited Dawn piece does not say; the MK-84 identification for the 16 Feb shipment comes from AFP, not from the ministry's own words.",
+   "quotes": [
+    "Deliveries are estimated to begin in 2026.",
+    "one shipment of high payload munitions",
+    "They have used massive 2,000-pound bombs in densely populated Gaza"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 33: what the sale contained"
+  },
+  "b8a1892b263740e3": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items, $151.8M ($150.0M/$1.8M), Repkon USA (Garland, TX), Transmittal 26-32 under 36(b)(1), delivered 6 Mar 2026, part from stock, no emergency language in FR, Dawn/Reuters on Rubio's emergency determination and 'national security interests', Sanders quotes and cosponsors all match. But Dawn calls Meeks only 'Democratic US Rep Gregory Meeks'; the description 'ranking Democrat on the House Foreign Affairs Committee' is not in the cited source.",
+   "quotes": [
+    "Part of the BLU-110 A/B requirement will be transferred from stock.",
+    "This is an emergency of the Trump administration's own creation.",
+    "Democratic US Rep Gregory Meeks said Rubio's decision to use emergency authority to bypass congressional review"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 138: what the sale contained"
+  },
+  "3df38411c6919a25": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Jewish Insider (Apr 2025) reports AIPAC's six-figure, 11-state ad blitz against the 15 senators who voted for the Sanders resolutions; the AIPAC release (dated 29 Jul 2025) applauds the Senate for rejecting Sanders's proposed bans; Jewish Insider (15 Apr 2026) quotes AIPAC thanking senators who opposed the bulldozer and 1,000-lb bomb resolutions. None of the sources names S.J.Res. numbers, so the mapping to specific resolutions comes from dates and descriptions. The PAC/super PAC FEC IDs are not covered by the evidence links.",
+   "quotes": [
+    "six-figure ad buy",
+    "AIPAC applauds the U.S. Senate for standing with Israel and again resoundingly rejecting proposed bans",
+    "We appreciate the senators who opposed these misguided and dangerous resolutions."
+   ],
+   "kind": "stated position",
+   "label": "AIPAC: stated positions"
+  },
+  "6d6e5f529960b384": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The UN page quotes Pillay that 'Israel is responsible for the commission of genocide in Gaza', finds four of the five acts, and gives the 'cease the transfer of arms and other equipment' recommendation (document a-hrc-60-crp-3). The counterpoint's Israeli quote and abolition call are confirmed by Arab News, and NPR has the 'bias against Israel' line attributed to leaders of both parties. 'Non-judicial body' and 'conference-room paper' are descriptive and not stated on the page.",
+   "quotes": [
+    "The Commission finds that Israel is responsible for the commission of genocide in Gaza",
+    "cease the transfer of arms and other equipment",
+    "an organization that U.S. leaders from both parties have long said has a bias against Israel"
+   ],
+   "kind": "outcome",
+   "label": "The UN Human Rights Council's Independent International Commission of Inquiry, a non-judic"
+  },
+  "7b9fbe35cf1bc0ba": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "S/2020/70 Table 2 says the UAE 'formed the Forces, selected the commanders, recruited and trained the troops ... paid salaries and provided weapons' for the Security Belt Forces, with Shabwani and Hadramawt Elite rows marked 'as above'. The summary lists 'the forces affiliated with the United Arab Emirates' among those responsible for arbitrary detention, enforced disappearance and torture. S/2019/83 para. 52 supports the counterpoint.",
+   "quotes": [
+    "The United Arab Emirates formed the Forces, selected the commanders, recruited and trained the troops",
+    "Arbitrary arrest and detention, enforced disappearances, ill-treatment and the torture of detainees continue to be conducted by ... the forces affiliated with the United Arab Emirates",
+    "the control of proxy forces rested with the national Government"
+   ],
+   "kind": "outcome",
+   "label": "The UN Panel of Experts on Yemen found that the UAE 'formed the Forces, selected the comma"
+  },
+  "c775bbcda22c040d": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Demand Progress (31 Jul 2025) names S.J.Res. 41 and says it 'led a campaign' urging people to ask senators to support the resolutions. The FCNL coalition letter (9 Apr 2026), urging votes for the JRDs on 1,000-lb bombs and D9 bulldozers, lists Demand Progress as a signer. The letter gives no S.J.Res. numbers.",
+   "quotes": [
+    "led a campaign",
+    "block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers"
+   ],
+   "kind": "stated position",
+   "label": "Demand Progress: stated positions"
+  },
+  "eea0aa1396cc6ca1": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The cited api.icj-cij.org PDF was blocked; the same ICJ press release was read via the UN UNISPAL mirror. The famine quote, the unanimous measure 2(a) on unhindered basic services and aid 'including by increasing the capacity and number of land crossing points', and the 14-2 reaffirmation with Sebutinde and Barak against all match. But the counterpoint's 'Israel disputes the genocide allegation' is not in the press release, which only notes that Israel filed observations on 15 Mar 2024.",
+   "quotes": [
+    "Palestinians in Gaza are no longer facing only a risk of famine",
+    "famine is setting in",
+    "increasing the capacity and number of land crossing points"
+   ],
+   "kind": "outcome",
+   "label": "In its 28 Mar 2024 order the ICJ said 'Palestinians in Gaza are no longer facing only a ri"
+  },
+  "ce709f81c01139ce": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "All counts, the 198,273 total, the approximately 81% share, the 11 Oct 2025 imagery date and the preliminary/not field-validated caveat match the UNOSAT PDF.",
+   "quotes": [
+    "for a total of 198,273 affected structures",
+    "approximately 81% of all structures in the Gaza Strip are damaged",
+    "This is a preliminary analysis and has not yet been validated in the field."
+   ],
+   "kind": "outcome",
+   "label": "From imagery of 11 Oct 2025 UNOSAT identified 123,464 destroyed, 17,116 severely damaged, "
+  },
+  "dc76ac00399f157d": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The OCHA snapshot of 28 Oct 2026 lists 'Over 1,200' Israeli fatalities 'According to Israeli media citing official sources', including 7 October, its immediate aftermath and foreign nationals.",
+   "quotes": [
+    "Over 1,200",
+    "According to Israeli media citing official sources",
+    "This includes fatalities on 7 October and the immediate aftermath"
+   ],
+   "kind": "context",
+   "label": "OCHA, citing Israeli media quoting official sources, reports over 1,200 Israeli fatalities"
+  },
+  "a9062b53654ab02a": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "FDD's 14 Apr 2024 brief has 'an estimated 300 drones and missiles' launched overnight 13-14 April, and IDF spokesperson Hagari saying 'more than 99 percent' were intercepted.",
+   "quotes": [
+    "an estimated 300 drones and missiles",
+    "more than 99 percent"
+   ],
+   "kind": "context",
+   "label": "Iran launched 'an estimated 300 drones and missiles' at Israel overnight on 13–14 Apr 2024"
+  },
+  "067cf44aead02049": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "All three quoted phrases appear in SC/14771. The page as fetched shows no year or issue date, so the year 2022 is not confirmed on the page, though the claim text itself states no year.",
+   "quotes": [
+    "heinous terrorist attacks in Abu Dhabi",
+    "committed and claimed by the Houthis",
+    "resulted in three civilian deaths and six other civilians injured"
+   ],
+   "kind": "context",
+   "label": "The Security Council condemned 'the heinous terrorist attacks in Abu Dhabi … on Monday, 17"
+  },
+  "3012eac4eee34192": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The FCNL page (9 Apr 2026) supports the 'block' position on the 1,000-lb bomb and bulldozer JRDs, with FCNL as a signer. The entries 'lobbied per LD-2' for S.J.Res. 26/33/34/41 cite no LD-2 filing, and the evidence link does not mention 2025 lobbying.",
+   "quotes": [
+    "Friends Committee on National Legislation",
+    "Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April"
+   ],
+   "kind": "stated position",
+   "label": "Friends Committee on National Legislation: stated positions"
+  },
+  "5ea04227490fc7bb": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Arab American Institute is a signer of the 9 Apr 2026 coalition letter urging votes for the JRDs blocking 1,000-lb bombs and D9 bulldozers. The letter gives no S.J.Res. numbers.",
+   "quotes": [
+    "Arab American Institute",
+    "block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers"
+   ],
+   "kind": "stated position",
+   "label": "Arab American Institute: stated positions"
+  },
+  "ec27c67477a2c002": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Forward quotes IfNotNow executive director Morriah Kaplan after the Senate votes on the D-9 bulldozer and bomb resolutions, calling the vote 'a powerful step toward shared safety'. That supports 'post-vote praise only'.",
+   "quotes": [
+    "a powerful step toward shared safety"
+   ],
+   "kind": "stated position",
+   "label": "IfNotNow: stated positions"
+  },
+  "23a7f57ba98b0766": {
+   "result": "not_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "No sources or evidence links are cited, so 'lobbied (LD-2, DEF issue code)' on S.J.Res. 26/32/33/34/41 cannot be checked against anything.",
+   "quotes": [],
+   "kind": "stated position",
+   "label": "FDD Action: stated positions"
+  },
+  "2d30c46a63607319": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "OCHA snapshot gives 74,564 reported fatalities as of 28 Oct 2026 attributed to MoH, and 74,237 identified as of 7 Oct 2026 (35,555 men, 21,976 children, 11,301 women, 5,405 elderly). Counterpoint figures match the Lancet (64,260; 41%), Hopkins (1.5-3.8%), ToI (at least 22,000; no civilian/combatant distinction), HJS (natural deaths; almost 6,000 names removed), Ynet and VOA/Al Jazeera (8,119 verified; nearly 70%; 88%; 'unverified information'); minor: Al Jazeera says first six months while VOA says seven.",
+   "quotes": [
+    "REPORTED CASUALTIES (Cumulative) as of 28 October 2026",
+    "under-reported mortality by 41%",
+    "the MoH removed almost 6,000 names from its lists of verified casualties"
+   ],
+   "kind": "outcome",
+   "label": "OCHA reports, citing the Gaza Ministry of Health (part of the Hamas-led administration in "
+  },
+  "869784b920e6e4b3": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items, $295M (highest estimate), Transmittal 24-38, AECA 36(b)(1), CR 3 Mar 2025, Caterpillar Irving TX, emergency waiver, 2027 deliveries, justification text, Sanders intro 10 Mar 2025 with no cosponsors and his 15 Apr 2026 quotes all match. But 'an earlier shipment that had been held under the previous US administration' states as fact what Times of Israel only attributes to a report ('it was reported that the Biden administration was holding up the sale'; headline says 'reportedly').",
+   "quotes": [
+    "an emergency exists that requires the immediate sale",
+    "In November, it was reported that the Biden administration was holding up the sale of the D9 bulldozers",
+    "bulldozers used to demolish homes in Gaza, Lebanon and the West Bank"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 32: what the sale contained"
+  },
+  "582c021a844cf453": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "ICC release supports unanimity, 'Thus Israel's challenge is premature', the charges, period, deprivation finding and the extermination limit; Just Security supports the 3-2 Appeals ruling on 15 Dec, two pending motions, the 17 Oct suspension rejection and 'remain in force'; EO 14203 supports 'baseless arrest warrants'. The PMO quote is not in the cited links but is confirmed by the named PMO statement of 21 Nov 2024 (GlobalSecurity copy).",
+   "quotes": [
+    "Thus Israel's challenge is premature",
+    "could not determine that all elements of the crime against humanity of extermination were met",
+    "Israel utterly rejects the false and absurd charges of the International Criminal Court"
+   ],
+   "kind": "outcome",
+   "label": "On 21 Nov 2024 ICC Pre-Trial Chamber I unanimously rejected Israel's jurisdiction challeng"
+  },
+  "28fd356829543c63": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "WaPo/Stripes supports four experts, Tal al-Sultan, GBU-39, cage code 81873 linked to Woodward HRT, and Israel's 'smallest munition', '17 kilos', 'unexpected and unintended' and secondary-explosions statements; NPR supports Gaza health ministry's 45 and 'two senior Hamas militants'. Neither source names the militants as 'Yassin Rabia and Khaled Najjar'.",
+   "quotes": [
+    "Four weapons experts said the Israeli military used a U.S.-made precision bomb",
+    "The '81873' designation links the fragment to Woodward HRT",
+    "The Gaza health ministry said that an airstrike in Rafah on Sunday killed 45 Palestinians"
+   ],
+   "kind": "outcome",
+   "label": "Washington Post analysis with four weapons experts concluded that the 26 May 2024 strike o"
+  },
+  "9862985539c00b57": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "OCHA supports 1,559 fatalities and 5,608 injuries since the 10 Oct 2025 ceasefire and 33 killed 20-26 Oct, per MoH; Al-Monitor supports 'powerful strikes', the Rafah fire, unreturned remains and Hamas's 'no connection'. The IDF quote 'deployed in accordance with the ceasefire agreement and will continue to operate to remove any immediate threat' appears in neither source, and neither says the figures are 'not independently verified by OCHA'.",
+   "quotes": [
+    "bringing the total number of casualties since the ceasefire agreement to 1,559 fatalities and 5,608 injuries",
+    "33 Palestinians were reported killed and 188 injured between 20 and 26 October",
+    "instructed the military leadership to carry out powerful strikes in the Gaza Strip immediately"
+   ],
+   "kind": "outcome",
+   "label": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since th"
+  },
+  "1eae103a0b5c661a": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "NPR supports 251 hostages per Israeli authorities, the identification and return of Ran Gvili's body on 26 Jan 2026, and Netanyahu's quote to parliament; Gulf News supports Hamas handing over all 20 living hostages on 13 Oct 2025.",
+   "quotes": [
+    "251 hostages",
+    "There are no more hostages in Gaza.",
+    "Hamas hands over all 20 living Israeli hostages to Red Cross"
+   ],
+   "kind": "context",
+   "label": "Hamas-led fighters took 251 hostages in Israel on 7 Oct 2023 (Israeli authorities, via NPR"
+  },
+  "979f3672485c05d4": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "NSM-20 report contains 'reasonable to assess' with the reliance rationale and IHL/best-practices wording, 'not able to reach definitive conclusions', 'credible and reliable' and the humanitarian-assistance sentence. The revocation on 21 Feb is not in the cited PDF but is confirmed by the named Arms Control Association Apr 2025 brief.",
+   "quotes": [
+    "it is reasonable to assess that defense articles covered under NSM-20 have been used by Israeli security forces",
+    "not able to reach definitive conclusions",
+    "Trump also revoked National Security Memorandum 20 (NSM-20) Feb. 21."
+   ],
+   "kind": "outcome",
+   "label": "The State Department's NSM-20 report said that, given Israel's significant reliance on US-"
+  },
+  "87c4d3a2e0b829ce": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Joint FAO/UNICEF/WFP/WHO release supports famine confirmed in Gaza Governorate, projected spread to Deir al-Balah and Khan Younis, and more than 640,000 in Catastrophe by end of September. Israel's quotes are not in the cited page but appear in the named Axios article (22 Aug 2025), which also reports COGAT calling the conclusions untrue and politically motivated.",
+   "quotes": [
+    "Famine conditions are projected to spread from Gaza Governorate to Deir Al Balah and Khan Younis Governorates",
+    "By the end of September, more than 640,000 people will face Catastrophic levels of food insecurity",
+    "There is no famine in Gaza."
+   ],
+   "kind": "outcome",
+   "label": "FAO, UNICEF, WFP and WHO reported that the IPC confirmed Famine in Gaza Governorate, proje"
+  },
+  "ca9d7395fb01d919": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Amnesty identifies Chinese GB50A bombs from the 9 Mar 2025 North Darfur strike and an AH-4 howitzer seized in Khartoum in late March 2025, says 'almost certainly re-exported to Sudan by the UAE', and includes no UAE response; S/2025/260 is described by Security Council Report as a UAE letter refuting Sudan's allegations of support to the RSF. The source_note about Amnesty USA's April 2026 advocacy is not addressed by the cited source.",
+   "quotes": [
+    "The weapons were almost certainly re-exported to Sudan by the UAE",
+    "On the night of 9 March 2025, the RSF launched a drone strike near al-Malha town in North Darfur",
+    "This was a letter from the UAE refuting allegations made by Sudan regarding the UAE's alleged support to the RSF"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
+  },
+  "9da381ba5184647f": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Amnesty 2019 names M-ATV, Caiman and MaxxPro vehicles with the Security Belt, Shabwani Elite and 'The Giants', describes militias 'known to be committing war crimes', and includes no UAE response. The source_note about Amnesty USA's April 2026 advocacy is not addressed by the cited source.",
+   "quotes": [
+    "known to be committing war crimes",
+    "UAE-backed militias"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International documented US-supplied armoured vehicles (M-ATV, Caiman, MaxxPro) he"
+  },
+  "07ad26e39234217b": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "OCHA infographic gives 331 Palestinians (77 children) killed in the West Bank 1 Jan 2025-30 Sep 2026: 292 by forces, 24 by settlers, 15 by forces or settlers; 21 Israelis (1 child, 8 forces); and the 2025 sentence on three Israelis killed in Israel. The counterpoint is a statement of absence.",
+   "quotes": [
+    "In Israel, three Israelis were killed by Palestinians from the West Bank in attacks"
+   ],
+   "kind": "outcome",
+   "label": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 331 Palestinians (77 children) were killed in the We"
+  },
+  "6fc2ab1c3d72f97a": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "PMO comments of 26 Jan 2024 (GlobalSecurity copy) contain both quoted sentences verbatim.",
+   "quotes": [
+    "Like every country, Israel has an inherent right to defend itself",
+    "We will continue to facilitate humanitarian assistance, and to do our utmost to keep civilians out of harm's way."
+   ],
+   "kind": "context",
+   "label": "Israel's stated position (PMO, 26 Jan 2024): 'Like every country, Israel has an inherent r"
+  },
+  "cdfb439461889bdb": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Jewish Insider says Iran 'shot about 180 ballistic missiles at Israel', two Israelis were wounded by shrapnel (per MDA), and one Palestinian man was reportedly killed in the West Bank.",
+   "quotes": [
+    "shot about 180 ballistic missiles at Israel on Tuesday night"
+   ],
+   "kind": "context",
+   "label": "Iran 'shot about 180 ballistic missiles at Israel' on 1 Oct 2024; two Israelis were wounde"
+  },
+  "b9d72e4bc5812bee": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Defense News/AP supports US troops at Al-Dhafra taking shelter in bunkers, about 2,000 US personnel, an official acknowledging Patriot assistance, and WAM's 'ready to deal with any threats'.",
+   "quotes": [
+    "took shelter in bunkers",
+    "approximately 2,000 U.S. service members and personnel at Al-Dhafra Air Base",
+    "ready to deal with any threats"
+   ],
+   "kind": "context",
+   "label": "During a Houthi missile attack on Abu Dhabi on 24 Jan 2022, US troops at Al Dhafra Air Bas"
+  },
+  "cf71c1d19fc35d37": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "A New Policy is a signer of the 9 Apr 2026 coalition letter urging senators to 'cosponsor and vote in favor of' Sanders' April JRDs on 1,000-pound bombs and D9 bulldozers. The letter gives no resolution numbers; the mapping to S.J.Res. 32 (D9 bulldozers) and S.J.Res. 138 (1,000-pound bomb bodies) is confirmed by the bill texts on govinfo, not the letter. Letter says 'A New Policy', not 'Inc.'.",
+   "quotes": [
+    "cosponsor and vote in favor of",
+    "Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April"
+   ],
+   "kind": "stated position",
+   "label": "A New Policy Inc.: stated positions"
+  },
+  "975e412c56db21b0": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Global Ministries page names S.J.Res. 34 and S.J.Res. 41 and urges supporting them to stop the weapons transfers.",
+   "quotes": [
+    "Stop any new weapons to Israel by supporting these Joint Resolutions of Disapproval!"
+   ],
+   "kind": "stated position",
+   "label": "Global Ministries (Christian Church (Disciples of Christ) & United Church of Christ): stated positions"
+  },
+  "dfe8b66f3ef5ea01": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "AJCongress statement of 4 Apr 2025 contains the quoted phrase and opposes Sanders' resolutions, calling them 'deeply misguided' and 'reckless'. It gives no resolution numbers, so the link to S.J.Res. 26 and 33 rests on the statement's date and subject, not on its text.",
+   "quotes": [
+    "a powerful rejection of efforts to undermine our closest ally in the Middle East"
+   ],
+   "kind": "stated position",
+   "label": "American Jewish Congress: stated positions"
+  },
+  "1a2e117ab5e88bfc": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "DSCA release (Transmittal 25-16, 26 Mar 2025, $1.96B 'highest estimated quantity', items incl. 28+12 EGI, contractors, justification) and bill text (36(b)(1), Cong. Rec. 26 Mar 2025, Murphy with Kaine, Sanders, Van Hollen, Schatz, 15 May 2025) match; Breaking Defense reports the ~$2B MQ-9B agreement signed 14 May 2025 citing a White House fact sheet; Van Hollen release has both quotes and no claim about Qatar's conduct; SAP 10 Jun 2025 'strongly opposes passage' with veto recommendation. Murphy's 'illegal bribe' quote is found in the Van Hollen release, not in the Murphy release also cited.",
+   "quotes": [
+    "The description and dollar value are for the highest estimated quantity and dollar value based on initial requirements.",
+    "it's about blocking the sale of the presidency to the highest bidder.",
+    "The Administration strongly opposes passage of S.J. Res. 53"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 53: what the sale contained"
+  },
+  "9185fed6c28cbba8": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items, $6.75B, Transmittal 24-13, 7 Feb 2025, Cong. Rec. 10 Feb 2025, contractors, delivery 2025, justification, Sanders floor quotes and the SAP 'minimize civilian casualties' quote all match. Not supported by cited sources: 'the 15-day review period for Israel ran out before the vote' (no source states a 15-day period); the parenthetical that the 'bogus emergency declaration' remark 'concerns the companion emergency sales, such as the one covered by S.J.Res. 33' (Sanders refers only to 'these transfers' and the SAP mentions no emergency); and the 'related Sanders media advisory' is not among the cited sources. Note the SAP also says the sale 'was notified to Congress on January 3, 2025'.",
+   "quotes": [
+    "Deliveries are estimated to begin in 2025.",
+    "The second resolution, S.J. Res. 26, would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs",
+    "a bogus emergency declaration--an emergency declaration to bypass congressional review"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 26: what the sale contained"
+  },
+  "daadff3243f82662": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items (incl. WESCAM MX-15HDi, survivability equipment), $1.32B, Transmittal 24-118, 12 May 2025, Cong. Rec. 13 May 2025, contractors, justification and stated uses, sponsors, and Van Hollen/Murphy quotes all match. Not stated by any cited source: 'The 30-day review period, counted from the 12 May 2025 notification, ran through 11 Jun 2025' (the DSCA release, bill text, BILLSTATUS and Van Hollen release do not mention a review period).",
+   "quotes": [
+    "The estimated total cost is $1.32 billion.",
+    "the United States should not provide weapons to the UAE until they cease arming the murderous RSF",
+    "If a foreign government is participating in this kind of nuclear grade corruption by directly enriching the President and his family"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 54: what the sale contained"
+  },
+  "227010627cbcc6c3": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "CNN supports the school complex (Al-Mutanabbi / 'Al-Awda Schools') housing displaced people, three explosive weapons experts, 'consistent with a GBU-39-series tail actuation system', Boeing manufacture, and MoH 'at least 27 killed and 53 injured'; Airwars dates it 9 Jul 2024 and records 'The incident is under review' and unreleased results. One mismatch in quoted words: CNN prints the IDF statement as 'the [Israeli air force] struck', not 'the IAF struck' as the claim's quotation has it.",
+   "quotes": [
+    "is consistent with a GBU-39-series tail actuation system located in the rear of the munition",
+    "At least 27 people have been killed and 53 have been injured",
+    "The incident is under review."
+   ],
+   "kind": "outcome",
+   "label": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mu"
+  },
+  "352fe1175914dc14": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "OCHA infographic gives 2,979 structures demolished 1 Jan 2025-30 Sep 2026, 2,781 (93%) for lack of building permits, 42,322 displaced, and the UNRWA camp figures with the quoted wording; Times of Israel (21 Jan 2025) has Netanyahu's quote and military sources' aims ('neutralize terror infrastructure and eliminate imminent threats').",
+   "quotes": [
+    "due to Palestinian and Israeli forces' operations",
+    "another step in achieving the goal we set, strengthening security in Judea and Samaria",
+    "neutralize terror infrastructure and eliminate imminent threats, according to military sources."
+   ],
+   "kind": "outcome",
+   "label": "OCHA: from 1 Jan 2025 to 30 Sep 2026, 2,979 Palestinian structures in the West Bank were d"
+  },
+  "fbccab735577d4eb": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The first CAIR alert urges senators to 'VOTE YES' on S.J.Res.34 and S.J.Res.41 (undated, refers to the 2025 August recess) and does not mention bulldozers; the second page urges YES votes on S.J.Res.136, 137 and 138 and names the 12,000 1,000-lb BLU-110 bombs, with no mention of bulldozers or S.J.Res.32. Minor: the second page does not pair resolution numbers with specific sales and describes itself as a message to senators rather than an action alert.",
+   "quotes": [
+    "VOTE YES",
+    "12,000 1,000-pound BLU-110 bombs",
+    "Senator Sanders' three Joint Resolutions of Disapproval would block multiple components of this ongoing weapons pipeline:"
+   ],
+   "kind": "stated position",
+   "label": "CAIR: stated positions"
+  },
+  "e75a200c0078e8b6": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Amnesty supports every element of the main claim: the two Deir al-Balah strikes and dates, 24 and 19 killed, 43 civilians (19 children, 14 women, 10 men), no indication of military objectives, a JDAM code associated with Boeing, 2017/2018 manufacture, ~2,000 lb / at least 1,000 lb, and IDF questions on 21 Nov 2023 unanswered. The scope_note_by entries add facts not in the cited source: that a ~2,000-lb bomb 'corresponds to the MK-84 kit' and that S.J.Res.34 covers '1,000-lb MK-83 kits' (Amnesty names no variant; no cited source gives these weight classes).",
+   "quotes": [
+    "did not find any indication that there were any military objectives at the sites of the two strikes",
+    "killed 24 people",
+    "70P862352"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated "
+  },
+  "a15826e6fe3ba69f": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The IPC snapshot (19 Dec 2025) supports 'No areas are classified in Famine (IPC Phase 5)', the risk of Famine persisting in all areas, ~1.6 million (77%) in Phase 3+, 104,000 in Catastrophe, and the FRC August finding. The counterpoint quote attributed to COGAT (29 Jan 2026, 'modest increase'...'just false') is not in the cited source and no source for it is cited.",
+   "quotes": [
+    "No areas are classified in Famine (IPC Phase 5).",
+    "around 1.6 million people (77 percent of the population analysed) faced high levels of acute food insecurity",
+    "the FRC concluded that Famine was ongoing in Gaza Governorate"
+   ],
+   "kind": "outcome",
+   "label": "IPC, 19 Dec 2025: 'No areas are classified in Famine (IPC Phase 5)' but 'the risk of Famin"
+  },
+  "2d667e93002863db": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Amnesty supports 'Using bulldozers and manually laid explosives', 'more than 90% of the buildings', more than 3,500 structures, ~58 km2, Oct 2023-May 2024, no mention of D9/Caterpillar/US origin, officials' 'protect Israeli communities from further attacks' and 'terror infrastructure', and unanswered 2 Jul 2024 questions. The counterpoint's D9 rationale '(DSCA; IDF)' is not in the cited source; the DSCA D9 notification (Cong. Rec. 3 Mar 2025, Transmittal 24-38) supports only defending 'borders, vital infrastructure, and population centers', not 'combat engineering, tunnel and explosives clearance', and no IDF source is cited.",
+   "quotes": [
+    "Using bulldozers and manually laid explosives, the Israeli military has unlawfully destroyed agricultural land",
+    "more than 90% of the buildings",
+    "protect Israeli communities from further attacks"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty says Israeli forces, 'Using bulldozers and manually laid explosives', destroyed or"
+  },
+  "21b9f852b15c4c0c": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The quoted wording ('2,159 settler attacks resulting in Palestinian casualties, property damage or both'; 'averaging 7.4 attacks per day, compared with five per day in 2025') is in the OCHA report. But the report says only 'Since the beginning of 2026' and gives no cut-off for this cumulative figure; 'up to 19 Oct' is not stated (19 Oct is only the end of the report's weekly reporting period, 13-19 Oct).",
+   "quotes": [
+    "2,159 settler attacks resulting in Palestinian casualties, property damage or both",
+    "averaging 7.4 attacks per day, compared with five per day in 2025",
+    "The reporting Period is 13–19 October 2026 unless otherwise specified."
+   ],
+   "kind": "outcome",
+   "label": "OCHA recorded '2,159 settler attacks resulting in Palestinian casualties, property damage "
+  },
+  "445f53558ae6e8e3": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The UNISPAL copy of the ICC release (21 Nov 2024) contains the warrant for Mohammed Diab Ibrahim Al-Masri ('Deif') and every quoted phrase.",
+   "quotes": [
+    "murder; extermination; torture; and rape and other form of sexual violence",
+    "on the territory of the State of Israel and the State of Palestine",
+    "Members of Hamas, notably fighters of the al-Qassam Brigades, carried out mass killings"
+   ],
+   "kind": "context",
+   "label": "On 21 Nov 2024 the Chamber issued a warrant for Hamas's Mohammed Deif for crimes against h"
+  },
+  "57e4dbec1a8e6b53": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Times of Israel (24 Jun 2025) gives Israel's opening strikes on 13 June, some 550 ballistic missiles and around 1,000 drones 'according to the IDF', 28 killed by ballistic missile attacks, over 3,000 wounded, and a ceasefire taking effect.",
+   "quotes": [
+    "according to the IDF",
+    "claimed the lives of 28 people",
+    "wounded over 3,000 people"
+   ],
+   "kind": "context",
+   "label": "In the war that began with Israel's strikes on Iran on 13 Jun 2025, Iran launched about 55"
+  },
+  "0e58072f66246c9f": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "All four quoted phrases appear in The Peninsula article (23 Jun 2025). Nuance: they are statements by Dr Majid Al-Ansari, the Official Spokesperson for the Ministry of Foreign Affairs, posted on X, rather than a statement issued under the Ministry's own name.",
+   "quotes": [
+    "a flagrant violation of the sovereignty of the State of Qatar",
+    "Qatar's air defenses successfully thwarted the attack",
+    "no injuries or human casualties resulted"
+   ],
+   "kind": "context",
+   "label": "Qatar's MOFA called the Iranian missile attack on Al Udeid Air Base 'a flagrant violation "
+  },
+  "9f99b5e745e4ed3e": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The FCNL coalition letter (9 Apr 2026) lists New Jewish Narrative as a signer and urges senators to 'cosponsor and vote in favor of' Sanders' JRDs to block '1,000-pound bombs and Caterpillar D9 bulldozers'. The letter gives no S.J.Res. numbers, so the mapping to S.J.Res.32 and S.J.Res.138 is not stated in the cited source.",
+   "quotes": [
+    "block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government",
+    "cosponsor and vote in favor of",
+    "We urge you to support these JRDs"
+   ],
+   "kind": "stated position",
+   "label": "New Jewish Narrative: stated positions"
+  },
+  "3d63bd2777636ae2": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "An absence claim with no cited sources, so there is nothing to check against; a brief search found Yemen coalition reports of US-made bombs attributed to the Saudi-led coalition generally, but nothing tying Qatar's use of these weapons to civilian harm.",
+   "quotes": [],
+   "kind": "outcome",
+   "label": "Speculum found no authoritative or credible record, as of 4 Nov 2026, linking Qatar's use "
+  },
+  "e1525cdc9d019031": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Items, DDTC 23-077, EC 510/24 Mar 2025, 6 Mar notification, $24M (Reuters), settler concern, SAP purpose, Sanders quotes, EO 14115 text and OFAC removals all match. Not supported: 'The 15-day review period for Israel ended in March 2025' appears in no cited source; history entry 2 says the ministry 'on 24 Oct 2023 ... said it had bought' 10,000 rifles, but ToI says that was announced 'three days after the Hamas invasion' (24 Oct was the Lavi press conference); and 'overseen by the Israel Police' and 'small towns and communities ... West Bank settlements' are ToI narration, not words of the coordinator as the claim implies.",
+   "quotes": [
+    "announced three days after the Hamas invasion that his ministry had purchased",
+    "the weapons could end up in the hands of Israeli settlers",
+    "All property and interests in property blocked under E.O. 14115 are unblocked."
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 41: what the sale contained"
+  },
+  "1413aa9fd1678cdc": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "DSCA release (28 Feb 2025, Transmittal 25-26) matches items, quantities, $675.7M, Repkon USA and Boeing, 2028 deliveries, emergency waiver, and the justification text verbatim; bill text gives CR 3 Mar 2025 and AECA 36(b)(1); Sanders and SAP quotes appear verbatim.",
+   "quotes": [
+    "Deliveries are expected to begin in 2028",
+    "in illegal strikes leading to unacceptable civilian death tolls",
+    "The sale would improve Israel's capability to defeat current and future threats"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 34: what the sale contained"
+  },
+  "8ca578e77958ee9e": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "3 Apr 2025 statement contains the quoted 'vote yes ... vote no' line and opposes the circumvention of congressional review citing dense urban use and Gaza civilian toll for 2,000-lb bombs; 30 Jul 2025 release was issued after the vote, welcomes the 27 senators and mentions the rifles vote; J Street signed the 9 Apr 2026 coalition letter and Jewish Currents says it backed both April 2026 JRDs. The J Street sources do not name resolution numbers.",
+   "quotes": [
+    "some Senators will decide to vote yes and others to vote no",
+    "One of today's votes was to stop the transfer of rifles that the Biden Administration had held for over a year",
+    "if you oppose the US-Israel war in Iran, then you need to support these Joint Resolutions of Disapproval"
+   ],
+   "kind": "stated position",
+   "label": "J Street: stated positions"
+  },
+  "005d3e31948c35f4": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "IMEU newsletter (7 Apr 2025) discusses S.J.Res. 33 and 26 after the vote and opposes the weapons transfers; Jewish Currents (14 Apr 2026) reports the IMEU Policy Project supports the April 2026 resolutions, quoting Hamid Bendaas.",
+   "quotes": [
+    "By sending these weapons to Israel, President Trump is giving Israel the green light to contine its genocide in Gaza.",
+    "on the record, on a vote"
+   ],
+   "kind": "stated position",
+   "label": "IMEU Policy Project: stated positions"
+  },
+  "4660db76b3bfb310": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Jewish Currents reports JVP Action (political director Beth Miller) pushing Democrats to vote yes on both April 2026 JRDs (bombs and D9 bulldozers).",
+   "quotes": [
+    "an organizing opportunity for all of us to show the Senators",
+    "something like 30 votes, if not more"
+   ],
+   "kind": "stated position",
+   "label": "Jewish Voice for Peace Action: stated positions"
+  },
+  "ff728dab9e495be7": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The 9 Apr 2026 coalition letter (23 signers) urges support for the Sanders JRDs blocking 1,000-lb bombs and Caterpillar D9 bulldozers; the letter does not give bill numbers.",
+   "quotes": [
+    "Joint Resolutions of Disapproval"
+   ],
+   "kind": "stated position",
+   "label": "17 other signers of the April 9, 2026 coalition letter: stated positions"
+  },
+  "1dacd2d7cffca103": {
+   "result": "not_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "The record cites no sources or evidence; the statement that Hadassah 'lobbied (LD-2)' on S.J.Res. 26 and 33 has no cited LD-2 filing or other source to check.",
+   "quotes": [],
+   "kind": "stated position",
+   "label": "Hadassah, The Women's Zionist Organization of America: stated positions"
+  },
+  "3106573d05b096f6": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Press release confirms the quoted Rafah measure, 13-2, with Sebutinde and Barak against; docket's last entry is 22 Sep 2026, a 21 May 2026 order fixes Reply/Rejoinder time-limits, and no merits judgment is listed. Not in the cited sources: 'Israel disputes the genocide allegation' and 'Judges' declarations differ on whether the halt was conditional' (the release only notes that Nolte, Aurescu and Tladi appended declarations, with summaries in a separate 'Summary 2024/6' that is not cited and could not be fetched).",
+   "quotes": [
+    "Immediately halt its military offensive, and any other action in the Rafah Governorate,",
+    "By thirteen votes to two"
+   ],
+   "kind": "outcome",
+   "label": "In its 24 May 2024 order the ICJ ordered Israel (13-2) to 'immediately halt its military o"
+  },
+  "8e83f5a58e1d79fa": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "ICJ press release contains both quoted findings verbatim, and Times of Israel reports the settler-violence / 'coercive environment' finding. The counterpoint is not supported by either cited source: Netanyahu's quotes ('The Jewish people are not occupiers in their own land'; 'No false decision in The Hague...') and 'An advisory opinion is not binding' appear in neither.",
+   "quotes": [
+    "the State of Israel's continued presence in the Occupied Palestinian Territory is unlawful;",
+    "failure to prevent and punish it effectively",
+    "coercive environment against Palestinians"
+   ],
+   "kind": "outcome",
+   "label": "The ICJ advisory opinion found 'the State of Israel's continued presence in the Occupied P"
+  },
+  "65e54c141ebeecbe": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "ICJ summary confirms the 'plausible' finding, the Article II measure at 15-2, Sebutinde against all six measures and Barak against four; Barak's and Bhandari's opinions say the order does not prejudge the claims. The counterpoint's quotes from the Prime Minister's Office ('Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists...') do not appear in the cited source.",
+   "quotes": [
+    "at least some of the rights claimed by South Africa and for which it is seeking protection are plausible",
+    "take all measures within its power to prevent the commission of all acts within the scope of Article II of this Convention"
+   ],
+   "kind": "outcome",
+   "label": "In its 26 Jan 2024 order the ICJ found 'at least some of the rights claimed by South Afric"
+  },
+  "ed21451d9dc22337": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "UN News confirms OHCHR 'documented more than 6,000 killings in the first three days of the RSF offensive', about 500 killed at Al-Rashid dormitory on 26 Oct, and 'amount to war crimes and possible crimes against humanity'. The counterpoint ('The RSF did not respond to a request for comment'; Dagalo 'acknowledged abuses but disputed their scale') does not appear in the source. Also, the article reports Turk urging states to respect 'the arms embargo and halting the supply of weapons', so 'does not address arms supply' holds for the report's findings only.",
+   "quotes": [
+    "OHCHR documented more than 6,000 killings in the first three days of the RSF offensive",
+    "around 500 people were killed",
+    "including by respecting the arms embargo and halting the supply of weapons"
+   ],
+   "kind": "outcome",
+   "label": "OHCHR documented 'more than 6,000 killings in the first three days of the RSF offensive' o"
+  },
+  "ce41123d86b82eef": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Report (para. 89) contains the quoted war-crimes finding (source says 'the majority of cases investigated'), documents bulldozing of heritage sites (Pasha Palace, Samaritan Bathhouse, Rashad al-Shawa Centre), contains 'No responses were received' and 'Israeli security forces provided no explanation for the attack', and names no bulldozer make, model or origin. Not in the cited source: the counterpoint's 'Israel's stated rationale for D9 use: combat engineering, tunnel and explosives clearance, and defending borders and infrastructure (DSCA; IDF)', for which no DSCA or IDF source is cited.",
+   "quotes": [
+    "particularly those involving demolitions using explosives and bulldozers, Israeli security forces committed war crimes",
+    "No responses were received.",
+    "Israeli security forces provided no explanation for the attack"
+   ],
+   "kind": "outcome",
+   "label": "The Commission of Inquiry appointed by the UN Human Rights Council (a non-judicial body, n"
+  },
+  "99b87a1ab3665888": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "CRC/C/ISR/RQ/5-6/Add.1 (21 Aug 2024) gives more than 1,200 killed in 'the October 7th attack and the days that followed', the majority civilians, 43 under 18 killed, and 251 hostages including 32 infants, children and youth.",
+   "quotes": [
+    "More than 1,200 people, the majority of whom are civilians",
+    "43 infants, children and youth under the age of 18 were brutally murdered",
+    "Among the hostages taken, were 32 infants, children and youth"
+   ],
+   "kind": "context",
+   "label": "Israel told the UN Committee on the Rights of the Child that 'more than 1,200 people' were"
+  },
+  "187b3e3a31b59843": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Jerusalem Post reports the ICC cancelled the Deif warrant after obtaining 'sufficient and reliable information' of his death, citing Article 58(4); the decision was 'on Wednesday' (26 Feb 2025) per the 27 Feb article.",
+   "quotes": [
+    "having obtained 'sufficient and reliable information' from the prosecution",
+    "jurisdiction cannot be exercised over a deceased person"
+   ],
+   "kind": "context",
+   "label": "The ICC withdrew the Deif warrant after receiving 'sufficient and reliable information' of"
+  },
+  "5cf6ff6d0e9b51a3": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "All four quoted passages appear verbatim in S/2023/879 (paras. 2 and 10); Hizbullah claims of responsibility appear in paras. 4 and 6.",
+   "quotes": [
+    "daily exchanges of fire across the Blue Line",
+    "recorded over 1,000 trajectories of projectiles fired in both directions",
+    "over 200,000 people were reportedly evacuated from northern Israel"
+   ],
+   "kind": "context",
+   "label": "From 8 Oct 2023 there were 'daily exchanges of fire across the Blue Line', with Hizbullah "
+  },
+  "2b349fdda966e942": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
+   "note": "Dawn/Reuters (8 Mar 2026) reports the 28 Feb US-Israeli air assault on Iran, Iranian attacks in Israel and on regional countries with US bases, Israel's figure of at least 10 civilians killed, six US service members killed at a Kuwait facility, and Iran's UN ambassador's 1,332 figure. The 10-civilian figure is Israel's own and the source says 'regional countries with US bases' rather than 'US bases'.",
+   "quotes": [
+    "The US and Israel launched an air assault on Iran on Feb. 28.",
+    "Israel has said at least 10 civilians have been killed across Israel so far.",
+    "The US military has said six service members were killed in a strike on a Kuwait facility."
+   ],
+   "kind": "context",
+   "label": "The sale was notified during the war that began when the US and Israel launched air strike"
+  }
+ }
+}

@@ -290,7 +290,7 @@ def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None
             ch["advocacy_noside"].append({"name": org["name"], "position": pos})
         if sd in sides:
             sides[sd].append({"name": org["name"], "_fp": org.get("_fp"), "pacs": org.get("pacs", []), "super_pacs": org.get("super_pacs", []),
-                              "includes": org.get("includes", []),
+                              "includes": org.get("includes", []), "mapping_note": org.get("mapping_note"),
                               "evidence": org.get("evidence", []), "position": _position_text(org, bkey)})
     ch["advocacy_orgs"] = sides
     ch["advocacy_meta"] = cfg.get("_meta", {})

@@ -1,0 +1,65 @@
+name: Source check
+
+# Checks new, changed and disputed claims in The Dependents against their sources, then rebuilds the site.
+# The nightly run does this too; this workflow lets it run on its own (by hand, or a second time each day).
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Most claims to check in this run"
+        required: false
+        default: "60"
+  schedule:
+    - cron: "23 18 * * *"   # 18:23 UTC (1:23pm Eastern in winter): picks up disputes sent during the day
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Check claims against their sources
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: python -m speculum verify --limit ${{ inputs.limit || '60' }}
+
+      - name: Commit the results
+        run: |
+          git config user.name "speculum-bot"
+          git config user.email "speculum-bot@users.noreply.github.com"
+          for f in data/chains/checks.json data/chains/disputes.json; do [ -e "$f" ] && git add "$f"; done
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "Source check $(date -u +%F)"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          echo "::error::Could not push the source-check results."
+          exit 1
+
+      - run: python -m speculum build --out dist
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash scripts/deploy.sh
