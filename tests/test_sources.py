@@ -351,6 +351,8 @@ def test_advocacy_counts_earmarks_once_and_tracks_completeness():
     class F:
         n = 0
         def get_json(self, source, name, url, params=None, **kw):
+            if params.get("min_date") != "2025-01-01":     # every row falls in the cycle's first quarter
+                return {"results": [], "pagination": {}}
             p = pages[self.n]; self.n += 1; return p
 
     out = advocacy.pac_disbursements(F(), "k", "PAC1", 2026)
@@ -461,6 +463,8 @@ def test_advocacy_resumes_after_an_fec_error():
             self.fail_at, self.calls = fail_at, []
 
         def get_json(self, src, name, url, params=None):
+            if params.get("min_date") != "2023-01-01":
+                return {"results": [], "pagination": {}}
             i = int(params.get("last_index", 0))
             self.calls.append(i)
             if i == self.fail_at:
@@ -469,7 +473,7 @@ def test_advocacy_resumes_after_an_fec_error():
             return {"results": pages[i], "pagination": {"last_indexes": last}}
 
     first = advocacy.pac_disbursements(F(fail_at=1), "k", "PAC", 2024)
-    assert not first["complete"] and first["cursor"] == {"last_index": "1"}
+    assert not first["complete"] and first["cursor"] == {"slice": 0, "keys": {"last_index": "1"}}
     assert first["rows"]["C1"]["total"] == 100
     f2 = F()
     second = advocacy.pac_disbursements(f2, "k", "PAC", 2024, prior=first)
@@ -486,7 +490,9 @@ def test_advocacy_counts_only_through_the_vote():
             {"recipient_committee_id": "CAMP", "disbursement_amount": 40, "disbursement_date": "2025-05-01T00:00:00"}]
 
     class F:
-        def get_json(self, *a, **k):
+        def get_json(self, src, name, url, params=None):
+            if params.get("min_date") != "2025-01-01":
+                return {"results": [], "pagination": {}}
             return {"results": rows, "pagination": {"last_indexes": None}}
 
     cur = advocacy.pac_disbursements(F(), "k", "PAC", 2026, cut_dates=["2025-04-03"])
@@ -498,3 +504,9 @@ def test_advocacy_counts_only_through_the_vote():
     old = {"pacs": {"PAC": {"2026": {"complete": True, "rows": {"CAMP": {"total": 70}}}}}}
     t2 = advocacy.member_totals("A", {"fec_ids": []}, {"A": {"committee_id": "CAMP"}}, cfg, old, "SJRES1")
     assert t2["proceed"] == 0 and not t2["complete"]     # read before cuts were recorded: incomplete, not the full total
+
+
+def test_advocacy_reads_a_cycle_by_quarter():
+    from speculum.sources import advocacy
+    q = advocacy._quarters(2024)
+    assert len(q) == 8 and q[0] == ("2023-01-01", "2023-03-31") and q[-1] == ("2024-10-01", "2024-12-31")

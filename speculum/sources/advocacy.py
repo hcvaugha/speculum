@@ -62,42 +62,55 @@ class _Pager:
         log.warning("%s: hit the page cap", name)
 
 
+def _quarters(cycle: int) -> list[tuple[str, str]]:
+    """The eight calendar quarters of a two-year cycle, as (first day, last day)."""
+    ends = {1: "03-31", 4: "06-30", 7: "09-30", 10: "12-31"}
+    return [(f"{y}-{m:02d}-01", f"{y}-{ends[m]}") for y in (cycle - 1, cycle) for m in (1, 4, 7, 10)]
+
+
 def _resumable(prior: dict | None) -> tuple[dict, dict | None]:
     """Rows and cursor to continue from, when the prior fetch stopped part way with a cursor."""
-    if prior and not prior.get("complete") and prior.get("cursor"):
-        return {k: dict(v) for k, v in prior["rows"].items()}, prior["cursor"]
+    if prior and not prior.get("complete") and isinstance(prior.get("cursor"), dict) and "slice" in prior["cursor"]:
+        return {k: {**v, "upto": dict(v.get("upto") or {})} for k, v in prior["rows"].items()}, prior["cursor"]
     return {}, None
 
 
 def pac_disbursements(fetch, key, committee_id: str, cycle: int, max_pages: int = 1500, deadline=None,
                       prior: dict | None = None, cut_dates: list[str] | None = None) -> dict:
-    """{"complete": bool, "cursor": next page or None, "rows": {recipient committee id: {"total",
+    """{"complete": bool, "cursor": where to resume or None, "rows": {recipient committee id: {"total",
     "earmarked", "direct", "count", "name", "upto": {cut date: amount dated on or before it}}}}.
-    Continues a prior partial fetch when it left a cursor. cut_dates are the vote dates, so a chain
-    can count only what was given through its vote."""
+    Read one calendar quarter at a time: the FEC times out on the first page of a whole cycle for the
+    largest conduit PACs. Continues a prior partial fetch from its cursor (quarter, then keyset page).
+    cut_dates are the vote dates, so a chain can count only what was given through its vote."""
     out, cursor = _resumable(prior)
     cut_dates = sorted(set(cut_dates or []))
-    params = {"committee_id": committee_id, "two_year_transaction_period": cycle, "per_page": 100,
-              "sort": "-disbursement_date"}
-    pager = _Pager(fetch, key, f"sched_b_{committee_id}_{cycle}", "/schedules/schedule_b/", params, max_pages,
-                   deadline, cursor)
-    for r in pager:
-        if r.get("memo_code") == "X" or r.get("memoed_subtotal"):
+    start = cursor["slice"] if cursor else 0
+    for i, (lo, hi) in enumerate(_quarters(cycle)):
+        if i < start:
             continue
-        rid = r.get("recipient_committee_id")
-        if not rid:
-            continue
-        amt = _num(r.get("disbursement_amount"))
-        e = out.setdefault(rid, {"total": 0.0, "earmarked": 0.0, "direct": 0.0, "count": 0, "name": r.get("recipient_name")})
-        e["total"] += amt
-        e["earmarked" if _EARMARK.search(r.get("disbursement_description") or "") else "direct"] += amt
-        e["count"] += 1
-        day = (r.get("disbursement_date") or "")[:10]
-        for d in cut_dates:
-            if day and day <= d:
-                e.setdefault("upto", {})
-                e["upto"][d] = e["upto"].get(d, 0.0) + amt
-    return {"complete": pager.complete, "cursor": pager.cursor, "rows": out, "cut_dates": cut_dates}
+        params = {"committee_id": committee_id, "two_year_transaction_period": cycle, "per_page": 100,
+                  "min_date": lo, "max_date": hi, "sort": "-disbursement_date"}
+        pager = _Pager(fetch, key, f"sched_b_{committee_id}_{cycle}_q{i}", "/schedules/schedule_b/", params,
+                       max_pages, deadline, cursor["keys"] if cursor and i == start else None)
+        for r in pager:
+            if r.get("memo_code") == "X" or r.get("memoed_subtotal"):
+                continue
+            rid = r.get("recipient_committee_id")
+            if not rid:
+                continue
+            amt = _num(r.get("disbursement_amount"))
+            e = out.setdefault(rid, {"total": 0.0, "earmarked": 0.0, "direct": 0.0, "count": 0,
+                                     "name": r.get("recipient_name"), "upto": {}})
+            e["total"] += amt
+            e["earmarked" if _EARMARK.search(r.get("disbursement_description") or "") else "direct"] += amt
+            e["count"] += 1
+            day = (r.get("disbursement_date") or "")[:10]
+            for d in cut_dates:
+                if day and day <= d:
+                    e["upto"][d] = e["upto"].get(d, 0.0) + amt
+        if not pager.complete:
+            return {"complete": False, "cursor": {"slice": i, "keys": pager.cursor}, "rows": out, "cut_dates": cut_dates}
+    return {"complete": True, "cursor": None, "rows": out, "cut_dates": cut_dates}
 
 
 def super_pac_spending(fetch, key, committee_id: str, cycle: int, max_pages: int = 500, deadline=None) -> dict:
@@ -139,7 +152,7 @@ def fetch_advocacy(fetch, key: str, config: dict, run_date: str, previous: dict 
                     data = prior
                 else:
                     data = pac_disbursements(fetch, key, cid, c, deadline=deadline, prior=prior, cut_dates=cut_dates)
-                    if not data["complete"] and not data["cursor"] and prior and prior.get("rows"):
+                    if not data["complete"] and data["cursor"] == {"slice": 0, "keys": None} and prior and prior.get("rows"):
                         data = {**prior, "complete": False}   # stopped before the first page: keep the prior read
                 out["pacs"].setdefault(cid, {})[str(c)] = data
             log.info("advocacy PAC %s: %d recipients; complete cycles %s", cid,

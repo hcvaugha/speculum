@@ -34,8 +34,9 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" != "schedule" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
           TODAY=$(date -u +%F)
-          N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion \
-            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.createdAt[0:10] == \"$TODAY\")
+          # Only scheduled runs count: a manual partial rerun (one source, an earlier night) is not tonight's run.
+          N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion,event \
+            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.event == \"schedule\") | select(.createdAt[0:10] == \"$TODAY\")
                   | select(.status != \"completed\" or .conclusion == \"success\")] | length")
           echo "other nightly runs today that are running or succeeded: $N"
           if [ "$N" -gt 0 ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi
@@ -46,7 +47,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 340
     steps:
+      # Check out the branch tip when the job starts, not the commit it was queued at: a run that waited
+      # behind another one in the "nightly" group must start from that run's snapshot, or its own
+      # snapshot for the same night conflicts with it when pushed.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -76,7 +82,13 @@ jobs:
           DATE=$(ls data/snapshots | sort | tail -1)
           git commit -m "Snapshot $DATE"
           # Code may have been pushed while this run was fetching; replay the snapshot on top of it.
-          for i in 1 2 3; do git pull --rebase origin main && git push && break; sleep 5; done
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          echo "::error::Could not push the snapshot (conflict with a newer commit). The fetched data is in the raw archive for this run."
+          exit 1
 
       - name: Archive raw filings as a release
         env:
