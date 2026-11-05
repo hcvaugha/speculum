@@ -191,7 +191,7 @@
     <input type="hidden" name="chain" value="{{ c.id }}">
     <label>Source that contradicts it (a link)<input type="url" name="source" required placeholder="https://"></label>
     <label>What it shows (optional, up to 1,000 characters)<textarea name="note" maxlength="1000" rows="4"></textarea></label>
-    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" style="position:absolute;left:-9999px">
     <button type="submit" disabled id="dispute-send">Send dispute</button>
     <p class="meta" id="dispute-msg" role="status"></p>
   </form>

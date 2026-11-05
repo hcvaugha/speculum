@@ -59,6 +59,7 @@ def env() -> Environment:
     e.filters["billname"] = billname
     e.filters["money"] = money
     e.filters["pct"] = pct
+    e.globals["css_v"] = __import__("hashlib").sha256((HERE / "static" / "style.css").read_bytes()).hexdigest()[:10]
     e.filters["org"] = org_name
     e.filters["num"] = lambda x: f"{x:,}" if isinstance(x, (int, float)) and not isinstance(x, bool) else ("—" if x is None else x)
     return e
