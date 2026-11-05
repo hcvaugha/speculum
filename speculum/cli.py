@@ -215,6 +215,41 @@ def cmd_chains(args) -> int:
     return 0
 
 
+def cmd_approve(args) -> int:
+    """Record a person's approval of one chain, tied to the research as it stands now."""
+    import json
+    from . import chains
+    from .snapshot import latest
+    from .sources.lda import clean
+    from .sources.fec import clean_finance
+    from .sources.senate import clean_votes
+
+    snap = latest(ROOT / "snapshots")
+    if snap is None:
+        log.error("no snapshot yet")
+        return 1
+    members = snap.read("members.json", [])
+    out = chains.for_site(members, clean_finance(snap.read("finance.json", {}), members), clean(snap.read("lobbying.json", {}), members),
+                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT)
+    want = args.chain.lower().replace(".", "").replace(" ", "")
+    hits = [c for c in out if c["id"] == want or c["id"].endswith("-" + want)]
+    if len(hits) != 1:
+        log.error("no single chain matches %r; chains: %s", args.chain, ", ".join(c["id"] for c in out))
+        return 1
+    ch = hits[0]
+    path = ROOT / "chains" / "reviews.json"
+    reviews = chains.load_json(path, {})
+    entry = {k: v for k, v in (reviews.get(ch["id"]) or {}).items() if k not in ("approved_by", "date", "note", "research")}
+    if not args.revoke:
+        entry.update({"approved_by": args.by, "date": today_et(), "research": ch["fingerprint"]})
+        if args.note:
+            entry["note"] = args.note
+    reviews[ch["id"]] = entry
+    path.write_text(json.dumps(reviews, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    log.info("%s %s", "revoked" if args.revoke else f"approved by {args.by}:", ch["id"])
+    return 0
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
     p = argparse.ArgumentParser(prog="speculum")
@@ -229,8 +264,13 @@ def main(argv=None) -> int:
     c.add_argument("--draft", action="store_true")
     c.add_argument("--check", action="store_true", help="one small live request to prove the API key works")
     c.add_argument("--limit", type=int, default=3, help="most chains to draft in one run")
+    a = sub.add_parser("approve", help="record a person's approval of one chain's current research")
+    a.add_argument("chain", help="chain id or bill, e.g. sjres32")
+    a.add_argument("--by", default="the editor", help="name shown on the page")
+    a.add_argument("--note", help="optional note shown with the approval")
+    a.add_argument("--revoke", action="store_true", help="withdraw the approval")
     args = p.parse_args(argv)
-    return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains}[args.cmd](args)
+    return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains, "approve": cmd_approve}[args.cmd](args)
 
 
 if __name__ == "__main__":

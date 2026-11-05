@@ -219,11 +219,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
                           and (not x.get("applies_to") or bkey in x["applies_to"])])
         _contractor_money(ch, sectors)
         _advocacy(ch, by_id, finance, advocacy_cfg or {}, advocacy_data)
-        rv = reviews.get(ch["id"]) or {}
-        # approved: a person checked it and takes responsibility. verified: an independent AI checker
-        # opened every source and found each claim matches. draft: neither yet.
-        ch["status"] = "approved" if rv.get("approved_by") else "verified" if rv.get("ai_verified") else "draft"
-        ch["review"] = rv
+        ch["review"] = reviews.get(ch["id"]) or {}
         out.append(ch)
     # Votes held the same day are mostly the same senators: say how much they overlap, so a repeated
     # money gap is not read as an independent confirmation.
@@ -389,4 +385,29 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
             ch["research_by"] = "ai-draft"
             ch["draft_meta"] = d.get("_drafted", {})
         ch["research_meta"] = research.get("_meta", {})
+        set_status(ch)
     return out
+
+
+# What a reviewer signs off on: the research and the framing, not the nightly figures. Money totals,
+# vote tallies and patterns are left out, so they can update every night without undoing a review.
+_REVIEWED = ("mechanism", "outcomes", "context", "genocide_note", "advocacy_orgs", "advocacy_after",
+             "advocacy_noside", "advocacy_meta", "research_by", "draft_meta")
+
+
+def fingerprint(ch: dict) -> str:
+    """A short hash of everything in a chain a reviewer approves. Any change to it lapses the approval."""
+    import hashlib
+    blob = json.dumps({k: ch.get(k) for k in _REVIEWED}, sort_keys=True, ensure_ascii=False, default=str)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]
+
+
+def set_status(ch: dict) -> None:
+    """approved: a person reviewed this exact research and takes responsibility for it. verified: an
+    independent AI checker opened every source and found each claim matches. draft: neither yet.
+    An approval given to earlier research has lapsed: the chain is shown as awaiting review again."""
+    rv = ch.get("review") or {}
+    ch["fingerprint"] = fingerprint(ch)
+    approved = bool(rv.get("approved_by")) and rv.get("research") == ch["fingerprint"]
+    ch["lapsed"] = rv if rv.get("approved_by") and not approved else None
+    ch["status"] = "approved" if approved else "verified" if rv.get("ai_verified") else "draft"

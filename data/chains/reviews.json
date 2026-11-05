@@ -1,5 +1,5 @@
 {
- "_how": "To approve a chain, add an entry keyed by its id: {\"approved_by\": \"name\", \"date\": \"YYYY-MM-DD\", \"note\": \"...\"}. Remove it to send the chain back to draft.",
+ "_how": "Approve with: python -m speculum approve <chain id or bill, e.g. sjres32> (the reviewer is shown as \"the editor\" unless --by is given). The approval records a fingerprint of the chain's research; if the research changes, the approval lapses and the chain awaits review again. Revoke with --revoke.",
  "arms-sales-119-sjres26": {
   "ai_verified": {
    "date": "2026-11-04",
