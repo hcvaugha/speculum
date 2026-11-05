@@ -484,19 +484,6 @@
    "kind": "context",
    "label": "The sale was notified during the war that began when the US and Israel launched air strike"
   },
-  "5c6151d36eb0ca16": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The main claim, counterpoint, grade note and per-bill scope notes all match the source: JDAM fragments, Boeing-associated codes, the two strikes with dates and tolls, the 43 civilians by group, no military objective found, 2017/2018 manufacture, the 2,000lb and at-least-1,000lb estimates, and the 21 Nov questions with no response. However, the source_note's statement that Amnesty's US section urged senators to support the April 2026 resolutions is not in this 2023 source, and no source is named for it.",
-   "quotes": [
-    "the codes stamped on the plates from both sets of recovered scrap, 70P862352, are associated with JDAMs and Boeing, the manufacturer",
-    "two strikes that killed a total of 43 civilians – 19 children, 14 women and 10 men",
-    "the bomb that struck the al-Najjar family home likely weighed 2,000lb. The bomb that hit the Abu Mu'eileq family destroyed their home and likely weighed at least 1,000lb"
-   ],
-   "kind": "outcome",
-   "label": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated "
-  },
   "29a21f8c3754787a": {
    "result": "supported",
    "on": "2026-11-05",
@@ -509,32 +496,6 @@
    ],
    "kind": "outcome",
    "label": "Washington Post analysis with four weapons experts concluded that the 26 May 2024 strike o"
-  },
-  "05f1f2e3d4471d47": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "CNN and Airwars support most of the claim: the remnant was found at the Al-Mutanabbi/Al-Awda school complex sheltering displaced people, the experts' identification, Boeing as manufacturer, the Ministry of Health's figure of 27 killed and 53 injured, the 9 July 2024 date and both IDF statements in the counterpoint. Two problems: no cited source supports the statement that DSCA names Boeing as a principal contractor for this sale, and the 'consistent with' quote comes from one expert (Patrick Senft of ARES), not from all three.",
-   "quotes": [
-    "this remnant is consistent with a GBU-39-series tail actuation system located in the rear of the munition,” Patrick Senft, a research coordinator at Armament Research Services (ARES), told CNN",
-    "The remnant is the tail section of the munition, according to three explosive weapons experts who reviewed the video for CNN.",
-    "The GBU-39, which is manufactured by Boeing"
-   ],
-   "kind": "outcome",
-   "label": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mu"
-  },
-  "85873bee377362c3": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The main claim is supported: the plausibility quote, the 15-2 vote and the Article II wording all appear in the ICJ summary, and the order is provisional. Barak voted against 4 of 6 measures, and both Netanyahu quotes appear in the PM's statement. But the counterpoint calls Sebutinde 'Vice-President'. The source names her 'Judge Sebutinde' and lists Gevorgian as Vice-President, so that title is wrong.",
-   "quotes": [
-    "at least some of the rights claimed by South Africa and for which it is seeking protection are plausible",
-    "IN FAVOUR: President Donoghue; Vice-President Gevorgian; ... AGAINST: Judge Sebutinde; Judge ad hoc Barak",
-    "Israel's commitment to international law is unwavering."
-   ],
-   "kind": "outcome",
-   "label": "In its 26 Jan 2024 order the ICJ found 'at least some of the rights claimed by South Afric"
   },
   "265a9a3480ec31c5": {
    "result": "supported",
@@ -562,19 +523,6 @@
    "kind": "outcome",
    "label": "In its 24 May 2024 order the ICJ ordered Israel (13-2) to 'immediately halt its military o"
   },
-  "59ea3919a24617bf": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The OCHA report supports the core figures: per the Gaza MoH, 33 killed and 188 injured between 20 and 26 Oct 2026, and totals since the ceasefire agreement of 1,559 fatalities and 5,608 injuries; OCHA dates the ceasefire announcement to 10 Oct 2025. The counterpoint relies on an Al-Monitor article about a 28 Oct 2025 Rafah incident, a year before the reported deaths, so it does not give Israel's position on the 2026 casualties, and the article does not say the unreturned hostage remains were a reason for the strike order; it presents them only as background to the 'latest escalation'.",
-   "quotes": [
-    "33 Palestinians were reported killed and 188 injured between 20 and 26 October, bringing the total number of casualties since the ceasefire agreement to 1,559 fatalities and 5,608 injuries",
-    "Since the announcement of a ceasefire agreement on 10 October 2025",
-    "Prime Minister Netanyahu instructed the military leadership to carry out powerful strikes in the Gaza Strip immediately."
-   ],
-   "kind": "outcome",
-   "label": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since th"
-  },
   "9f60b569f5f2e4ea": {
    "result": "supported",
    "on": "2026-11-05",
@@ -600,19 +548,6 @@
    "kind": "outcome",
    "label": "Secretary of State Blinken determined that 'members of the RSF and allied militias have co"
   },
-  "d417394bd4ddbf9f": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The UN News text supports the 6,000+ killings in the first three days, the roughly 500 killed at Al-Rashid dormitory on 26 October, and the 'war crimes and possible crimes against humanity' wording. The Africanews/AP article supports Dagalo's Telegram quote and the investigation committee. The scope note that the findings 'do not address arms supply' goes too far: the article does not name any supplier, but Türk explicitly called on States to respect the arms embargo and halt the supply of weapons.",
-   "quotes": [
-    "OHCHR documented more than 6,000 killings in the first three days of the RSF offensive.",
-    "around 500 people were killed when RSF fighters opened fire using heavy weapons on a crowd of 1,000 sheltering at Al-Rashid dormitory in El Fasher University on 26 October",
-    "committing atrocities that amount to war crimes and possible crimes against humanity"
-   ],
-   "kind": "outcome",
-   "label": "OHCHR documented 'more than 6,000 killings in the first three days of the RSF offensive' o"
-  },
   "522f4aec3ab155bb": {
    "result": "supported",
    "on": "2026-11-05",
@@ -625,19 +560,6 @@
    ],
    "kind": "outcome",
    "label": "FAO, WFP and UNICEF reported that the IPC Famine Review Committee found famine conditions "
-  },
-  "cad895c96b30a9cd": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "Most of the claim matches Amnesty: the quoted 'Using bulldozers and manually laid explosives', the ~58 km² buffer zone, Oct 2023 to May 2024, and 'more than 90% of the buildings' (more than 3,500 structures). The counterpoint and scope note also hold, including the DSCA quote. But Amnesty says these buildings 'appear destroyed or severely damaged', and the claim drops the hedge. The claim also ties the whole 90% figure to bulldozers and explosives, which the source never does; it says some destruction in Khuza'a was caused 'many by airstrikes'.",
-   "quotes": [
-    "Using bulldozers and manually laid explosives, the Israeli military has unlawfully destroyed agricultural land and civilian buildings",
-    "As of May 2024, more than 90% of the buildings within this area (more than 3,500 structures) appear destroyed or severely damaged",
-    "an estimated 178 structures in and around the town were destroyed or severely damaged – many by airstrikes"
-   ],
-   "kind": "outcome",
-   "label": "Amnesty says Israeli forces, 'Using bulldozers and manually laid explosives', destroyed or"
   },
   "6a6932646d1fe526": {
    "result": "supported",
@@ -690,19 +612,6 @@
    "kind": "sale record",
    "label": "S.J.Res. 33: what the sale contained"
   },
-  "800e8b6d06212aac": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The DSCA release matches the items, the $6.75B estimate, Transmittal 24-13, the four contractors, the 2025 delivery estimate, the justification text and the 7 Feb 2025 date. The bill text confirms AECA 36(b)(1) and Congressional Record publication on 10 Feb 2025. Two problems: (1) the cited SAP says this sale 'was notified to Congress on January 3, 2025', which conflicts with the published notified date of 2025-02-07 and is not reconciled. (2) Sanders' 'bogus emergency declaration' quote is verbatim, but in the Record he applies it broadly to 'these transfers'. Calling it 'the emergency route' for this sale contradicts the claim's own emergency: false and 'No emergency certification'.",
-   "quotes": [
-    "for an estimated cost of $6.75 billion",
-    "Deliveries are estimated to begin in 2025.",
-    "published in the Congressional Record on February 10, 2025"
-   ],
-   "kind": "sale record",
-   "label": "S.J.Res. 26: what the sale contained"
-  },
   "971818e622b8a481": {
    "result": "supported",
    "on": "2026-11-05",
@@ -742,45 +651,6 @@
    "kind": "sale record",
    "label": "S.J.Res. 32: what the sale contained"
   },
-  "75c9cbddb560dd3a": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The sources support the core record: the items, the value split ($150.0M + $1.8M = $151.8M), Repkon USA of Garland, TX, Transmittal 26-32 under 36(b)(1), delivery to Congress on 6 Mar 2026, partial transfer from stock, the justification text, the 36(b)(1)-only wording in the Federal Register notice, Rubio's emergency determination as reported by Dawn/Reuters, and the Sanders and Meeks quotes. However, no cited source supports the no_same_type_note's statement that strikes with bombs of this weight class are reported or that forensic reports identify US guidance kits used with them.",
-   "quotes": [
-    "Part of the BLU–110 A/B requirement will be transferred from stock.",
-    "The principal contractor will be Repkon USA, located in Garland, TX.",
-    "US Secretary of State Marco Rubio determined that an emergency existed requiring an immediate sale to Israel, the State Department said."
-   ],
-   "kind": "sale record",
-   "label": "S.J.Res. 138: what the sale contained"
-  },
-  "ccb65417780851cd": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The source confirms that FCNL signed an April 9, 2026 coalition letter urging senators to cosponsor and vote for Senator Sanders' JRDs blocking 1,000-pound bombs and Caterpillar D9 bulldozers to Israel. It never gives resolution numbers, so the claim's link of that support to SJRES32 and SJRES138 is not shown by this source.",
-   "quotes": [
-    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "united in our support for these resolutions",
-    "Friends Committee on National Legislation"
-   ],
-   "kind": "stated position",
-   "label": "Friends Committee on National Legislation: stated positions"
-  },
-  "0cabbc129f562c13": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The letter, dated April 9, 2026 and signed by \"A New Policy\", supports the Sanders joint resolutions of disapproval blocking 1,000-pound bombs and Caterpillar D9 bulldozers to Israel, so the 'supports'/'block' stance and the April 2026 date match. The letter never gives resolution numbers, so it does not tie that support to SJRES32 and SJRES138 specifically. It also does not use the name \"A New Policy Inc.\"",
-   "quotes": [
-    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "united in our support for these resolutions",
-    "Sincerely, A New Policy"
-   ],
-   "kind": "stated position",
-   "label": "A New Policy Inc.: stated positions"
-  },
   "6e6d7c2a14b42ac6": {
    "result": "supported",
    "on": "2026-11-05",
@@ -793,15 +663,158 @@
    "kind": "stated position",
    "label": "Amnesty International USA: stated positions"
   },
-  "5e3cc47278396646": {
+  "86e2f3ceceb7bfff": {
    "result": "partly_supported",
    "on": "2026-11-05",
    "by": "claude-opus-5-5",
-   "note": "New Jewish Narrative signed a letter urging Senators to cosponsor and vote for Senator Sanders's April resolutions to block transfers of 1,000-pound bombs and Caterpillar D9 bulldozers to Israel, so 'supports' and 'block' match the stated position. The letter never names S.J.Res. 32 or S.J.Res. 138, so it does not show that these are the two resolutions it endorses. A letter dated April 2026 about resolutions to come 'this April' cannot, without more, support a position on any resolution that is not one of those.",
+   "note": "The main claim, counterpoint and scope notes match the Amnesty investigation: JDAM fragments, Boeing-associated codes, the strike dates and death tolls, 43 civilians (19 children, 14 women, 10 men), no indication of military objectives, 2017/2018 manufacture dates, a likely 2,000lb and at least 1,000lb bomb, and the unanswered 21 November questions. The source note's link is not supported: the AIUSA release urges votes on S.J.Res. 32 and S.J.Res. 138, not SJRES26 or SJRES34, so the cited source does not show AIUSA urged support for the resolutions this claim applies to.",
+   "quotes": [
+    "the codes stamped on the plates from both sets of recovered scrap, 70P862352, are associated with JDAMs and Boeing, the manufacturer",
+    "the JDAM that killed members of the al-Najjar family was manufactured in 2017, while the JDAM that killed members of the Abu Mu’eileq family was manufactured in 2018",
+    "the bomb that struck the al-Najjar family home likely weighed 2,000lb. The bomb that hit the Abu Mu’eileq family destroyed their home and likely weighed at least 1,000lb"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated "
+  },
+  "3d07773eb4afdb9f": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "Everything checks out. CNN gives Senft's 'consistent with a GBU-39-series tail actuation system' quote and reports that three explosive-weapons experts reviewed the video, that Boeing makes the GBU-39, that the complex sheltered displaced people, and the Ministry of Health toll of 27 killed and 53 injured. CNN also carries the IDF quote. Airwars dates the strike to 9 July 2024 and records the IDF line 'The incident is under review' with no results released. One small point: CNN's text says 'near Khan Younis', but its photo caption says 'in Khan Younis'. The grade fits, because experts identified a US-made munition remnant at the strike site, and the grade note admits the identification is hedged.",
+   "quotes": [
+    "this remnant is consistent with a GBU-39-series tail actuation system located in the rear of the munition",
+    "according to three explosive weapons experts who reviewed the video for CNN",
+    "At least 27 people have been killed and 53 have been injured in the strike, which hit the gate of the Al-Mutanabbi school complex, also known locally as the Al-Awda Schools"
+   ],
+   "kind": "outcome",
+   "label": "CNN, consulting three explosive-weapons experts, reported that a remnant from the strike o"
+  },
+  "0d42154f87bfd768": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The ICJ summary supports both quoted passages, the 15-2 vote on measure (1), and the claim that the order does not rule on whether violations occurred. Barak's opinion says the Court has not made any findings on South Africa's claims, and the Court acted only to protect rights it found plausible, pending the merits. The counterpoint also holds: Sebutinde voted against all six measures, Barak voted against four of six (1, 2, 5 and 6), and both Netanyahu quotes appear word for word in the PMO statement mirrored on GlobalSecurity. Grading this as associated fits the rubric, because it is a provisional-measures order.",
+   "quotes": [
+    "at least some of the rights claimed by South Africa and for which it is seeking protection are plausible",
+    "By fifteen votes to two, The State of Israel shall... take all measures within its power to prevent the commission of all acts within the scope of Article II of this Convention",
+    "Judge ad hoc Barak also recalls that the Court has not made any findings with regard to South Africa's claims under the Genocide Convention."
+   ],
+   "kind": "outcome",
+   "label": "In its 26 Jan 2024 order the ICJ found 'at least some of the rights claimed by South Afric"
+  },
+  "f9be14bcca696537": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The OCHA report supports the core claim: MoH-sourced figures of 33 killed between 20 and 26 October, bringing the post-ceasefire totals to 1,559 fatalities and 5,608 injuries, with the ceasefire agreement announced on 10 October 2025. The counterpoint text is also supported, but it is labelled \"Response of the Government of Israel\" when it only notes the MoH sourcing, and no cited source gives an Israeli government response to these figures.",
+   "quotes": [
+    "According to the Ministry of Health in Gaza, which operates under the de-facto authorities, 33 Palestinians were reported killed and 188 injured between 20 and 26 October, bringing the total number of casualties since the ceasefire agreement to 1,559 fatalities and 5,608 injuries.",
+    "Since the announcement of a ceasefire agreement on 10 October 2025",
+    "Another 42 fatalities were retroactively added to the total number after their identification details were approved by MoH."
+   ],
+   "kind": "outcome",
+   "label": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since th"
+  },
+  "1cdd51c9f60fe39c": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "Para. 42 finds the Am Djarass allegations credible and describes weapons and ammunition unloaded from cargo planes and handed to RSF. Para. 54 attributes the 10,000–15,000 El Geneina death estimate to intelligence sources, and the arms identified (Type 56, Type 63-2, SA-7) include no US-origin items. The counterpoint matches the UAE's 21 December 2023 response, and 'associated' fits because the report does not tie US-made weapons to specific harm.",
+   "quotes": [
+    "According to information gathered by the Panel from sources in Chad and Darfur, the allegations were credible.",
+    "weapons and ammunition shipments were unloaded from cargo planes arriving at Am Djarass airport, then loaded on trucks.",
+    "where shipments were handed over to RSF"
+   ],
+   "kind": "outcome",
+   "label": "The UN Panel of Experts on the Sudan found allegations 'credible' that weapons and ammunit"
+  },
+  "a3091ee7d0988818": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The main claim matches the report: the quoted sentence appears in para. 95, and Annex 5 describes ammunition and military equipment moving from eastern Chad and southern Libya. The published quote drops the qualifier 'at the time of writing'. The counterpoint relies on S/2025/260 and the ICJ order of 5 May 2025, which are not in this source and could not be checked here.",
+   "quotes": [
+    "The Panel was unable to confirm transfers of military materiel from Am Djarass to Darfur at the time of writing.",
+    "key areas for supplies through which fuel, ammunition, and military equipment has been moving from eastern Chad and southern Libya to Sudan since the onset of the current conflict in Sudan",
+    "Bir Mirgui became the central hub for transferring supplies from Eastern Chad and Southern Libya to active frontlines."
+   ],
+   "kind": "outcome",
+   "label": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military "
+  },
+  "51fccad6ac91591d": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The UN News mirror matches each part of the claim: OHCHR documented more than 6,000 killings in the first three days, about 500 were killed at Al-Rashid dormitory on 26 October, the report's finding was war crimes and possible crimes against humanity, and Türk called for respecting the arms embargo and halting weapons supply. The article names no supplier. The Africanews/AP piece supports the counterpoint word for word: Dagalo's Telegram post admitting violations and announcing an investigation committee, made 'on Wednesday' (29 Oct 2025). The grade 'estimated' fits because this is an aggregate UN figure that the source does not link to UAE-supplied weapons.",
+   "quotes": [
+    "OHCHR documented more than 6,000 killings in the first three days of the RSF offensive",
+    "around 500 people were killed when RSF fighters opened fire using heavy weapons on a crowd of 1,000 sheltering at Al-Rashid dormitory in El Fasher University on 26 October",
+    "committing atrocities that amount to war crimes and possible crimes against humanity"
+   ],
+   "kind": "outcome",
+   "label": "OHCHR documented 'more than 6,000 killings in the first three days of the RSF offensive' o"
+  },
+  "7b9f16bf53f31828": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The DSCA release matches every part of the claim: the items and quantities, the $6.75 billion estimate, the four contractors, Transmittal 24-13, the 7 Feb 2025 date, deliveries starting in 2025, the justification text, and no emergency language. The bill text confirms AECA 36(b)(1) and the 10 Feb Congressional Record publication, and Sanders' remarks and the SAP quote and date are accurate. Sanders' floor remark about a 'bogus emergency declaration' is not tied to this sale in the source, so it does not contradict 'no emergency certification.'",
+   "quotes": [
+    "for an estimated cost of $6.75 billion. The Defense Security Cooperation Agency delivered the required certification notifying Congress of this possible sale today.",
+    "Deliveries are estimated to begin in 2025.",
+    "The second resolution, S.J. Res. 26, would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs"
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 26: what the sale contained"
+  },
+  "e6313648e9f6a8d8": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "Every element of the claim is confirmed by the cited sources. The Federal Register notice gives the items, the $150.0M + $1.8M = $151.8M value, Repkon USA in Garland, TX, Transmittal 26-32 under 36(b)(1), the 6 March 2026 delivery date, the transfer from stock and the justification word for word, and it has no emergency language. Dawn/Reuters supports Rubio's emergency determination, the bypass of congressional review, the 'national security interests' wording and the Meeks quote. The Sanders release supports the cosponsors and his quotes. Two small wording differences: Dawn says Rubio 'determined' an emergency where the claim says 'certified', and the claim says 'press reports' (plural) while only one report is cited.",
+   "quotes": [
+    "Major Defense Equipment * $150.0 million",
+    "The principal contractor will be Repkon USA, located in Garland, TX.",
+    "Part of the BLU–110 A/B requirement will be transferred from stock."
+   ],
+   "kind": "sale record",
+   "label": "S.J.Res. 138: what the sale contained"
+  },
+  "50217179adea06eb": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "FCNL signed the April 9, 2026 coalition letter urging Senators to vote for Sanders' JRDs blocking 1,000-pound bombs and Caterpillar D9 bulldozers, which fits S.J.Res.138 (Sanders, March 19, 2026, BLU-110 1,000-lb bombs). The letter names no resolution numbers, though, and S.J.Res.32 is a 1st-session resolution introduced March 10, 2025. Nothing in the sources ties the D9 resolution the letter refers to ('will bring to the floor this April') to S.J.Res.32 rather than a later D9 resolution, so the SJRES32 attribution is not established.",
    "quotes": [
     "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "united in our support for these resolutions",
-    "New Jewish Narrative"
+    "Friends Committee on National Legislation",
+    "IN THE SENATE OF THE UNITED STATES March 10, 2025 Mr. Sanders introduced the following joint resolution"
+   ],
+   "kind": "stated position",
+   "label": "Friends Committee on National Legislation: stated positions"
+  },
+  "7369b0b9e2a773b9": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The April 9, 2026 letter, signed by 'A New Policy', supports Sanders's JRDs to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers, so the S.J.Res.138 mapping (12,000 BLU-110 1,000-lb bomb bodies, introduced March 19, 2026) fits. The letter names no resolution numbers, and S.J.Res.32 was introduced March 10, 2025 (Transmittal 24-38), so the sources do not establish that it is the bulldozer resolution 'Senator Sanders will bring to the floor this April' 2026 rather than a newer bulldozer JRD.",
+   "quotes": [
+    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
+    "A New Policy",
+    "IN THE SENATE OF THE UNITED STATES March 10, 2025 Mr. Sanders introduced the following joint resolution"
+   ],
+   "kind": "stated position",
+   "label": "A New Policy Inc.: stated positions"
+  },
+  "2ff927e17b0694b6": {
+   "result": "partly_supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "New Jewish Narrative signed a letter urging senators to vote for Sanders's April resolutions blocking the 1,000-pound bomb and Caterpillar D9 bulldozer transfers. That fits S.J.Res.138 (introduced March 19, 2026, BLU-110 1,000-lb bombs). The letter names no resolution numbers, though, and S.J.Res.32 was introduced March 10, 2025 for Transmittal 24-38, so the sources do not establish that the bulldozer resolution brought to the floor in April 2026 is S.J.Res.32.",
+   "quotes": [
+    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
+    "New Jewish Narrative",
+    "March 10, 2025 Mr. Sanders introduced the following joint resolution"
    ],
    "kind": "stated position",
    "label": "New Jewish Narrative: stated positions"
