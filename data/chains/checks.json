@@ -754,19 +754,6 @@
    "kind": "outcome",
    "label": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military "
   },
-  "a160531e2f03ad0d": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The core claim matches the release: GB50A fragments from the 9 March 2025 North Darfur strike, an AH-4 howitzer seized in Khartoum on 27–28 March 2025, Chinese (Norinco) manufacture, and the quoted words 'almost certainly re-exported to Sudan by the UAE'. The release does contain no UAE response, but the UAE denial attributed to S/2025/260 and the source_note about Amnesty International USA's April 2026 advocacy cite documents that were not provided, so they cannot be verified here.",
-   "quotes": [
-    "The weapons were almost certainly re-exported to Sudan by the UAE.",
-    "On the night of 9 March 2025, the RSF launched a drone strike near al-Malha town in North Darfur",
-    "Amnesty International identified the fragments as belonging to a Norinco GB50A guided aerial bomb."
-   ],
-   "kind": "outcome",
-   "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
-  },
   "15ecd3e22d0e2579": {
    "result": "supported",
    "on": "2026-11-05",
@@ -831,6 +818,19 @@
    ],
    "kind": "stated position",
    "label": "New Jewish Narrative: stated positions"
+  },
+  "7c18dd87db8b4ddb": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "Amnesty's release matches the claim: it identifies a Norinco GB50A bomb from the 9 March 2025 strike near al-Malha, North Darfur, and an AH-4 howitzer seized after the RSF left Khartoum on 27–28 March 2025, and it uses the quoted 'almost certainly re-exported' wording. The video identification is of one howitzer, though Amnesty itself writes 'AH-4 howitzers'. The UAE denial is in S/2025/260, the release contains no UAE response, and the AIUSA advocacy note is confirmed; 'associated' is appropriate because the UAE attribution is Amnesty's inference and the weapons are not US-made.",
+   "quotes": [
+    "The weapons were almost certainly re-exported to Sudan by the UAE.",
+    "On the night of 9 March 2025, the RSF launched a drone strike near al-Malha town in North Darfur",
+    "Amnesty International identified the fragments as belonging to a Norinco GB50A guided aerial bomb."
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
   }
  }
 }
