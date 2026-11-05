@@ -1,7 +1,7 @@
 name: Source check
 
 # Checks new, changed and disputed claims in The Dependents against their sources, then rebuilds the site.
-# The nightly run does this too; this workflow lets it run on its own (by hand, or a second time each day).
+# The nightly run does this too; this workflow also runs it on its own: by hand, and once more each afternoon.
 on:
   workflow_dispatch:
     inputs:
