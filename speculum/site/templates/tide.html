@@ -8,14 +8,13 @@
 
 {% if fs %}{% include "_founding.html" %}{% endif %}
 
-{% if public %}<div class="notice">Every story is written from the night's public filings using fixed templates, and published only after an editor checks it against its sources. Reactions open soon.</div>
-{% else %}<div class="notice">Drafts. Every story is generated from the night's filings using fixed templates. On the public site only stories an editor has approved appear; each story below shows its status.</div>{% endif %}
+<div class="notice">Every story is written automatically from the night's public filings by fixed templates, the same way for every member and party, and links to the filings it came from. Spot an error? Send the filing that shows it to <a href="{{ root }}corrections.html">corrections</a>.{% if public %} Reactions open soon.{% endif %}</div>
 
 {% if ed.stories %}
 <div class="stories">
 {% for s in ed.stories %}
 <article class="story" id="{{ s.id }}">
-  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}{% if not public %} · <span class="story-status st-{{ s.status }}">{{ {'approved': 'Approved', 'held': 'Held back', 'pending': 'Awaiting editor'}[s.status] }}</span> <span class="muted">{{ s.id }}</span>{% endif %}</div>
+  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}{% if not public %} · <span class="story-status st-{{ s.status }}">{{ {'published': 'Published', 'held': 'Held back'}[s.status] }}</span> <span class="muted">{{ s.id }}</span>{% endif %}</div>
   <h3>{{ s.headline }}</h3>
   <p class="dek">{{ s.dek }}</p>
   <ul class="facts">{% for f in s.facts %}<li>{{ f }}</li>{% endfor %}</ul>
@@ -32,8 +31,6 @@
 {% endfor %}
 </div>
 {% if ed.more %}<p class="meta">{{ ed.more }} lower-ranked stories held back from this edition.</p>{% endif %}
-{% elif ed.awaiting %}
-<p class="lede">{{ ed.awaiting }} {{ 'story' if ed.awaiting == 1 else 'stories' }} from this night's filings {{ 'is' if ed.awaiting == 1 else 'are' }} waiting for an editor to check {{ 'it' if ed.awaiting == 1 else 'them' }} against the sources, and will appear here once approved.</p>
 {% else %}
 {% if fs %}<p class="lede">Congress has been away campaigning since its last roll call on {{ fs.votes_through }}, so Day 1 brings no new votes to report. The first stories of the record come with the next filings, and the first votes with the lame-duck session.</p>
 {% else %}<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>{% endif %}

@@ -4,8 +4,7 @@ Each edition compares one snapshot with the one before it. With no earlier snaps
 it covers the roll calls of the preceding 30 days. Every story is built from fixed templates so
 the same event reads the same way whoever it involves, and every story links to its sources.
 
-Stories are drafts until a person approves them: the blueprint requires an editor's sign-off
-before anything is published outside the private preview.
+Stories publish automatically; data/tide/approvals.json can hold one back while a correction is checked.
 """
 from __future__ import annotations
 

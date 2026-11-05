@@ -77,11 +77,20 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python -m speculum chains --draft --limit 3
 
+      - name: Check new, changed and disputed claims against their sources (only when an Anthropic key is set)
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: python -m speculum verify --limit 40
+
       - name: Commit the snapshot
         run: |
           git config user.name "speculum-bot"
           git config user.email "speculum-bot@users.noreply.github.com"
-          git add data/snapshots data/chains/drafts 2>/dev/null || git add data/snapshots
+          git add data/snapshots
+          for f in data/chains/drafts data/chains/checks.json data/chains/disputes.json; do [ -e "$f" ] && git add "$f"; done
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           DATE=$(ls data/snapshots | sort | tail -1)
           git commit -m "Snapshot $DATE"
@@ -122,13 +131,4 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "::warning::Cloudflare secrets are not set yet (CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID). Skipping deploy; see SETUP.md step 3."
-            exit 0
-          fi
-          # First run creates the two Pages projects; later runs skip this harmlessly.
-          npx --yes wrangler@3 pages project create speculum-public --production-branch main || true
-          npx --yes wrangler@3 pages project create speculum-preview --production-branch main || true
-          npx --yes wrangler@3 pages deploy dist/public --project-name speculum-public --branch main --commit-dirty=true
-          npx --yes wrangler@3 pages deploy dist/preview --project-name speculum-preview --branch main --commit-dirty=true
+        run: bash scripts/deploy.sh

@@ -120,7 +120,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
 
     site_cfg = chains_mod.load_json(snapshots_root.parent / "site.json", {}) or {}
     common = {"snapshot_date": snap.date, "day_number": day_number(snap.date), "public": public,
-              "show_dependents": (not public) or bool(site_cfg.get("dependents_public"))}
+              "show_dependents": (not public) or bool(site_cfg.get("dependents_public", True))}
     rows = []
     for m in members:
         L = ledgers[m["bioguide"]]
@@ -210,14 +210,24 @@ def _build_interests(E, prev: Path, members, finance, lobbying, common) -> None:
             root="../", page="interests", e=e, all=all_, by_id=by_id, seat=seat, party_names=PARTY_NAMES, **common), encoding="utf-8")
 
 
+def public_view(c: dict) -> dict:
+    """A chain as the public site shows it: only the items that passed the source check, nothing held."""
+    v = dict(c)
+    v["outcomes"] = [o for o in c.get("outcomes") or [] if o.get("_public")]
+    v["context"] = [x for x in c.get("context") or [] if x.get("_public")]
+    if not c.get("advocacy_public"):
+        v["advocacy_pattern"], v["advocacy_withheld"] = None, True
+    return v
+
+
 def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common, public: bool = False) -> None:
     from ..snapshot import latest as _latest
     snap = _latest(data_root / "snapshots")
     chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
                                  committees=read_newest(data_root / "snapshots", "committees.json", snap.date) if snap else None,
                                  advocacy_data=read_newest(data_root / "snapshots", "advocacy.json", snap.date) if snap else None)
-    if public:   # the public site shows only chains a person approved
-        chains = [c for c in chains if c["status"] == "approved"]
+    if public:   # the public site shows what has passed the source check (see chains.apply_checks)
+        chains = [public_view(c) for c in chains if c["status"] == "approved" or c.get("auto_public")]
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
@@ -263,16 +273,16 @@ def _glass_by_edition(cfg: dict, dates: list[str]) -> dict:
 
 
 def _apply_approvals(ed: dict, marks: dict, public: bool) -> dict:
-    """Editor approvals (data/tide/approvals.json, {date: {story id: "approved" | "held"}}).
-    The preview shows every story with its status; the public site shows approved stories only."""
-    stories, awaiting = [], 0
+    """Stories publish automatically: they are built from the night's filings by fixed templates, the
+    same way for everyone. data/tide/approvals.json ({date: {story id: "held"}}) can hold one back,
+    for instance while a correction is checked; the preview still shows it, marked."""
+    stories = []
     for st in ed.get("stories", []):
-        status = marks.get(st.get("id"), "pending")
-        if public and status != "approved":
-            awaiting += status == "pending"
+        status = "held" if marks.get(st.get("id")) == "held" else "published"
+        if public and status == "held":
             continue
         stories.append({**st, "status": status})
-    return {**ed, "stories": stories, "awaiting": awaiting}
+    return {**ed, "stories": stories}
 
 
 def _build_pages(E, data_root: Path, prev: Path, common: dict) -> None:

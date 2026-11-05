@@ -10,7 +10,11 @@
   {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.publisher or o.source.title }}{% if o.source.publisher and o.source.title %}: {{ o.source.title }}{% endif %}</a>{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% for a in o.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}{% endif %}
   {% if o.source_note %}<p class="src">Source note: {{ o.source_note }}</p>{% endif %}
   {% if o.counterpoint %}<p class="counter"><b>{{ o.counter_label or 'Response, dissent or caveat' }}:</b> {{ o.counterpoint }}</p>{% endif %}
+  {{ checkline(o) }}
 </div>
+{% endmacro %}
+{% macro checkline(o) %}
+<p class="checkline">{% if o._check and o._check.result == 'supported' and not o._disputed %}Source checked {{ o._check.on }}{% if o._check.dispute_upheld %} · a reader's dispute was checked and the item stands{% endif %}{% elif o._disputed %}<span class="ck-warn">Disputed by a reader · withdrawn from the public page until re-checked</span>{% elif o._check %}<span class="ck-warn">Did not match its source ({{ o._check.result|replace('_', ' ') }}){% if o._check.note %}: {{ o._check.note }}{% endif %} · not public</span>{% else %}<span class="ck-wait">Not yet checked against its source · not public</span>{% endif %}{% if not public and o._public is defined and o._check and o._check.result == 'supported' and not o._public and not o._disputed %} · <span class="ck-wait">graded {{ o.grade }}: not published automatically</span>{% endif %}{% if o._fp %} · <a href="#dispute" class="dispute-link" data-fp="{{ o._fp }}" data-label="{{ (o.claim or '')[:120] }}">Dispute</a>{% endif %}</p>
 {% endmacro %}
 {% macro money_table(pattern, show_contractor) %}
 <div class="tbl-wrap"><table>
@@ -31,11 +35,15 @@
 <h1>{{ c.bill|billname }}{% if c.country %}: arms to {{ 'the ' if c.country in ['United Arab Emirates', 'United Kingdom', 'Philippines', 'Netherlands'] else '' }}{{ c.country }}{% endif %}</h1>
 <p class="lede">{{ c.title }}</p>
 <p>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span> by {{ c.review.approved_by }} on {{ c.review.date }}{% if c.review.note %} · {{ c.review.note }}{% endif %}
-{% elif c.lapsed %}<span class="status verified">Changed since review</span> Reviewed by {{ c.lapsed.approved_by }} on {{ c.lapsed.date }}; the research has changed since, so it awaits review again before it is published.
-{% elif c.status == 'verified' %}<span class="status verified">AI-verified · awaiting review</span> An independent checker opened every source on {{ c.review.ai_verified.date }} and found each claim matches it{% if c.review.ai_verified.note %} ({{ c.review.ai_verified.note }}){% endif %}. A person has not yet approved it.
-{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not reviewed</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. Every claim below must be checked against its source before this chain is approved.
-{% elif c.research_by %}<span class="status draft">Draft · not reviewed</span> Researched with AI assistance{% if c.research_meta.on %} on {{ c.research_meta.on }}{% endif %}; each claim is cited to the source it came from and awaits a reviewer.
+{% elif c.auto_public %}<span class="status verified">Source-checked</span> Researched with AI. {% if public %}Every item on this page{% else %}Every item marked "Source checked"{% endif %} was checked against the source it cites by an independent AI checker, which opens the source and confirms it says what the item says. No editor has reviewed it. Anyone can dispute an item with a source; a disputed item is withdrawn until it is checked again.
+{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not yet checked</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. It is published once the record of the sale passes the source check.
+{% elif c.research_by %}<span class="status draft">Not yet checked</span> Researched with AI; the record of the sale has not yet passed the source check, so this chain is not public.
 {% else %}<span class="status draft">Votes and money only</span> The mechanism and outcome links have not been researched yet.{% endif %}</p>
+{% set h = c.held or {} %}{% if public and (h.unchecked or h.failed or h.disputed or h.weak) %}
+<p class="meta">Not shown here: {% set parts = [] %}{% if h.weak %}{% set _ = parts.append(h.weak ~ ' graded Associated (a weaker link; not published automatically)') %}{% endif %}{% if h.unchecked %}{% set _ = parts.append(h.unchecked ~ ' awaiting the source check') %}{% endif %}{% if h.disputed %}{% set _ = parts.append(h.disputed ~ ' withdrawn while a reader\'s dispute is checked') %}{% endif %}{% if h.failed %}{% set _ = parts.append(h.failed ~ ' that did not match their sources') %}{% endif %}{{ parts|join('; ') }}.</p>
+{% elif not public and (h.unchecked or h.failed or h.disputed or h.weak) %}
+<p class="meta">Held from the public page: {{ h.weak or 0 }} graded Associated, {{ h.unchecked or 0 }} not yet checked, {{ h.disputed or 0 }} disputed, {{ h.failed or 0 }} failed the check.{% if not c.mechanism_public %} The record of the sale itself has not passed the check, so the whole chain is held.{% endif %}</p>
+{% endif %}
 
 <div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
   <div class="reading"><div class="label">Sale notified</div><div class="value" style="font-size:20px">{{ mx.notified or '—' }}</div><div class="context">{{ mx.notification or '' }}</div></div>
@@ -75,7 +83,7 @@
 
 <li>
   <div class="step">3 · What the record shows</div>
-  <p class="meta" style="margin-top:0">Each item carries two separate judgments. Its <b>grade</b> says how strong the evidence is for the finding itself. Its <b>place on this page</b> says how it relates to this sale. Dates show when each finding was published, before or after the sale and the vote. Court orders on provisional measures and arrest warrants are graded Associated: they are court records, but they do not decide the facts.</p>
+  <p class="meta" style="margin-top:0">Each item carries two separate judgments. Its <b>grade</b> says how strong the evidence is for the finding itself. Its <b>place on this page</b> says how it relates to this sale. Dates show when each finding was published, before or after the sale and the vote. Court orders on provisional measures and arrest warrants are graded Associated: they are court records, but they do not decide the facts.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
   {% set same = c.outcomes|selectattr('scope', 'equalto', 'same_type')|list %}
   {% set wider = c.outcomes|selectattr('scope', 'equalto', 'wider')|list %}
   {% set nonef = c.outcomes|selectattr('grade', 'equalto', 'none_found')|list %}
@@ -105,7 +113,7 @@
 
   {% if c.context %}
   <p class="step" style="margin-top:18px;font-size:11px">Context</p>
-  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p>{% for a in x.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}</div>{% endif %}{% endfor %}
+  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p>{% for a in x.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}{{ checkline(x) }}</div>{% endif %}{% endfor %}
   {% endif %}
 </li>
 
@@ -141,7 +149,8 @@
   </div>
   {% if c.advocacy_after %}<p class="meta" style="margin-top:8px"><b>Welcomed the result afterward (not counted):</b> {% for o in c.advocacy_after %}{{ o.name }}{% if o.position %} <span class="muted">({{ o.position }})</span>{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
   {% if c.advocacy_noside %}<p class="meta"><b>Lobbied or commented without a stated side (not counted):</b> {% for o in c.advocacy_noside %}{{ o.name }} <span class="muted">({{ o.position }})</span>{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
-  {% if c.advocacy_pattern and not c.advocacy_complete %}<p class="muted">Advocacy money for this vote: still being collected (unknown, not zero). Some of these organizations' FEC filings have not yet been read in full through the vote date, and a partial count would understate one side; the table appears once every filing is in.</p>
+  {% if c.advocacy_withheld %}<p class="muted">Advocacy money for this vote appears once each organization's stated position has passed the source check.</p>
+  {% elif c.advocacy_pattern and not c.advocacy_complete %}<p class="muted">Advocacy money for this vote: still being collected (unknown, not zero). Some of these organizations' FEC filings have not yet been read in full through the vote date, and a partial count would understate one side; the table appears once every filing is in.</p>
   {% elif c.advocacy_pattern %}
   <div class="tbl-wrap" style="margin-top:12px"><table>
   <thead><tr><th>Party</th><th>Side</th><th class="r">Senators</th><th class="r">From groups urging rejection: received any</th><th class="r">From groups urging advancing: received any</th><th class="r">Super PAC spending for / against</th></tr></thead>
@@ -171,5 +180,38 @@
 </li>
 </ol>
 
-<div class="notice">This page follows a decision, not a person: the Senate's refusal, on {{ c.date }}, to advance a resolution blocking this sale. It does not claim that any senator caused any harm, that any contribution influenced any vote, or that anyone acted improperly. Each senator's vote is shown as the public record of their part in the decision. To dispute any item, send the source that contradicts it to <a href="../corrections.html">corrections</a>.</div>
+<div class="notice">This page follows a decision, not a person: the Senate's refusal, on {{ c.date }}, to advance a resolution blocking this sale. It does not claim that any senator caused any harm, that any contribution influenced any vote, or that anyone acted improperly. Each senator's vote is shown as the public record of their part in the decision. To dispute an item, use its Dispute link.</div>
+
+<section id="dispute" class="dispute">
+  <h2>Dispute an item</h2>
+  <p class="meta">Choose an item with its <b>Dispute</b> link, then give a source that contradicts it. The item is withdrawn from the public page until the checker has read your source beside the original; if the item does not hold up, it stays down, and if it does, it returns with a note that it was disputed and checked. Disputes are published in the project's public record, so do not include personal details.</p>
+  <form id="dispute-form">
+    <p class="dispute-item" id="dispute-item">No item chosen yet.</p>
+    <input type="hidden" name="fp" id="dispute-fp">
+    <input type="hidden" name="chain" value="{{ c.id }}">
+    <label>Source that contradicts it (a link)<input type="url" name="source" required placeholder="https://"></label>
+    <label>What it shows (optional, up to 1,000 characters)<textarea name="note" maxlength="1000" rows="4"></textarea></label>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+    <button type="submit" disabled id="dispute-send">Send dispute</button>
+    <p class="meta" id="dispute-msg" role="status"></p>
+  </form>
+</section>
+<script>
+(function () {
+  var f = document.getElementById('dispute-form'), fp = document.getElementById('dispute-fp'),
+      item = document.getElementById('dispute-item'), send = document.getElementById('dispute-send'), msg = document.getElementById('dispute-msg');
+  document.querySelectorAll('.dispute-link').forEach(function (a) {
+    a.addEventListener('click', function () { fp.value = a.dataset.fp; item.textContent = 'Item: ' + a.dataset.label; send.disabled = false; msg.textContent = ''; });
+  });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    send.disabled = true; msg.textContent = 'Sending…';
+    fetch('{{ root }}api/dispute', { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(f))) })
+      .then(function (r) { return r.json().then(function (j) { return [r.ok, j]; }); })
+      .then(function (x) { msg.textContent = x[0] ? 'Received. The item will be withdrawn on the next nightly update and re-checked against your source.' : (x[1].error || 'Could not send.'); if (!x[0]) send.disabled = false; })
+      .catch(function () { msg.textContent = 'Could not send. You can also write to the corrections address.'; send.disabled = false; });
+  });
+})();
+</script>
 {% endblock %}

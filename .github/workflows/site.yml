@@ -4,7 +4,7 @@ name: Deploy site
 on:
   push:
     branches: [main]
-    paths: ["speculum/site/**", ".github/workflows/site.yml"]
+    paths: ["speculum/**", "functions/**", "scripts/**", "data/chains/**", "data/tide/**", "data/site.json", ".github/workflows/site.yml"]
   workflow_dispatch:
 
 jobs:
@@ -24,13 +24,4 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "::warning::Cloudflare secrets are not set yet (CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID). Skipping deploy; see SETUP.md step 3."
-            exit 0
-          fi
-          # First run creates the two Pages projects; later runs skip this harmlessly.
-          npx --yes wrangler@3 pages project create speculum-public --production-branch main || true
-          npx --yes wrangler@3 pages project create speculum-preview --production-branch main || true
-          npx --yes wrangler@3 pages deploy dist/public --project-name speculum-public --branch main --commit-dirty=true
-          npx --yes wrangler@3 pages deploy dist/preview --project-name speculum-preview --branch main --commit-dirty=true
+        run: bash scripts/deploy.sh

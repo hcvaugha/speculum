@@ -187,6 +187,18 @@ details summary { cursor: pointer; font: 500 12px/1.4 var(--mono); letter-spacin
   .fd-dek { font-size: 18px; }
 }
 .story-status { letter-spacing: .08em; }
-.st-approved { color: var(--gold); }
+.st-published { color: var(--gold); }
 .st-held { color: #d99a8f; }
 .st-pending { color: var(--ink-3); }
+
+.checkline { font: 12px/1.5 var(--mono); color: var(--ink-3); margin: 8px 0 0; }
+.checkline .ck-warn { color: #d99a8f; }
+.checkline .ck-wait { color: var(--ink-3); font-style: italic; }
+.checkline a.dispute-link { color: var(--ink-3); }
+.dispute { margin-top: 36px; max-width: 680px; }
+.dispute label { display: block; margin: 12px 0 0; font-size: 13px; color: var(--ink-2); }
+.dispute input[type=url], .dispute textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 6px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); padding: 8px 10px; font: 14px var(--sans); }
+.dispute button { margin-top: 12px; background: transparent; color: var(--gold); border: 1px solid var(--gold-dim); padding: 8px 14px; font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.dispute button:disabled { opacity: .45; cursor: default; }
+.dispute .dispute-item { color: var(--ink-2); font-style: italic; }
+.dispute .hp { position: absolute; left: -9999px; }

@@ -1,3 +1,3 @@
 {
- "_how": "{date: {story id: \"approved\" | \"held\"}}. Stories not listed are awaiting an editor and stay off the public site."
+ "_how": "Stories publish automatically. To hold one back (for example while a correction is checked), add {date: {story id: \"held\"}}; remove it to publish again."
 }

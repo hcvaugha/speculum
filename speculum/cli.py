@@ -250,6 +250,15 @@ def cmd_approve(args) -> int:
     return 0
 
 
+def cmd_verify(args) -> int:
+    """Read readers' disputes, then check new, changed and disputed claims against their sources."""
+    from . import verify
+    if not args.no_disputes:
+        verify.ingest_disputes(ROOT)
+    verify.run(ROOT, limit=args.limit)
+    return 0
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
     p = argparse.ArgumentParser(prog="speculum")
@@ -269,8 +278,12 @@ def main(argv=None) -> int:
     a.add_argument("--by", default="the editor", help="name shown on the page")
     a.add_argument("--note", help="optional note shown with the approval")
     a.add_argument("--revoke", action="store_true", help="withdraw the approval")
+    v = sub.add_parser("verify", help="check new, changed and disputed claims against their sources")
+    v.add_argument("--limit", type=int, default=40, help="most claims to check in one run")
+    v.add_argument("--no-disputes", action="store_true", help="skip reading new disputes from Cloudflare")
     args = p.parse_args(argv)
-    return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains, "approve": cmd_approve}[args.cmd](args)
+    return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains, "approve": cmd_approve,
+            "verify": cmd_verify}[args.cmd](args)
 
 
 if __name__ == "__main__":

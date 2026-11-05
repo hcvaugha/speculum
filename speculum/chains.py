@@ -148,6 +148,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
 
     # LD-203 window: from the first day of the earliest reporting year collected through the vote date.
     # Items dated outside the reporting years (typos such as 2029, or late reports of older gifts) are left out.
+    tag_claims(research, advocacy_cfg or {})
     yrs = [int(y) for y in (lobbying.get("years") or []) if str(y).isdigit()]
     window_start = f"{min(yrs)}-01-01" if yrs else None
     out = []
@@ -288,7 +289,7 @@ def _advocacy(ch: dict, by_id: dict, finance: dict, cfg: dict, data: dict | None
         if not sd and pos and "not found" not in pos and "not retrieved" not in pos:
             ch["advocacy_noside"].append({"name": org["name"], "position": pos})
         if sd in sides:
-            sides[sd].append({"name": org["name"], "pacs": org.get("pacs", []), "super_pacs": org.get("super_pacs", []),
+            sides[sd].append({"name": org["name"], "_fp": org.get("_fp"), "pacs": org.get("pacs", []), "super_pacs": org.get("super_pacs", []),
                               "includes": org.get("includes", []),
                               "evidence": org.get("evidence", []), "position": _position_text(org, bkey)})
     ch["advocacy_orgs"] = sides
@@ -373,6 +374,8 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
     drafter's output, clearly marked as an unreviewed draft."""
     data_root = Path(data_root)
     research = load_json(data_root / "chains" / "research.json", {})
+    checks = load_json(data_root / "chains" / "checks.json", {}).get("checks", {})
+    disputes = load_json(data_root / "chains" / "disputes.json", {})
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
                 load_json(data_root / "chains" / "reviews.json", {}), committees,
                 load_json(data_root / "advocacy.json", {}), advocacy_data,
@@ -383,10 +386,13 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
         if d and not ch["research_by"]:
             ch["mechanism"] = d.get("mechanism")
             ch["outcomes"] = d.get("outcomes", [])
+            for o in ch["outcomes"] + ([ch["mechanism"]] if ch["mechanism"] else []):
+                o["_fp"] = claim_fp(o)
             ch["research_by"] = "ai-draft"
             ch["draft_meta"] = d.get("_drafted", {})
         ch["research_meta"] = research.get("_meta", {})
         set_status(ch)
+        apply_checks(ch, checks, disputes)
     return out
 
 
@@ -412,3 +418,92 @@ def set_status(ch: dict) -> None:
     approved = bool(rv.get("approved_by")) and rv.get("research") == ch["fingerprint"]
     ch["lapsed"] = rv if rv.get("approved_by") and not approved else None
     ch["status"] = "approved" if approved else "verified" if rv.get("ai_verified") else "draft"
+
+
+# ---------------------------------------------------------------------------------------------------
+# Automatic publication. Every piece of research (an outcome, a context item, a sale's record, an
+# organization's stated position) is a claim with a fingerprint of its content. A claim reaches the
+# public site only when an independent checker has opened its sources and found that they support it,
+# no reader's dispute against it is waiting to be checked, and, for outcomes, its evidence is graded
+# documented or estimated (or is a finding that nothing was found). Any edit changes the fingerprint
+# and sends the claim back through the check. No person has to approve anything.
+
+PUBLIC_GRADES = {"documented", "estimated", "none_found"}
+_PRESENTATION = {"priority", "group"}          # ordering only; changing them does not need a new check
+
+
+def claim_fp(obj: dict) -> str:
+    import hashlib
+    body = {k: v for k, v in obj.items() if not k.startswith("_") and k not in _PRESENTATION}
+    return hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
+
+
+def tag_claims(research: dict, advocacy_cfg: dict) -> None:
+    for o in research.get("outcomes", []) + research.get("context", []):
+        o["_fp"] = claim_fp(o)
+    for r in (research.get("resolutions") or {}).values():
+        r["_fp"] = claim_fp(r)
+    for org in advocacy_cfg.get("organizations", []):
+        org["_fp"] = claim_fp(org)
+
+
+def all_claims(research: dict, advocacy_cfg: dict, drafts: list[dict] | None = None) -> list[dict]:
+    """Every claim the checker must pass, with what it says and where it says it came from. AI drafts
+    for chains without research are claims too: they publish only once they pass the same check."""
+    tag_claims(research, advocacy_cfg)
+    research = {**research, "outcomes": list(research.get("outcomes", [])),
+                "resolutions": dict(research.get("resolutions") or {})}
+    for i, d in enumerate(drafts or []):
+        research["outcomes"] += d.get("outcomes", [])
+        if d.get("mechanism"):
+            research["resolutions"][f"draft-{i}"] = d["mechanism"]
+        for o in d.get("outcomes", []) + ([d["mechanism"]] if d.get("mechanism") else []):
+            o["_fp"] = claim_fp(o)
+    out = []
+    for kind in ("outcomes", "context"):
+        for o in research.get(kind, []):
+            srcs = [o["source"]] + list(o.get("also") or []) if o.get("source") else list(o.get("also") or [])
+            out.append({"fp": o["_fp"], "kind": kind[:-1] if kind == "outcomes" else "context", "grade": o.get("grade"),
+                        "label": (o.get("claim") or "")[:90], "item": {k: v for k, v in o.items() if not k.startswith("_")},
+                        "sources": srcs})
+    for key, r in (research.get("resolutions") or {}).items():
+        srcs = list(r.get("sources") or []) + [h["source"] for h in r.get("history", []) if h.get("source")]
+        out.append({"fp": r["_fp"], "kind": "sale record", "grade": None, "label": f"{r.get('bill', key)}: what the sale contained",
+                    "item": {k: v for k, v in r.items() if not k.startswith("_")}, "sources": srcs})
+    for org in advocacy_cfg.get("organizations", []):
+        out.append({"fp": org["_fp"], "kind": "stated position", "grade": None, "label": f"{org['name']}: stated positions",
+                    "item": {k: org.get(k) for k in ("name", "sides", "positions", "evidence", "after_only", "pacs", "super_pacs")},
+                    "sources": list(org.get("evidence") or [])})
+    return out
+
+
+def _passes(fp: str | None, checks: dict, open_fps: set) -> tuple[bool, dict | None, bool]:
+    c = checks.get(fp) if fp else None
+    held_by_dispute = fp in open_fps and not (c or {}).get("dispute_upheld")
+    return bool(c and c.get("result") == "supported" and not held_by_dispute), c, held_by_dispute
+
+
+def apply_checks(ch: dict, checks: dict, disputes: dict) -> None:
+    open_fps = {d.get("fp") for d in (disputes or {}).get("open", [])}
+    held = {"unchecked": 0, "failed": 0, "disputed": 0, "weak": 0}
+
+    def mark(item: dict, graded: bool) -> None:
+        ok, c, disputed = _passes(item.get("_fp"), checks, open_fps)
+        item["_check"], item["_disputed"] = c, disputed
+        weak = graded and item.get("grade") not in PUBLIC_GRADES
+        item["_public"] = ok and not weak
+        if not item["_public"]:
+            held["disputed" if disputed else "unchecked" if not c else "failed" if c.get("result") != "supported" else "weak"] += 1
+
+    for o in ch.get("outcomes") or []:
+        mark(o, graded=True)
+    for x in ch.get("context") or []:
+        mark(x, graded=bool(x.get("grade")))
+    mx = ch.get("mechanism") or {}
+    ch["mechanism_public"], ch["mechanism_check"], ch["mechanism_disputed"] = _passes(mx.get("_fp"), checks, open_fps)
+    orgs = [o for side in (ch.get("advocacy_orgs") or {}).values() for o in side]
+    for o in orgs:
+        o["_public"], o["_check"], o["_disputed"] = _passes(o.get("_fp"), checks, open_fps)
+    ch["advocacy_public"] = all(o["_public"] for o in orgs)
+    ch["held"] = held
+    ch["auto_public"] = bool(ch["mechanism_public"])
