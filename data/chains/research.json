@@ -568,7 +568,7 @@
     "date": "2023-12-05"
    },
    "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions (Amnesty International USA, 14 Apr 2026).",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support S.J.Res. 32 and S.J.Res. 138 in April 2026 (Amnesty International USA, 14 Apr 2026).",
    "scope_note": null,
    "grade_note": "The grade covers Amnesty's forensic identification of the weapon. That those killed were civilians, and that there was no military objective, is Amnesty's assessment.",
    "scope_note_by": {
@@ -785,8 +785,6 @@
     "publisher": "UN OCHA oPt",
     "date": "2026-10-31"
    },
-   "counterpoint": "Figures are the Gaza Ministry of Health's, as cited by OCHA.",
-   "counter_label": "Response of the Government of Israel",
    "also": [
     {
      "title": "Netanyahu orders powerful strike on Gaza after Hamas attack in Rafah",
@@ -794,7 +792,8 @@
      "publisher": "Al-Monitor",
      "date": "2025-10-28"
     }
-   ]
+   ],
+   "source_note": "Figures are the Gaza Ministry of Health's, as cited by OCHA."
   },
   {
    "country": "Israel",
@@ -850,7 +849,7 @@
   {
    "country": "United Arab Emirates",
    "grade": "associated",
-   "claim": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military materiel from Am Djarass to Darfur', while describing supply routes for ammunition and military equipment from eastern Chad and southern Libya.",
+   "claim": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military materiel from Am Djarass to Darfur' at the time of writing, while describing supply routes for ammunition and military equipment from eastern Chad and southern Libya.",
    "source": {
     "title": "Final report of the Panel of Experts on the Sudan (S/2025/239)",
     "url": "https://www.ecoi.net/en/file/local/2124824/n2442101.pdf",
@@ -862,7 +861,21 @@
    "group": "uae",
    "priority": {
     "SJRES54": 0
-   }
+   },
+   "also": [
+    {
+     "title": "Letter from the UAE to the President of the Security Council (S/2025/260)",
+     "url": "https://digitallibrary.un.org/record/4081846/files/S_2025_260-EN.pdf",
+     "publisher": "United Nations",
+     "date": "2025-04-29"
+    },
+    {
+     "title": "Sudan v. United Arab Emirates: the Court removes the case from its List (press release)",
+     "url": "https://api.icj-cij.org/sites/default/files/case-related/197/197-20250505-pre-01-00-en.pdf",
+     "publisher": "International Court of Justice",
+     "date": "2025-05-05"
+    }
+   ]
   },
   {
    "country": "United Arab Emirates",
@@ -875,7 +888,7 @@
     "date": "2025-05-08"
    },
    "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support S.J.Res. 32 and S.J.Res. 138 in April 2026 (Amnesty International USA, 14 Apr 2026).",
    "counter_label": "Response or dispute",
    "group": "uae"
   },
@@ -941,7 +954,7 @@
     "date": "2019-02-06"
    },
    "counterpoint": "Amnesty's release includes no UAE response.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support S.J.Res. 32 and S.J.Res. 138 in April 2026 (Amnesty International USA, 14 Apr 2026).",
    "counter_label": "Response or dispute",
    "group": "uae"
   },
@@ -1001,7 +1014,7 @@
    "scope_note": "The source does not identify the D9, Caterpillar or US origin; no unit from this case has been traced.",
    "scope_note_wider": true,
    "grade_note": "The grade covers Amnesty's satellite and field documentation of the destruction; that it was wanton or unlawful is Amnesty's assessment.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions (Amnesty International USA, 14 Apr 2026).",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support S.J.Res. 32 and S.J.Res. 138 in April 2026 (Amnesty International USA, 14 Apr 2026).",
    "priority": {
     "SJRES32": 0
    },

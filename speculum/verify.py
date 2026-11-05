@@ -101,10 +101,10 @@ def _ask(key: str, prompt: str, fetch_urls: list[str]) -> dict:
     r.raise_for_status()
     out = r.json()
     text = "".join(b.get("text", "") for b in out.get("content", []) if b.get("type") == "text")
-    m = re.search(r"\{.*\}", text, re.S)
-    if not m:
+    start = text.find("{")
+    if start < 0:
         raise ValueError("checker returned no JSON")
-    res = json.loads(m.group(0))
+    res, _ = json.JSONDecoder().raw_decode(text[start:])     # the first object; ignore any text after it
     res["by"] = out.get("model", MODEL)
     return res
 
