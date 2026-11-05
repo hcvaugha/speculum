@@ -173,14 +173,14 @@
      "date": "2025-04-03"
     }
    ],
-   "proceeded": "DSCA release 7 Feb 2025; Congressional Record 10 Feb 2025. No emergency language. DSCA: deliveries estimated to begin in 2025.",
+   "proceeded": "DSCA release 7 Feb 2025; Congressional Record 10 Feb 2025. The White House Statement of Administration Policy says the sale was notified to Congress on 3 Jan 2025. No emergency language. DSCA: deliveries estimated to begin in 2025.",
    "notification": "DSCA Transmittal No. 24-13, AECA 36(b)(1)",
    "notified": "2025-02-07",
    "delivery_estimate": "2025",
    "emergency": false,
    "clearance": "No emergency certification.",
    "justification": "The United States is committed to the security of Israel, and it is vital to U.S. national interests to assist Israel to develop and maintain a strong and ready self-defense capability. This proposed sale is consistent with those objectives. … The proposed sale improves Israel's capability to meet current and future threats, strengthen its homeland defense, and serves as a deterrent to regional threats. Israel already has these weapons in its inventory and will have no difficulty absorbing this equipment into its armed forces.",
-   "sponsor_reasons": "Sanders, floor remarks, Congressional Record, 3 Apr 2025: the resolution 'would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs'; 'The United States cannot provide weaponry to countries that violate internationally recognized human rights'. He called the emergency route 'a bogus emergency declaration--an emergency declaration to bypass congressional review'. White House Statement of Administration Policy (SAP), 3 Apr 2025: the sale 'improves Israel's capability to defeat current and future threats and minimize civilian casualties.'"
+   "sponsor_reasons": "Sanders, floor remarks, Congressional Record, 3 Apr 2025: the resolution 'would block almost $7 billion for 2,800 500-pound bombs, 2,100 small-diameter bombs'; 'The United States cannot provide weaponry to countries that violate internationally recognized human rights'. White House Statement of Administration Policy (SAP), 3 Apr 2025: the sale 'improves Israel's capability to defeat current and future threats and minimize civilian casualties.'"
   },
   "SJRES53": {
    "bill": "S.J.Res. 53",
@@ -527,7 +527,7 @@
    "clearance": "Reuters (via Dawn, 8 Mar 2026) reports that Secretary Rubio made an emergency determination; the Federal Register notice cites only section 36(b)(1) and contains no emergency language. Part of the requirement is to come from US stock.",
    "justification": "This proposed sale will contribute to the foreign policy and national security of the United States by helping to improve the security of a strategic regional partner that has been, and continues to be, an important force for political stability and economic progress in the Middle East. The proposed sale will improve Israel's capability to meet current and future threats by improving its ability to defend its borders, vital infrastructure, and population centers. This proposed sale will increase the interoperability with U.S. forces and conveys U.S. commitment to Israel's security and armed forces modernization. Israel will have no difficulty absorbing this equipment into its armed forces.",
    "sponsor_reasons": "Sanders (cosponsors Van Hollen, Merkley and Welch), 19 Mar 2026: 'No more weapons to support an illegal war.' He cited 'horrific destruction' in Gaza, Iran and Lebanon. Democratic Rep. Gregory Meeks said of the emergency: 'This is an emergency of the Trump administration's own creation.' (Dawn/Reuters, 8 Mar 2026)",
-   "no_same_type_note": "Strikes with bombs of this weight class are reported, and some forensic reports identify US guidance kits used with them, but no source identifies where the bomb bodies came from. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here.",
+   "no_same_type_note": "No source identifies any use of bombs from this sale. Under this site's attachment rule, incident evidence is attached only when the source identifies the same component that was sold, so none is attached here.",
    "emergency_basis": "Per the press reports, the determination cited 'the national security interests of the United States'."
   }
  },
@@ -568,13 +568,21 @@
     "date": "2023-12-05"
    },
    "counterpoint": "Amnesty sent questions to the IDF spokesperson unit on 21 Nov 2023 and reported no response by publication.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions (Amnesty International USA, 14 Apr 2026).",
    "scope_note": null,
    "grade_note": "The grade covers Amnesty's forensic identification of the weapon. That those killed were civilians, and that there was no military objective, is Amnesty's assessment.",
    "scope_note_by": {
     "SJRES34": "Amnesty did not identify the JDAM variant. It estimated the al-Najjar bomb at about 2,000 lb and the Abu Mu'eileq bomb at 'at least 1,000 lb'; no source says which sale's kits they were.",
     "SJRES26": "Amnesty did not identify the JDAM variant. It estimated the al-Najjar bomb at about 2,000 lb and the Abu Mu'eileq bomb at 'at least 1,000 lb'; no source says which sale's kits they were."
-   }
+   },
+   "also": [
+    {
+     "title": "Senators urged to vote yes on Joint Resolutions of Disapproval and end arms transfers to Israel",
+     "url": "https://www.amnestyusa.org/press-releases/senators-urged-to-vote-yes-on-joint-resolutions-of-disapproval-and-end-arms-transfers-to-israel/",
+     "publisher": "Amnesty International USA",
+     "date": "2026-04-14"
+    }
+   ]
   },
   {
    "country": "Israel",
@@ -606,7 +614,7 @@
    "applies_to": [
     "SJRES26"
    ],
-   "claim": "CNN, with three explosive-weapons experts, identified a remnant at the strike on the Al-Mutanabbi/Al-Awda school complex, which was sheltering displaced people in Khan Younis, as 'consistent with a GBU-39-series tail actuation system' (CNN reports that the GBU-39 is manufactured by Boeing, which DSCA also names as a principal contractor for this sale). Airwars dates the strike to 9 Jul 2024. The Gaza Ministry of Health reported at least 27 killed and 53 injured.",
+   "claim": "CNN, consulting three explosive-weapons experts, reported that a remnant from the strike on the Al-Mutanabbi/Al-Awda school complex, which was sheltering displaced people in Khan Younis, was 'consistent with a GBU-39-series tail actuation system', in the assessment of Patrick Senft of ARES (CNN reports that the GBU-39 is manufactured by Boeing). Airwars dates the strike to 9 Jul 2024. The Gaza Ministry of Health reported at least 27 killed and 53 injured.",
    "source": {
     "title": "US-made munitions used in deadly Israeli strike on school complex near Khan Younis, CNN analysis finds",
     "url": "https://amp.cnn.com/cnn/2024/07/10/middleeast/israel-us-munitions-school-strike-khan-younis-intl-latam",
@@ -634,7 +642,7 @@
     "publisher": "International Court of Justice",
     "date": "2024-01-26"
    },
-   "counterpoint": "Dissenting judges: Vice-President Sebutinde voted against every measure; Judge ad hoc Barak voted against most (15-2 on the main measure). Response of the Government of Israel: 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians' (Prime Minister's Office, 26 Jan 2024). The order does not rule on whether violations occurred.",
+   "counterpoint": "Dissenting judges: Judge Sebutinde voted against every measure; Judge ad hoc Barak voted against most (15-2 on the main measure). Response of the Government of Israel: 'Israel's commitment to international law is unwavering'; 'Our war is against Hamas terrorists, not against Palestinian civilians' (Prime Minister's Office, 26 Jan 2024). The order does not rule on whether violations occurred.",
    "counter_label": "Dissenting judges and response",
    "grade_note": "That the court issued this is a matter of record. It is graded associated because its findings are provisional (plausibility of rights, or reasonable grounds), not findings of fact on the merits.",
    "also": [
@@ -777,7 +785,7 @@
     "publisher": "UN OCHA oPt",
     "date": "2026-10-31"
    },
-   "counterpoint": "Figures are the Gaza Ministry of Health's, as cited by OCHA. Israel's position: after militants fired on troops in Rafah and hostage remains were not returned, the Prime Minister's office ordered 'powerful strikes'. Hamas said it had 'no connection' to the Rafah incident.",
+   "counterpoint": "Figures are the Gaza Ministry of Health's, as cited by OCHA.",
    "counter_label": "Response of the Government of Israel",
    "also": [
     {
@@ -888,7 +896,7 @@
   {
    "country": "United Arab Emirates",
    "grade": "estimated",
-   "claim": "OHCHR documented 'more than 6,000 killings in the first three days of the RSF offensive' on El Fasher (late Oct 2025), including about 500 killed at Al-Rashid dormitory on 26 Oct. It said the violations 'amount to war crimes and possible crimes against humanity'. Its findings do not address arms supply.",
+   "claim": "OHCHR documented 'more than 6,000 killings in the first three days of the RSF offensive' on El Fasher (late Oct 2025), including about 500 killed at Al-Rashid dormitory on 26 Oct. It said the violations 'amount to war crimes and possible crimes against humanity'. It names no arms supplier; the High Commissioner called on States to respect the arms embargo and halt the supply of weapons.",
    "source": {
     "title": "'Like a scene out of a horror movie': UN report warns of war crimes in Sudan's El Fasher (UN News, GlobalSecurity mirror)",
     "url": "https://www.globalsecurity.org/military/library/news/2026/02/mil-260213-unnews02.htm",
@@ -977,7 +985,7 @@
   {
    "country": "Israel",
    "grade": "documented",
-   "claim": "Amnesty says Israeli forces, 'Using bulldozers and manually laid explosives', destroyed or severely damaged 'more than 90% of the buildings' (over 3,500 structures) in a roughly 58 km² buffer area along Gaza's perimeter, between Oct 2023 and May 2024. It does not identify the machine model.",
+   "claim": "Amnesty says more than 90% of the buildings (over 3,500 structures) in a roughly 58 km² buffer area along Gaza's perimeter 'appear destroyed or severely damaged' between Oct 2023 and May 2024. It describes Israeli forces 'Using bulldozers and manually laid explosives' to destroy buildings there, and attributes some of the destruction, in Khuza'a, to airstrikes. It does not identify the machine model.",
    "date": "2024-09-05",
    "source": {
     "title": "Israel/OPT: Israeli military must be investigated for war crime of wanton destruction in Gaza",
@@ -993,7 +1001,7 @@
    "scope_note": "The source does not identify the D9, Caterpillar or US origin; no unit from this case has been traced.",
    "scope_note_wider": true,
    "grade_note": "The grade covers Amnesty's satellite and field documentation of the destruction; that it was wanton or unlawful is Amnesty's assessment.",
-   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions.",
+   "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support the April 2026 resolutions (Amnesty International USA, 14 Apr 2026).",
    "priority": {
     "SJRES32": 0
    },
@@ -1003,6 +1011,12 @@
      "url": "https://www.dsca.mil/Press-Media/Major-Arms-Sales/Article-Display/Article/4088243/israel-caterpillar-d9-bulldozers",
      "publisher": "DSCA",
      "date": "2025-02-28"
+    },
+    {
+     "title": "Senators urged to vote yes on Joint Resolutions of Disapproval and end arms transfers to Israel",
+     "url": "https://www.amnestyusa.org/press-releases/senators-urged-to-vote-yes-on-joint-resolutions-of-disapproval-and-end-arms-transfers-to-israel/",
+     "publisher": "Amnesty International USA",
+     "date": "2026-04-14"
     }
    ]
   },

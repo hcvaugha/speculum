@@ -199,6 +199,16 @@
      "title": "National coalition letter urging congressional action to block arms transfers to Israel",
      "url": "https://www.fcnl.org/updates/2026-04/national-coalition-letter-urging-congressional-action-block-arms-transfers-israel",
      "date": "2026-04-09"
+    },
+    {
+     "title": "S.J.Res.32 (Introduced) text: disapproval of the Caterpillar D9 bulldozer sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres32is/html/BILLS-119sjres32is.htm",
+     "publisher": "GPO/govinfo"
+    },
+    {
+     "title": "S.J.Res.138 (Introduced) text: disapproval of the BLU-110 1,000-lb bomb sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres138is/html/BILLS-119sjres138is.htm",
+     "publisher": "GPO/govinfo"
     }
    ],
    "lda": [
@@ -219,7 +229,8 @@
     }
    ],
    "pacs": [],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "mapping_note": "The letter names the sales it opposes (1,000-pound bombs and Caterpillar D9 bulldozers) and Senator Sanders' resolutions, not resolution numbers; it is matched to S.J.Res. 138 (the 1,000-lb bomb sale) and S.J.Res. 32 (the D9 sale) by those items, as the bill texts show."
   },
   {
    "name": "A New Policy Inc.",
@@ -237,6 +248,16 @@
      "title": "Coalition letter (signer)",
      "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
      "date": "2026-04-09"
+    },
+    {
+     "title": "S.J.Res.32 (Introduced) text: disapproval of the Caterpillar D9 bulldozer sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres32is/html/BILLS-119sjres32is.htm",
+     "publisher": "GPO/govinfo"
+    },
+    {
+     "title": "S.J.Res.138 (Introduced) text: disapproval of the BLU-110 1,000-lb bomb sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres138is/html/BILLS-119sjres138is.htm",
+     "publisher": "GPO/govinfo"
     }
    ],
    "lda": [
@@ -267,7 +288,8 @@
     }
    ],
    "pacs": [],
-   "related_pacs_excluded": []
+   "related_pacs_excluded": [],
+   "mapping_note": "The letter names the sales it opposes (1,000-pound bombs and Caterpillar D9 bulldozers) and Senator Sanders' resolutions, not resolution numbers; it is matched to S.J.Res. 138 (the 1,000-lb bomb sale) and S.J.Res. 32 (the D9 sale) by those items, as the bill texts show."
   },
   {
    "name": "Amnesty International USA",
@@ -479,12 +501,22 @@
      "title": "Coalition letter (signer)",
      "url": "https://www.fcnl.org/sites/default/files/2026-04/Coalition%20Letter%20JRD.pdf",
      "date": "2026-04-09"
+    },
+    {
+     "title": "S.J.Res.32 (Introduced) text: disapproval of the Caterpillar D9 bulldozer sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres32is/html/BILLS-119sjres32is.htm",
+     "publisher": "GPO/govinfo"
+    },
+    {
+     "title": "S.J.Res.138 (Introduced) text: disapproval of the BLU-110 1,000-lb bomb sale to Israel",
+     "url": "https://www.govinfo.gov/content/pkg/BILLS-119sjres138is/html/BILLS-119sjres138is.htm",
+     "publisher": "GPO/govinfo"
     }
    ],
    "lda": [],
    "pacs": [],
    "related_pacs_excluded": [],
-   "mapping_note": "The letter names the sales it opposes (1,000-pound bombs and Caterpillar D9 bulldozers), not resolution numbers; it is matched to S.J.Res. 138 and 32 by those items."
+   "mapping_note": "The letter names the sales it opposes (1,000-pound bombs and Caterpillar D9 bulldozers) and Senator Sanders' resolutions, not resolution numbers; it is matched to S.J.Res. 138 (the 1,000-lb bomb sale) and S.J.Res. 32 (the D9 sale) by those items, as the bill texts show."
   },
   {
    "name": "17 other signers of the April 9, 2026 coalition letter",

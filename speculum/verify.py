@@ -31,7 +31,7 @@ log = logging.getLogger("speculum.verify")
 API = "https://api.anthropic.com/v1/messages"
 MODEL = os.environ.get("SPECULUM_CHECK_MODEL", "claude-opus-5-5")
 UA = "Mozilla/5.0 (compatible; SpeculumSourceCheck/1.0; +https://speculum.vote/method.html)"
-MAX_SOURCE_CHARS = 60_000
+MAX_SOURCE_CHARS = 200_000   # a whole UN report: claims about what a report does not say need all of it
 
 GRADES = """documented: an official or authoritative investigative record ties weapons or actions of this kind from
   the recipient to specific harm (UN panels and commissions, US government reports, court findings of fact,

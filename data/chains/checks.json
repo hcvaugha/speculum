@@ -588,32 +588,6 @@
    "kind": "outcome",
    "label": "IPC, 19 Dec 2025: 'No areas are classified in Famine (IPC Phase 5)' but 'the risk of Famin"
   },
-  "1cdd51c9f60fe39c": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The Am Djarass 'credible' finding, the intelligence-sourced figure of 10,000–15,000 killed in El Geneina, and the UAE's 21 Dec 2023 denial all match the source verbatim, and the weapons-supply section (IV) names no US-origin weapons (it mentions Type 56 rifles and an SA-7-type MANPADS). The supplied text stops partway through section V of a 52-page report, so the scope note that the report as a whole does not identify US-origin weapons cannot be fully verified against the El Geneina case study (sect. VI) or the annexes.",
-   "quotes": [
-    "According to information gathered by the Panel from sources in Chad and Darfur, the allegations were credible.",
-    "weapons and ammunition shipments were unloaded from cargo planes arriving at Am Djarass airport, then loaded on trucks",
-    "where shipments were handed over to RSF"
-   ],
-   "kind": "outcome",
-   "label": "The UN Panel of Experts on the Sudan found allegations 'credible' that weapons and ammunit"
-  },
-  "a3091ee7d0988818": {
-   "result": "not_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The source text available to me ends partway through section VII.A (page 21). It does not contain the quoted sentence 'was unable to confirm transfers of military materiel from Am Djarass to Darfur', and it does not describe ammunition or equipment supply routes from eastern Chad and southern Libya. Section XI (Weapons supply), where these would appear, is listed in the contents but not in the text, and Am Djarass appears only in a recruitment context. The counterpoint's S/2025/260 and ICJ material are not in this source, so neither the claim nor the 'associated' grade can be confirmed.",
-   "quotes": [
-    "XI. Weapons supply and circulation in Darfur",
-    "A. External support to RSF",
-    "Panel interlocutors also reported that Zaghawa individuals in areas near Am Djarass were recruited into SAF -aligned joint forces, particularly SLA/MM and JEM."
-   ],
-   "kind": "outcome",
-   "label": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military "
-  },
   "c6cf009cbc5bf3be": {
    "result": "supported",
    "on": "2026-11-05",
