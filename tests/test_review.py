@@ -33,3 +33,10 @@ def test_approval_without_fingerprint_does_not_count():
     ch = _chain(review={"approved_by": "someone", "date": "2026-11-05"})
     chains.set_status(ch)
     assert ch["status"] == "draft" and ch["lapsed"]
+
+
+def test_glass_entry_moves_to_next_edition_when_a_night_is_missed():
+    from speculum.site.build import _glass_by_edition
+    cfg = {"entries": [{"date": "2026-11-10", "paras": ["a"]}, {"date": "2026-11-17", "paras": ["b"]}]}
+    got = _glass_by_edition(cfg, ["2026-11-09", "2026-11-11", "2026-11-12", "2026-11-17"])
+    assert got == {"2026-11-11": cfg["entries"][0], "2026-11-17": cfg["entries"][1]}

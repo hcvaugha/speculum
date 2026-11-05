@@ -37,6 +37,14 @@
 {% else %}<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>{% endif %}
 {% endif %}
 
+{% if glass %}
+<div class="fd-glass" style="margin:28px 0 8px;max-width:680px">
+  <div class="fd-box-head">Across the Glass</div>
+  {% for p in glass.paras %}<p>{{ p }}</p>{% endfor %}
+  <p class="fd-sign">— {{ glass.sign }}</p>
+</div>
+{% endif %}
+
 {% if archive|length > 1 %}
 <h2>Earlier editions</h2>
 <p class="meta">{% for d in archive %}{% if d != ed.date %}<a href="{{ root }}tide/{{ d }}.html">{{ d }}{% if d == day_zero %} · No. 1, the founding edition{% endif %}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>

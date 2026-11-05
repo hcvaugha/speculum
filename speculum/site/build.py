@@ -233,15 +233,29 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
     names = {m["bioguide"]: f"{m['name']} ({m['party']}-{m['state']})" for m in members}
     (prev / "tide").mkdir(exist_ok=True)
     tmpl = E.get_template("tide.html")
+    glass = _glass_by_edition(chains_mod.load_json(snapshots_root.parent / "tide" / "glass.json", {}), dates)
     for i, d in enumerate(dates):
         cur = Snapshot(snapshots_root, d)
         ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
         ed = _apply_approvals(ed, approvals.get(d, {}), public)
         ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names,
-                   day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, **common)
+                   day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, glass=glass.get(d), **common)
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
+
+
+def _glass_by_edition(cfg: dict, dates: list[str]) -> dict:
+    """Across the Glass: each weekly entry goes in the first edition dated on or after its date and
+    before the next entry's date, so a missed night moves it to the next edition rather than losing it."""
+    entries = sorted(cfg.get("entries", []), key=lambda e: e["date"])
+    out = {}
+    for i, e in enumerate(entries):
+        until = entries[i + 1]["date"] if i + 1 < len(entries) else "9999"
+        hit = next((d for d in sorted(dates) if e["date"] <= d < until), None)
+        if hit:
+            out[hit] = e
+    return out
 
 
 def _apply_approvals(ed: dict, marks: dict, public: bool) -> dict:

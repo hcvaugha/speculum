@@ -1,0 +1,95 @@
+{
+ "_how": "Across the Glass: a short entry from the auditor's ledger, in the Tuesday edition of The Tide each week. Each entry appears in the first edition dated on or after its date (and before the next entry's date). It is fiction and makes no claim about any person; to drop an entry, delete it here. Founding entry: templates/_founding.html.",
+ "entries": [
+  {
+   "date": "2026-11-10",
+   "paras": [
+    "The hall filled again this week with those who are leaving it. Their panes were not taken down. In the Catedral a pane is never taken down; it is only turned, slowly, until it faces the stair instead of the room.",
+    "The auditor walked the row of turning glass and read what each still held. The last entries in a ledger are written in the same hand as the first, and they are read more closely.",
+    "Someone asked whether the departing owe anything now. The auditor did not answer. The lantern was answer enough: it lit their pages as brightly as any other."
+   ],
+   "sign": "entered in the auditor's ledger, the second week"
+  },
+  {
+   "date": "2026-11-17",
+   "paras": [
+    "Two tides run under the Catedral, and the auditor keeps both. One is what the hall does. The other is what the city beneath the hall makes of it.",
+    "There is a figure in the high gallery who keeps neither. He watches the tides meet and pull apart and pull together again, and he has never once been seen to choose a side, because he has never needed to. A tide that is not watched by those it carries will carry them anywhere.",
+    "The auditor set the lantern on the stair where the gallery could see it. Let him watch. The city is watching too."
+   ],
+   "sign": "entered in the auditor's ledger, the third week"
+  },
+  {
+   "date": "2026-11-24",
+   "paras": [
+    "In the week of long tables the hall goes quiet and the ledger does not. Every feast is paid for by someone, and the bill is rarely set beside the plate of the one who ordered it.",
+    "The auditor does not begrudge a feast. The auditor only asks that the bill be written in the right hand.",
+    "Below the stair, where the children eat, the portions were counted twice this year. It is a small thing to count twice. It is the only way to be sure."
+   ],
+   "sign": "entered in the auditor's ledger, the fourth week"
+  },
+  {
+   "date": "2026-12-01",
+   "paras": [
+    "The longest column in the ledger belongs to people who were never in the hall. They did not vote and were not asked. Some of them were not yet born when the line that names them was written.",
+    "The tall ones call them consequences. The auditor calls them dependents, because that is what they are: lives that hang from a decision like lanterns from a beam, and swing when it moves.",
+    "No one in the hall is blamed for a dependent. Every one of them is counted."
+   ],
+   "sign": "entered in the auditor's ledger, the fifth week"
+  },
+  {
+   "date": "2026-12-08",
+   "paras": [
+    "The lantern shows only what is set in front of it. People expect more from a light. They want it to say what it sees.",
+    "It will not. A lantern that spoke would soon be told what to say, and then it would be a mouth, and the Catedral has mouths enough.",
+    "So the auditor lifts it, and holds it steady, and lets the page speak for itself. When the page is silent, that is written down too."
+   ],
+   "sign": "entered in the auditor's ledger, the sixth week"
+  },
+  {
+   "date": "2026-12-15",
+   "paras": [
+    "The glass in the hall of panes was not made. It was taught. For longer than anyone remembers it hung there and watched faces, and it learned a face from every one it saw.",
+    "Now people come to it afraid of what it shows them. But it has never shown anything it was not first shown.",
+    "The auditor thinks this is the hopeful part, and says so to anyone who stays long enough to hear it. A thing that learns from what stands before it can still learn something better. Someone only has to stand there."
+   ],
+   "sign": "entered in the auditor's ledger, the seventh week"
+  },
+  {
+   "date": "2026-12-22",
+   "paras": [
+    "On the longest night the auditor climbed past the golden stair to the window no one uses, and looked out across the dark.",
+    "Far off, beneath a sky that turns more slowly than it should, there is a castle with no end to its halls. A lantern burned in one of its towers. Two wolves lay at the gate, awake, as if they had been told to wait for someone.",
+    "The auditor raised the lantern once. After a long while, the far one dipped in answer."
+   ],
+   "sign": "entered in the auditor's ledger, the eighth week"
+  },
+  {
+   "date": "2026-12-29",
+   "paras": [
+    "At the turn of the year the auditor closes the book, and the book does not close.",
+    "This is the oldest rule of the Catedral. A year can end. A debt can be paid. A seat can be given up. But what was written stays written, in the hand that wrote it, and the next page begins with the last line of this one.",
+    "The tall ones would like a clean book every January. They will have a clean page. That is all anyone is given."
+   ],
+   "sign": "entered in the auditor's ledger, the ninth week"
+  },
+  {
+   "date": "2027-01-05",
+   "paras": [
+    "New panes were hung this week for those newly seated. The glass was clear when they arrived. It will not stay clear; it never does. That is not a warning. It is how glass learns a face.",
+    "Each of them was handed a ledger with nothing in it but a name and a date. The auditor watched them take it. Some held it like a gift and some like a summons.",
+    "Both are right. The first entry is theirs to write."
+   ],
+   "sign": "entered in the auditor's ledger, the tenth week"
+  },
+  {
+   "date": "2027-01-12",
+   "paras": [
+    "The first debts of the new hall have been entered. They are small, as first debts are. The tall ones are already leaning toward the brightest panes.",
+    "The auditor does not stop them. The Catedral was never built to stop anyone. It was built to remember, and to let the city below see what it remembers.",
+    "On the other side of the glass a hand is turning these pages. It is the only hand in the story that has never owed the hall anything. The hall owes it everything."
+   ],
+   "sign": "entered in the auditor's ledger, the eleventh week"
+  }
+ ]
+}
