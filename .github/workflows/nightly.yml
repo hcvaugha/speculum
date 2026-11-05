@@ -1,4 +1,7 @@
 name: Nightly snapshot
+# A full run for today (scheduled, or started by hand with no inputs) is titled "Nightly snapshot today all";
+# the gate uses that title so a hand-started full run also stands in for a dropped scheduled one.
+run-name: "Nightly snapshot ${{ inputs.date || 'today' }} ${{ inputs.only || 'all' }}"
 
 on:
   schedule:
@@ -34,9 +37,10 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" != "schedule" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
           TODAY=$(date -u +%F)
-          # Only scheduled runs count: a manual partial rerun (one source, an earlier night) is not tonight's run.
-          N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion,event \
-            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.event == \"schedule\") | select(.createdAt[0:10] == \"$TODAY\")
+          # Only full runs for today count (scheduled, or by hand with no inputs); a partial rerun
+          # (one source, an earlier night) is not tonight's run.
+          N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion,displayTitle \
+            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.displayTitle == \"Nightly snapshot today all\") | select(.createdAt[0:10] == \"$TODAY\")
                   | select(.status != \"completed\" or .conclusion == \"success\")] | length")
           echo "other nightly runs today that are running or succeeded: $N"
           if [ "$N" -gt 0 ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi
