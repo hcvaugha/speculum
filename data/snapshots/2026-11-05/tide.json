@@ -1,0 +1,50 @@
+{
+ "date": "2026-11-05",
+ "first": false,
+ "more": 0,
+ "roll_calls": 0,
+ "since": "2026-11-04",
+ "stories": [
+  {
+   "date": null,
+   "dek": "Registered lobbyists and their organizations file twice-yearly reports of contributions to federal officeholders.",
+   "facts": [
+    "Mike Johnson (R-LA): $121,600",
+    "John Thune (R-SD): $120,063",
+    "Jason Smith (R-MO): $117,375",
+    "Ted Budd (R-NC): $116,541",
+    "Brett Guthrie (R-KY): $103,250",
+    "Steve Scalise (R-LA): $95,050",
+    "Susan M. Collins (R-ME): $90,400",
+    "Hakeem S. Jeffries (D-NY): $89,500",
+    "Bill Cassidy (R-LA): $84,000",
+    "John Cornyn (R-TX): $81,644",
+    "3704 contributions in newly posted reports."
+   ],
+   "headline": "New lobbyist contribution reports list $7.0 million to 466 members",
+   "id": "2026-11-05-01",
+   "kind": "Lobbyist money",
+   "member_names": [],
+   "members": [
+    "J000299",
+    "T000250",
+    "S001195",
+    "B001305",
+    "G000558",
+    "S001176",
+    "C001035",
+    "J000294",
+    "C001075",
+    "C001056"
+   ],
+   "score": 12,
+   "sources": [
+    {
+     "label": "LD-203 reports, lda.gov",
+     "url": "https://lda.gov/system/public/"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

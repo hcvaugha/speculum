@@ -1,0 +1,20 @@
+{
+ "calls": 3582,
+ "counts": {
+  "finance": 518,
+  "house": 433,
+  "lobbying_items": 175506,
+  "lobbying_unmatched": 500,
+  "members": 533,
+  "senate": 100,
+  "votes": 1591
+ },
+ "date": "2026-11-05",
+ "day_zero": "2026-11-03",
+ "errors": {},
+ "fec_through": "2026-10-22",
+ "finance_partial": null,
+ "note": "",
+ "raw_files": 3581,
+ "votes_through": "2026-09-30"
+}
