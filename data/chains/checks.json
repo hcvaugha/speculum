@@ -191,31 +191,6 @@
    "kind": "outcome",
    "label": "FAO, UNICEF, WFP and WHO reported that the IPC confirmed Famine in Gaza Governorate, proje"
   },
-  "ca9d7395fb01d919": {
-   "result": "supported",
-   "on": "2026-11-05",
-   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
-   "note": "Amnesty identifies Chinese GB50A bombs from the 9 Mar 2025 North Darfur strike and an AH-4 howitzer seized in Khartoum in late March 2025, says 'almost certainly re-exported to Sudan by the UAE', and includes no UAE response; S/2025/260 is described by Security Council Report as a UAE letter refuting Sudan's allegations of support to the RSF. The source_note about Amnesty USA's April 2026 advocacy is not addressed by the cited source.",
-   "quotes": [
-    "The weapons were almost certainly re-exported to Sudan by the UAE",
-    "On the night of 9 March 2025, the RSF launched a drone strike near al-Malha town in North Darfur",
-    "This was a letter from the UAE refuting allegations made by Sudan regarding the UAE's alleged support to the RSF"
-   ],
-   "kind": "outcome",
-   "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
-  },
-  "9da381ba5184647f": {
-   "result": "supported",
-   "on": "2026-11-05",
-   "by": "independent checker (separate Claude agent, fresh context; opened every cited source)",
-   "note": "Amnesty 2019 names M-ATV, Caiman and MaxxPro vehicles with the Security Belt, Shabwani Elite and 'The Giants', describes militias 'known to be committing war crimes', and includes no UAE response. The source_note about Amnesty USA's April 2026 advocacy is not addressed by the cited source.",
-   "quotes": [
-    "known to be committing war crimes",
-    "UAE-backed militias"
-   ],
-   "kind": "outcome",
-   "label": "Amnesty International documented US-supplied armoured vehicles (M-ATV, Caiman, MaxxPro) he"
-  },
   "07ad26e39234217b": {
    "result": "supported",
    "on": "2026-11-05",
@@ -663,19 +638,6 @@
    "kind": "stated position",
    "label": "Amnesty International USA: stated positions"
   },
-  "86e2f3ceceb7bfff": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The main claim, counterpoint and scope notes match the Amnesty investigation: JDAM fragments, Boeing-associated codes, the strike dates and death tolls, 43 civilians (19 children, 14 women, 10 men), no indication of military objectives, 2017/2018 manufacture dates, a likely 2,000lb and at least 1,000lb bomb, and the unanswered 21 November questions. The source note's link is not supported: the AIUSA release urges votes on S.J.Res. 32 and S.J.Res. 138, not SJRES26 or SJRES34, so the cited source does not show AIUSA urged support for the resolutions this claim applies to.",
-   "quotes": [
-    "the codes stamped on the plates from both sets of recovered scrap, 70P862352, are associated with JDAMs and Boeing, the manufacturer",
-    "the JDAM that killed members of the al-Najjar family was manufactured in 2017, while the JDAM that killed members of the Abu Mu’eileq family was manufactured in 2018",
-    "the bomb that struck the al-Najjar family home likely weighed 2,000lb. The bomb that hit the Abu Mu’eileq family destroyed their home and likely weighed at least 1,000lb"
-   ],
-   "kind": "outcome",
-   "label": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated "
-  },
   "3d07773eb4afdb9f": {
    "result": "supported",
    "on": "2026-11-05",
@@ -702,19 +664,6 @@
    "kind": "outcome",
    "label": "In its 26 Jan 2024 order the ICJ found 'at least some of the rights claimed by South Afric"
   },
-  "f9be14bcca696537": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The OCHA report supports the core claim: MoH-sourced figures of 33 killed between 20 and 26 October, bringing the post-ceasefire totals to 1,559 fatalities and 5,608 injuries, with the ceasefire agreement announced on 10 October 2025. The counterpoint text is also supported, but it is labelled \"Response of the Government of Israel\" when it only notes the MoH sourcing, and no cited source gives an Israeli government response to these figures.",
-   "quotes": [
-    "According to the Ministry of Health in Gaza, which operates under the de-facto authorities, 33 Palestinians were reported killed and 188 injured between 20 and 26 October, bringing the total number of casualties since the ceasefire agreement to 1,559 fatalities and 5,608 injuries.",
-    "Since the announcement of a ceasefire agreement on 10 October 2025",
-    "Another 42 fatalities were retroactively added to the total number after their identification details were approved by MoH."
-   ],
-   "kind": "outcome",
-   "label": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since th"
-  },
   "1cdd51c9f60fe39c": {
    "result": "supported",
    "on": "2026-11-05",
@@ -727,19 +676,6 @@
    ],
    "kind": "outcome",
    "label": "The UN Panel of Experts on the Sudan found allegations 'credible' that weapons and ammunit"
-  },
-  "a3091ee7d0988818": {
-   "result": "partly_supported",
-   "on": "2026-11-05",
-   "by": "claude-opus-5-5",
-   "note": "The main claim matches the report: the quoted sentence appears in para. 95, and Annex 5 describes ammunition and military equipment moving from eastern Chad and southern Libya. The published quote drops the qualifier 'at the time of writing'. The counterpoint relies on S/2025/260 and the ICJ order of 5 May 2025, which are not in this source and could not be checked here.",
-   "quotes": [
-    "The Panel was unable to confirm transfers of military materiel from Am Djarass to Darfur at the time of writing.",
-    "key areas for supplies through which fuel, ammunition, and military equipment has been moving from eastern Chad and southern Libya to Sudan since the onset of the current conflict in Sudan",
-    "Bir Mirgui became the central hub for transferring supplies from Eastern Chad and Southern Libya to active frontlines."
-   ],
-   "kind": "outcome",
-   "label": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military "
   },
   "51fccad6ac91591d": {
    "result": "supported",
@@ -780,41 +716,118 @@
    "kind": "sale record",
    "label": "S.J.Res. 138: what the sale contained"
   },
-  "50217179adea06eb": {
+  "44149eb7891e325a": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The source supports every element: the JDAM fragments with code 70P862352 associated with Boeing, both strikes with their dates and death tolls, the 43 civilians (19 children, 14 women, 10 men), no indication of military objectives, 2017 and 2018 manufacture dates, the likely 2,000lb and at least 1,000lb bomb weights, and the unanswered 21 November questions; the AIUSA release confirms the source note. 'Documented' fits because this is a forensic identification of US-made munitions at the strike sites, and the grade note correctly marks civilian status and absence of military objectives as Amnesty's assessment.",
+   "quotes": [
+    "the codes stamped on the plates from both sets of recovered scrap, 70P862352, are associated with JDAMs and Boeing, the manufacturer",
+    "two strikes that killed a total of 43 civilians – 19 children, 14 women and 10 men",
+    "On 10 October, an air strike on the al-Najjar family home in Deir al-Balah killed 24 people. On 22 October, an air strike on the Abu Mu’eileq family home in the same city killed 19 people."
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified fragments of US-made JDAM kits, with codes it associated "
+  },
+  "bf4dbbb9a6fa0cf3": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The OCHA report attributes the figures to the Gaza MoH: 33 killed between 20 and 26 Oct and cumulative totals since the ceasefire agreement of 1,559 fatalities and 5,608 injuries. It dates the announcement of the ceasefire agreement to 10 October 2025. The Al-Monitor piece is background only and does not bear on the figures, and an OCHA aggregate drawn from MoH data fits 'estimated'.",
+   "quotes": [
+    "According to the Ministry of Health in Gaza, which operates under the de-facto authorities, 33 Palestinians were reported killed and 188 injured between 20 and 26 October, bringing the total number of casualties since the ceasefire agreement to 1,559 fatalities and 5,608 injuries.",
+    "Since the announcement of a ceasefire agreement on 10 October 2025"
+   ],
+   "kind": "outcome",
+   "label": "OCHA reports, citing MoH, 1,559 Palestinian fatalities and 5,608 injuries in Gaza since th"
+  },
+  "60fcdd65736a0c40": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "Paragraph 95 of S/2025/239 contains the quoted words, including 'at the time of writing'. Paragraph 98 and annex 5 describe ammunition and military equipment moving from eastern Chad and southern Libya. The UAE letter matches both quotes. The ICJ press release supports 'manifestly lacks jurisdiction', the Article IX reservation and the 9-7 removal. It does not use the words 'merits', but a dismissal for lack of jurisdiction that keeps jurisdiction separate from whether the UAE's acts were lawful supports 'without ruling on the merits'. 'Associated' fits: the Panel names supply routes linked to RSF operations but makes no direct link to the UAE.",
+   "quotes": [
+    "The Panel was unable to confirm transfers of military materiel from Am Djarass to Darfur at the time of writing.",
+    "key areas for supplies through which fuel, ammunition, and military equipment has been moving from eastern Chad and southern Libya to Sudan",
+    "makes no findings against the United Arab Emirates"
+   ],
+   "kind": "outcome",
+   "label": "In its 2025 final report the Panel stated it 'was unable to confirm transfers of military "
+  },
+  "a160531e2f03ad0d": {
    "result": "partly_supported",
    "on": "2026-11-05",
    "by": "claude-opus-5-5",
-   "note": "FCNL signed the April 9, 2026 coalition letter urging Senators to vote for Sanders' JRDs blocking 1,000-pound bombs and Caterpillar D9 bulldozers, which fits S.J.Res.138 (Sanders, March 19, 2026, BLU-110 1,000-lb bombs). The letter names no resolution numbers, though, and S.J.Res.32 is a 1st-session resolution introduced March 10, 2025. Nothing in the sources ties the D9 resolution the letter refers to ('will bring to the floor this April') to S.J.Res.32 rather than a later D9 resolution, so the SJRES32 attribution is not established.",
+   "note": "The core claim matches the release: GB50A fragments from the 9 March 2025 North Darfur strike, an AH-4 howitzer seized in Khartoum on 27–28 March 2025, Chinese (Norinco) manufacture, and the quoted words 'almost certainly re-exported to Sudan by the UAE'. The release does contain no UAE response, but the UAE denial attributed to S/2025/260 and the source_note about Amnesty International USA's April 2026 advocacy cite documents that were not provided, so they cannot be verified here.",
    "quotes": [
-    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "Friends Committee on National Legislation",
-    "IN THE SENATE OF THE UNITED STATES March 10, 2025 Mr. Sanders introduced the following joint resolution"
+    "The weapons were almost certainly re-exported to Sudan by the UAE.",
+    "On the night of 9 March 2025, the RSF launched a drone strike near al-Malha town in North Darfur",
+    "Amnesty International identified the fragments as belonging to a Norinco GB50A guided aerial bomb."
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
+  },
+  "15ecd3e22d0e2579": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The release states that US-supplied M-ATV, Caiman and MaxxPro armoured vehicles were documented with the Security Belt, Shabwani elite forces and 'The Giants', and quotes Wilcken describing these militias as 'known to be committing war crimes'; the release contains no UAE response. The CH-47F comparison and the 2026 Amnesty USA note are not in this source and were not checked here, but neither changes what is attributed to it; 'associated' fits an NGO open-source finding that does not tie the vehicles to specific harm.",
+   "quotes": [
+    "A wide variety of US-supplied armoured vehicles equipped with heavy machine guns, including M-ATV, Caiman and MaxxPro models, have been documented in the hands of UAE-backed militias Security Belt, Shabwani elite forces and “The Giants”.",
+    "only to siphon them off to militias in Yemen that answer to no-one and are known to be committing war crimes.",
+    "Some of them stand accused of war crimes"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty International documented US-supplied armoured vehicles (M-ATV, Caiman, MaxxPro) he"
+  },
+  "cfbee830a1e44f90": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "The Amnesty source matches the published claim: the 58km² buffer area, more than 90% of buildings (over 3,500 structures) as of May 2024 within the Oct 2023–May 2024 analysis period, the bulldozer-and-explosives quote, the Khuza'a airstrikes, and no mention of the D9, Caterpillar or US origin. The counterpoint's Israeli justifications and the 2 Jul 2024 unanswered questions are in the Amnesty source, the D9 sale purpose quote is word-for-word in DSCA Transmittal 24-38, and Amnesty USA's 14 Apr 2026 call to support S.J.Res. 32 and S.J.Res. 138 is confirmed. The documented grade fits only because the grade note limits it to Amnesty's satellite and field documentation of destruction by Israeli forces, not to any US-made equipment.",
+   "quotes": [
+    "As of May 2024, more than 90% of the buildings within this area (more than 3,500 structures) appear destroyed or severely damaged",
+    "Using bulldozers and manually laid explosives, the Israeli military has unlawfully destroyed agricultural land and civilian buildings",
+    "an estimated 178 structures in and around the town were destroyed or severely damaged – many by airstrikes"
+   ],
+   "kind": "outcome",
+   "label": "Amnesty says more than 90% of the buildings (over 3,500 structures) in a roughly 58 km² bu"
+  },
+  "4b561adcd506be87": {
+   "result": "supported",
+   "on": "2026-11-05",
+   "by": "claude-opus-5-5",
+   "note": "FCNL signed the April 9, 2026 coalition letter. The letter asks senators to vote for Sanders' JRDs, brought to the floor that April, that block the D9 bulldozer and 1,000-pound bomb transfers. The bill texts show S.J.Res.32 (D9 bulldozers) and S.J.Res.138 (1,000-pound BLU-110 bomb bodies) are Sanders' resolutions, and the April 15, 2026 roll calls confirm both reached the floor, so the bill-number link holds even though the letter never names the numbers.",
+   "quotes": [
+    "urging the Senate to support Joint Resolutions of Disapproval to halt the transfer of Caterpillar D9 bulldozers and 1,000-pound bombs to Israel",
+    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April",
+    "Friends Committee on National Legislation"
    ],
    "kind": "stated position",
    "label": "Friends Committee on National Legislation: stated positions"
   },
-  "7369b0b9e2a773b9": {
-   "result": "partly_supported",
+  "2b3e618824d03923": {
+   "result": "supported",
    "on": "2026-11-05",
    "by": "claude-opus-5-5",
-   "note": "The April 9, 2026 letter, signed by 'A New Policy', supports Sanders's JRDs to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers, so the S.J.Res.138 mapping (12,000 BLU-110 1,000-lb bomb bodies, introduced March 19, 2026) fits. The letter names no resolution numbers, and S.J.Res.32 was introduced March 10, 2025 (Transmittal 24-38), so the sources do not establish that it is the bulldozer resolution 'Senator Sanders will bring to the floor this April' 2026 rather than a newer bulldozer JRD.",
+   "note": "The April 9, 2026 coalition letter lists 'A New Policy' as a signer. It urges senators to back Sanders' April resolutions to block the sale of 1,000-pound bombs and Caterpillar D9 bulldozers to Israel. The bill texts confirm that S.J.Res.32 covers the D9 bulldozers and S.J.Res.138 covers the BLU-110 1,000-pound bombs. The Senate roll calls confirm both came to discharge votes on April 15, 2026. So 'supports' and 'block' are accurate for both bills. The letter does not name the bills by number; the match comes from the bill texts and roll calls. The letter says 'A New Policy', not 'Inc.', which is a minor naming difference that does not change the claim.",
    "quotes": [
-    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "A New Policy",
-    "IN THE SENATE OF THE UNITED STATES March 10, 2025 Mr. Sanders introduced the following joint resolution"
+    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April",
+    "to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government",
+    "A New Policy"
    ],
    "kind": "stated position",
    "label": "A New Policy Inc.: stated positions"
   },
-  "2ff927e17b0694b6": {
-   "result": "partly_supported",
+  "6c523d5209f3ba7e": {
+   "result": "supported",
    "on": "2026-11-05",
    "by": "claude-opus-5-5",
-   "note": "New Jewish Narrative signed a letter urging senators to vote for Sanders's April resolutions blocking the 1,000-pound bomb and Caterpillar D9 bulldozer transfers. That fits S.J.Res.138 (introduced March 19, 2026, BLU-110 1,000-lb bombs). The letter names no resolution numbers, though, and S.J.Res.32 was introduced March 10, 2025 for Transmittal 24-38, so the sources do not establish that the bulldozer resolution brought to the floor in April 2026 is S.J.Res.32.",
+   "note": "New Jewish Narrative signed the April 9, 2026 coalition letter. The letter urges senators to vote for the resolutions Sanders would bring to the floor that April to block 1,000-lb bombs and Caterpillar D9 bulldozers for Israel. The letter gives no bill numbers, but the bill texts tie them together: S.J.Res.32 (Sanders) covers the D9 bulldozers and S.J.Res.138 (Sanders) covers the 1,000-lb bomb bodies, and both discharge votes took place April 15, 2026.",
    "quotes": [
-    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government.",
-    "New Jewish Narrative",
-    "March 10, 2025 Mr. Sanders introduced the following joint resolution"
+    "We urge you to cosponsor and vote in favor of Joint Resolutions of Disapproval (JRDs) that Senator Sanders will bring to the floor this April",
+    "to block the transfer of 1,000-pound bombs and Caterpillar D9 bulldozers to the Israeli government",
+    "New Jewish Narrative"
    ],
    "kind": "stated position",
    "label": "New Jewish Narrative: stated positions"
