@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-04T12:15:00-05:00",
+ "as_of": "2026-11-05T09:50:00-05:00",
  "members": [
   {
    "name": "Dick Durbin",
@@ -1642,10 +1642,10 @@
    "state": "AK",
    "chamber": "senate",
    "district": null,
-   "status": "Uncalled vs. Mary Peltola (D); mail ballots counted through Nov. 18 before any ranked-choice tabulation",
+   "status": "Uncalled vs. Mary Peltola (D); Peltola led by 637 votes (AP) with nearly a quarter of votes uncounted; ranked-choice results published Nov. 18 (as of Nov. 4 night)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "What's delaying the US Senate election results in Mississippi and Alaska? (Al Jazeera, 5 Nov 2026)",
+    "url": "https://www.aljazeera.com/news/2026/11/5/whats-delaying-us-midterm-election-calls-in-mississippi-and-alaska"
    }
   },
   {
@@ -1653,10 +1653,10 @@
    "state": "MS",
    "chamber": "senate",
    "district": null,
-   "status": "Uncalled vs. Scott Colom (D); separated by a few dozen votes (CBS: Colom up 43)",
+   "status": "Uncalled vs. Scott Colom (D); Colom led by 1,138 votes with 96% counted, about 3,600 mail ballots and an unknown number of affidavit ballots outstanding; counties certify by Nov. 13 (as of Nov. 4 night)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "What's delaying the US Senate election results in Mississippi and Alaska? (Al Jazeera, 5 Nov 2026)",
+    "url": "https://www.aljazeera.com/news/2026/11/5/whats-delaying-us-midterm-election-calls-in-mississippi-and-alaska"
    }
   },
   {
@@ -1664,10 +1664,10 @@
    "state": "CA",
    "chamber": "house",
    "district": "40",
-   "status": "Member-vs-member in new CA-40 vs. Rep. Ken Calvert; Calvert led ~54-46 on early returns; one will not return; uncalled",
+   "status": "Member-vs-member in new CA-40 vs. Rep. Ken Calvert; Calvert led 54-46 with precincts partially reporting; uncalled, no concession (as of Nov. 4 midday)",
    "source": {
-    "title": "Election Night 2026 Results: Two Republicans Face Off in the 40th District (Voice of OC)",
-    "url": "https://voiceofoc.org/2026/11/election-night-2026-results-two-republicans-face-off-in-the-40th-district/"
+    "title": "Calvert: Result Shows 'Voters Want Proven, Effective Leader' (MyNewsLA, 4 Nov 2026)",
+    "url": "https://mynewsla.com/business/2026/11/04/calvert-result-shows-voters-want-proven-effective-leader"
    }
   },
   {
@@ -1675,10 +1675,10 @@
    "state": "CA",
    "chamber": "house",
    "district": "41",
-   "status": "Member-vs-member in new CA-40 vs. Rep. Young Kim; leading ~54-46 on early returns; uncalled",
+   "status": "Member-vs-member in new CA-40 vs. Rep. Young Kim; led 54-46 with precincts partially reporting; uncalled (as of Nov. 4 midday)",
    "source": {
-    "title": "Election Night 2026 Results: Two Republicans Face Off in the 40th District (Voice of OC)",
-    "url": "https://voiceofoc.org/2026/11/election-night-2026-results-two-republicans-face-off-in-the-40th-district/"
+    "title": "Calvert: Result Shows 'Voters Want Proven, Effective Leader' (MyNewsLA, 4 Nov 2026)",
+    "url": "https://mynewsla.com/business/2026/11/04/calvert-result-shows-voters-want-proven-effective-leader"
    }
   },
   {
@@ -1686,10 +1686,10 @@
    "state": "NY",
    "chamber": "house",
    "district": "17",
-   "status": "Conceded to Cait Conley (D); not called by AP as of 7 a.m. ET; 61% counted",
+   "status": "Conceded to Cait Conley (D) on election night; NBC News had not projected a winner (as of Nov. 4 afternoon)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "Which New York and New Jersey races have yet to be called? (NBC New York, updated 4 Nov 2026)",
+    "url": "https://www.nbcnewyork.com/elections/what-new-york-new-jersey-races-yet-to-be-called/6567471/"
    }
   },
   {
@@ -1697,10 +1697,10 @@
    "state": "NJ",
    "chamber": "house",
    "district": "2",
-   "status": "Conceded to Zack Mullock (D); AP and CBS had not called the race",
+   "status": "Reportedly conceded to Zack Mullock (D), who led 50.8-48.2; NBC News had not projected a winner (as of Nov. 4 afternoon)",
    "source": {
-    "title": "Zack Mullock / Jeff Van Drew NJ-2 (CBS Philadelphia: 'CBS News has not yet projected a winner')",
-    "url": "https://www.cbsnews.com/philadelphia/news/zack-mullock-defeats-jeff-van-drew-nj-2/"
+    "title": "Which New York and New Jersey races have yet to be called? (NBC New York, updated 4 Nov 2026)",
+    "url": "https://www.nbcnewyork.com/elections/what-new-york-new-jersey-races-yet-to-be-called/6567471/"
    }
   },
   {
@@ -1708,10 +1708,10 @@
    "state": "AZ",
    "chamber": "house",
    "district": "2",
-   "status": "Trails Jonathan Nez (D) by under 1 point; 78% counted (as of 7 a.m. ET Nov. 4)",
+   "status": "Leads Jonathan Nez (D) 49.5-48.7; lead has changed hands; too close to call (as of 7:42 p.m. MST Nov. 4)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "Arizona Congressional District 2 results (KJZZ, updated 4 Nov 2026)",
+    "url": "https://www.kjzz.org/elections/2026-11-03/arizona-congressional-district-2-results-elex"
    }
   },
   {
@@ -1719,10 +1719,10 @@
    "state": "CO",
    "chamber": "house",
    "district": "3",
-   "status": "Trails Dwayne Romero (D) by about 1,200 votes (as of 7 a.m. ET Nov. 4)",
+   "status": "Leads Dwayne Romero (D) by 5,396 votes (49.2-47.6); too close to call (as of 7 p.m. MT Nov. 4)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "Boebert trails in 4th CD, Hurd rallies in 3rd CD (Colorado Springs Gazette, 4 Nov 2026)",
+    "url": "https://gazette.com/2026/11/04/boebert-trails-in-4th-cd-hurd-rallies-in-3rd-cd-for-lone-gop-hope/"
    }
   },
   {
@@ -1730,10 +1730,10 @@
    "state": "CO",
    "chamber": "house",
    "district": "4",
-   "status": "Trails Eileen Laubacher (D) 48-49; 83% counted (as of 7 a.m. ET Nov. 4)",
+   "status": "Trails Eileen Laubacher (D) by 3,405 votes (47.9-48.9) with 94% counted; too close to call (as of 7 p.m. MT Nov. 4)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "Boebert trails in 4th CD, Hurd rallies in 3rd CD (Colorado Springs Gazette, 4 Nov 2026)",
+    "url": "https://gazette.com/2026/11/04/boebert-trails-in-4th-cd-hurd-rallies-in-3rd-cd-for-lone-gop-hope/"
    }
   },
   {
@@ -1752,10 +1752,10 @@
    "state": "FL",
    "chamber": "house",
    "district": "26",
-   "status": "Trails Nicole Locklin (D) by about 1,100 votes (as of 7 a.m. ET Nov. 4)",
+   "status": "Leads Nicole Locklin (D) by about 1,770 votes (49.9-49.1) per the Florida Division of Elections and has claimed victory; AP has not called it; certification Nov. 16 (as of Nov. 4 evening)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "FL-26 update: Rep. Mario Diaz-Balart claims victory (WLRN, 4 Nov 2026)",
+    "url": "https://www.wlrn.org/government-politics/2026-11-04/fl-26-mario-diaz-balart-nicole-locklin-elections"
    }
   },
   {
@@ -1763,10 +1763,10 @@
    "state": "MI",
    "chamber": "house",
    "district": "7",
-   "status": "Trails William Lawrence (D) 48-51 (as of 7 a.m. ET Nov. 4)",
+   "status": "CBS News projected William Lawrence (D) the winner at 2:50 p.m. ET Nov. 4; no AP call found yet",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "2026 House midterm election results (CBS News live updates, 4 Nov 2026)",
+    "url": "https://www.cbsnews.com/live-updates/house-election-results-2026/"
    }
   },
   {
@@ -1774,10 +1774,10 @@
    "state": "MN",
    "chamber": "house",
    "district": "1",
-   "status": "Trails Jake Johnson (D) by about 320 votes (as of 7 a.m. ET Nov. 4)",
+   "status": "Trails Jake Johnson (D) 49.9-50.0 on AP's count; uncalled, recount possible (as of midday Nov. 5)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "2026 US House Election Results (Poliwave, AP counts)",
+    "url": "https://www.poliwave.com/us/live/midterms-2026/house"
    }
   },
   {
@@ -1851,10 +1851,10 @@
    "state": "TN",
    "chamber": "house",
    "district": "4",
-   "status": "Trails Victoria Broderick (D) by 280 votes (as of 7 a.m. ET Nov. 4)",
+   "status": "Trails Victoria Broderick (D) 48.7-48.9 (under 300 votes); AP has not called it (as of Nov. 4)",
    "source": {
-    "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
-    "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
+    "title": "DECISION 2026: Victoria Broderick (D) wins Tennessee U.S. House Dist. 4 (Local 3 News; article states AP has not called the race)",
+    "url": "https://www.local3news.com/local-news/decision-2026-victoria-broderick-d-wins-tennessee-u-s-house-dist-4/article_e18ad914-c394-42c5-93f2-09dbe7561963.html"
    }
   },
   {
