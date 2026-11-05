@@ -10,6 +10,7 @@ recently posted version of each report is counted.
 """
 from __future__ import annotations
 
+from ..names import is_placeholder, org_name
 import re
 import unicodedata
 from collections import defaultdict
@@ -199,15 +200,15 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
         filer = reg.get("name") or ""
         reg_id = str(reg.get("id")) if reg.get("id") is not None else None
         if reg_id:
-            entry = registrants.setdefault(reg_id, {"id": reg_id, "name": filer.title(), "description": reg.get("description"),
+            entry = registrants.setdefault(reg_id, {"id": reg_id, "name": org_name(filer), "description": reg.get("description"),
                                                     "pacs": []})
             for pac in r.get("pacs") or []:
-                if pac and pac not in entry["pacs"]:
+                if not is_placeholder(pac) and pac not in entry["pacs"]:
                     entry["pacs"].append(pac)
         lob = r.get("lobbyist") or {}
         # Filings leave fields blank more often than the schema suggests; never let one sink the night.
         lob_name = " ".join(str(x).strip().title() for x in (lob.get("first_name"), lob.get("last_name")) if x and str(x).strip())
-        reported_by = f"{lob_name} ({filer.title()})" if lob_name else (filer.title() or "Unnamed filer")
+        reported_by = f"{lob_name} ({org_name(filer)})" if lob_name else (org_name(filer) or "Unnamed filer")
         for it in r.get("contribution_items") or []:
             if it.get("contribution_type") not in COUNTED_TYPES:
                 continue
@@ -223,7 +224,7 @@ def match_reports(reports: list[dict], members: list[dict], years: list[int]) ->
                 continue
             by_member[m["bioguide"]].append({
                 "date": it.get("date"), "amount": amount, "type": it.get("contribution_type_display"),
-                "contributor": (it.get("contributor_name") or "").title(), "payee": (it.get("payee_name") or "").title(),
+                "contributor": org_name(it.get("contributor_name") or ""), "payee": org_name(it.get("payee_name") or ""),
                 "honoree": honoree, "reported_by": reported_by, "registrant_id": reg_id, "filing_uuid": r.get("filing_uuid"),
                 "url": r.get("filing_document_url"), "period": r.get("filing_period_display"),
             })

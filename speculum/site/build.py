@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import json
 import re
+
+from ..names import org_name
 import shutil
 from datetime import date
 from pathlib import Path
@@ -57,6 +59,8 @@ def env() -> Environment:
     e.filters["billname"] = billname
     e.filters["money"] = money
     e.filters["pct"] = pct
+    e.filters["org"] = org_name
+    e.filters["num"] = lambda x: f"{x:,}" if isinstance(x, (int, float)) and not isinstance(x, bool) else ("—" if x is None else x)
     return e
 
 
@@ -261,13 +265,14 @@ def _glass_by_edition(cfg: dict, dates: list[str]) -> dict:
 def _apply_approvals(ed: dict, marks: dict, public: bool) -> dict:
     """Editor approvals (data/tide/approvals.json, {date: {story id: "approved" | "held"}}).
     The preview shows every story with its status; the public site shows approved stories only."""
-    stories = []
+    stories, awaiting = [], 0
     for st in ed.get("stories", []):
         status = marks.get(st.get("id"), "pending")
         if public and status != "approved":
+            awaiting += status == "pending"
             continue
         stories.append({**st, "status": status})
-    return {**ed, "stories": stories}
+    return {**ed, "stories": stories, "awaiting": awaiting}
 
 
 def _build_pages(E, data_root: Path, prev: Path, common: dict) -> None:

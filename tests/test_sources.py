@@ -188,7 +188,7 @@ def test_fec_totals_and_top_committees():
     assert out["small"] == 3e6 and out["pac"] == 1e5 and out["cash_on_hand"] == 9e5
     assert out["coverage_end"] == "2026-09-30"
     assert out["committee_id"] == "C00411330"
-    assert out["top_committees"] == [{"committee_id": "C00000001", "name": "Example Union Pac", "entity_type": "PAC",
+    assert out["top_committees"] == [{"committee_id": "C00000001", "name": "Example Union PAC", "entity_type": "PAC",
                                       "amount": 7500.0, "count": 2}]
     shares = ledger.funding_shares(out)
     assert round(shares["parts"]["small"], 3) == round(3e6 / 5.1e6, 3)

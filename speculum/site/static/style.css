@@ -121,7 +121,8 @@ td.num { white-space: nowrap; }
 .tide-mast { text-align: center; border-bottom: 3px double var(--gold-dim); padding: 28px 0 16px; margin-bottom: 8px; }
 .tide-name { font: 600 54px/1 var(--serif); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .tide-mast .meta { margin-top: 10px; }
-.stories { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0 32px; }
+.stories { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 32px; }
+.stories > .story { max-width: 760px; }
 .story { border-top: 1px solid var(--line); padding: 20px 0 22px; }
 .story .kicker { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
 .story h3 { font: 600 23px/1.2 var(--serif); margin: 10px 0 8px; color: var(--ink); }

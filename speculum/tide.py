@@ -20,7 +20,7 @@ MAX_STORIES = 14
 
 
 def _plural(n: int, word: str) -> str:
-    return f"{n} {word}{'' if n == 1 else 's'}"
+    return f"{n:,} {word}{'' if n == 1 else 's'}"
 
 
 def _money(x: float) -> str:

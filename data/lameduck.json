@@ -125,7 +125,7 @@
    "district": null,
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for governor of Alabama; won (called)",
+   "detail": "Ran for governor of Alabama; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -185,7 +185,7 @@
    "district": null,
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Troy Jackson (D); conceded; called (AP per SCL; NBC per Fortune; CBS projection)",
+   "detail": "Lost to Troy Jackson (D); conceded",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -202,7 +202,7 @@
    "district": null,
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Adam Hamilton (D); called (AP per SCL; CBS projection)",
+   "detail": "Lost to Adam Hamilton (D)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -219,7 +219,7 @@
    "district": null,
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Appointed senator (Vance seat); lost special election to Sherrod Brown (D); called",
+   "detail": "Appointed senator (Vance seat); lost special election to Sherrod Brown (D)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -232,7 +232,7 @@
    "district": null,
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Appointed July 2026 after the death of Sen. Lindsey Graham; won GOP runoff; lost to Annie Andrews (D); called (AP per SCL; CBS projection)",
+   "detail": "Appointed July 2026 after the death of Sen. Lindsey Graham; won GOP runoff; lost to Annie Andrews (D)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -249,7 +249,7 @@
    "district": "11",
    "bioguide": null,
    "reason": "retiring",
-   "detail": "Retiring from public office (withdrew; replacement nominee Jennifer Balkcom per Newsweek)",
+   "detail": "Withdrew from his re-election race; retiring from public office",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -431,7 +431,7 @@
    "district": "21",
    "bioguide": null,
    "reason": "retiring",
-   "detail": "Retiring from public office (Ballotpedia); the Sept. 4 casualty list still showed her seeking governor",
+   "detail": "Not seeking re-election",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -665,7 +665,7 @@
    "district": "AL",
    "bioguide": null,
    "reason": "retiring",
-   "detail": "Delegate; on casualty list as retiring or seeking other office (not on Ballotpedia list)",
+   "detail": "Delegate; not seeking re-election",
    "source": {
     "title": "House Press Gallery casualty list (as of 09/04/2026)",
     "url": "https://pressgallery.house.gov/member-data/casualty-list"
@@ -678,7 +678,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in OK (Mullin seat); won (called)",
+   "detail": "Ran for Senate in OK (Mullin seat); won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -695,7 +695,7 @@
    "district": "5",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in LA; won (called)",
+   "detail": "Ran for Senate in LA; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -712,7 +712,7 @@
    "district": "AL",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in WY; won (called)",
+   "detail": "Ran for Senate in WY; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -729,7 +729,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in AL; won (called)",
+   "detail": "Ran for Senate in AL; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -746,7 +746,7 @@
    "district": "6",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in KY; won (called)",
+   "detail": "Ran for Senate in KY; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -763,7 +763,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in NH; won vs. John E. Sununu (called)",
+   "detail": "Ran for Senate in NH; won vs. John E. Sununu",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -780,7 +780,7 @@
    "district": "2",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in IA; lost general to Josh Turek (D) (called)",
+   "detail": "Ran for Senate in IA; lost general to Josh Turek (D)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -797,7 +797,7 @@
    "district": "10",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in GA; lost general to Jon Ossoff (D) (called)",
+   "detail": "Ran for Senate in GA; lost general to Jon Ossoff (D)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -933,7 +933,7 @@
    "district": "6",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for Senate in MA; lost Sept. 1 Democratic primary to Sen. Ed Markey (AP call 8:31 p.m.)",
+   "detail": "Ran for Senate in MA; lost the Sept. 1 Democratic primary to Sen. Ed Markey",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -967,7 +967,7 @@
    "district": "19",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for governor of FL; won (called)",
+   "detail": "Ran for governor of FL; won",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -984,7 +984,7 @@
    "district": "5",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for governor of AZ; lost general to Katie Hobbs (D) (called)",
+   "detail": "Ran for governor of AZ; lost general to Katie Hobbs (D)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -1001,7 +1001,7 @@
    "district": "10",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for governor of MI; lost general to Jocelyn Benson (D) (called)",
+   "detail": "Ran for governor of MI; lost general to Jocelyn Benson (D)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -1018,7 +1018,7 @@
    "district": "7",
    "bioguide": null,
    "reason": "other_office",
-   "detail": "Ran for governor of WI; lost general to David Crowley (D) (called)",
+   "detail": "Ran for governor of WI; lost general to David Crowley (D)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -1171,7 +1171,7 @@
    "district": "7",
    "bioguide": null,
    "reason": "lost_primary",
-   "detail": "Lost Republican primary (to Ryan Elijah per 270toWin)",
+   "detail": "Lost Republican primary (to Ryan Elijah)",
    "source": {
     "title": "Ballotpedia: Congress incumbents not running for re-election in 2026 (as of Oct. 2)",
     "url": "https://ballotpedia.org/List_of_U.S._Congress_incumbents_who_are_not_running_for_re-election_in_2026"
@@ -1314,7 +1314,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Mike McGuire (D) in redrawn CA-1; AP called",
+   "detail": "Lost to Mike McGuire (D) in redrawn CA-1",
    "source": {
     "title": "Mike McGuire defeats James Gallagher in California congressional race, per AP",
     "url": "https://www.yahoo.com/news/politics/articles/mike-mcguire-defeats-james-gallagher-052810794.html"
@@ -1331,7 +1331,7 @@
    "district": "3",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Independent (left GOP March 2026); lost to Richard Pan (D) in redrawn CA-6, 58-42; called per SCL; Kiley conceded (CapRadio)",
+   "detail": "Independent (left the Republican Party in March 2026); lost to Richard Pan (D) in redrawn CA-6, 58-42, and conceded",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1348,7 +1348,7 @@
    "district": "8",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Manny Rutinel (D); called",
+   "detail": "Lost to Manny Rutinel (D)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1365,7 +1365,7 @@
    "district": "5",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to J.D. Ford (D), 52-48; called",
+   "detail": "Lost to J.D. Ford (D), 52-48",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1382,7 +1382,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Christina Bohannan (D), 53-44; called",
+   "detail": "Lost to Christina Bohannan (D), 53-44",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1399,7 +1399,7 @@
    "district": "3",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Sarah Trone Garriott (D), 54-46; called",
+   "detail": "Lost to Sarah Trone Garriott (D), 54-46",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1416,7 +1416,7 @@
    "district": "2",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Fred Wellman (D), 51-46; called",
+   "detail": "Lost to Fred Wellman (D), 51-46",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1433,7 +1433,7 @@
    "district": "7",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Rebecca Bennett (D), 57-41; called",
+   "detail": "Lost to Rebecca Bennett (D), 57-41",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1450,7 +1450,7 @@
    "district": "7",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Brian Poindexter (D), 55-45 (redrawn district); called",
+   "detail": "Lost to Brian Poindexter (D), 55-45 (redrawn district)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1467,7 +1467,7 @@
    "district": "15",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Don Leonard (D), 52-45 (redrawn district); called",
+   "detail": "Lost to Don Leonard (D), 52-45 (redrawn district)",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1484,7 +1484,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Bob Harvie (D), 52.7-47.3; called 12:37 a.m.",
+   "detail": "Lost to Bob Harvie (D), 52.7-47.3",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1501,7 +1501,7 @@
    "district": "7",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Bob Brooks (D), 56-44; called 10:27 p.m.",
+   "detail": "Lost to Bob Brooks (D), 56-44",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1518,7 +1518,7 @@
    "district": "8",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Paige Cognetti (D), 54.4-45.6; called 10:41 p.m.",
+   "detail": "Lost to Paige Cognetti (D), 54.4-45.6",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1535,7 +1535,7 @@
    "district": "10",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Janelle Stelson (D), 55-45; called 10:41 p.m.",
+   "detail": "Lost to Janelle Stelson (D), 55-45",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1552,7 +1552,7 @@
    "district": "15",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Bobby Pulido (D), 62-38; called",
+   "detail": "Lost to Bobby Pulido (D), 62-38",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1565,7 +1565,7 @@
    "district": "2",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Elaine Luria (D), 51-46; called",
+   "detail": "Lost to Elaine Luria (D), 51-46",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1582,7 +1582,7 @@
    "district": "1",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Mitchell Berman (D), 52-48; called",
+   "detail": "Lost to Mitchell Berman (D), 52-48",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1599,7 +1599,7 @@
    "district": "3",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Rebecca Cooke (D), 52-46; called",
+   "detail": "Lost to Rebecca Cooke (D), 52-46",
    "source": {
     "title": "State Capital Lobbyist: 2026 Midterm Elections: Where Things Stand (AP calls as of 7 a.m. ET Nov. 4)",
     "url": "https://statecapitallobbyist.com/elections/2026-midterm-elections-where-things-stand/"
@@ -1616,10 +1616,10 @@
    "district": "22",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to Randy Villegas (D); projected by Decision Desk HQ; AP had NOT called as of 7 a.m. ET (SCL)",
+   "detail": "Lost to Randy Villegas (D)",
    "source": {
-    "title": "Valadao ousted in battleground California House contest (The Hill via Yahoo; DDHQ projection)",
-    "url": "https://www.yahoo.com/news/politics/articles/valadao-ousted-battleground-california-house-063518237.html"
+    "title": "2026 House midterm election results (CBS News live updates, 4 Nov 2026)",
+    "url": "https://www.cbsnews.com/live-updates/house-election-results-2026/"
    }
   },
   {
@@ -1629,10 +1629,23 @@
    "district": "6",
    "bioguide": null,
    "reason": "lost_general",
-   "detail": "Lost to JoAnna Mendoza (D); projected by Decision Desk HQ; AP had NOT called as of 7 a.m. ET (SCL)",
+   "detail": "Lost to JoAnna Mendoza (D)",
    "source": {
     "title": "JoAnna Mendoza wins Arizona House seat (The Hill via Yahoo; DDHQ projection)",
     "url": "https://www.yahoo.com/news/politics/articles/joanna-mendoza-wins-arizona-house-031637631.html"
+   }
+  },
+  {
+   "name": "Tom Barrett",
+   "state": "MI",
+   "chamber": "house",
+   "district": "7",
+   "bioguide": null,
+   "reason": "lost_general",
+   "detail": "Lost to William Lawrence (D)",
+   "source": {
+    "title": "2026 House midterm election results (CBS News live updates, 4 Nov 2026)",
+    "url": "https://www.cbsnews.com/live-updates/house-election-results-2026/"
    }
   }
  ],
@@ -1759,17 +1772,6 @@
    }
   },
   {
-   "name": "Tom Barrett",
-   "state": "MI",
-   "chamber": "house",
-   "district": "7",
-   "status": "CBS News projected William Lawrence (D) the winner at 2:50 p.m. ET Nov. 4; no AP call found yet",
-   "source": {
-    "title": "2026 House midterm election results (CBS News live updates, 4 Nov 2026)",
-    "url": "https://www.cbsnews.com/live-updates/house-election-results-2026/"
-   }
-  },
-  {
    "name": "Brad Finstad",
    "state": "MN",
    "chamber": "house",
@@ -1883,6 +1885,6 @@
  "_meta": {
   "status": "draft, awaiting reviewer",
   "compiled_by": "Claude research agent from Ballotpedia, the House Press Gallery and race calls; every entry links its source",
-  "note": "Uncalled races are listed separately and not shown until called."
+  "note": "A race counts as decided once the Associated Press, a national network or a recognized decision desk has projected it; each entry links the source. Undecided races are listed separately and not shown until decided."
  }
 }

@@ -32,6 +32,8 @@
 {% endfor %}
 </div>
 {% if ed.more %}<p class="meta">{{ ed.more }} lower-ranked stories held back from this edition.</p>{% endif %}
+{% elif ed.awaiting %}
+<p class="lede">{{ ed.awaiting }} {{ 'story' if ed.awaiting == 1 else 'stories' }} from this night's filings {{ 'is' if ed.awaiting == 1 else 'are' }} waiting for an editor to check {{ 'it' if ed.awaiting == 1 else 'them' }} against the sources, and will appear here once approved.</p>
 {% else %}
 {% if fs %}<p class="lede">Congress has been away campaigning since its last roll call on {{ fs.votes_through }}, so Day 1 brings no new votes to report. The first stories of the record come with the next filings, and the first votes with the lame-duck session.</p>
 {% else %}<p class="lede">No roll calls or new filings in this window. Congress may be in recess; the record continues tomorrow.</p>{% endif %}

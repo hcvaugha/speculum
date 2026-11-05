@@ -6,10 +6,10 @@
 
 <h2>What the baseline holds</h2>
 <div class="readings">
-  <div class="reading"><div class="label">Members</div><div class="value">{{ meta.counts.members }}</div><div class="context">{{ meta.counts.house }} House, {{ meta.counts.senate }} Senate</div></div>
-  <div class="reading"><div class="label">Roll calls</div><div class="value">{{ meta.counts.votes }}</div><div class="context">latest {{ meta.votes_through or '—' }}</div></div>
-  <div class="reading"><div class="label">Members with FEC totals</div><div class="value">{{ meta.counts.finance }}</div><div class="context">money through {{ meta.fec_through or '—' }}</div></div>
-  <div class="reading"><div class="label">Lobbyist contributions matched</div><div class="value">{{ meta.counts.lobbying_items }}</div><div class="context">{{ meta.counts.lobbying_unmatched }} honorees not yet matched to a member</div></div>
+  <div class="reading"><div class="label">Members</div><div class="value">{{ meta.counts.members|num }}</div><div class="context">{{ meta.counts.house|num }} House, {{ meta.counts.senate|num }} Senate</div></div>
+  <div class="reading"><div class="label">Roll calls</div><div class="value">{{ meta.counts.votes|num }}</div><div class="context">latest {{ meta.votes_through or '—' }}</div></div>
+  <div class="reading"><div class="label">Members with FEC totals</div><div class="value">{{ meta.counts.finance|num }}</div><div class="context">money through {{ meta.fec_through or '—' }}</div></div>
+  <div class="reading"><div class="label">Lobbyist contributions matched</div><div class="value">{{ meta.counts.lobbying_items|num }}</div><div class="context">{{ meta.counts.lobbying_unmatched|num }} honorees not yet matched to a member</div></div>
 </div>
 
 {% if meta.finance_partial %}
@@ -21,7 +21,7 @@
 <thead><tr><th>Date</th><th>Day</th><th class="r">Raw files archived</th><th class="r">Source calls</th><th>Note</th></tr></thead>
 <tbody>
 {% for s in history %}
-<tr><td class="num">{{ s.date }}</td><td class="num">{{ s.day }}</td><td class="r num">{{ s.files }}</td><td class="r num">{{ s.calls }}</td><td class="muted">{{ s.note }}</td></tr>
+<tr><td class="num">{{ s.date }}</td><td class="num">{{ s.day }}</td><td class="r num">{{ s.files|num }}</td><td class="r num">{{ s.calls|num }}</td><td class="muted">{{ s.note }}</td></tr>
 {% endfor %}
 </tbody></table></div>
 

@@ -4,7 +4,7 @@
 {% block body %}
 <h1>{{ m.name }}</h1>
 <p class="lede"><span class="party-{{ m.party }}">{{ m.party_name }}{% if m.party != m.caucus %} (caucuses with {{ party_names[m.caucus] }}s){% endif %}</span> · {{ m.seat_long }} · {{ 'Senator' if m.chamber == 'senate' else 'Representative' }}{% if m.chamber_since or m.start %} since {{ (m.chamber_since or m.start)[:4] }}{% endif %}</p>
-{% if leaving %}<p class="notice" style="margin-top:0">Not returning in January: {{ leaving_label|lower }}{% if leaving.detail %} ({{ leaving.detail }}){% endif %}. Votes after Election Day are compared with this member's own record on the <a href="../lameduck.html">lame-duck watch</a>.</p>{% endif %}
+{% if leaving %}<p class="notice" style="margin-top:0">Not returning in January: {{ leaving_label|lower }}{% if leaving.detail %}. {{ leaving.detail }}{% endif %}. Votes after Election Day are compared with this member's own record on the <a href="../lameduck.html">lame-duck watch</a>.</p>{% endif %}
 <p class="meta">Bioguide {{ m.bioguide }}{% if L.finance and L.finance.candidate_id %} · FEC <a href="https://www.fec.gov/data/candidate/{{ L.finance.candidate_id }}/">{{ L.finance.candidate_id }}</a>{% endif %} · <a href="https://bioguide.congress.gov/search/bio/{{ m.bioguide }}">Congressional biography</a></p>
 
 <h2>The Ledger</h2>
@@ -66,7 +66,7 @@
 <thead><tr><th>Committee</th><th class="r">Amount</th><th class="r">Gifts</th></tr></thead>
 <tbody>
 {% for c in L.finance.top_committees[:10] %}
-<tr><td><a href="../interest/{{ slugify('c', c.committee_id or c.name) }}.html">{{ c.name }}</a>{% if c.committee_id %} <a class="muted" href="https://www.fec.gov/data/committee/{{ c.committee_id }}/" title="FEC record">FEC</a>{% endif %}</td><td class="r num">{{ c.amount|money }}</td><td class="r num">{{ c.count }}</td></tr>
+<tr><td><a href="../interest/{{ slugify('c', c.committee_id or c.name) }}.html">{{ c.name|org }}</a>{% if c.committee_id %} <a class="muted" href="https://www.fec.gov/data/committee/{{ c.committee_id }}/" title="FEC record">FEC</a>{% endif %}</td><td class="r num">{{ c.amount|money }}</td><td class="r num">{{ c.count }}</td></tr>
 {% endfor %}
 </tbody></table></div>
 <p class="meta" style="margin-top:8px">Itemized receipts from committees to {{ L.finance.committee_name or 'the principal campaign committee' }}, {{ L.finance.cycle_label }}.</p>

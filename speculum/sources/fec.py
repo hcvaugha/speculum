@@ -13,6 +13,7 @@ again only when their coverage date moves.
 """
 from __future__ import annotations
 
+from ..names import org_name
 import logging
 import re
 from datetime import date
@@ -109,7 +110,7 @@ def _top_committees(fetch, key, committee_id: str, periods: list[int], top_n: in
             cid = r.get("contributor_id") or (r.get("contributor_name") or "").upper()
             if not cid:
                 continue
-            a = agg.setdefault(cid, {"committee_id": r.get("contributor_id"), "name": (r.get("contributor_name") or cid).title(),
+            a = agg.setdefault(cid, {"committee_id": r.get("contributor_id"), "name": org_name(r.get("contributor_name") or cid),
                                      "entity_type": r.get("entity_type"), "amount": 0.0, "count": 0})
             a["amount"] += _num(r.get("contribution_receipt_amount"))
             a["count"] += 1

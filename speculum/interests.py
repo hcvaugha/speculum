@@ -13,6 +13,8 @@ reports matches the committee's name after normalizing; the link is labelled as 
 from __future__ import annotations
 
 import re
+
+from .names import is_placeholder, org_name
 from collections import defaultdict
 
 from . import ledger
@@ -49,7 +51,7 @@ def build(members: list[dict], finance: dict, lobbying: dict) -> dict:
             if not key:
                 continue
             e = committees.setdefault(key, {"key": key, "kind": "committee", "committee_id": c.get("committee_id"),
-                                            "name": c.get("name") or key, "type": TYPE_LABEL.get(c.get("entity_type"), "Committee"),
+                                            "name": org_name(c.get("name") or key), "type": TYPE_LABEL.get(c.get("entity_type"), "Committee"),
                                             "rows": []})
             e["rows"].append({"bioguide": bio, "amount": float(c.get("amount") or 0), "count": c.get("count") or 0,
                               "cycle_label": fin.get("cycle_label")})
@@ -62,9 +64,9 @@ def build(members: list[dict], finance: dict, lobbying: dict) -> dict:
             if not rid:
                 continue
             meta = reg_meta.get(rid, {})
-            e = registrants.setdefault(rid, {"key": rid, "kind": "registrant", "name": meta.get("name") or it.get("reported_by"),
+            e = registrants.setdefault(rid, {"key": rid, "kind": "registrant", "name": org_name(meta.get("name") or it.get("reported_by") or ""),
                                              "type": "Lobbying organization", "description": meta.get("description"),
-                                             "pacs": meta.get("pacs", []), "rows": [], "items": []})
+                                             "pacs": [p for p in meta.get("pacs", []) if not is_placeholder(p)], "rows": [], "items": []})
             e["items"].append({**it, "bioguide": bio})
     for e in registrants.values():
         per = defaultdict(lambda: {"amount": 0.0, "count": 0})
