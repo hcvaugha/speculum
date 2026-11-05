@@ -220,6 +220,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         _contractor_money(ch, sectors)
         _advocacy(ch, by_id, finance, advocacy_cfg or {}, advocacy_data)
         ch["review"] = reviews.get(ch["id"]) or {}
+        set_status(ch)                                   # set again in for_site once drafts are merged
         out.append(ch)
     # Votes held the same day are mostly the same senators: say how much they overlap, so a repeated
     # money gap is not read as an independent confirmation.
