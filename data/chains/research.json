@@ -890,7 +890,21 @@
    "counterpoint": "The UAE has denied arming the RSF (see S/2025/260). Amnesty's release includes no UAE response.",
    "source_note": "Amnesty International is an advocacy organization; its US section publicly urged senators to support S.J.Res. 32 and S.J.Res. 138 in April 2026 (Amnesty International USA, 14 Apr 2026).",
    "counter_label": "Response or dispute",
-   "group": "uae"
+   "group": "uae",
+   "also": [
+    {
+     "title": "Senators urged to vote yes on Joint Resolutions of Disapproval and end arms transfers to Israel",
+     "url": "https://www.amnestyusa.org/press-releases/senators-urged-to-vote-yes-on-joint-resolutions-of-disapproval-and-end-arms-transfers-to-israel/",
+     "publisher": "Amnesty International USA",
+     "date": "2026-04-14"
+    },
+    {
+     "title": "Letter from the UAE to the President of the Security Council (S/2025/260)",
+     "url": "https://digitallibrary.un.org/record/4081846/files/S_2025_260-EN.pdf",
+     "publisher": "United Nations",
+     "date": "2025-04-29"
+    }
+   ]
   },
   {
    "country": "United Arab Emirates",
