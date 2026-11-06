@@ -156,6 +156,9 @@ def _finance_story(cur: dict, prev: dict | None, by_id: dict) -> dict | None:
     }
 
 
+NEEDS = ("members.json", "votes.json.gz", "lobbying.json", "finance.json")   # read from the night before
+
+
 def build_edition(cur, prev=None) -> dict:
     """cur and prev are Snapshot objects (prev may be None)."""
     members = cur.read("members.json", [])

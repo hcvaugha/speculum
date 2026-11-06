@@ -81,5 +81,5 @@
 </ul>
 
 <h2>Archive and corrections</h2>
-<p>Each night every raw file fetched from a source is saved untouched, hashed with SHA-256, and listed in a manifest attached to that night's release, so any figure can be traced to the exact bytes it came from. Fixes are made in the rules that read the files, never by editing saved data, and every fix is logged on the <a href="corrections.html">corrections</a> page.</p>
+<p>Each night every raw file fetched from a source is saved untouched, hashed with SHA-256, and listed in a manifest attached to that night's release, so any figure can be traced to the exact bytes it came from. The normalized files built from them are committed each night to the project's public repository; a file is stored again only when its content changed, and every earlier version stays in the repository's history, listed by SHA-256 in that night's index. Fixes are made in the rules that read the files, never by editing saved data, and every fix is logged on the <a href="corrections.html">corrections</a> page.</p>
 {% endblock %}

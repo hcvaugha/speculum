@@ -13,6 +13,48 @@
  "day_zero": "2026-11-03",
  "errors": {},
  "fec_through": "2026-10-22",
+ "files": {
+  "advocacy.json": {
+   "bytes": 499132,
+   "night": "2026-11-06",
+   "sha256": "9411e05f7e88d5bd933450e796849cbb44946899cf90d030bb5b513156c327e7"
+  },
+  "billinfo.json": {
+   "bytes": 295161,
+   "night": "2026-11-06",
+   "sha256": "52d566dfa63db9a11d23179d250ba403deb5292e2b629c074965963be1a42a4f"
+  },
+  "committees.json": {
+   "bytes": 583114,
+   "night": "2026-11-04",
+   "sha256": "1ee4b8316e324bc5ad2285523b442a81ecb135952d08540fcdb80e84278f0945"
+  },
+  "finance.json": {
+   "bytes": 4264038,
+   "night": "2026-11-05",
+   "sha256": "eb429733ce802130a8a28d489039c6b1a0eb1121306911374ffe545c58ebbb95"
+  },
+  "lobbying.json": {
+   "bytes": 76163768,
+   "night": "2026-11-06",
+   "sha256": "390420baeade3236804c2124503ef3ff27a3f9d55f3faabb0d4d1c3326ffaac9"
+  },
+  "members.json": {
+   "bytes": 261385,
+   "night": "2026-11-03",
+   "sha256": "9234ac2ddfa0f81a608f1096e590c51aad54221fbfb2442a1cd4c27cd916ed62"
+  },
+  "spend.json": {
+   "bytes": 19065778,
+   "night": "2026-11-06",
+   "sha256": "26a7844d6f9da38832d90952ad1dc94aa5ec8e72744890d121b9a64381efee5b"
+  },
+  "votes.json.gz": {
+   "bytes": 447235,
+   "night": "2026-11-06",
+   "sha256": "e120c516750f0167a3da2028a9022c2758a239ecf78c99b57b73e3f49a3ccfdf"
+  }
+ },
  "finance_partial": null,
  "note": "",
  "raw_files": 6350,

@@ -10,7 +10,7 @@ Every night a GitHub Actions job:
 
 1. Pulls the current roster and ID crosswalk ([congress-legislators](https://github.com/unitedstates/congress-legislators)), House roll calls ([Congress.gov API](https://api.congress.gov/)), Senate roll calls (senate.gov XML), campaign totals ([OpenFEC](https://api.open.fec.gov/developers/)) and lobbyist contribution reports ([lda.gov](https://lda.gov/api/v1/)).
 2. Saves every raw file untouched, hashes it with SHA-256, and attaches the night's archive to a GitHub release.
-3. Writes a normalized, dated snapshot to `data/snapshots/<date>/` and commits it. Git history is the audit trail.
+3. Writes a normalized, dated snapshot to `data/snapshots/<date>/` and commits it. Only files whose content changed are stored; each night's `meta.json` lists, under `files`, which night's copy of every file stood that night and its SHA-256. Once a newer copy exists, the older one leaves the working tree but stays in git history, so the checkout stays about the same size however many nights pass. Day Zero keeps every file. Git history is the audit trail.
 4. Computes each member's Ledger and rebuilds two static sites on Cloudflare Pages:
    - `speculum.vote`: the public holding page.
    - `preview.speculum.vote`: the private prototype, behind a login until the method review is done.
@@ -21,11 +21,11 @@ Every night a GitHub Actions job:
 speculum/
   archive.py       raw archive with SHA-256 manifest
   http.py          paced, retrying fetcher that archives before parsing
-  snapshot.py      dated snapshot store
+  snapshot.py      dated snapshot store (only what changed; index and restore)
   ledger.py        the readings (funding mix, lobbyist money, party unity, attendance)
   sources/         one module per public source
   site/            templates, styles and the static site builder
-data/snapshots/    one folder per night
+data/snapshots/    one folder per night: meta.json and tide.json always, data files only when they changed
 tests/             tests against recorded real responses
 ```
 
@@ -34,6 +34,7 @@ tests/             tests against recorded real responses
 ```
 python -m speculum snapshot [--date YYYY-MM-DD] [--only votes finance lobbying]
 python -m speculum build --out dist
+python -m speculum restore YYYY-MM-DD [--out DIR]   # a past night's files from git history, hash-checked (needs full history)
 pytest
 ```
 

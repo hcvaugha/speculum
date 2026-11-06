@@ -65,7 +65,7 @@ def collect(spend: dict | None, info: dict | None = None) -> dict:
 def wanted(spend: dict | None, votes: dict | None, top: int = 600) -> list[tuple[int, str]]:
     """Bills whose titles the pages need: the most lobbied, and voted bills without a title."""
     c = collect(spend)
-    ranked = [k for k, v in sorted(c.items(), key=lambda kv: -len(kv[1]["orgs"])) if len(v["orgs"]) >= MIN_ORGS_FOR_PAGE][:top]
+    ranked = [k for k, v in sorted(c.items(), key=lambda kv: (-len(kv[1]["orgs"]), kv[0])) if len(v["orgs"]) >= MIN_ORGS_FOR_PAGE][:top]
     voted = {(int(v.get("congress") or 0), norm(v.get("bill"))) for v in (votes or {}).get("votes") or []
              if v.get("bill") and not v.get("title")}
     return list(dict.fromkeys(ranked + sorted(k for k in voted if k[0])))
@@ -145,7 +145,7 @@ def build(spend: dict | None, votes: dict, members: list[dict], lobbying: dict, 
             "orgs": orgs, "former": sorted(({"name": p[0], "post": p[1]} for p in e["former"].values()), key=lambda x: x["name"]),
             "rolls": rolls, "money_orgs": len(regs),
         })
-    pages.sort(key=lambda p: -p["n_orgs"])
+    pages.sort(key=lambda p: (-p["n_orgs"], p["congress"], p["bill"]))   # ties in a fixed order, whatever order the file lists them in
     return {"bills": pages, "min_orgs": MIN_ORGS_FOR_PAGE,
             "quarters": sorted((spend or {}).get("quarters", {})),
             "by_slug": {p["slug"]: p for p in pages},

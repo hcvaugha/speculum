@@ -13,6 +13,28 @@
  "day_zero": "2026-11-03",
  "errors": {},
  "fec_through": "2026-10-14",
+ "files": {
+  "finance.json": {
+   "bytes": 2078832,
+   "night": "2026-11-03",
+   "sha256": "44103b0482dde79730d648659da597765a081381ed7519bccc92c0d3364c6b7e"
+  },
+  "lobbying.json": {
+   "bytes": 85917961,
+   "night": "2026-11-03",
+   "sha256": "8e8370a3e82d1e3d7ef065ae0eebfdc1c0077f466233a46444dc087d94190f6c"
+  },
+  "members.json": {
+   "bytes": 261385,
+   "night": "2026-11-03",
+   "sha256": "9234ac2ddfa0f81a608f1096e590c51aad54221fbfb2442a1cd4c27cd916ed62"
+  },
+  "votes.json.gz": {
+   "bytes": 445318,
+   "night": "2026-11-03",
+   "sha256": "5a4e2387fc5dd1522b78e91664022e2714474b30ff3bde144c58b0d93bd3d0e6"
+  }
+ },
  "finance_partial": {
   "of": 533,
   "reached": 255

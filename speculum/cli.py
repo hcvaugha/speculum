@@ -144,14 +144,29 @@ def cmd_snapshot(args) -> int:
         meta["raw_files"] += prior.get("raw_files") or 0
         meta["calls"] += prior.get("calls") or 0
         meta["note"] = prior.get("note", meta["note"])
+    meta["files"] = snap.index()   # which night's copy of each file stands tonight, with its SHA-256
     snap.write("meta.json", meta)
     try:
         from . import tide
         from .snapshot import all_dates
         earlier = [d for d in all_dates(ROOT / "snapshots") if d < run_date]
-        snap.write("tide.json", tide.build_edition(snap, Snapshot(ROOT / "snapshots", earlier[-1]) if earlier else None))
+        prev = Snapshot(ROOT / "snapshots", earlier[-1]) if earlier else None
+        gone = [n for n in tide.NEEDS if prev and prev.standing(n) is None]
+        if gone and (snap.dir / "tide.json").exists():
+            # A back-dated rerun: the night before is in git history only, and an edition built without it
+            # would call everything new. Keep the edition already saved for this night.
+            log.warning("kept %s's saved edition of The Tide: %s for %s is in git history only", run_date, ", ".join(gone), prev.date)
+        else:
+            snap.write("tide.json", tide.build_edition(snap, prev))
     except Exception:
         log.exception("tide edition failed")
+    from .snapshot import all_dates as _dates, prune
+    if _dates(ROOT / "snapshots")[-1] == run_date:   # a back-dated rerun never removes anything
+        removed = prune(ROOT / "snapshots")
+        if removed:
+            log.info("older copies left for git history: %s", ", ".join(f"{p.parent.name}/{p.name}" for p in removed))
+    stored = sorted(n for n, e in meta["files"].items() if e["night"] == run_date)
+    log.info("files stored for %s (the rest are unchanged and stand from earlier nights): %s", run_date, ", ".join(stored) or "none")
     log.info("snapshot %s done: %s", run_date, json.dumps(meta["counts"]))
     if errors:
         log.warning("sources with errors: %s", ", ".join(errors))
@@ -188,17 +203,10 @@ def _votes(fetch, keys, members, snap, errors):
 
 
 def _latest(snap: Snapshot, name: str):
-    """This run's file if a rerun already wrote it, else the most recent earlier snapshot's.
+    """This run's file if a rerun already wrote it, else the copy that stood the night before.
     Lets each night fetch only what changed."""
-    current = snap.read(name)
-    if current:
-        return current
-    root = snap.dir.parent
-    for d in sorted((p.name for p in root.iterdir() if p.is_dir() and p.name < snap.date), reverse=True):
-        prior = Snapshot(root, d).read(name)
-        if prior:
-            return prior
-    return None
+    from .snapshot import read_newest
+    return snap.read(name) or read_newest(snap.root, name, snap.date)
 
 
 def cmd_build(args) -> int:
@@ -276,6 +284,21 @@ def cmd_verify(args) -> int:
     return 0
 
 
+def cmd_restore(args) -> int:
+    """Rebuild a past night's files from git history, checked against that night's SHA-256 index."""
+    from .snapshot import restore
+    out = Path(args.out or f"restored/{args.date}")
+    result = restore(ROOT / "snapshots", args.date, out)
+    for name, status in result.items():
+        log.info("%-18s %s", name, status)
+    missing = [n for n, s in result.items() if not s.startswith("ok")]
+    if missing:
+        log.error("not found: %s (a shallow clone lacks history: run `git fetch --unshallow`)", ", ".join(missing))
+        return 1
+    log.info("restored %s into %s", args.date, out)
+    return 0
+
+
 def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(levelname)s %(message)s")
     p = argparse.ArgumentParser(prog="speculum")
@@ -298,9 +321,12 @@ def main(argv=None) -> int:
     v = sub.add_parser("verify", help="check new, changed and disputed claims against their sources")
     v.add_argument("--limit", type=int, default=40, help="most claims to check in one run")
     v.add_argument("--no-disputes", action="store_true", help="skip reading new disputes from Cloudflare")
+    r = sub.add_parser("restore", help="rebuild a past night's files from git history, checked by SHA-256")
+    r.add_argument("date", help="the night, YYYY-MM-DD")
+    r.add_argument("--out", help="folder to write into (default restored/<date>)")
     args = p.parse_args(argv)
     return {"snapshot": cmd_snapshot, "build": cmd_build, "chains": cmd_chains, "approve": cmd_approve,
-            "verify": cmd_verify}[args.cmd](args)
+            "verify": cmd_verify, "restore": cmd_restore}[args.cmd](args)
 
 
 if __name__ == "__main__":
