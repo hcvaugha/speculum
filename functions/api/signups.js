@@ -17,7 +17,7 @@ export async function onRequestPost({ request, env }) {
   if (fails >= 10) return json({ error: 'Too many wrong passwords today.' }, 429);
   let b;
   try { b = await request.json(); } catch { return json({ error: 'Bad request.' }, 400); }
-  const a = await digest(String(b.key || '')), k = await digest(env.ADMIN_KEY);
+  const a = await digest(String(b.key || '')), k = await digest(String(env.ADMIN_KEY).trim());
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ k[i];        // constant-time comparison
   if (diff) {

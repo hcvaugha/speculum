@@ -11,8 +11,10 @@ async function digest(s) {
 async function hex(s, n) { return [...(await digest(s))].slice(0, n).map(b => b.toString(16).padStart(2, '0')).join(''); }
 
 async function cf(env, path, init = {}) {
-  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}${path}`, {
-    ...init, headers: { authorization: `Bearer ${env.CF_ACCESS_TOKEN}`, 'content-type': 'application/json' },
+  // Secrets pasted into GitHub often carry a trailing newline, which fetch rejects in a header: trim them.
+  const token = String(env.CF_ACCESS_TOKEN || '').trim(), account = String(env.CF_ACCOUNT_ID || '').trim();
+  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${account}${path}`, {
+    ...init, headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
   });
   const j = await r.json().catch(() => ({}));
   if (!r.ok || j.success === false) throw new Error((j.errors && j.errors[0] && j.errors[0].message) || `Cloudflare answered ${r.status}`);
@@ -49,7 +51,7 @@ async function handle({ request, env }) {
   if (fails >= 10) return json({ error: 'Too many wrong passwords today.' }, 429);
   let b;
   try { b = await request.json(); } catch { return json({ error: 'Bad request.' }, 400); }
-  const a = await digest(String(b.key || '')), k = await digest(env.ADMIN_KEY);
+  const a = await digest(String(b.key || '')), k = await digest(String(env.ADMIN_KEY).trim());
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ k[i];
   if (diff) {

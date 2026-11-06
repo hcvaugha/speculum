@@ -35,7 +35,7 @@ if [ -n "${SPECULUM_ADMIN_PASSWORD:-}" ]; then
 fi
 # One-click approvals on signups.html: a token limited to Access policies, from the CLOUDFLARE_ACCESS_TOKEN secret.
 if [ -n "${CLOUDFLARE_ACCESS_TOKEN:-}" ]; then
-  printf '%s' "$CLOUDFLARE_ACCESS_TOKEN" | npx --yes wrangler@3 pages secret put CF_ACCESS_TOKEN --project-name speculum-public >/dev/null \
+  printf '%s' "$(printf '%s' "$CLOUDFLARE_ACCESS_TOKEN" | tr -d '[:space:]')" | npx --yes wrangler@3 pages secret put CF_ACCESS_TOKEN --project-name speculum-public >/dev/null \
     && printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | npx --yes wrangler@3 pages secret put CF_ACCOUNT_ID --project-name speculum-public >/dev/null \
     && echo "early-access approvals enabled" || echo "::warning::Could not enable early-access approvals."
 fi
