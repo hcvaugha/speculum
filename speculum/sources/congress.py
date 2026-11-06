@@ -35,6 +35,17 @@ def _list_votes(fetch, key: str, congress: int, session: int) -> list[dict]:
             return items
 
 
+_CLERK_XML = __import__("re").compile(r"^https?://clerk\.house\.gov/evs/(\d{4})/roll0*(\d+)\.xml$")
+
+
+def page_url(url: str | None) -> str | None:
+    """The Clerk's readable page for a House roll call, for links. Congress.gov gives only the XML file
+    (clerk.house.gov/evs/2025/roll144.xml), which a browser shows as code; the page for the same vote is
+    clerk.house.gov/Votes/2025144. The snapshot keeps the XML address: it is the file that is read."""
+    m = _CLERK_XML.match(url or "")
+    return f"https://clerk.house.gov/Votes/{m.group(1)}{int(m.group(2))}" if m else url
+
+
 def _bill_label(v: dict) -> str | None:
     if v.get("legislationType") and v.get("legislationNumber"):
         return f"{v['legislationType']} {v['legislationNumber']}"

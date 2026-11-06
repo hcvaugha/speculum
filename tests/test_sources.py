@@ -510,3 +510,10 @@ def test_advocacy_reads_a_cycle_by_quarter():
     from speculum.sources import advocacy
     q = advocacy._quarters(2024)
     assert len(q) == 8 and q[0] == ("2023-01-01", "2023-03-31") and q[-1] == ("2024-10-01", "2024-12-31")
+
+
+def test_house_roll_calls_link_to_the_clerks_page_not_the_xml():
+    assert congress.page_url("https://clerk.house.gov/evs/2025/roll144.xml") == "https://clerk.house.gov/Votes/2025144"
+    assert congress.page_url("https://clerk.house.gov/evs/2026/roll007.xml") == "https://clerk.house.gov/Votes/20267"
+    s = "https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00001.htm"
+    assert congress.page_url(s) == s and congress.page_url(None) is None

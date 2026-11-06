@@ -134,6 +134,9 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     finance = clean_finance(read_newest(snapshots_root, "finance.json", snap.date, {}), members)
     from ..sources.senate import clean_votes
     votes = clean_votes(read_newest(snapshots_root, "votes.json.gz", snap.date, {"votes": [], "positions": {}}))
+    from ..sources.congress import page_url
+    for v in votes.get("votes", []):
+        v["url"] = page_url(v.get("url"))          # link readers to the vote's page, not the data file
     from ..sources.lda import clean
     lobbying = clean(read_newest(snapshots_root, "lobbying.json", snap.date, {"by_member": {}}), members)
     meta = snap.read("meta.json", {})
@@ -340,6 +343,10 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
     for i, d in enumerate(dates):
         cur = Snapshot(snapshots_root, d)
         ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
+        from ..sources.congress import page_url
+        for s in ed.get("stories") or []:
+            for src in s.get("sources") or []:
+                src["url"] = page_url(src.get("url"))
         eds.append((d, cur, _apply_approvals(ed, approvals.get(d, {}), public)))
     # The record so far: every edition, newest first, with its headlines, for the timeline on each page.
     timeline = [{"date": d, "day": day_number(d), "founding": d == DAY_ZERO, "roll_calls": ed.get("roll_calls"),
