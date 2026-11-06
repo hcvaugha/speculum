@@ -24,7 +24,7 @@ You bought speculum.vote on Cloudflare, so you already have an account.
 
 ## 3. GitHub secrets
 
-In github.com/hcvaugha/speculum: Settings → Secrets and variables → Actions → New repository secret. Add each of these:
+In github.com/speculum-vote/speculum: Settings → Secrets and variables → Actions → New repository secret. Add each of these:
 
 | Name | Value |
 | --- | --- |

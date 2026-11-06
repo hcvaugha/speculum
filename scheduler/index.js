@@ -1,7 +1,7 @@
 // Starts the nightly snapshot on time. GitHub's own schedule is best-effort and often skips runs,
 // so this Cloudflare Worker asks GitHub to start it at the same times. The nightly's gate lets only
 // one full run through per day, so a start here and a scheduled one never both run.
-const REPO = "hcvaugha/speculum";
+const REPO = "speculum-vote/speculum";
 
 async function dispatch(env) {
   const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/nightly.yml/dispatches`, {
