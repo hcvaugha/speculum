@@ -1,0 +1,8 @@
+name = "speculum-scheduler"
+main = "index.js"
+compatibility_date = "2024-09-01"
+workers_dev = false
+
+[triggers]
+# 10:20 UTC (5:20am Eastern in winter), with two later tries; the nightly's gate runs only the first.
+crons = ["20 10 * * *", "50 13 * * *", "20 17 * * *"]

@@ -19,7 +19,7 @@ You bought speculum.vote on Cloudflare, so you already have an account.
 1. **Account ID.** In the Cloudflare dashboard, open speculum.vote. The Account ID is in the right-hand column of the Overview page. Copy it.
 2. **API token.** Click your profile icon → My Profile → API Tokens → Create Token → Create Custom Token.
    - Name: `speculum-deploy`
-   - Permissions: Account → Cloudflare Pages → Edit, and Account → Workers KV Storage → Edit (KV holds readers' disputes; an existing token can be edited to add it)
+   - Permissions: Account → Cloudflare Pages → Edit, Account → Workers KV Storage → Edit (KV holds readers' disputes) and Account → Workers Scripts → Edit (runs the scheduler that starts the nightly on time); an existing token can be edited to add them
    - Create it and copy the token (it is shown once).
 
 ## 3. GitHub secrets
@@ -34,6 +34,7 @@ In github.com/hcvaugha/speculum: Settings → Secrets and variables → Actions 
 | `CLOUDFLARE_API_TOKEN` | the token from step 2 |
 | `CLOUDFLARE_ACCOUNT_ID` | the Account ID from step 2 |
 | `ANTHROPIC_API_KEY` | a key from console.anthropic.com → API Keys. It runs the nightly source check: without it nothing new in The Dependents is checked, so nothing new is published. Expect a few dollars a month. |
+| `SPECULUM_DISPATCH_TOKEN` | a GitHub fine-grained token with access to this repository only and the permission Actions → Read and write. The Cloudflare scheduler uses it to start the nightly, because GitHub's own schedule often skips runs. When it expires, make a new one, replace this secret, and rerun the Scheduler workflow. |
 
 Then Settings → Actions → General → Workflow permissions → choose **Read and write permissions** → Save. The nightly job needs this to commit each snapshot and attach the raw archive.
 

@@ -16,6 +16,9 @@ on:
       only:
         description: "Rerun only these sources for that date (space-separated: votes finance lobbying spend advocacy); blank for all"
         required: false
+      by:
+        description: "Left blank by hand; the Cloudflare scheduler sets it so the daily gate applies"
+        required: false
 
 permissions:
   contents: write
@@ -35,12 +38,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # Started by hand: always run. Scheduled by GitHub or by the Cloudflare scheduler: run only if
+          # no full run has started or succeeded today.
+          if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ inputs.by }}" != "scheduler" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; exit 0; fi
           TODAY=$(date -u +%F)
           # Only full runs for today count (scheduled, or by hand with no inputs); a partial rerun
           # (one source, an earlier night) is not tonight's run.
           N=$(gh run list -R "$GITHUB_REPOSITORY" -w nightly.yml -L 30 --json databaseId,createdAt,status,conclusion,displayTitle \
-            --jq "[.[] | select(.databaseId != ${{ github.run_id }}) | select(.displayTitle == \"Nightly snapshot today all\") | select(.createdAt[0:10] == \"$TODAY\")
+            --jq "[.[] | select(.databaseId < ${{ github.run_id }}) | select(.displayTitle == \"Nightly snapshot today all\") | select(.createdAt[0:10] == \"$TODAY\")
                   | select(.status != \"completed\" or .conclusion == \"success\")] | length")
           echo "other nightly runs today that are running or succeeded: $N"
           if [ "$N" -gt 0 ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi

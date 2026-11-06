@@ -1,0 +1,26 @@
+name: Scheduler
+# Deploys the Cloudflare Worker in scheduler/ that starts the nightly snapshot on time.
+on:
+  push:
+    branches: [main]
+    paths: ["scheduler/**", ".github/workflows/scheduler.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy the scheduler
+        working-directory: scheduler
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DISPATCH_TOKEN: ${{ secrets.SPECULUM_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then echo "::error::The SPECULUM_DISPATCH_TOKEN secret is not set (see SETUP.md)."; exit 1; fi
+          npx --yes wrangler@3 deploy
+          printf '%s' "$DISPATCH_TOKEN" | npx --yes wrangler@3 secret put GITHUB_DISPATCH_TOKEN
