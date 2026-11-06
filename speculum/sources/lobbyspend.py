@@ -6,14 +6,18 @@ issue areas it lobbied on. This module totals those reports per quarter.
 
 Counting rules (published on the Method page):
 - Amendments replace the report they amend: the latest posted report per registrant, client and quarter.
+- Only quarterly reports count; registrations (RR, RA) carry no amounts and are skipped.
 - No double counting: an organization's own report includes what it paid outside lobbying firms (LDA
-  guidance), so when a client files for itself, the firms' reports for that client are not added.
+  guidance), so when a client files for itself, the firms' reports for that client are not added. The
+  LDA gives each firm its own client record, so the match is made on the organization's name, with
+  punctuation and endings such as Inc. or LLC set aside.
 - A report lists issue areas but not dollars per area, so its amount is split equally across the areas
   it lists.
 """
 from __future__ import annotations
 
 import logging
+import re
 from collections import defaultdict
 from datetime import date
 
@@ -37,6 +41,18 @@ def due_quarters(today: date) -> list[tuple[int, int]]:
             if _deadline(y, q) <= today:
                 out.append((y, q))
     return out
+
+
+REGISTRATIONS = {"RR", "RA"}
+_ENDINGS = re.compile(r"\b(THE|INC|INCORPORATED|LLC|L L C|LLP|LP|CORP|CORPORATION|CO|COMPANY|LTD|PLC)\b")
+
+
+def name_key(name: str | None) -> str:
+    """An organization's name for matching across filers: case, punctuation and legal endings set aside."""
+    s = (name or "").upper().replace("&", " AND ")
+    s = re.sub(r"\(.*?\)", " ", s).replace("'", "").replace("\u2019", "").replace(".", "")
+    s = re.sub(r"[^A-Z0-9 ]", " ", s)
+    return " ".join(_ENDINGS.sub(" ", s).split())
 
 
 def _amount(x) -> float:
@@ -68,14 +84,16 @@ def aggregate(filings: list[dict]) -> dict:
     latest: dict[tuple, dict] = {}
     for f in filings:
         reg, cli = f.get("registrant") or {}, f.get("client") or {}
-        if not reg.get("id") or not cli.get("id"):
+        if not reg.get("id") or not cli.get("id") or (f.get("filing_type") or "") in REGISTRATIONS:
             continue
         k = (reg["id"], cli["id"])
         if k not in latest or (f.get("dt_posted") or "") > (latest[k].get("dt_posted") or ""):
             latest[k] = f
     reports = list(latest.values())
-    self_filed = {(f.get("client") or {}).get("id") for f in reports
-                  if (f.get("client") or {}).get("client_self_select") and _amount(f.get("expenses")) > 0}
+    self_filed = set()
+    for f in reports:
+        if f["client"].get("client_self_select") and _amount(f.get("expenses")) > 0:
+            self_filed |= {name_key(f["client"].get("name")), name_key(f["registrant"].get("name"))} - {""}
 
     issues: dict[str, dict] = {}
     clients: dict[str, dict] = {}
@@ -85,7 +103,7 @@ def aggregate(filings: list[dict]) -> dict:
         reg, cli = f["registrant"], f["client"]
         own = bool(cli.get("client_self_select"))
         amt = _amount(f.get("expenses")) if own else _amount(f.get("income"))
-        if not own and cli["id"] in self_filed:
+        if not own and name_key(cli.get("name")) in self_filed:
             amt_counted = 0.0            # already inside the client's own report
         else:
             amt_counted = amt

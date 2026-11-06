@@ -18,7 +18,7 @@
 <h2>What followed</h2>
 {% if a.traced %}
 <p>{{ a.traced|length }} decision{{ 's' if a.traced|length != 1 }} in this area {{ 'are' if a.traced|length != 1 else 'is' }} traced to recorded outcomes in <a href="../dependents.html">The Dependents</a>:</p>
-<ul class="plain">{% for c in a.traced %}<li><a href="../chain/{{ c.id }}.html">{{ c.title }}</a> <span class="muted">· {{ c.date }}</span></li>{% endfor %}</ul>
+<ul class="plain">{% for c in a.traced %}<li><a href="../chain/{{ c.id }}.html">{{ c.bill|billname }}{% if c.country %}: arms to {{ 'the ' if c.country in ['United Arab Emirates', 'United Kingdom', 'Philippines', 'Netherlands'] else '' }}{{ c.country }}{% endif %}</a> <span class="muted">· {{ c.date }}</span></li>{% endfor %}</ul>
 {% else %}
 <p class="muted">No decision in this area has been traced to recorded outcomes yet.</p>
 {% endif %}

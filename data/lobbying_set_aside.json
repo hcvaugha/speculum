@@ -1,0 +1,15 @@
+{
+  "_how": "Filers whose lobbying-spending reports (LD-2) are left out of the totals on the Money pages, each with the reason and the filings, so anyone can check the decision. Their reports stay in the raw archive. Contributions (LD-203) are not affected.",
+  "set_aside": [
+    {
+      "client": "State of LOC Nation Global Public Benefit Corporation",
+      "registrant": "LOC Community Association",
+      "reason": "Reports the same $20,000,000 in income every quarter since 2025 from a client describing itself as a nation, with the issue areas changing from one amendment to the next. One filer would otherwise be the largest lobbying spender in finance and government operations. Left out until the amounts can be confirmed.",
+      "filings": [
+        "https://lda.gov/filings/public/filing/4d5b1cb0-0971-43b8-958b-d260e2be8af1/print/",
+        "https://lda.gov/filings/public/filing/1d624ae1-cb98-4219-9e2e-75ac71ea1617/print/",
+        "https://lda.gov/filings/public/filing/06ab9786-9457-4175-8c3f-e026d61e802a/print/"
+      ]
+    }
+  ]
+}

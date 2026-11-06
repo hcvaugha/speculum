@@ -30,3 +30,17 @@ def test_due_quarters_follow_the_filing_deadlines():
     assert lobbyspend.due_quarters(date(2025, 4, 20)) == [(2025, 1)]
     assert lobbyspend.due_quarters(date(2026, 11, 6))[-1] == (2026, 3)
     assert len(lobbyspend.due_quarters(date(2026, 11, 6))) == 7
+
+
+def test_firm_reports_match_the_clients_own_report_by_name_and_registrations_are_skipped():
+    own = _f(1, 10, True, expenses="200000")
+    own["client"]["name"] = own["registrant"]["name"] = "Acme Corporation"
+    firm = _f(2, 77, False, income="60000")              # the firm's own client record: another id
+    firm["client"]["name"] = "ACME CORP."
+    other = _f(3, 88, False, income="10000", posted="2025-04-02")
+    reg = _f(3, 88, False, posted="2025-06-01")           # a later registration amendment, no amounts
+    reg["filing_type"] = "RA"
+    a = lobbyspend.aggregate([own, firm, other, reg])
+    assert a["total"] == 210000
+    assert lobbyspend.name_key("The Boeing Company") == lobbyspend.name_key("BOEING CO")
+    assert lobbyspend.name_key("Bank of America, N.A.") != lobbyspend.name_key("Bank of the West")

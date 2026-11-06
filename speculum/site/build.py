@@ -29,6 +29,8 @@ def money(x) -> str:
     x = float(x or 0)
     if x < 0:
         return "−" + money(-x)
+    if abs(x) >= 1e9:
+        return f"${x / 1e9:,.2f}B"
     if abs(x) >= 1e6:
         return f"${x / 1e6:,.1f}M"
     if abs(x) >= 1e4:
@@ -135,7 +137,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         })
     rows.sort(key=lambda r: r["sort_name"])
     from .. import money as money_mod
-    mb = money_mod.build(members, finance, lobbying, read_newest(snapshots_root, "spend.json", snap.date))
+    mb = money_mod.build(members, finance, lobbying, read_newest(snapshots_root, "spend.json", snap.date),
+                         set_aside=_set_aside(snapshots_root))
     (prev / "index.html").write_text(E.get_template("chamber.html").render(
         root="", page="chamber", rows=rows, members=members, mb=mb,
         fec_through=max((f.get("coverage_end") or "" for f in finance.values()), default=None) or meta.get("fec_through"),
@@ -194,7 +197,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         root="", page="lameduck", rows=ld_rows, as_of=(ld.get("as_of") or "")[:10] or "—",
         min_after=lameduck_mod.MIN_AFTER, **common), encoding="utf-8")
     from .. import money as money_mod
-    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", money_areas=money_mod.AREAS, **common), encoding="utf-8")
+    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", money_areas=money_mod.AREAS, set_aside=_set_aside(snapshots_root), **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
     slim = {bio: {**{k: v for k, v in L.items() if k != "lobbyist_items"}, "lobbyist_count": len(L.get("lobbyist_items") or [])}
@@ -246,11 +249,16 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
     return chains
 
 
+def _set_aside(snapshots_root: Path) -> list[dict]:
+    p = Path(snapshots_root).parent / "lobbying_set_aside.json"
+    return json.loads(p.read_text())["set_aside"] if p.exists() else []
+
+
 def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, finance, lobbying, chains, common) -> None:
     """Where the money goes, and Shared funders (see speculum/money.py)."""
     from .. import money as money_mod
     spend = read_newest(snapshots_root, "spend.json", date)
-    data = money_mod.build(members, finance, lobbying, spend, chains)
+    data = money_mod.build(members, finance, lobbying, spend, chains, set_aside=_set_aside(snapshots_root))
     have = {p.stem for p in (prev / "interest").glob("*.html")}
     for o in data["orgs"]:
         o["name"] = org_name(o["name"] or "")

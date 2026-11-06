@@ -4,7 +4,7 @@ name: Deploy site
 on:
   push:
     branches: [main]
-    paths: ["speculum/**", "functions/**", "scripts/**", "data/chains/**", "data/tide/**", "data/site.json", ".github/workflows/site.yml"]
+    paths: ["speculum/**", "functions/**", "scripts/**", "data/chains/**", "data/tide/**", "data/site.json", "data/lobbying_set_aside.json", ".github/workflows/site.yml"]
   workflow_dispatch:
 
 jobs:

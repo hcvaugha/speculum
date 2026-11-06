@@ -98,7 +98,10 @@ def _feca(lobbying: dict, members: list[dict]):
             yield str(r.get("registrant_id") or ""), r.get("reported_by") or "", m, float(r["amount"])
 
 
-def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None, chains: list[dict] | None = None) -> dict:
+def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None, chains: list[dict] | None = None,
+          set_aside: list[dict] | None = None) -> dict:
+    from .sources.lobbyspend import name_key
+    aside = {name_key(x["client"]) for x in set_aside or []}
     mix = _registrant_mix(spend or {})
     st = seats(members)
     two = st["all"].get("D", 0) + st["all"].get("R", 0)
@@ -126,12 +129,19 @@ def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None
     spend_area: dict[str, float] = defaultdict(float)
     spend_codes: dict[str, dict] = {}
     top_clients: dict[str, dict] = defaultdict(lambda: defaultdict(lambda: {"name": "", "amount": 0.0}))
+    aside_total = 0.0
     for label, q in quarters:
         for code, v in (q.get("issues") or {}).items():
             spend_area[area_of_code(code)] += v["amount"]
             e = spend_codes.setdefault(code, {"name": v["name"], "amount": 0.0, "area": area_of_code(code)})
             e["amount"] += v["amount"]
         for c in q.get("top_clients") or []:
+            if name_key(c["name"]) in aside:          # published on the Method page, with the filings
+                aside_total += c["amount"]
+                for code, amt in (c.get("issues") or {}).items():
+                    spend_area[area_of_code(code)] -= amt
+                    spend_codes[code]["amount"] -= amt
+                continue
             for code, amt in (c.get("issues") or {}).items():
                 t = top_clients[area_of_code(code)][c["id"]]
                 t["name"], t["amount"] = c["name"], t["amount"] + amt
@@ -139,7 +149,8 @@ def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None
     # Decisions traced in The Dependents, by area (arms sales are defense and foreign affairs)
     traced = defaultdict(list)
     for c in chains or []:
-        traced["defense-foreign"].append({"id": c["id"], "title": c.get("title"), "date": c.get("date")})
+        traced["defense-foreign"].append({"id": c["id"], "bill": c.get("bill"), "country": c.get("country"),
+                                          "title": c.get("title"), "date": c.get("date")})
 
     areas = []
     for key in list(AREAS) + [FIRMS, UNPLACED]:
@@ -185,6 +196,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None
         "areas": areas,
         "spend_codes": sorted(({"code": k, **v} for k, v in spend_codes.items()), key=lambda x: -x["amount"]),
         "spend_total": round(sum(spend_area.values()), 2),
+        "set_aside": [{**x, "amount": None} for x in set_aside or []], "set_aside_total": round(aside_total, 2),
         "spend_quarters": [label for label, q in quarters],
         "spend_partial": [label for label, q in quarters if not q.get("complete")],
         "given_total": round(sum(a["given_total"] for a in areas), 2),
