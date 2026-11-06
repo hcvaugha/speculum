@@ -32,7 +32,15 @@ async function findPolicy(env) {
   throw new Error(`No Access policy named "${POLICY_NAME}" was found.`);
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(ctx) {
+  try {
+    return await handle(ctx);
+  } catch (e) {                                   // never answer with Cloudflare's HTML error page
+    return json({ error: `Server error: ${e && e.message ? e.message : e}` }, 500);
+  }
+}
+
+async function handle({ request, env }) {
   if (!env.SIGNUPS || !env.ADMIN_KEY) return json({ error: 'The list is not set up yet.' }, 503);
   if (!env.CF_ACCESS_TOKEN || !env.CF_ACCOUNT_ID) return json({ error: 'Approvals need the CLOUDFLARE_ACCESS_TOKEN secret (see SETUP.md).' }, 503);
   const day = new Date().toISOString().slice(0, 10);

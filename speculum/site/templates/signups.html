@@ -45,18 +45,20 @@
     var r = rows[+t.getAttribute('data-i')], a = t.getAttribute('data-a');
     if (a === 'remove' && !confirm('Remove ' + r.email + ' from early access?')) return;
     t.textContent = a === 'approve' ? 'Approving…' : 'Removing…';
-    fetch('api/approve', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: pass, email: r.email, action: a }) })
-      .then(function (x) { return x.json(); })
+    fetch('/api/approve', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: pass, email: r.email, action: a }) })
+      .then(function (x) { return x.text().then(function (t) {
+        try { return JSON.parse(t); } catch (e) { return { error: 'The site answered ' + x.status + ': ' + t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300) }; }
+      }); })
       .then(function (j) {
         if (j.error) { alert(j.error); render(); return; }
         r.approved = j.approved ? new Date().toISOString() : null; render();
       })
-      .catch(function () { alert('Could not reach the site.'); render(); });
+      .catch(function (e) { alert('Could not reach the site: ' + (e && e.message ? e.message : e)); render(); });
   });
   function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   f.addEventListener('submit', function (e) {
     e.preventDefault(); msg.textContent = 'Checking…';
-    fetch('api/signups', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: f.key.value }) })
+    fetch('/api/signups', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: f.key.value }) })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (j.error) { msg.textContent = j.error; return; }
