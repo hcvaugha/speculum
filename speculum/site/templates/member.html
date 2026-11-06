@@ -102,7 +102,7 @@
 <thead><tr><th>Date</th><th>Question</th><th>Result</th><th>Vote</th></tr></thead>
 <tbody>
 {% for v in recent %}
-<tr><td class="num">{{ v.date[:10] }}</td><td>{% if v.url %}<a href="{{ v.url }}">{{ v.question }}</a>{% else %}{{ v.question }}{% endif %}{% if v.bill %} <span class="muted">{{ v.bill }}</span>{% endif %}</td><td class="muted">{{ v.result }}</td>
+<tr><td class="num">{{ v.date[:10] }}</td><td>{% if v.url %}<a href="{{ v.url }}">{{ v.question }}</a>{% else %}{{ v.question }}{% endif %}{% if v.bill %}{% set sl = (v.congress or 119)|string ~ '-' ~ (v.bill|billnorm|lower) %} {% if sl in bill_slugs %}<a class="muted" href="../bill/{{ sl }}.html" title="Who lobbied this bill">{{ v.bill }}</a>{% else %}<span class="muted">{{ v.bill }}</span>{% endif %}{% endif %}</td><td class="muted">{{ v.result }}</td>
 <td><span class="pos pos-{{ v.side or 'X' }}">{{ v.position }}</span>{% if v.dissent %} <span class="dissent">against party</span>{% endif %}</td></tr>
 {% endfor %}
 </tbody></table></div>

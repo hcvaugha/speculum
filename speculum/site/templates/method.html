@@ -49,6 +49,15 @@
 </tbody></table></div>
 <p><b>What it does not say.</b> These measures count money and where it went. They do not say what it bought, and they do not compare the parties' votes; contributions and lobbying are legal and reported.</p>
 
+<h2 id="bills">Who lobbies each bill</h2>
+<p>Every quarterly lobbying report (LD-2) describes what was lobbied on, in the lobbyists' own words, and often names bills. A bill is counted as lobbied by an organization when a report for that organization names it ("H.R. 1", "S. 2296", "S.J.Res. 26"). Senate bills are read only with their period ("S. 12"), so stray capitals are not taken for bills. Reports from 2025 and 2026 are read as naming bills of the 119th Congress; a mention in a quarter that ended before the bill was introduced is left out, since it refers to an earlier Congress's bill of the same number.</p>
+<p>Reports say which bills were lobbied on, not which side the organization took or how much it spent on each bill, so neither is shown. Organizations are counted once per bill, by name. A bill gets a page when at least {{ bill_min_orgs }} organizations named it, or when it had a roll call and anyone named it.</p>
+<p><b>Former officials.</b> Each report lists its lobbyists and any covered government post they held (for example a congressional staff or executive-branch position), as they report it. A bill's list counts lobbyists who named it on a report and list such a post.</p>
+<p><b>Money to the members who voted.</b> For each roll call, the federal campaign contributions (LD-203) from the organizations that lobbied the bill and file their own lobbying reports, to the members who voted yea and to those who voted nay. Every contribution reported since 2025 counts, before or after the vote. Contributions from lobbying firms are not counted, since a firm works for many clients.</p>
+<p><b>Sectors.</b> An organization is placed by its own description of its business on its lobbying registration, read against the rules below in order; the first rule whose words appear wins. When the description is blank or matches nothing, its name is read the same way. An organization the filing marks as a government entity is placed under governments. A word ending in * matches any word that starts with it. Sectors are grouped as business, labor unions, advocacy and nonprofits, education and research, and governments.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Order</th><th>Sector</th><th>Words</th></tr></thead><tbody>
+{% for k, words in sector_rules %}<tr><td class="num">{{ loop.index }}</td><td>{{ sector_names[k] }} <span class="muted">· {{ sector_groups[k] }}</span></td><td class="muted" style="font-size:13px">{{ words|join(', ') }}</td></tr>{% endfor %}
+</tbody></table></div>
 <h2 id="findings">Findings</h2>
 <p>The Findings page holds a fixed list of measures, recomputed every night. A measure is added only with a note here, and never dropped because of what it shows.</p>
 <ul class="plain">

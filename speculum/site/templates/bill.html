@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ x.label }} · Who lobbies each bill · Speculum{% endblock %}
+{% block body %}
+<p class="meta"><a href="../bills.html">← Who lobbies each bill</a></p>
+<h1>{{ x.label }}</h1>
+{% if x.title %}<p class="lede">{{ x.title }}</p>{% else %}<p class="lede muted">Title not yet read from Congress.gov.</p>{% endif %}
+{% set i = x.info %}
+<p class="meta">{{ x.congress }}th Congress{% if i.introduced %} · introduced {{ i.introduced|shortdate }}{% endif %}{% if i.sponsor %} · sponsor: {% if i.sponsor_bioguide %}<a href="../member/{{ i.sponsor_bioguide }}.html">{{ i.sponsor }}</a>{% else %}{{ i.sponsor }}{% endif %}{% endif %}{% if i.policy_area %} · {{ i.policy_area }}{% endif %}{% if i.url %} · <a href="{{ i.url }}">Congress.gov</a>{% endif %}</p>
+{% if i.latest_action and i.latest_action.text %}<p class="meta">Latest action{% if i.latest_action.date %}, {{ i.latest_action.date|shortdate }}{% endif %}: {{ i.latest_action.text }}</p>{% endif %}
+
+<h2>Who lobbied it</h2>
+<div class="mstats">
+  <div><b class="num">{{ x.n_orgs|num }}</b><span>organizations named it on lobbying reports</span></div>
+  <div><b class="num">{{ x.reports|num }}</b><span>reports, {{ x.quarters|first }} to {{ x.quarters|last }}</span></div>
+  <div><b class="num">{{ (x.business_share or 0)|pct }}</b><span>of the organizations are businesses or business groups</span></div>
+  <div><b class="num">{{ x.former|length|num }}</b><span>of its lobbyists list a former government post</span></div>
+</div>
+<div class="gbar big">{% for g in x.groups %}<span style="width:{{ 100 * g.n / x.n_orgs }}%;background:{{ group_colors[g.name] }}" title="{{ g.name }}: {{ g.n }}"></span>{% endfor %}</div>
+<div class="glegend">{% for g in x.groups %}<span><i style="background:{{ group_colors[g.name] }}"></i>{{ g.name }} {{ g.n|num }}</span>{% endfor %}</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Sector</th><th class="r">Organizations</th><th class="r">Share</th></tr></thead>
+<tbody>{% for s in x.sectors|sort(attribute='n', reverse=True) %}<tr><td>{{ s.name }}</td><td class="r num">{{ s.n|num }}</td><td class="r num">{{ (s.n / x.n_orgs)|pct }}</td></tr>{% endfor %}</tbody></table></div>
+<p class="meta">Lobbying reports name the bills an organization lobbied on but not the side it took, or how much of its spending went to this bill.</p>
+
+{% if x.rolls %}
+<h2>Roll calls</h2>
+<p class="meta">How each party voted, and what the organizations that lobbied this bill and file their own reports ({{ x.money_orgs|num }} of them) gave the members who voted each way: every contribution they reported since 2025 (LD-203), before or after the vote. Contributions from lobbying firms are not counted.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Date</th><th>Question</th><th>Result</th><th>Democrats</th><th>Republicans</th><th class="r">To members voting yes</th><th class="r">To members voting no</th></tr></thead>
+<tbody>{% for r in x.rolls %}
+<tr><td class="num">{{ r.date }}</td><td>{% if r.url %}<a href="{{ r.url }}">{{ r.question }}</a>{% else %}{{ r.question }}{% endif %} <span class="muted">· {{ 'House' if r.chamber == 'house' else 'Senate' }}</span></td><td class="muted">{{ r.result }}</td>
+{% for p in ['D', 'R'] %}{% set t = r.party.get(p, {}) %}<td class="num">{{ t.get('Y', 0) }} yes · {{ t.get('N', 0) }} no</td>{% endfor %}
+<td class="r num">{{ r.money.Y|money }} <span class="muted">· {{ r.got.Y }} of {{ r.n.Y }}</span></td><td class="r num">{{ r.money.N|money }} <span class="muted">· {{ r.got.N }} of {{ r.n.N }}</span></td></tr>
+{% endfor %}</tbody></table></div>
+<p class="meta">"12 of 210" means 12 of the 210 members who voted that way received contributions from these organizations.</p>
+{% endif %}
+
+{% if x.former %}
+<h2>Former government officials among its lobbyists</h2>
+<p class="meta">Lobbyists who named this bill on a report and list a covered government post, as they reported it.</p>
+<details{% if x.former|length <= 20 %} open{% endif %}><summary>{{ x.former|length|num }} lobbyist{{ 's' if x.former|length != 1 }}</summary>
+<ul class="plain former">{% for p in x.former %}<li><b>{{ p.name }}</b> <span class="muted">· {{ p.post }}</span></li>{% endfor %}</ul></details>
+{% endif %}
+
+<h2>The organizations</h2>
+{% for s in x.sectors %}
+<details{% if x.n_orgs <= 40 %} open{% endif %}><summary>{{ s.name }} <span class="muted">· {{ s.n|num }}</span></summary>
+<ul class="plain orgs">{% for o in x.orgs if o.sector == s.key %}<li>{{ o.name|org }}</li>{% endfor %}</ul></details>
+{% endfor %}
+<div class="notice">Naming a bill on a lobbying report shows an organization worked on it, not which way. How sectors are assigned and what is counted is on the <a href="../method.html#bills">Method</a> page.</div>
+{% endblock %}

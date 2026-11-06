@@ -267,3 +267,17 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { padding: 4px 0; }
 .holding .early .fine { font-size: 12px; color: var(--ink-3); margin: 10px 0 0; text-align: center; }
 .holding .follow { margin: 28px 0 0; font: 400 13px/1.6 var(--mono); color: var(--ink-3); letter-spacing: .04em; }
 .holding .follow a { color: var(--ink-2); }
+
+/* Who lobbies each bill */
+.gbar { display: flex; height: 10px; background: var(--line-soft); overflow: hidden; }
+.gbar.big { height: 16px; margin: 18px 0 8px; }
+.gbar span { display: block; height: 100%; }
+.gsub { font-size: 12px; margin-top: 3px; }
+.glegend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); margin: 10px 0 14px; }
+.glegend i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+.btitle { font-size: 13px; color: var(--ink-2); margin-top: 2px; max-width: 520px; }
+.billfind { margin: 8px 0 14px; font-size: 14px; color: var(--ink-2); }
+.billfind input { background: var(--panel); color: var(--ink); border: 1px solid var(--line); padding: 6px 10px; font: 14px var(--sans); margin-left: 8px; width: 210px; }
+ul.orgs, ul.former { columns: 2 280px; column-gap: 28px; margin: 8px 0 16px; }
+ul.orgs li, ul.former li { break-inside: avoid; margin: 2px 0; font-size: 14px; }
+details > summary { cursor: pointer; padding: 6px 0; color: var(--ink); }

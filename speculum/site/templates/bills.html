@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Who lobbies each bill · Speculum{% endblock %}
+{% block body %}
+<h1>Who lobbies each bill</h1>
+<p class="lede">Every bill that organizations name on their quarterly lobbying reports, with who they are. A report says which bills were lobbied on, not which side the organization took.</p>
+<p class="meta">{{ b.bills|length|num }} bills named by at least {{ b.min_orgs }} organizations, or voted on and lobbied, {{ b.quarters|first }} to {{ b.quarters|last }}. Organizations are placed in sectors by their own description of their business. <a href="method.html#bills">How this is counted →</a></p>
+<div class="glegend">{% for g, c in group_colors.items() %}<span><i style="background:{{ c }}"></i>{{ g }}</span>{% endfor %}</div>
+<form class="billfind" id="billfind" onsubmit="return false"><label>Find a bill <input id="billq" placeholder="e.g. H.R. 1 or S. 2296" autocomplete="off"></label> <span id="billmsg" class="muted"></span></form>
+<div class="tbl-wrap"><table class="bills">
+<thead><tr><th>Bill</th><th class="r">Organizations</th><th>Who they are</th><th class="r">Former officials lobbying</th><th class="r">Roll calls</th></tr></thead>
+<tbody>
+{% for x in b.bills[:500] %}
+<tr><td><a href="bill/{{ x.slug }}.html">{{ x.label }}</a>{% if x.title %}<div class="btitle">{{ x.title|truncate(110) }}</div>{% endif %}</td>
+<td class="r num">{{ x.n_orgs|num }}</td>
+<td style="min-width:160px"><div class="gbar">{% for g in x.groups %}<span style="width:{{ 100 * g.n / x.n_orgs }}%;background:{{ group_colors[g.name] }}" title="{{ g.name }}: {{ g.n }}"></span>{% endfor %}</div>
+<div class="muted gsub">{{ (x.business_share or 0)|pct }} business</div></td>
+<td class="r num">{{ x.former|length|num }}</td><td class="r num">{{ x.rolls|length or '—' }}</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% if b.bills|length > 500 %}<p class="meta">The 500 named by the most organizations are listed; every other bill has its own page, which the box above finds.</p>{% endif %}
+<script>
+(function () {
+  var slugs = {{ slugs_json|safe }};
+  var q = document.getElementById('billq'), msg = document.getElementById('billmsg');
+  function go() {
+    var m = q.value.toUpperCase().replace(/[^A-Z0-9]/g, '').match(/^(HCONRES|SCONRES|HJRES|SJRES|HRES|SRES|HR|S)(\d+)$/);
+    if (!m) { msg.textContent = 'Type a bill number, such as H.R. 1.'; return; }
+    var s = '119-' + (m[1] + parseInt(m[2], 10)).toLowerCase();
+    if (slugs.indexOf(s) >= 0) location.href = 'bill/' + s + '.html';
+    else msg.textContent = 'No page: fewer than {{ b.min_orgs }} organizations named that bill.';
+  }
+  q.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+})();
+</script>
+{% endblock %}

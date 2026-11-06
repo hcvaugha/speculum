@@ -71,6 +71,8 @@ def env() -> Environment:
     e = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
     e.filters["billname"] = billname
     e.filters["longdate"] = longdate
+    e.filters["billnorm"] = lambda b: re.sub(r"[^A-Z0-9]", "", (b or "").upper())
+    e.globals["bill_slugs"] = set()
     e.filters["shortdate"] = shortdate
     e.filters["money"] = money
     e.filters["pct"] = pct
@@ -151,8 +153,9 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         })
     rows.sort(key=lambda r: r["sort_name"])
     from .. import money as money_mod
-    mb = money_mod.build(members, finance, lobbying, read_newest(snapshots_root, "spend.json", snap.date),
-                         set_aside=_set_aside(snapshots_root))
+    spend = read_newest(snapshots_root, "spend.json", snap.date)
+    mb = money_mod.build(members, finance, lobbying, spend, set_aside=_set_aside(snapshots_root))
+    bd = _build_bills(E, prev, spend, votes, members, lobbying, read_newest(snapshots_root, "billinfo.json", snap.date), common)
     (prev / "index.html").write_text(E.get_template("chamber.html").render(
         root="", page="chamber", rows=rows, members=members, mb=mb,
         fec_through=max((f.get("coverage_end") or "" for f in finance.values()), default=None) or meta.get("fec_through"),
@@ -214,7 +217,11 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         root="", page="lameduck", rows=ld_rows, as_of=(ld.get("as_of") or "")[:10] or "—",
         min_after=lameduck_mod.MIN_AFTER, **common), encoding="utf-8")
     from .. import money as money_mod
-    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", money_areas=money_mod.AREAS, set_aside=_set_aside(snapshots_root), **common), encoding="utf-8")
+    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", money_areas=money_mod.AREAS, set_aside=_set_aside(snapshots_root),
+        sector_rules=__import__("speculum.lobbysectors", fromlist=["RULES"]).RULES,
+        sector_names=__import__("speculum.lobbysectors", fromlist=["NAMES"]).NAMES,
+        sector_groups=__import__("speculum.lobbysectors", fromlist=["GROUPS"]).GROUPS,
+        bill_min_orgs=__import__("speculum.bills", fromlist=["MIN_ORGS_FOR_PAGE"]).MIN_ORGS_FOR_PAGE, **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
     slim = {bio: {**{k: v for k, v in L.items() if k != "lobbyist_items"}, "lobbyist_count": len(L.get("lobbyist_items") or [])}
@@ -269,6 +276,24 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
 def _set_aside(snapshots_root: Path) -> list[dict]:
     p = Path(snapshots_root).parent / "lobbying_set_aside.json"
     return json.loads(p.read_text())["set_aside"] if p.exists() else []
+
+
+GROUP_COLORS = {"Business": "#c9a24a", "Labor unions": "#9fc3e6", "Advocacy and nonprofits": "#8fb39a",
+                "Education and research": "#a58fc4", "Governments": "#6f8fae", "Not described": "#4a4540"}
+
+
+def _build_bills(E, prev: Path, spend, votes, members, lobbying, info, common) -> dict:
+    """Who lobbies each bill (see speculum/bills.py)."""
+    from .. import bills as bills_mod
+    bd = bills_mod.build(spend, votes, members, lobbying, info)
+    E.globals["bill_slugs"] = set(bd["by_slug"])
+    (prev / "bill").mkdir(exist_ok=True)
+    (prev / "bills.html").write_text(E.get_template("bills.html").render(
+        root="", page="bills", b=bd, group_colors=GROUP_COLORS, slugs_json=json.dumps(sorted(bd["by_slug"])), **common), encoding="utf-8")
+    tmpl = E.get_template("bill.html")
+    for x in bd["bills"]:
+        (prev / "bill" / f"{x['slug']}.html").write_text(tmpl.render(root="../", page="bills", x=x, group_colors=GROUP_COLORS, **common), encoding="utf-8")
+    return bd
 
 
 def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, finance, lobbying, chains, common) -> dict:

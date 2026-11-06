@@ -44,6 +44,30 @@ def due_quarters(today: date) -> list[tuple[int, int]]:
 
 
 REGISTRATIONS = {"RR", "RA"}
+
+# Bill numbers as lobbyists write them in each activity's description: "H.R. 1", "HR 3838", "S. 2296",
+# "H.Res. 5", "S.J.Res. 26". A Senate bill needs its period ("S. 12") so that stray capitals are not read
+# as bills; the look-behind keeps "U.S. 2025" from being read as S. 2025. Filings from 2025-2026 are read
+# as bills of the 119th Congress.
+_BILL = re.compile(
+    r"(?<![A-Za-z.])(H\.?\s?CON\.?\s?RES|S\.?\s?CON\.?\s?RES|H\.?\s?J\.?\s?RES|S\.?\s?J\.?\s?RES|H\.?\s?RES|S\.?\s?RES|H\.?\s?R|S\.)"
+    r"\.?\s?(\d{1,5})(?![\d])", re.I)
+_BILL_TYPES = {"HCONRES", "SCONRES", "HJRES", "SJRES", "HRES", "SRES", "HR", "S"}
+
+
+def bills_in(text: str | None) -> list[str]:
+    """Bill keys named in a description, e.g. ['HR1', 'S2296'], in order, without repeats."""
+    out = []
+    for m in _BILL.finditer(text or ""):
+        t = re.sub(r"[^A-Z]", "", m.group(1).upper())
+        k = f"{t}{int(m.group(2))}"
+        if t in _BILL_TYPES and int(m.group(2)) > 0 and k not in out:
+            out.append(k)
+    return out
+
+
+def congress_of(year: int) -> int:
+    return (year - 1789) // 2 + 1
 _ENDINGS = re.compile(r"\b(THE|INC|INCORPORATED|LLC|L L C|LLP|LP|CORP|CORPORATION|CO|COMPANY|LTD|PLC)\b")
 
 
@@ -97,6 +121,13 @@ def aggregate(filings: list[dict]) -> dict:
 
     issues: dict[str, dict] = {}
     clients: dict[str, dict] = {}
+    # Who lobbied each bill: organizations (by name, with sector) and lobbyists who list a former government post.
+    from ..lobbysectors import sector as sector_of
+    bill_orgs: dict[str, dict] = {}
+    bill_reports: dict[str, int] = defaultdict(int)
+    bill_lobbyists: dict[str, dict] = {}
+    orgs: dict[str, list] = {}
+    people: dict[str, list] = {}
     registrants: dict[str, dict] = {}
     total, counted = 0.0, 0
     for f in reports:
@@ -108,6 +139,29 @@ def aggregate(filings: list[dict]) -> dict:
         else:
             amt_counted = amt
         codes = sorted({a.get("general_issue_code") for a in f.get("lobbying_activities") or [] if a.get("general_issue_code")})
+        okey = name_key(cli.get("name"))
+        if okey and own and okey in orgs and not orgs[okey][2]:
+            orgs[okey][2] = str(reg["id"])          # the organization files for itself: its LD-203 registrant id
+        if okey and okey not in orgs:
+            orgs[okey] = [cli.get("name"), sector_of(cli.get("general_description") or (reg.get("description") if own else ""),
+                                                     cli.get("name"), bool(cli.get("client_government_entity"))),
+                          str(reg["id"]) if own else ""]
+        named = set()
+        for a in f.get("lobbying_activities") or []:
+            for b in bills_in(a.get("description")):
+                named.add(b)
+                for l in a.get("lobbyists") or []:
+                    pos = (l.get("covered_position") or "").strip()
+                    lid = (l.get("lobbyist") or {}).get("id")
+                    if pos and lid and pos.lower() not in ("n/a", "na", "none"):
+                        bill_lobbyists.setdefault(b, {})[str(lid)] = 1
+                        if str(lid) not in people:
+                            p = l["lobbyist"]
+                            people[str(lid)] = [" ".join(x for x in (p.get("first_name"), p.get("last_name")) if x).title(), pos[:200]]
+        for b in named:
+            if okey:
+                bill_orgs.setdefault(b, {})[okey] = 1
+            bill_reports[b] += 1
         for a in f.get("lobbying_activities") or []:
             c = a.get("general_issue_code")
             if c and c not in issues:
@@ -139,6 +193,12 @@ def aggregate(filings: list[dict]) -> dict:
                          "issues": {c: round(a, 2) for c, a in v["issues"].items()}} for k, v in top],
         "registrants": {k: {"name": v["name"], "own": v["own"], "for_clients": v["for_clients"],
                             "issues": {c: round(a, 2) for c, a in v["issues"].items()}} for k, v in registrants.items()},
+        # Bills named in this quarter's reports. orgs: name key -> [name, sector, registrant id if it files for itself];
+        # people: lobbyist id -> [name, former government post as reported].
+        "bills": {b: {"orgs": sorted(o), "reports": bill_reports[b], "former": sorted(bill_lobbyists.get(b, {}))}
+                  for b, o in bill_orgs.items()},
+        "orgs": {k: orgs[k] for k in set().union(*bill_orgs.values()) if k in orgs} if bill_orgs else {},
+        "people": {k: v for k, v in people.items()},
     }
 
 

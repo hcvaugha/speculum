@@ -80,6 +80,15 @@ def cmd_snapshot(args) -> int:
     spend = step("spend", _spend)
     if spend is not None:
         snap.write("spend.json", spend)
+    def _billinfo():
+        from .sources import billinfo
+        from . import bills as bills_mod
+        wanted = bills_mod.wanted(spend or _latest(snap, "spend.json"), snap.read("votes.json.gz") or _latest(snap, "votes.json.gz"))
+        return billinfo.fetch_bill_info(fetch, keys["congress"], wanted, run_date, previous=_latest(snap, "billinfo.json"),
+                                        deadline=deadline - 140 * 60)
+    info = step("billinfo", _billinfo)
+    if info is not None:
+        snap.write("billinfo.json", info)
     def _advocacy():
         from .sources import advocacy
         from .chains import load_json
@@ -127,7 +136,7 @@ def cmd_snapshot(args) -> int:
         # A partial rerun fills in sources for a night already saved: keep what that night recorded
         # about the sources this run did not touch.
         prior = snap.read("meta.json", {}) or {}
-        skipped = [k for k in ("votes", "finance", "lobbying", "spend", "advocacy") if k not in args.only]
+        skipped = [k for k in ("votes", "finance", "lobbying", "spend", "billinfo", "advocacy") if k not in args.only]
         meta["errors"] = {**{k: v for k, v in (prior.get("errors") or {}).items()
                              if any(k == s or k.startswith(s + "_") for s in skipped)}, **errors}
         if "finance" not in args.only:
@@ -273,7 +282,7 @@ def main(argv=None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("snapshot", help="fetch every source and write today's snapshot")
     s.add_argument("--date", help="override the snapshot date (YYYY-MM-DD)")
-    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying", "spend", "advocacy"])
+    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying", "spend", "billinfo", "advocacy"])
     s.add_argument("--top-committees", type=int, default=50, help="committee givers kept per member (pages show the top 10)")
     b = sub.add_parser("build", help="render the site from the latest snapshot")
     b.add_argument("--out", default="dist")
