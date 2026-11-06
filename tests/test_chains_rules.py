@@ -59,3 +59,30 @@ def test_one_chain_per_resolution_across_chambers_with_money_from_who_lobbied_it
 
 def test_measures_lists_every_selected_resolution_once():
     assert chains.measures(_votes()) == [(119, "HJRES18"), (119, "SJRES9")]
+
+
+def test_each_theme_selects_by_the_titles_the_law_prescribes():
+    R = {r["id"]: r for r in chains.RULES}
+    assert R["reconciliation"]["test"].search("An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.")
+    assert not R["reconciliation"]["test"].search("To create a point of order against any reconciliation bill that would not decrease the cost of housing.")
+    assert R["reconciliation"]["subject"]("An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.") == "H. Con. Res. 14"
+    e = "A joint resolution terminating the national emergency declared to impose duties on articles imported from Canada."
+    assert R["emergencies"]["test"].search(e) and R["emergencies"]["area"](e) == "trade-industry-ag"
+    assert R["emergencies"]["area"]("A joint resolution terminating the national emergency declared with respect to energy.") == "energy-environment"
+    w = ("A joint resolution to direct the removal of United States Armed Forces from hostilities within or against the "
+         "Islamic Republic of Iran that have not been authorized by Congress.")
+    assert R["war-powers"]["test"].search(w) and R["war-powers"]["subject"](w) == "Islamic Republic of Iran"
+    assert not R["war-powers"]["test"].search("To limit the provision of support by the Armed Forces to civilian law enforcement activities.")
+    ids = [r["id"] for r in chains.RULES]
+    assert ids == ["arms-sales", "rules-overturned", "reconciliation", "emergencies", "war-powers"]   # the index's order
+
+
+def test_war_powers_heading_keeps_the_titles_article():
+    v = {"votes": [{"id": "s-119-1-200", "chamber": "senate", "congress": 119, "bill": "SJRES59", "date": "2025-06-27",
+                    "title": "A joint resolution to direct the removal of United States Armed Forces from hostilities against the "
+                             "Islamic Republic of Iran that have not been authorized by Congress.",
+                    "question": "On the Motion to Discharge", "result": "Rejected"}],
+         "positions": {"s-119-1-200": {f"S{i}": "Yea" for i in range(12)}}}
+    c = chains.build(_members(), {}, {"years": [2025]}, v, {}, {}, {}, spend={"quarters": {}}, bill_info={"bills": {}})[0]
+    assert c["heading"] == "removing US forces from hostilities with the Islamic Republic of Iran"
+    assert c["area"] == "defense-foreign" and c["template"] == "chain_rule.html"

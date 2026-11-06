@@ -38,9 +38,11 @@ A public, nonpartisan record of Congress at speculum.vote: how every member vote
 
 Home (`index.html`), The Tide (nightly editions with a dated timeline), Findings (fixed measures), The Chamber (`chamber.html`, every member), The Money (campaign sources, lobbying contributions and spending by issue area, shared funders), Bills (who lobbied each bill, by sector, from LD-2 descriptions; sector rules in `speculum/lobbysectors.py`), Interests, The Dependents (decisions traced to outcomes, by theme), Day Zero, Method, About, Corrections, Join the readers (`join.html`).
 
-The Dependents has two themes, each a rule in `RULES` (`speculum/chains.py`) with its own template:
+The Dependents has five themes, each a rule in `RULES` (`speculum/chains.py`):
 - Foreign arms sales (`chain.html`): Senate votes on Arms Export Control Act disapprovals; money from SIPRI Top 100 companies (`data/sectors.json`).
 - Regulations overturned (`chain_rule.html`, added November 6): every roll call in either chamber on a Congressional Review Act disapproval; one chain per resolution across both chambers. Money around each chamber's last vote comes from organizations whose LD-2 reports name the resolution (LD-203, through the vote date). The drafter has its own brief (`SYSTEM_RULE` in `speculum/interpret.py`): the rule, what it required, and the agency's own benefit and cost estimates side by side. It drafts resolutions that became law first, oldest first. 48 resolutions; at 3 drafts a night (`--limit 3` in `nightly.yml`), research takes about 16 nights, and each chain goes public once its record passes the source check. The Dependents' measures are fetched first in the nightly bill-details step, so every resolution's final status (became law or not) is known.
+- Budget reconciliation, Ending national emergencies and War powers (added November 6): same page (`chain_rule.html`) and money method as regulations. Each rule has a `page` block that sets its heading, subject, record fields and closing note. Each has its own drafter brief (`BRIEFS` in `speculum/interpret.py`). Selected by statutory title wording: "to provide for reconciliation pursuant to" (2 bills: H.R. 1, S. 2); "terminating the national emergency declared" (7, all Senate so far); "removal of United States Armed Forces from hostilities" (18, Senate so far). House votes on these appear as House bill titles arrive.
+- 75 chains await research across the four newer themes. At 3 drafts a night that is about 25 nights; raising `--limit` on the chains step in `nightly.yml` speeds it up at more API cost.
 
 ## Next, in order
 
@@ -58,4 +60,4 @@ The Dependents has two themes, each a rule in `RULES` (`speculum/chains.py`) wit
 - GitHub's own cron is unreliable; the Cloudflare scheduler is the main trigger.
 - To check: LD-203 years follow the current Congress (`_years` in `speculum/sources/lda.py`). From January 1, 2027 the window is 2027 only, so Year-End 2026 contribution reports (July–December 2026, filed by January 30, 2027) would not be fetched. Decide whether the window should keep the previous Congress's final year until those reports are in.
 - Bills list and lobbied-bill ranking break ties by bill number, so the order a file lists bills in never changes a page.
-- Further Dependents themes considered: budget reconciliation (6 measures, CBO estimates), ending national emergencies, mostly tariffs (7), war powers (3). Each needs a rule, a money source and a drafter brief, as above.
+- Adding a Dependents theme: a rule in `RULES` (title test from the statute, subject parser, area, `page` block, `why` with verified sources) and a drafter brief in `BRIEFS`.

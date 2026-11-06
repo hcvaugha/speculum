@@ -89,6 +89,122 @@ RULES = [
             {"title": "5 U.S. Code 801: Congressional review", "url": "https://www.law.cornell.edu/uscode/text/5/801", "publisher": "LII, Cornell Law School", "date": None},
             {"title": "5 U.S. Code 802: Congressional disapproval procedure", "url": "https://www.law.cornell.edu/uscode/text/5/802", "publisher": "LII, Cornell Law School", "date": None},
         ],
+        "subject": lambda t: rule_parts(t)[0],
+        "page": {
+            "subject_label": "Agency", "heading": "overturning a rule of the {subject}", "fixed_article": True, "measure": "resolution",
+            "record_title": "What the rule did", "record_noun": "the record of the rule",
+            "unresearched": "What the rule did and what followed have not been researched yet.",
+            "main": "required",
+            "pair": [["benefits", "The agency's estimate of benefits"], ["costs", "The agency's estimate of costs"],
+                     "Both from the agency's own analysis of the rule. They are estimates made when the rule was written, not records of what happened."],
+            "lines": [["agency_reasons", "Stated purpose (the agency)"], ["sponsor_reasons", "Stated reasons for the resolution (sponsors and supporters)"]],
+            "status_label": "What became of the rule", "estimate_example": "the agency's own analysis",
+            "decision": "Congress's vote on whether to overturn this rule",
+        },
+    },
+    {
+        "id": "reconciliation",
+        "name": "Budget reconciliation",
+        # Every reconciliation bill: its title is fixed as "to provide for reconciliation pursuant to" the budget resolution.
+        "test": re.compile(r"to provide for reconciliation pursuant to", re.I),
+        "sector": None, "money": "lobbied", "template": "chain_rule.html", "area": "tax-budget",
+        "yes_means": "advance or pass the bill",
+        "no_means": "oppose it",
+        "why": "A budget resolution can direct committees to recommend changes in law to spending, revenues or the "
+               "debt limit; a reconciliation bill carries out those instructions (2 U.S.C. 641). In the Senate, "
+               "debate on a reconciliation bill, its amendments and related motions is limited to 20 hours, and a "
+               "provision that does not produce a change in outlays or revenues can be struck as extraneous on a "
+               "point of order (2 U.S.C. 644). Like any bill, it becomes law only when passed by both chambers and "
+               "signed by the President, or passed over a veto by two-thirds of each chamber.",
+        "why_sources": [
+            {"title": "2 U.S. Code 641: Reconciliation", "url": "https://www.law.cornell.edu/uscode/text/2/641", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "2 U.S. Code 644: Extraneous matter in reconciliation legislation", "url": "https://www.law.cornell.edu/uscode/text/2/644", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "Constitution of the United States, Article I", "url": "https://www.law.cornell.edu/constitution/articlei", "publisher": "LII, Cornell Law School", "date": None},
+        ],
+        "subject": lambda t: (re.search(r"pursuant to (?:title [IVXLC\d]+ of )?(.+?)\.?$", re.sub(r"\s+", " ", t or "").strip()) or [None, None])[1],
+        "page": {
+            "subject_label": "Budget resolution", "heading": "budget reconciliation under {subject}", "measure": "bill",
+            "record_title": "What the bill did", "record_noun": "the record of the bill",
+            "unresearched": "What the bill did and what followed have not been researched yet.",
+            "main": "summary",
+            "pair": [["budget_effect", "The Congressional Budget Office's estimate of the effect on deficits"],
+                     ["distribution", "The Congressional Budget Office's estimate of effects by household income"],
+                     "Both from the Congressional Budget Office. They are estimates made when the bill was considered, not records of what happened."],
+            "lines": [["sponsor_reasons", "Stated reasons (supporters)"], ["opponent_reasons", "Stated objections (opponents)"]],
+            "status_label": "What became of the bill", "estimate_example": "a Congressional Budget Office estimate",
+            "decision": "Congress's votes on this reconciliation bill",
+        },
+    },
+    {
+        "id": "emergencies",
+        "name": "Ending national emergencies",
+        # Every resolution to end a national emergency under the National Emergencies Act (50 U.S.C. 1622).
+        "test": re.compile(r"terminating the national emergency declared", re.I),
+        "sector": None, "money": "lobbied", "template": "chain_rule.html",
+        "area": lambda t: "energy-environment" if re.search(r"\benergy\b", t or "", re.I) else "trade-industry-ag",
+        "yes_means": "advance or pass the resolution ending the emergency",
+        "no_means": "oppose it",
+        "why": "Under the National Emergencies Act, a national emergency declared by the President ends when a joint "
+               "resolution terminating it is enacted into law (50 U.S.C. 1622). While an emergency lasts, each "
+               "chamber is to meet every six months to consider a vote on ending it, and a resolution to end it is to "
+               "be reported by committee within fifteen calendar days of referral and voted on within three calendar "
+               "days after that, unless the chamber decides otherwise by a recorded vote. As a joint resolution, it "
+               "takes effect only if signed by the President or passed over a veto by two-thirds of each chamber. "
+               "Several of the emergencies here were declared to impose duties on imports, as the resolutions' titles state.",
+        "why_sources": [
+            {"title": "50 U.S. Code 1622: National emergencies", "url": "https://www.law.cornell.edu/uscode/text/50/1622", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "Constitution of the United States, Article I", "url": "https://www.law.cornell.edu/constitution/articlei", "publisher": "LII, Cornell Law School", "date": None},
+        ],
+        "subject": lambda t: (re.search(r"national emergency declared (.+?)\.?$", re.sub(r"\s+", " ", t or "").strip()) or [None, None])[1],
+        "page": {
+            "subject_label": "Emergency", "heading": "ending the national emergency declared {subject}", "measure": "resolution",
+            "record_title": "What the emergency did", "record_noun": "the record of the emergency",
+            "unresearched": "What the emergency did and what followed have not been researched yet.",
+            "main": "declared",
+            "pair": None,
+            "lines": [["estimates", "Official estimates of its effects"], ["executive_reasons", "Stated basis (the President)"],
+                      ["sponsor_reasons", "Stated reasons for the resolution (sponsors and supporters)"]],
+            "status_label": "What became of the emergency", "estimate_example": "an official estimate of a tariff's effects",
+            "decision": "Congress's vote on whether to end this emergency",
+        },
+    },
+    {
+        "id": "war-powers",
+        "name": "War powers",
+        # Every resolution or bill directing the removal of US forces from hostilities (War Powers Resolution,
+        # 50 U.S.C. 1544(c), and 50 U.S.C. 1546a).
+        "test": re.compile(r"(?:remove|removal of) United States Armed Forces from hostilities", re.I),
+        "sector": None, "money": "lobbied", "template": "chain_rule.html", "area": "defense-foreign",
+        "yes_means": "advance or pass the resolution directing removal of the forces",
+        "no_means": "oppose it",
+        "why": "Under the War Powers Resolution, the President must end a use of United States Armed Forces in "
+               "hostilities within sixty days of reporting it, unless Congress has declared war or specifically "
+               "authorized it, has extended the period by law, or cannot meet because of an armed attack; the period "
+               "can be extended by up to thirty days for unavoidable military necessity (50 U.S.C. 1544(b)). Section "
+               "5(c) provides that forces engaged in hostilities abroad without a declaration of war or specific "
+               "statutory authorization shall be removed if Congress so directs by concurrent resolution (50 U.S.C. "
+               "1544(c)). A joint resolution or bill requiring their removal receives expedited consideration in the "
+               "Senate (50 U.S.C. 1546a); like any joint resolution, it takes effect only if signed by the President "
+               "or passed over a veto by two-thirds of each chamber.",
+        "why_sources": [
+            {"title": "50 U.S. Code 1544: Congressional action", "url": "https://www.law.cornell.edu/uscode/text/50/1544", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "50 U.S. Code 1546a: Expedited procedures for certain joint resolutions and bills", "url": "https://www.law.cornell.edu/uscode/text/50/1546a", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "Constitution of the United States, Article I", "url": "https://www.law.cornell.edu/constitution/articlei", "publisher": "LII, Cornell Law School", "date": None},
+        ],
+        "subject": lambda t: (re.search(r"hostilities (?:within or )?(?:against|with|in) (?:the )?(.+?)(?: that | which |,|\.?$)",
+                                        re.sub(r"\s+", " ", t or "").strip()) or [None, None])[1],
+        "page": {
+            "subject_label": "Hostilities with", "heading": "removing US forces from hostilities with {subject}",
+            "heading_none": "removing US forces from hostilities", "measure": "resolution",
+            "record_title": "The hostilities", "record_noun": "the record of the hostilities",
+            "unresearched": "The hostilities and what followed have not been researched yet.",
+            "main": "hostilities",
+            "pair": None,
+            "lines": [["executive_reasons", "Stated legal basis (the President)"],
+                      ["sponsor_reasons", "Stated reasons for the resolution (sponsors and supporters)"]],
+            "status_label": "What became of it", "estimate_example": "an official casualty or cost estimate",
+            "decision": "Congress's vote on whether to direct removal of these forces",
+        },
     },
 ]
 
@@ -220,10 +336,18 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
                 "bill": bill, "congress": v.get("congress"), "title": title,
                 "country": country_of(title) if rule["money"] == "sector" else None, "votes": [],
                 "_rule": rule})
-            if rule["money"] == "lobbied" and not ch.get("agency"):
+            if rule["money"] == "lobbied" and "page" not in ch:
                 import html
                 ch["title"] = html.unescape(title)          # Senate titles carry entities such as "&#38;"
-                ch["agency"], ch["rule_title"] = rule_parts(ch["title"])
+                pg = rule["page"]
+                ch["page"], ch["subject"] = pg, rule["subject"](ch["title"])
+                subj = ch["subject"]
+                if subj and not pg.get("fixed_article") and re.search(r"\bthe " + re.escape(subj), ch["title"]):
+                    subj = "the " + subj                      # as the title itself says it
+                ch["heading"] = pg["heading"].format(subject=subj) if subj else pg.get("heading_none")
+                if rule["id"] == "rules-overturned":
+                    ch["agency"], ch["rule_title"] = rule_parts(ch["title"])
+                ch["lede"] = ch.get("rule_title") or ch["title"]
             pos = positions.get(v["id"], {})
             ch["votes"].append({"id": v["id"], "chamber": v.get("chamber"), "date": (v.get("date") or "")[:10], "question": v.get("question"),
                                 "result": v.get("result"), "url": v.get("url"),
@@ -239,7 +363,9 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
     out = []
     for ch in chains.values():
         rule = ch.pop("_rule")
-        ch["template"], ch["area"] = rule["template"], rule.get("area") or area_of(ch.get("agency"))
+        area = rule.get("area")
+        ch["template"] = rule["template"]
+        ch["area"] = area(ch["title"]) if callable(area) else area or area_of(ch.get("agency"))
         ch["window_start"] = window_start
         ch["votes"].sort(key=lambda x: (x["date"], x["id"]))
         if rule["money"] == "lobbied":
@@ -356,6 +482,9 @@ def _build_rule_chain(ch: dict, by_id: dict, former: dict, finance: dict, lobbyi
     from . import lobbysectors as S
     ch["lobbied_orgs"] = sorted(({"name": o[0], "sector": S.NAMES.get(o[1], o[1]), "own": bool(o[2])} for o in e["orgs"].values()),
                                 key=lambda o: (o["name"] or "").lower())
+    from collections import Counter
+    groups = Counter(S.GROUPS.get(o[1], "Not described") for o in e["orgs"].values())
+    ch["lobbied_groups"] = [{"name": g, "n": groups[g]} for g in S.GROUP_ORDER if groups.get(g)]
     ch["lobbied_reports"], ch["lobbied_quarters"] = e.get("reports", 0), e.get("quarters", [])
     lda_ids = {str(o[2]): o[0] for o in e["orgs"].values() if o[2]}
     ch["chambers"] = []
@@ -642,8 +771,9 @@ def all_claims(research: dict, advocacy_cfg: dict, drafts: list[dict] | None = N
                         "sources": srcs})
     for key, r in (research.get("resolutions") or {}).items():
         srcs = list(r.get("sources") or []) + [h["source"] for h in r.get("history", []) if h.get("source")]
-        rec = "rule record" if r.get("rule") or r.get("agency") else "sale record"
-        what = "what the rule did" if rec == "rule record" else "what the sale contained"
+        rec = ("rule record" if r.get("rule") or r.get("agency") else
+               "sale record" if any(k in r for k in ("items", "contractors", "notification", "notified")) else "decision record")
+        what = {"rule record": "what the rule did", "sale record": "what the sale contained"}.get(rec, "what the decision changed")
         out.append({"fp": r["_fp"], "kind": rec, "grade": None, "label": f"{r.get('bill', key)}: {what}",
                     "item": {k: v for k, v in r.items() if not k.startswith("_")}, "sources": srcs})
     for org in advocacy_cfg.get("organizations", []):

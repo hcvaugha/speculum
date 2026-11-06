@@ -154,7 +154,7 @@ def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None
             continue                                     # only decisions actually followed to a record
         traced[c.get("area") or "defense-foreign"].append({"id": c["id"], "bill": c.get("bill"), "country": c.get("country"),
                                                           "title": c.get("title"), "date": c.get("date"),
-                                                          "agency": c.get("agency"), "rule_title": c.get("rule_title")})
+                                                          "agency": c.get("agency"), "heading": c.get("heading")})
 
     areas = []
     for key in list(AREAS) + [FIRMS, UNPLACED]:

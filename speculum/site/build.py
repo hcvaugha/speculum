@@ -276,6 +276,7 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
+        groups=[(r["name"], g) for r in chains_mod.RULES for g in [[c for c in chains if c["rule"] == r["id"]]] if g],
         approved=sum(1 for c in chains if c["status"] == "approved"), **common), encoding="utf-8")
     for c in chains:
         tmpl = E.get_template(c.get("template") or "chain.html")

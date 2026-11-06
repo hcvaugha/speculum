@@ -27,23 +27,23 @@
 </tbody></table></div>
 {% endmacro %}
 {% block body %}
-{% set mx = c.mechanism or {} %}
+{% set mx = c.mechanism or {} %}{% set pg = c.page %}
 <p class="meta"><a href="../dependents.html">The Dependents</a> · {{ c.rule_name }}</p>
-<h1>{{ c.bill|billname }}{% if c.agency %}: overturning a rule of the {{ c.agency }}{% endif %}</h1>
-<p class="lede">{{ c.rule_title or c.title }}</p>
+<h1>{{ c.bill|billname }}{% if c.heading %}: {{ c.heading }}{% endif %}</h1>
+<p class="lede">{{ c.lede or c.title }}</p>
 <p>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span> by {{ c.review.approved_by }} on {{ c.review.date }}{% if c.review.note %} · {{ c.review.note }}{% endif %}
 {% elif c.auto_public %}<span class="status verified">Source-checked</span> Researched with AI. {% if public %}Every item on this page{% else %}Every item marked "Source checked"{% endif %} was checked against the source it cites by an independent AI checker, which opens the source and confirms it says what the item says. No editor has reviewed it. Anyone can dispute an item with a source; a disputed item is withdrawn until it is checked again.
-{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not yet checked</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. It is published once the record of the rule passes the source check.
-{% elif c.research_by %}<span class="status draft">Not yet checked</span> Researched with AI; the record of the rule has not yet passed the source check, so this chain is not public.
-{% else %}<span class="status draft">Votes and money only</span> What the rule did and what followed have not been researched yet.{% endif %}</p>
+{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not yet checked</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. It is published once {{ pg.record_noun }} passes the source check.
+{% elif c.research_by %}<span class="status draft">Not yet checked</span> Researched with AI; {{ pg.record_noun }} has not yet passed the source check, so this chain is not public.
+{% else %}<span class="status draft">Votes and money only</span> {{ pg.unresearched }}{% endif %}</p>
 {% set h = c.held or {} %}{% if public and (h.unchecked or h.failed or h.disputed or h.weak) %}
 <p class="meta">Not shown here: {% set parts = [] %}{% if h.weak %}{% set _ = parts.append(h.weak ~ ' graded Associated (a weaker link; not published automatically)') %}{% endif %}{% if h.unchecked %}{% set _ = parts.append(h.unchecked ~ ' awaiting the source check') %}{% endif %}{% if h.disputed %}{% set _ = parts.append(h.disputed ~ ' withdrawn while a reader\'s dispute is checked') %}{% endif %}{% if h.failed %}{% set _ = parts.append(h.failed ~ ' that did not match their sources') %}{% endif %}{{ parts|join('; ') }}.</p>
 {% elif not public and (h.unchecked or h.failed or h.disputed or h.weak) %}
-<p class="meta">Held from the public page: {{ h.weak or 0 }} graded Associated, {{ h.unchecked or 0 }} not yet checked, {{ h.disputed or 0 }} disputed, {{ h.failed or 0 }} failed the check.{% if not c.mechanism_public %} The record of the rule itself has not passed the check, so the whole chain is held.{% endif %}</p>
+<p class="meta">Held from the public page: {{ h.weak or 0 }} graded Associated, {{ h.unchecked or 0 }} not yet checked, {{ h.disputed or 0 }} disputed, {{ h.failed or 0 }} failed the check.{% if not c.mechanism_public %} {{ pg.record_noun[:1]|upper }}{{ pg.record_noun[1:] }} itself has not passed the check, so the whole chain is held.{% endif %}</p>
 {% endif %}
 
 <div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-  <div class="reading"><div class="label">Agency</div><div class="context" style="margin-top:6px">{{ c.agency or '—' }}</div></div>
+  <div class="reading"><div class="label">{{ pg.subject_label }}</div><div class="context" style="margin-top:6px">{{ c.subject or '—' }}</div></div>
   {% for ch in c.chambers %}<div class="reading"><div class="label">{{ 'House' if ch.chamber == 'house' else 'Senate' }} vote</div><div class="value" style="font-size:20px">{{ ch.vote.date }}</div><div class="context">{{ ch.vote.question }}: {{ ch.vote.result }}, {{ ch.vote.yeas }}–{{ ch.vote.nays }}</div></div>{% endfor %}
   <div class="reading"><div class="label">What became of it</div><div class="context" style="margin-top:6px">{% if c.latest_action_text %}{{ c.latest_action_text }}{% if c.latest_action and c.latest_action.date %} <span class="muted">({{ c.latest_action.date }})</span>{% endif %}{% else %}Not yet recorded here.{% endif %}{% if c.bill_url %} <a href="{{ c.bill_url }}" class="muted">Congress.gov</a>{% endif %}</div></div>
 </div>
@@ -62,27 +62,27 @@
 </li>
 
 <li>
-  <div class="step">2 · What the rule did</div>
+  <div class="step">2 · {{ pg.record_title }}</div>
   {% if c.mechanism %}
   {% if mx.rule %}<p><b>{{ mx.rule }}</b>{% if mx.federal_register %} <span class="muted">· {{ mx.federal_register }}</span>{% endif %}{% if mx.published %} <span class="muted">· published {{ mx.published }}</span>{% endif %}{% if mx.effective %} <span class="muted">· effective {{ mx.effective }}</span>{% endif %}</p>{% endif %}
-  {% if mx.required %}<p>{{ mx.required }}</p>{% endif %}
-  {% if mx.benefits or mx.costs %}
+  {% if mx[pg.main] %}<p>{{ mx[pg.main] }}</p>{% endif %}
+  {% if pg.pair and (mx[pg.pair[0][0]] or mx[pg.pair[1][0]]) %}
   <div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
-    <div class="reading"><div class="label">The agency's estimate of benefits</div><div class="context" style="margin-top:6px">{{ mx.benefits or 'None given.' }}</div></div>
-    <div class="reading"><div class="label">The agency's estimate of costs</div><div class="context" style="margin-top:6px">{{ mx.costs or 'None given.' }}</div></div>
+    <div class="reading"><div class="label">{{ pg.pair[0][1] }}</div><div class="context" style="margin-top:6px">{{ mx[pg.pair[0][0]] or 'None given.' }}</div></div>
+    <div class="reading"><div class="label">{{ pg.pair[1][1] }}</div><div class="context" style="margin-top:6px">{{ mx[pg.pair[1][0]] or 'None given.' }}</div></div>
   </div>
-  <p class="meta">Both from the agency's own analysis of the rule. They are estimates made when the rule was written, not records of what happened.</p>
+  <p class="meta">{{ pg.pair[2] }}</p>
   {% endif %}
-  {% if mx.agency_reasons %}<p><b>Stated purpose (the agency):</b> {{ mx.agency_reasons }}</p>{% endif %}
-  {% if mx.sponsor_reasons %}<p><b>Stated reasons for the resolution (sponsors and supporters):</b> {{ mx.sponsor_reasons }}</p>{% endif %}
-  {% if mx.status %}<p><b>What became of the rule:</b> {{ mx.status }}</p>{% endif %}
+  {% for key, label in pg.lines %}{% if mx[key] %}<p><b>{{ label }}:</b> {{ mx[key] }}</p>
+  {% endif %}{% endfor %}
+  {% if mx.status %}<p><b>{{ pg.status_label }}:</b> {{ mx.status }}</p>{% endif %}
   {% if mx.sources %}<p class="src">{% for s in mx.sources %}<a href="{{ s.url }}">{{ s.title }}</a>{% if s.publisher %}, {{ s.publisher }}{% endif %}{% if s.date %}, {{ s.date }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
   {% else %}<p class="muted">Not yet researched.</p>{% endif %}
 </li>
 
 <li>
   <div class="step">3 · What the record shows</div>
-  <p class="meta" style="margin-top:0">Each item carries an evidence grade. An estimate made before the vote, such as the agency's own analysis, is graded Estimated: it is a forecast, not a record of what happened. Dates show when each finding was published, before or after the vote.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
+  <p class="meta" style="margin-top:0">Each item carries an evidence grade. An estimate made before the vote, such as {{ pg.estimate_example }}, is graded Estimated: it is a forecast, not a record of what happened. Dates show when each finding was published, before or after the vote.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
   {% if c.outcomes %}
   {% for o in c.outcomes|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
   {% else %}<p class="muted">Nothing recorded yet.</p>{% endif %}
@@ -95,7 +95,8 @@
 <li>
   <div class="step">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
   {% if c.lobbied_orgs %}
-  <p>{{ c.lobbied_orgs|length }} organization{{ '' if c.lobbied_orgs|length == 1 else 's' }} named this resolution in quarterly lobbying reports (LD-2) {% if c.lobbied_quarters %}from {{ c.lobbied_quarters|first }} to {{ c.lobbied_quarters|last }}{% endif %}. <b>The reports do not say which side an organization took</b>; one that lobbied on a resolution may have lobbied for it or against it.</p>
+  <p>{{ c.lobbied_orgs|length }} organization{{ '' if c.lobbied_orgs|length == 1 else 's' }} named this {{ pg.measure }} in quarterly lobbying reports (LD-2) {% if c.lobbied_quarters %}from {{ c.lobbied_quarters|first }} to {{ c.lobbied_quarters|last }}{% endif %}. <b>The reports do not say which side an organization took</b>; one that lobbied on a {{ pg.measure }} may have lobbied for it or against it.</p>
+  {% if c.lobbied_groups|length > 1 %}<p class="meta">By the organizations' own description of their business: {% for g in c.lobbied_groups %}{{ g.name }} {{ g.n|num }}{% if not loop.last %} · {% endif %}{% endfor %}.</p>{% endif %}
   <details><summary>Organizations that reported lobbying on it</summary>
   <ul class="plain" style="columns:2;column-gap:28px;margin-top:8px">{% for o in c.lobbied_orgs %}<li>{{ o.name }} <span class="muted">· {{ o.sector }}{% if not o.own %} · reported by an outside firm{% endif %}</span></li>{% endfor %}</ul>
   </details>
@@ -113,12 +114,12 @@
   </details>
   {% endfor %}
   {% else %}
-  <p>No organization named this resolution in a quarterly lobbying report (LD-2) collected so far, so there is no lobbying money to set beside the vote. Reports are read from the start of 2025.</p>
+  <p>No organization named this {{ pg.measure }} in a quarterly lobbying report (LD-2) collected so far, so there is no lobbying money to set beside the vote. Reports are read from the start of 2025.</p>
   {% endif %}
 </li>
 </ol>
 
-<div class="notice">This page follows a decision, not a person: Congress's vote on whether to overturn this rule. It does not claim that any member caused any harm, that any contribution influenced any vote, or that anyone acted improperly. Each member's vote is shown as the public record of their part in the decision. To dispute an item, use its Dispute link.</div>
+<div class="notice">This page follows a decision, not a person: {{ pg.decision }}. It does not claim that any member caused any harm, that any contribution influenced any vote, or that anyone acted improperly. Each member's vote is shown as the public record of their part in the decision. To dispute an item, use its Dispute link.</div>
 
 <section id="dispute" class="dispute">
   <h2>Dispute an item</h2>
