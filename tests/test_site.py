@@ -37,3 +37,13 @@ def test_launch_keeps_the_owners_list_and_offers_joining_the_readers(tmp_path):
     assert 'href="join.html"' in (pub / "about.html").read_text()
     assert "preview-flag" not in join
     assert "Readers&#39; preview · not yet published" in (d / "preview" / "index.html").read_text()
+
+
+def test_the_glass_frames_the_record_and_teases_the_game(tmp_path):
+    d = _site(tmp_path, "launch")
+    g = (d / "public" / "glass.html").read_text()
+    for pane in ("What has been", "What is", "What is coming", "What could not be"):
+        assert pane in g
+    assert "Malleus Cordis" in g and 'href="join.html"' in g
+    assert "casts no real person as anything" in g
+    assert 'href="glass.html"' in (d / "public" / "index.html").read_text()      # the seal in every footer

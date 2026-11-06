@@ -314,3 +314,33 @@ details > summary { cursor: pointer; padding: 6px 0; color: var(--ink); }
 .join-callout b { font: 500 20px/1.2 var(--serif); color: var(--ink); }
 .join-callout span { color: var(--ink-2); font-size: 15px; flex: 1 1 280px; }
 .join-callout a { font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+
+/* The Glass (glass.html): the Catedral's mirror from Malleus Cordis, framing plain facts from the record */
+.glass { max-width: 960px; margin: 0 auto; }
+.glass-head { text-align: center; padding: 18px 0 8px; }
+.glass-mirror { width: 108px; height: 152px; margin: 0 auto 18px; display: block; }
+.glass-sheen { animation: glass-sheen 9s ease-in-out infinite; }
+@keyframes glass-sheen { 0%, 55% { transform: skewX(-18deg) translateX(0); } 100% { transform: skewX(-18deg) translateX(240px); } }
+@media (prefers-reduced-motion: reduce) { .glass-sheen { animation: none; } }
+.glass-kicker { font: 500 12px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--gold); margin: 0 0 12px; }
+.glass h1 { margin: 0 0 12px; }
+.glass-voice { font: italic 500 19px/1.45 var(--serif); color: var(--ink-2); }
+.glass-head .glass-voice { max-width: 620px; margin: 0 auto; }
+.panes { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 34px 0 10px; }
+.pane { position: relative; border: 1px solid var(--gold-dim); border-radius: 110px 110px 3px 3px; padding: 46px 20px 22px;
+  background: linear-gradient(160deg, rgba(159,195,230,.07), rgba(0,0,0,0) 38%), var(--panel); text-align: center; display: flex; flex-direction: column; }
+.pane::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--line); border-radius: 104px 104px 2px 2px; pointer-events: none; }
+.pane-label { font: 600 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.pane .glass-voice { font-size: 17px; margin: 0 0 12px; }
+.pane p { margin: 0 0 12px; font-size: 14px; color: var(--ink-2); }
+.pane .pane-link { margin-top: auto; align-self: center; font: 500 12px var(--mono); letter-spacing: .08em; color: var(--gold); }
+.door { margin: 44px auto 0; max-width: 560px; text-align: center; }
+.door-arch { border: 1px solid var(--gold-dim); border-bottom: 0; border-radius: 280px 280px 0 0 / 200px 200px 0 0; padding: 112px 44px 30px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(201,162,74,.10), rgba(0,0,0,0) 62%), #0d0c0b; box-shadow: inset 0 -1px 0 var(--gold); }
+.door-name { font: 600 30px/1.1 var(--serif); letter-spacing: .32em; text-transform: uppercase; color: var(--ink); padding-left: .32em; margin-bottom: 16px; }
+.door-arch p { color: var(--ink-2); font-size: 15px; }
+.door-state { display: inline-block; margin-top: 8px; font: 500 11px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-dim); padding: 7px 12px; }
+.door-cta { margin: 18px 0 6px; font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.door-note { max-width: 520px; margin: 10px auto 0; }
+footer a.seal-link { display: inline-block; line-height: 0; }
+@media (max-width: 600px) { .door-name { font-size: 22px; letter-spacing: .2em; padding-left: .2em; } .door-arch { padding: 64px 20px 24px; border-radius: 180px 180px 0 0 / 90px 90px 0 0; } }

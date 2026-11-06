@@ -212,6 +212,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     if common["show_dependents"]:
         chains = _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common, public)
     money_data = _build_money(E, snapshots_root, snap.date, prev, members, finance, lobbying, chains, common)
+    _build_glass(E, prev, snapshots_root, snap, meta, timeline, chains, votes, common)
     from .. import findings as findings_mod
     fd = findings_mod.build(members, votes, money_data, chains, bd)
     (prev / "findings.html").write_text(E.get_template("findings.html").render(root="", page="findings", f=fd, **common), encoding="utf-8")
@@ -284,6 +285,26 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
             root="../", page="dependents", c=c, party_names=PARTY_NAMES, min_n=chains_mod.MIN_N, gap=int(chains_mod.GAP),
             lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")
     return chains
+
+
+def _build_glass(E, prev: Path, snapshots_root: Path, snap, meta: dict, timeline, chains, votes, common) -> None:
+    """The Glass: the Catedral's mirror (Malleus Cordis) as a frame for plain facts from the record. The lore is
+    in the frame only; every figure in a pane is computed here from the snapshots, as on every other page."""
+    dz = (Snapshot(snapshots_root, DAY_ZERO).read("meta.json", {}) if DAY_ZERO in all_dates(snapshots_root) else {}) or {}
+    chains = chains or []
+
+    def law(c):
+        if c.get("rule") == "arms-sales":       # a resolution blocking a sale; none has passed both chambers here
+            return False if not any((v.get("result") or "").lower().startswith(("passed", "joint resolution passed"))
+                                    for v in c.get("votes", [])) else None
+        return True if c.get("enacted") else (False if c.get("latest_action_text") else None)
+
+    status = [law(c) for c in chains]
+    (prev / "glass.html").write_text(E.get_template("glass.html").render(
+        root="", page="glass", dz=dz.get("counts") or {}, now=meta.get("counts") or {},
+        n_votes_now=len(votes.get("votes", [])), n_editions=len(timeline or []),
+        n_chains=len(chains), n_law=status.count(True), n_not=status.count(False), n_unknown=status.count(None),
+        themes=sorted({c.get("rule_name") for c in chains if c.get("rule_name")}), **common), encoding="utf-8")
 
 
 def _set_aside(snapshots_root: Path) -> list[dict]:

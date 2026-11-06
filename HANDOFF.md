@@ -13,7 +13,7 @@ A public, nonpartisan record of Congress at speculum.vote: how every member vote
 - Never ask for, paste or handle API keys or passwords in chat. Keys live only in GitHub secrets, which the owner sets.
 - Never force-push.
 - Commit to `main`; the deploy runs on push. (The old session also mirrored `main` to a `tide` branch.)
-- Subtle lore (Malleus Cordis / Vesperhold) stays subtle.
+- Subtle lore (Malleus Cordis / Vesperhold) stays subtle. The one open reference is The Glass (`glass.html`, linked from the auditor's seal and the footer): the Catedral's mirror framing four panes of plain facts from the record, and a closed door teasing Malleus Cordis, with a note that the game casts no real person as anything and nothing in the record is drawn from it.
 
 ## How it runs
 
