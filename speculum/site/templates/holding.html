@@ -30,10 +30,37 @@
       <p>The same yardstick for every member and every party. Every figure links to its source. The record describes; the reader decides.</p>
       <p class="meta" style="margin-top:22px">The Ledger opens after independent review of its method.</p>
     </div>
+    <form class="early" id="early" novalidate>
+      <h2>Early access</h2>
+      <p>Read the record before it opens, and tell us what's wrong, unclear or missing. Leave your email and you'll hear from us when early access begins.</p>
+      <label>Email<input type="email" name="email" required autocomplete="email" maxlength="254"></label>
+      <label>Name <span class="opt">(optional)</span><input type="text" name="name" autocomplete="name" maxlength="120"></label>
+      <label>What brings you here? <span class="opt">(optional)</span><textarea name="note" rows="3" maxlength="1000"></textarea></label>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <button type="submit">Request early access</button>
+      <p class="early-msg" role="status" aria-live="polite"></p>
+      <p class="fine">Your email is used only to write to you about Speculum. It is never shared, sold or published.</p>
+    </form>
     <div style="margin-top:44px">{% include "_seal.html" %}</div>
   </div>
 </main>
 <script>
+(function () {
+  var f = document.getElementById('early'), msg = f.querySelector('.early-msg'), btn = f.querySelector('button');
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(f).entries());
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((d.email || '').trim())) { msg.textContent = 'Please enter a valid email address.'; return; }
+    btn.disabled = true; msg.textContent = 'Sending…';
+    fetch('api/early-access', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) })
+      .then(function (r) { return r.json().then(function (j) { return [r.ok, j]; }); })
+      .then(function (x) {
+        if (x[0]) { f.reset(); msg.textContent = "Thank you. You're on the list."; }
+        else { msg.textContent = x[1].error || 'Something went wrong. Please try again.'; btn.disabled = false; }
+      })
+      .catch(function () { msg.textContent = 'Could not reach the site. Please try again.'; btn.disabled = false; });
+  });
+})();
 (function () {
   var start = Date.UTC(2026, 10, 3);
   var now = new Date();

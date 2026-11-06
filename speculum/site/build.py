@@ -101,6 +101,7 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
         shutil.copy(HERE / "static" / "style.css", d / "static" / "style.css")
 
     (pub / "index.html").write_text(E.get_template("holding.html").render(), encoding="utf-8")
+    (pub / "signups.html").write_text(E.get_template("signups.html").render(), encoding="utf-8")
     (pub / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
     (prev / "robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
     if snap is None:

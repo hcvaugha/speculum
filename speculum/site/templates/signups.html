@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Early-access list · Speculum</title>
+<link rel="stylesheet" href="static/style.css?v={{ css_v }}">
+</head>
+<body>
+<main class="wrap" style="max-width:900px;margin:0 auto;padding:32px 16px">
+  <h1>Early-access list</h1>
+  <form id="f" class="dispute" style="margin-top:12px">
+    <label>Password<input type="password" name="key" autocomplete="current-password" style="display:block;width:100%;max-width:360px;margin-top:6px;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:8px 10px"></label>
+    <button type="submit">Show the list</button>
+    <p id="msg" class="meta" role="status"></p>
+  </form>
+  <div id="out" hidden>
+    <p class="meta"><span id="n"></span> · <a href="#" id="csv">Download CSV</a></p>
+    <div class="tbl-wrap"><table><thead><tr><th>Signed up</th><th>Name</th><th>Email</th><th>Note</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+</main>
+<script>
+(function () {
+  var f = document.getElementById('f'), msg = document.getElementById('msg'), rows = [];
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault(); msg.textContent = 'Checking…';
+    fetch('api/signups', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: f.key.value }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.error) { msg.textContent = j.error; return; }
+        rows = j.rows; msg.textContent = ''; f.hidden = true;
+        document.getElementById('n').textContent = rows.length + (rows.length === 1 ? ' person' : ' people');
+        document.getElementById('rows').innerHTML = rows.map(function (r) {
+          return '<tr><td class="num">' + esc((r.first || '').slice(0, 16).replace('T', ' ')) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.email) + '</td><td>' + esc(r.note) + '</td></tr>';
+        }).join('');
+        document.getElementById('out').hidden = false;
+      })
+      .catch(function () { msg.textContent = 'Could not reach the site.'; });
+  });
+  document.getElementById('csv').addEventListener('click', function (e) {
+    e.preventDefault();
+    var q = function (s) { return '"' + String(s || '').replace(/"/g, '""') + '"'; };
+    var csv = ['signed_up,name,email,note'].concat(rows.map(function (r) { return [r.first, r.name, r.email, r.note].map(q).join(','); })).join('\n');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'speculum-early-access.csv'; a.click();
+  });
+})();
+</script>
+</body>
+</html>
