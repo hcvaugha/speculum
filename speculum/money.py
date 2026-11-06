@@ -146,11 +146,15 @@ def build(members: list[dict], finance: dict, lobbying: dict, spend: dict | None
                 t = top_clients[area_of_code(code)][c["id"]]
                 t["name"], t["amount"] = c["name"], t["amount"] + amt
 
-    # Decisions traced in The Dependents, by area (arms sales are defense and foreign affairs)
+    # Decisions traced in The Dependents, by area (arms sales are defense and foreign affairs; an overturned
+    # regulation goes under its agency's area)
     traced = defaultdict(list)
     for c in chains or []:
-        traced["defense-foreign"].append({"id": c["id"], "bill": c.get("bill"), "country": c.get("country"),
-                                          "title": c.get("title"), "date": c.get("date")})
+        if not c.get("research_by"):
+            continue                                     # only decisions actually followed to a record
+        traced[c.get("area") or "defense-foreign"].append({"id": c["id"], "bill": c.get("bill"), "country": c.get("country"),
+                                                          "title": c.get("title"), "date": c.get("date"),
+                                                          "agency": c.get("agency"), "rule_title": c.get("rule_title")})
 
     areas = []
     for key in list(AREAS) + [FIRMS, UNPLACED]:

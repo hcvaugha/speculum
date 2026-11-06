@@ -83,7 +83,10 @@ def cmd_snapshot(args) -> int:
     def _billinfo():
         from .sources import billinfo
         from . import bills as bills_mod
-        wanted = bills_mod.wanted(spend or _latest(snap, "spend.json"), snap.read("votes.json.gz") or _latest(snap, "votes.json.gz"))
+        from . import chains as chains_mod
+        votes_now = snap.read("votes.json.gz") or _latest(snap, "votes.json.gz")
+        # The Dependents' measures first (their final status decides what a chain can say), then the bill pages' own.
+        wanted = list(dict.fromkeys(chains_mod.measures(votes_now) + bills_mod.wanted(spend or _latest(snap, "spend.json"), votes_now)))
         return billinfo.fetch_bill_info(fetch, keys["congress"], wanted, run_date, previous=_latest(snap, "billinfo.json"),
                                         deadline=deadline - 140 * 60)
     info = step("billinfo", _billinfo)
@@ -229,7 +232,8 @@ def cmd_chains(args) -> int:
     from .sources.fec import clean_finance
     from .sources.senate import clean_votes
     out = chains.for_site(snap.read("members.json", []), clean_finance(snap.read("finance.json", {}), snap.read("members.json", [])), clean(snap.read("lobbying.json", {}), snap.read("members.json", [])),
-                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT)
+                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT,
+                          spend=snap.read("spend.json"), bill_info=snap.read("billinfo.json"))
     log.info("chains: %d (%d with reviewed research)", len(out), sum(1 for c in out if c["research_by"] == "research"))
     if args.check:
         log.info("drafter check: %s", interpret.check())
@@ -255,7 +259,8 @@ def cmd_approve(args) -> int:
         return 1
     members = snap.read("members.json", [])
     out = chains.for_site(members, clean_finance(snap.read("finance.json", {}), members), clean(snap.read("lobbying.json", {}), members),
-                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT)
+                          clean_votes(snap.read("votes.json.gz", {"votes": [], "positions": {}})), ROOT,
+                          spend=snap.read("spend.json"), bill_info=snap.read("billinfo.json"))
     want = args.chain.lower().replace(".", "").replace(" ", "")
     hits = [c for c in out if c["id"] == want or c["id"].endswith("-" + want)]
     if len(hits) != 1:

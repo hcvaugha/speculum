@@ -218,7 +218,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     # The front page: what Speculum is, a few of the night's findings, where to go, and the latest stories.
     (prev / "index.html").write_text(E.get_template("home.html").render(
         root="", page="home", f=fd, timeline=timeline or [], n_members=len(members), n_votes=len(votes.get("votes", [])),
-        n_bills=len(bd["bills"]), n_chains=len(chains or []), mb=mb, **common), encoding="utf-8")
+        n_bills=len(bd["bills"]), n_chains=sum(1 for c in chains or [] if c.get("research_by")), mb=mb, **common), encoding="utf-8")
     _build_pages(E, snapshots_root.parent, prev, common)
     from .. import lameduck as lameduck_mod
     ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
@@ -268,15 +268,17 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
     snap = _latest(data_root / "snapshots")
     chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
                                  committees=read_newest(data_root / "snapshots", "committees.json", snap.date) if snap else None,
-                                 advocacy_data=read_newest(data_root / "snapshots", "advocacy.json", snap.date) if snap else None)
+                                 advocacy_data=read_newest(data_root / "snapshots", "advocacy.json", snap.date) if snap else None,
+                                 spend=read_newest(data_root / "snapshots", "spend.json", snap.date) if snap else None,
+                                 bill_info=read_newest(data_root / "snapshots", "billinfo.json", snap.date) if snap else None)
     if public:   # the public site shows what has passed the source check (see chains.apply_checks)
         chains = [public_view(c) for c in chains if c["status"] == "approved" or c.get("auto_public")]
     (prev / "chain").mkdir(exist_ok=True)
     (prev / "dependents.html").write_text(E.get_template("dependents.html").render(
         root="", page="dependents", chains=chains, grades=chains_mod.GRADES,
         approved=sum(1 for c in chains if c["status"] == "approved"), **common), encoding="utf-8")
-    tmpl = E.get_template("chain.html")
     for c in chains:
+        tmpl = E.get_template(c.get("template") or "chain.html")
         (prev / "chain" / f"{c['id']}.html").write_text(tmpl.render(
             root="../", page="dependents", c=c, party_names=PARTY_NAMES, min_n=chains_mod.MIN_N, gap=int(chains_mod.GAP),
             lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")

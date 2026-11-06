@@ -162,7 +162,7 @@ def build(members: list[dict], votes: dict, money: dict, chains: list[dict] | No
                   "link": "bills.html", "link_label": "Who lobbies each bill"})
 
     # What followed
-    sales = [c for c in chains or [] if c.get("votes")]
+    sales = [c for c in chains or [] if c.get("votes") and c.get("rule", "arms-sales") == "arms-sales"]
     if sales:
         vs = [(c, v) for c in sales for v in c["votes"]]
         passed = [1 for c, v in vs if (v.get("result") or "").lower().startswith(("passed", "agreed", "joint resolution passed"))]

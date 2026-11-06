@@ -12,15 +12,17 @@
 {% for rule_name, group in chains|groupby('rule_name') %}
 <h2>{{ rule_name }}</h2>
 <p class="muted">{{ group[0].why }}</p>
+{% set arms = group[0].rule == 'arms-sales' %}
+{% if not arms %}{% set law = group|selectattr('enacted')|list|length %}{% set unknown = group|rejectattr('latest_action_text')|list|length %}<p class="meta">{{ group|length }} resolution{{ '' if group|length == 1 else 's' }} with a recorded vote; {{ law }} became law{% if unknown %} so far (the final status of {{ unknown }} is still being collected){% endif %}. Every such resolution is included, whoever sponsored it and whatever the rule concerned.</p>{% endif %}
 <div class="tbl-wrap"><table>
-<thead><tr><th>Date</th><th>Decision</th><th>Recipient</th><th>Result</th><th>Outcome links</th><th>Status</th></tr></thead>
+<thead><tr><th>Date</th><th>Decision</th><th>{{ 'Recipient' if arms else 'Agency' }}</th><th>Result</th><th>Outcome links</th><th>Status</th></tr></thead>
 <tbody>
 {% for c in group %}{% set v = c.votes[-1] %}
 <tr>
   <td class="num">{{ c.date }}</td>
   <td><a href="chain/{{ c.id }}.html">{{ c.bill|billname }}</a></td>
-  <td>{{ c.country or '—' }}</td>
-  <td class="muted">{{ v.result }} <span class="num">{{ v.yeas }}–{{ v.nays }}</span></td>
+  <td>{% if arms %}{{ c.country or '—' }}{% else %}{{ c.agency or '—' }}{% endif %}</td>
+  <td class="muted">{% if not arms and c.enacted %}Became law{% else %}{{ v.result }} <span class="num">{{ v.yeas }}–{{ v.nays }}</span>{% endif %}</td>
   <td>{% for g in ['documented', 'estimated', 'associated'] %}{% set n = c.outcomes|selectattr('grade', 'equalto', g)|list|length %}{% if n %}<span class="grade grade-{{ g }}" title="{{ g }}">{{ n }}</span> {% endif %}{% endfor %}{% if not c.outcomes %}<span class="muted">none yet</span>{% endif %}</td>
   <td>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span>{% elif c.auto_public %}<span class="status verified">Source-checked</span>{% elif c.research_by %}<span class="status draft">Not yet checked</span>{% else %}<span class="muted">Votes and money only</span>{% endif %}</td>
 </tr>
@@ -28,5 +30,5 @@
 </tbody></table></div>
 {% endfor %}
 
-<div class="notice">A chain judges a decision, never a person. It names who voted and who was funded, and lets the record of what followed speak. Every link carries an evidence grade and a source, outcomes a decision prevented are recorded as faithfully as outcomes it caused, and a member who voted to block a sale is not tied to what the sale did. Research is done with AI. An item appears on the public site only after an independent AI checker has opened its source and confirmed that it says what the item says; anyone can dispute an item with a source, and it is withdrawn until checked again.</div>
+<div class="notice">A chain judges a decision, never a person. It names who voted and who was funded, and lets the record of what followed speak. Every link carries an evidence grade and a source, outcomes a decision prevented are recorded as faithfully as outcomes it caused, and a member who voted against a decision is not tied to what it did. Research is done with AI. An item appears on the public site only after an independent AI checker has opened its source and confirmed that it says what the item says; anyone can dispute an item with a source, and it is withdrawn until checked again.</div>
 {% endblock %}

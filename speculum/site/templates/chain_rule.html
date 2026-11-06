@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}{{ c.bill|billname }} · The Dependents · Speculum{% endblock %}
+{% macro outcome(o) %}
+<div class="outcome">
+  <span class="grade grade-{{ o.grade }}">{{ 'No record found' if o.grade == 'none_found' else o.grade|capitalize }}</span>
+  {% if o.when %}<span class="muted" style="font-size:12px">{{ o.when }}{% if o.when_rel %} · {{ o.when_rel }}{% endif %}</span>{% endif %}
+  <p>{{ o.claim }}</p>
+  {% if o.grade_note %}<p class="counter" style="border:0;padding-top:0"><b>What the grade covers:</b> {{ o.grade_note }}</p>{% endif %}
+  {% if o.scope_note %}<p class="counter" style="border:0;padding-top:0"><b>Scope:</b> {{ o.scope_note }}</p>{% endif %}
+  {% if o.source %}<p class="src"><a href="{{ o.source.url }}">{{ o.source.publisher or o.source.title }}{% if o.source.publisher and o.source.title %}: {{ o.source.title }}{% endif %}</a>{% if o.source.date %}, {{ o.source.date }}{% endif %}</p>{% for a in o.also or [] %}<p class="src">Also: <a href="{{ a.url }}">{{ a.title }}</a>{% if a.publisher %}, {{ a.publisher }}{% endif %}{% if a.date %}, {{ a.date }}{% endif %}</p>{% endfor %}{% endif %}
+  {% if o.counterpoint %}<p class="counter"><b>{{ o.counter_label or 'Response, dissent or caveat' }}:</b> {{ o.counterpoint }}</p>{% endif %}
+  {{ checkline(o) }}
+</div>
+{% endmacro %}
+{% macro checkline(o) %}
+<p class="checkline">{% if o._check and o._check.result == 'supported' and not o._disputed %}Source checked {{ o._check.on }}{% if o._check.dispute_upheld %} · a reader's dispute was checked and the item stands{% endif %}{% elif o._disputed %}<span class="ck-warn">Disputed by a reader · withdrawn from the public page until re-checked</span>{% elif o._check %}<span class="ck-warn">Did not match its source ({{ o._check.result|replace('_', ' ') }}){% if o._check.note %}: {{ o._check.note }}{% endif %} · not public</span>{% else %}<span class="ck-wait">Not yet checked against its source · not public</span>{% endif %}{% if not public and o._public is defined and o._check and o._check.result == 'supported' and not o._public and not o._disputed %} · <span class="ck-wait">graded {{ o.grade }}: not published automatically</span>{% endif %}{% if o._fp %} · <a href="#dispute" class="dispute-link" data-fp="{{ o._fp }}" data-label="{{ (o.claim or '')|truncate(140, killwords=False, end='…') }}">Dispute</a>{% endif %}</p>
+{% endmacro %}
+{% macro money_table(pattern, who) %}
+<div class="tbl-wrap"><table>
+<thead><tr><th>Party</th><th>Side</th><th class="r">{{ who }}</th><th class="r">From these organizations: median (range)</th><th class="r">Received any</th></tr></thead>
+<tbody>
+{% for party, cell in pattern.items() %}{% for side, label in [('Y', 'Voted Yea'), ('N', 'Voted Nay')] %}{% set x = cell[side] %}{% if x.n %}
+<tr><td>{{ party_names[party] }}s</td><td>{{ label }}</td><td class="r num">{{ x.n }}</td>
+<td class="r num">{% if x.lobby.median is not none %}{{ x.lobby.median|money }}{% else %}<span class="muted">too few for a median</span>{% endif %} <span class="muted">({{ x.lobby.low|money }}–{{ x.lobby.high|money }})</span></td>
+<td class="r num">{{ x.lobby.any }} of {{ x.n }}</td></tr>
+{% endif %}{% endfor %}{% endfor %}
+</tbody></table></div>
+{% endmacro %}
+{% block body %}
+{% set mx = c.mechanism or {} %}
+<p class="meta"><a href="../dependents.html">The Dependents</a> · {{ c.rule_name }}</p>
+<h1>{{ c.bill|billname }}{% if c.agency %}: overturning a rule of the {{ c.agency }}{% endif %}</h1>
+<p class="lede">{{ c.rule_title or c.title }}</p>
+<p>{% if c.status == 'approved' %}<span class="status ok">Reviewed</span> by {{ c.review.approved_by }} on {{ c.review.date }}{% if c.review.note %} · {{ c.review.note }}{% endif %}
+{% elif c.auto_public %}<span class="status verified">Source-checked</span> Researched with AI. {% if public %}Every item on this page{% else %}Every item marked "Source checked"{% endif %} was checked against the source it cites by an independent AI checker, which opens the source and confirms it says what the item says. No editor has reviewed it. Anyone can dispute an item with a source; a disputed item is withdrawn until it is checked again.
+{% elif c.research_by == 'ai-draft' %}<span class="status draft">AI draft · not yet checked</span> Drafted by {{ c.draft_meta.by }} on {{ c.draft_meta.on }}. It is published once the record of the rule passes the source check.
+{% elif c.research_by %}<span class="status draft">Not yet checked</span> Researched with AI; the record of the rule has not yet passed the source check, so this chain is not public.
+{% else %}<span class="status draft">Votes and money only</span> What the rule did and what followed have not been researched yet.{% endif %}</p>
+{% set h = c.held or {} %}{% if public and (h.unchecked or h.failed or h.disputed or h.weak) %}
+<p class="meta">Not shown here: {% set parts = [] %}{% if h.weak %}{% set _ = parts.append(h.weak ~ ' graded Associated (a weaker link; not published automatically)') %}{% endif %}{% if h.unchecked %}{% set _ = parts.append(h.unchecked ~ ' awaiting the source check') %}{% endif %}{% if h.disputed %}{% set _ = parts.append(h.disputed ~ ' withdrawn while a reader\'s dispute is checked') %}{% endif %}{% if h.failed %}{% set _ = parts.append(h.failed ~ ' that did not match their sources') %}{% endif %}{{ parts|join('; ') }}.</p>
+{% elif not public and (h.unchecked or h.failed or h.disputed or h.weak) %}
+<p class="meta">Held from the public page: {{ h.weak or 0 }} graded Associated, {{ h.unchecked or 0 }} not yet checked, {{ h.disputed or 0 }} disputed, {{ h.failed or 0 }} failed the check.{% if not c.mechanism_public %} The record of the rule itself has not passed the check, so the whole chain is held.{% endif %}</p>
+{% endif %}
+
+<div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+  <div class="reading"><div class="label">Agency</div><div class="context" style="margin-top:6px">{{ c.agency or '—' }}</div></div>
+  {% for ch in c.chambers %}<div class="reading"><div class="label">{{ 'House' if ch.chamber == 'house' else 'Senate' }} vote</div><div class="value" style="font-size:20px">{{ ch.vote.date }}</div><div class="context">{{ ch.vote.question }}: {{ ch.vote.result }}, {{ ch.vote.yeas }}–{{ ch.vote.nays }}</div></div>{% endfor %}
+  <div class="reading"><div class="label">What became of it</div><div class="context" style="margin-top:6px">{% if c.latest_action_text %}{{ c.latest_action_text }}{% if c.latest_action and c.latest_action.date %} <span class="muted">({{ c.latest_action.date }})</span>{% endif %}{% else %}Not yet recorded here.{% endif %}{% if c.bill_url %} <a href="{{ c.bill_url }}" class="muted">Congress.gov</a>{% endif %}</div></div>
+</div>
+
+<ol class="chain">
+<li>
+  <div class="step">1 · The decision</div>
+  <p>{{ c.why }}{% for s in c.why_sources %} <a href="{{ s.url }}" class="muted" style="font-size:12px">[{{ s.publisher }}]</a>{% endfor %}</p>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Date</th><th>Chamber</th><th>Question</th><th>Result</th><th class="r">Yea</th><th class="r">Nay</th></tr></thead>
+  <tbody>{% for x in c.votes %}<tr><td class="num">{{ x.date }}</td><td>{{ 'House' if x.chamber == 'house' else 'Senate' }}</td><td>{% if x.url %}<a href="{{ x.url }}">{{ x.question }}</a>{% else %}{{ x.question }}{% endif %}</td><td class="muted">{{ x.result }}</td><td class="r num">{{ x.yeas }}</td><td class="r num">{{ x.nays }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  <p class="meta" style="margin-top:8px">A Yea was a vote to {{ c.yes_means }}; a Nay, to {{ c.no_means }}.
+  {% for ch in c.chambers %}{% set sp = ch.party_split %}{{ 'House' if ch.chamber == 'house' else 'Senate' }}, last recorded vote, by party (independents with the party they caucus with): Democrats {{ sp.get('D-Y', 0) }} Yea, {{ sp.get('D-N', 0) }} Nay; Republicans {{ sp.get('R-Y', 0) }} Yea, {{ sp.get('R-N', 0) }} Nay{% set pres = sp.get('D-P', 0) + sp.get('R-P', 0) + sp.get('?-P', 0) %}{% if pres %}; {{ pres }} Present{% endif %}{% if ch.unknown_party %}; {{ ch.unknown_party }} not matched to a party{% endif %}. {% endfor %}
+  Sources: House roll calls from the Clerk of the House, via Congress.gov; Senate roll calls from Senate.gov, or Voteview when Senate.gov is unavailable.</p>
+</li>
+
+<li>
+  <div class="step">2 · What the rule did</div>
+  {% if c.mechanism %}
+  {% if mx.rule %}<p><b>{{ mx.rule }}</b>{% if mx.federal_register %} <span class="muted">· {{ mx.federal_register }}</span>{% endif %}{% if mx.published %} <span class="muted">· published {{ mx.published }}</span>{% endif %}{% if mx.effective %} <span class="muted">· effective {{ mx.effective }}</span>{% endif %}</p>{% endif %}
+  {% if mx.required %}<p>{{ mx.required }}</p>{% endif %}
+  {% if mx.benefits or mx.costs %}
+  <div class="readings" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+    <div class="reading"><div class="label">The agency's estimate of benefits</div><div class="context" style="margin-top:6px">{{ mx.benefits or 'None given.' }}</div></div>
+    <div class="reading"><div class="label">The agency's estimate of costs</div><div class="context" style="margin-top:6px">{{ mx.costs or 'None given.' }}</div></div>
+  </div>
+  <p class="meta">Both from the agency's own analysis of the rule. They are estimates made when the rule was written, not records of what happened.</p>
+  {% endif %}
+  {% if mx.agency_reasons %}<p><b>Stated purpose (the agency):</b> {{ mx.agency_reasons }}</p>{% endif %}
+  {% if mx.sponsor_reasons %}<p><b>Stated reasons for the resolution (sponsors and supporters):</b> {{ mx.sponsor_reasons }}</p>{% endif %}
+  {% if mx.status %}<p><b>What became of the rule:</b> {{ mx.status }}</p>{% endif %}
+  {% if mx.sources %}<p class="src">{% for s in mx.sources %}<a href="{{ s.url }}">{{ s.title }}</a>{% if s.publisher %}, {{ s.publisher }}{% endif %}{% if s.date %}, {{ s.date }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  {% else %}<p class="muted">Not yet researched.</p>{% endif %}
+</li>
+
+<li>
+  <div class="step">3 · What the record shows</div>
+  <p class="meta" style="margin-top:0">Each item carries an evidence grade. An estimate made before the vote, such as the agency's own analysis, is graded Estimated: it is a forecast, not a record of what happened. Dates show when each finding was published, before or after the vote.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
+  {% if c.outcomes %}
+  {% for o in c.outcomes|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
+  {% else %}<p class="muted">Nothing recorded yet.</p>{% endif %}
+  {% if c.context %}
+  <p class="step" style="margin-top:18px;font-size:11px">Context</p>
+  {% for x in c.context %}{% if x.grade %}{{ outcome(x) }}{% else %}<div class="outcome">{% if x.date %}<span class="muted" style="font-size:12px">{{ x.date }}</span>{% endif %}<p style="margin-top:4px">{{ x.claim }}</p>{% if x.note %}<p class="counter">{{ x.note }}</p>{% endif %}<p class="src"><a href="{{ x.source.url }}">{{ x.source.publisher or x.source.title }}{% if x.source.publisher and x.source.title %}: {{ x.source.title }}{% endif %}</a>{% if x.source.date %}, {{ x.source.date }}{% endif %}</p>{{ checkline(x) }}</div>{% endif %}{% endfor %}
+  {% endif %}
+</li>
+
+<li>
+  <div class="step">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
+  {% if c.lobbied_orgs %}
+  <p>{{ c.lobbied_orgs|length }} organization{{ '' if c.lobbied_orgs|length == 1 else 's' }} named this resolution in quarterly lobbying reports (LD-2) {% if c.lobbied_quarters %}from {{ c.lobbied_quarters|first }} to {{ c.lobbied_quarters|last }}{% endif %}. <b>The reports do not say which side an organization took</b>; one that lobbied on a resolution may have lobbied for it or against it.</p>
+  <details><summary>Organizations that reported lobbying on it</summary>
+  <ul class="plain" style="columns:2;column-gap:28px;margin-top:8px">{% for o in c.lobbied_orgs %}<li>{{ o.name }} <span class="muted">· {{ o.sector }}{% if not o.own %} · reported by an outside firm{% endif %}</span></li>{% endfor %}</ul>
+  </details>
+  <p style="margin-top:12px">Below: legal, publicly disclosed contributions (LD-203 reports) to each member's campaign and leadership committees from those organizations that file their own lobbying reports. <b>Window:</b> contributions dated {{ c.window_start or 'from the start of the reporting years collected' }} through each chamber's last recorded vote, the same for every member of that chamber; nothing given after the vote is counted.</p>
+  <p class="notice" style="margin-top:0"><b>These figures do not show that any contribution influenced any vote.</b> Money can follow votes as easily as precede them, and seniority, committee seats, home-state industry and a member's general views can drive both. Comparisons are made only within a party, a median is shown only for groups of {{ min_n }} or more, and every member's figure is listed below.</p>
+  {% for ch in c.chambers %}
+  <p class="step" style="margin-top:18px;font-size:11px">{{ 'House' if ch.chamber == 'house' else 'Senate' }} · vote of {{ ch.vote.date }}</p>
+  {{ money_table(ch.money_pattern, 'Representatives' if ch.chamber == 'house' else 'Senators') }}
+  <p class="meta" style="margin-top:8px">{% for party, cell in ch.money_pattern.items() %}{% set y, n = cell.Y, cell.N %}<b>{{ party_names[party] }}s:</b> {% if cell.verdict == 'none' %}No comparison: all {{ party_names[party] }}s who voted took the same side.{% elif cell.verdict == 'small' %}No comparison: one side has fewer than {{ min_n }} members.{% else %}{{ y.lobby.any }} of {{ y.n }} who voted Yea and {{ n.lobby.any }} of {{ n.n }} who voted Nay had any such contribution reported. {% if cell.verdict == 'no_difference' %}No clear difference between the two sides by the fixed rule.{% elif cell.verdict == 'gap_no' %}Those who voted Nay had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% else %}Those who voted Yea had more reported to their committees, past the fixed threshold at the median. A pattern, not a cause.{% endif %}{% endif %} {% endfor %}</p>
+  <details style="margin-top:10px"><summary>Every {{ 'representative' if ch.chamber == 'house' else 'senator' }}'s vote and contributions from these organizations (alphabetical)</summary>
+  <div class="tbl-wrap"><table>
+  <thead><tr><th>Member</th><th>Vote</th><th class="r">From these organizations</th></tr></thead>
+  <tbody>{% for r in ch.members %}<tr><td><a href="../member/{{ r.bioguide }}.html">{{ r.name }}</a> <span class="party-{{ r.party }} num">{{ r.party }}-{{ r.state }}</span></td><td><span class="pos pos-{{ r.side or 'X' }}">{{ r.position }}</span></td><td class="r num">{{ r.lobby|money }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  </details>
+  {% endfor %}
+  {% else %}
+  <p>No organization named this resolution in a quarterly lobbying report (LD-2) collected so far, so there is no lobbying money to set beside the vote. Reports are read from the start of 2025.</p>
+  {% endif %}
+</li>
+</ol>
+
+<div class="notice">This page follows a decision, not a person: Congress's vote on whether to overturn this rule. It does not claim that any member caused any harm, that any contribution influenced any vote, or that anyone acted improperly. Each member's vote is shown as the public record of their part in the decision. To dispute an item, use its Dispute link.</div>
+
+<section id="dispute" class="dispute">
+  <h2>Dispute an item</h2>
+  <p class="meta">Choose an item with its <b>Dispute</b> link, then give a source that contradicts it. The item is withdrawn from the public page until the checker has read your source beside the original; if the item does not hold up, it stays down, and if it does, it returns with a note that it was disputed and checked. Disputes are published in the project's public record, so do not include personal details.</p>
+  <form id="dispute-form">
+    <p class="dispute-item" id="dispute-item">No item chosen yet.</p>
+    <input type="hidden" name="fp" id="dispute-fp">
+    <input type="hidden" name="chain" value="{{ c.id }}">
+    <label>Source that contradicts it (a link)<input type="url" name="source" required placeholder="https://"></label>
+    <label>What it shows (optional, up to 1,000 characters)<textarea name="note" maxlength="1000" rows="4"></textarea></label>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" style="position:absolute;left:-9999px">
+    <button type="submit" disabled id="dispute-send">Send dispute</button>
+    <p class="meta" id="dispute-msg" role="status"></p>
+  </form>
+</section>
+<script>
+(function () {
+  var f = document.getElementById('dispute-form'), fp = document.getElementById('dispute-fp'),
+      item = document.getElementById('dispute-item'), send = document.getElementById('dispute-send'), msg = document.getElementById('dispute-msg');
+  document.querySelectorAll('.dispute-link').forEach(function (a) {
+    a.addEventListener('click', function () { fp.value = a.dataset.fp; item.textContent = 'Item: ' + a.dataset.label; send.disabled = false; msg.textContent = ''; });
+  });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    send.disabled = true; msg.textContent = 'Sending…';
+    fetch('{{ root }}api/dispute', { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(f))) })
+      .then(function (r) { return r.json().then(function (j) { return [r.ok, j]; }); })
+      .then(function (x) { msg.textContent = x[0] ? 'Received. The item will be withdrawn on the next nightly update and re-checked against your source.' : (x[1].error || 'Could not send.'); if (!x[0]) send.disabled = false; })
+      .catch(function () { msg.textContent = 'Could not send. You can also write to the corrections address.'; send.disabled = false; });
+  });
+})();
+</script>
+{% endblock %}

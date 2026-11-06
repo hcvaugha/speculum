@@ -48,6 +48,9 @@ RULES = [
         "test": re.compile(r"disapproval of the proposed (foreign military sale|export|direct commercial sale|transfer)"
                            r"[^.]*defense articles", re.I),
         "sector": "arms",
+        "money": "sector",              # money from a fixed list of companies (data/sectors.json)
+        "template": "chain.html",
+        "area": "defense-foreign",
         "yes_means": "advance a resolution to block the sale",
         "no_means": "decline to advance it",
         "why": "Congress can block a notified foreign arms sale only by passing a joint resolution of "
@@ -64,7 +67,76 @@ RULES = [
             {"title": "The State Department OKs the sale of tank ammunition to Israel in a deal bypassing Congress review", "url": "https://www.click2houston.com/news/politics/2023/12/09/the-state-department-oks-the-sale-of-tank-ammunition-to-israel-in-a-deal-bypassing-congress-review/", "publisher": "AP", "date": "2023-12-09"},
         ],
     },
+    {
+        "id": "rules-overturned",
+        "name": "Regulations overturned",
+        # Every resolution under the Congressional Review Act with a recorded vote, whoever sponsored it and
+        # whatever the rule was about. Titles follow the form fixed by 5 U.S.C. 802(a).
+        "test": re.compile(r"disapproval under chapter 8 of title 5", re.I),
+        "sector": None,
+        "money": "lobbied",             # money from organizations that reported lobbying on this resolution
+        "template": "chain_rule.html",
+        "yes_means": "advance or pass the resolution overturning the rule",
+        "no_means": "oppose it",
+        "why": "Congress can overturn a rule issued by a federal agency with a joint resolution of disapproval "
+               "under the Congressional Review Act (5 U.S.C. 801-808). The resolution must pass both chambers and "
+               "be signed by the President, or passed over a veto by two-thirds of each chamber. A rule overturned "
+               "this way has no force or effect, and it may not be reissued in substantially the same form, nor a "
+               "substantially similar rule issued, unless a law enacted afterward specifically authorizes it. In "
+               "the Senate, a resolution taken up within 60 session days of the rule's submission or publication "
+               "follows an expedited procedure in which debate is limited to 10 hours.",
+        "why_sources": [
+            {"title": "5 U.S. Code 801: Congressional review", "url": "https://www.law.cornell.edu/uscode/text/5/801", "publisher": "LII, Cornell Law School", "date": None},
+            {"title": "5 U.S. Code 802: Congressional disapproval procedure", "url": "https://www.law.cornell.edu/uscode/text/5/802", "publisher": "LII, Cornell Law School", "date": None},
+        ],
+    },
 ]
+
+# Where a rule's agency sits among The Money's issue areas (speculum/money.py), for "What followed".
+AGENCY_AREAS = [
+    (r"Environmental Protection|Land Management|Ocean Energy|Energy Efficiency|Department of Energy|Fish and Wildlife"
+     r"|National Park|Interior|Forest Service|Bureau of Safety and Environmental", "energy-environment"),
+    (r"Consumer Financial|Comptroller of the Currency|Federal Reserve|Federal Deposit|Securities and Exchange"
+     r"|Commodity Futures|National Credit Union", "finance"),
+    (r"Internal Revenue|Treasury", "tax-budget"),
+    (r"Health and Human Services|Food and Drug|Medicare|Centers for Disease", "health"),
+    (r"Communications Commission", "tech-media"),
+    (r"Highway Traffic|Transportation|Housing", "transport-housing"),
+    (r"Labor|Education|Veterans", "labor-social"),
+    (r"Agriculture|Commerce", "trade-industry-ag"),
+]
+
+_AGENCY = re.compile(r"rule submitted by (?:the )?(.+?)(?:,)? (?:relating to|regarding|with respect to)\b", re.I)
+_RULE_NAME = re.compile(r"(?:relating to|regarding|with respect to) (.+?)\.?$", re.I)
+
+
+def rule_parts(title: str) -> tuple[str | None, str | None]:
+    """The agency and the rule's name, from a resolution title in the form 5 U.S.C. 802(a) fixes."""
+    t = re.sub(r"\s+", " ", title or "").strip()
+    a, r = _AGENCY.search(t), _RULE_NAME.search(t)
+    name = r.group(1).strip().strip('"\u201c\u201d').strip() if r else None
+    return (a.group(1).strip() if a else None), (name or None)
+
+
+def measures(votes: dict) -> list[tuple[int, str]]:
+    """Every measure a Dependents rule selects, by its own title (Senate roll calls carry one). Their bill
+    details (final status: became law or not) are fetched each night ahead of anything else."""
+    from .bills import norm
+    out = []
+    for v in (votes or {}).get("votes") or []:
+        t = v.get("title") or ""
+        if v.get("bill") and any(r["test"].search(t) for r in RULES):
+            k = (int(v.get("congress") or 0), norm(v["bill"]))
+            if k[0] and k not in out:
+                out.append(k)
+    return out
+
+
+def area_of(agency: str | None) -> str:
+    for pat, area in AGENCY_AREAS:
+        if agency and re.search(pat, agency, re.I):
+            return area
+    return "government"
 
 _COUNTRY = re.compile(r"(?:sale|export)[^.]*?\bto (?:the Government of )?(?:the )?([A-Z][A-Za-z .'-]+?)(?: of certain| certain|\.|$)")
 
@@ -121,26 +193,39 @@ def _median(xs):
 def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, sectors: dict,
           research: dict, reviews: dict, committees: dict | None = None,
           advocacy_cfg: dict | None = None, advocacy_data: dict | None = None,
-          former_members: dict | None = None) -> list[dict]:
+          former_members: dict | None = None, spend: dict | None = None, bill_info: dict | None = None) -> list[dict]:
     from .sources.committees import on_defense_committee
+    from . import bills as bills_mod
     by_id = {m["bioguide"]: m for m in members}
+    info = (bill_info or {}).get("bills", {})
+    lobbied = bills_mod.collect(spend, bill_info) if spend else {}
+
+    def title_of(v: dict) -> str:
+        # Senate roll calls carry the measure's title; House roll calls get it from Congress.gov bill data.
+        return v.get("title") or (info.get(f"{v.get('congress')}-{bills_mod.norm(v.get('bill'))}") or {}).get("title") or ""
     former = {**{k: v for k, v in (votes.get("people") or {}).items()}, **(former_members or {})}
     positions = votes.get("positions", {})
     chains: dict[str, dict] = {}
     for rule in RULES:
-        fec_ids, lda_ids = sector_index(sectors, rule["sector"])
         for v in votes.get("votes", []):
-            if not rule["test"].search(v.get("title") or ""):
+            title = title_of(v)
+            if not rule["test"].search(title):
                 continue
-            bill = v.get("bill") or v["id"]
+            # One chain per measure: the House writes "HJRES 61" and the Senate "HJRES61" for the same resolution.
+            bill = (bills_mod.norm(v.get("bill")) if rule["money"] == "lobbied" else v.get("bill")) or v["id"]
             cid = f"{rule['id']}-{v.get('congress')}-{bill}".lower()
             ch = chains.setdefault(cid, {
                 "id": cid, "rule": rule["id"], "rule_name": rule["name"], "why": rule["why"], "why_sources": rule.get("why_sources", []),
                 "yes_means": rule["yes_means"], "no_means": rule["no_means"], "sector": rule["sector"],
-                "bill": bill, "congress": v.get("congress"), "title": v.get("title"),
-                "country": country_of(v.get("title")), "votes": []})
+                "bill": bill, "congress": v.get("congress"), "title": title,
+                "country": country_of(title) if rule["money"] == "sector" else None, "votes": [],
+                "_rule": rule})
+            if rule["money"] == "lobbied" and not ch.get("agency"):
+                import html
+                ch["title"] = html.unescape(title)          # Senate titles carry entities such as "&#38;"
+                ch["agency"], ch["rule_title"] = rule_parts(ch["title"])
             pos = positions.get(v["id"], {})
-            ch["votes"].append({"id": v["id"], "date": (v.get("date") or "")[:10], "question": v.get("question"),
+            ch["votes"].append({"id": v["id"], "chamber": v.get("chamber"), "date": (v.get("date") or "")[:10], "question": v.get("question"),
                                 "result": v.get("result"), "url": v.get("url"),
                                 "yeas": sum(1 for p in pos.values() if ledger.side(p) == "Y"),
                                 "nays": sum(1 for p in pos.values() if ledger.side(p) == "N"),
@@ -153,8 +238,16 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
     window_start = f"{min(yrs)}-01-01" if yrs else None
     out = []
     for ch in chains.values():
+        rule = ch.pop("_rule")
+        ch["template"], ch["area"] = rule["template"], rule.get("area") or area_of(ch.get("agency"))
         ch["window_start"] = window_start
         ch["votes"].sort(key=lambda x: (x["date"], x["id"]))
+        if rule["money"] == "lobbied":
+            out.append(_build_rule_chain(ch, by_id, former, finance, lobbying, research, reviews, window_start,
+                                         lobbied, info))
+            continue
+        for x in ch["votes"]:
+            x.pop("chamber", None)                       # arms votes are Senate votes; the page names the chamber
         decisive = ch["votes"][-1]                      # the last recorded vote on the resolution
         ch["date"] = decisive["date"]
         rows, split = [], {}
@@ -229,17 +322,97 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
         sides = {r["bioguide"]: r["side"] for r in ch["members"] if r["side"]}
         ch["siblings"] = []
         for other in out:
-            if other is ch or other["date"] != ch["date"]:
+            if other is ch or other["date"] != ch["date"] or other["rule"] != ch["rule"]:
                 continue
             o = {r["bioguide"]: r["side"] for r in other["members"] if r["side"]}
             both = [b for b in sides if b in o]
             same = sum(1 for b in both if sides[b] == o[b])
             ch["siblings"].append({"bill": other["bill"], "id": other["id"], "both": len(both), "same": same,
                                    "verdicts": {p: cell["verdict"] for p, cell in other["money_pattern"].items()}})
-        ch["same_recipient"] = sorted({o["date"] for o in out if o["country"] == ch["country"]})
-        ch["same_recipient_n"] = sum(1 for o in out if o["country"] == ch["country"])
+        if ch["rule"] == "arms-sales":
+            ch["same_recipient"] = sorted({o["date"] for o in out if o["rule"] == ch["rule"] and o["country"] == ch["country"]})
+            ch["same_recipient_n"] = sum(1 for o in out if o["rule"] == ch["rule"] and o["country"] == ch["country"])
+        else:
+            ch["same_recipient"], ch["same_recipient_n"] = [], 0
     out.sort(key=lambda c: (c["date"], c["id"]), reverse=True)
     return out
+
+
+def _build_rule_chain(ch: dict, by_id: dict, former: dict, finance: dict, lobbying: dict, research: dict,
+                      reviews: dict, window_start: str | None, lobbied: dict, info: dict) -> dict:
+    """A regulation overturned (or kept) under the Congressional Review Act. Both chambers vote on these,
+    so the money around the vote is read for each chamber's last recorded vote. The money is from the
+    organizations whose own quarterly reports (LD-2) name this resolution, to members, through the vote date
+    (LD-203). The reports do not say which side an organization took."""
+    bkey = ch["bill"]
+    meta = info.get(f"{ch['congress']}-{bkey}") or {}
+    ch["latest_action"] = meta.get("latest_action")
+    la = (meta.get("latest_action") or {})
+    la_text = la.get("text") if isinstance(la, dict) else str(la or "")
+    ch["enacted"] = bool(re.search(r"became public law|public law no", la_text or "", re.I))
+    ch["latest_action_text"] = la_text or None
+    ch["bill_url"] = meta.get("url")
+    e = lobbied.get((int(ch["congress"] or 0), bkey)) or {"orgs": {}, "reports": 0, "quarters": []}
+    from . import lobbysectors as S
+    ch["lobbied_orgs"] = sorted(({"name": o[0], "sector": S.NAMES.get(o[1], o[1]), "own": bool(o[2])} for o in e["orgs"].values()),
+                                key=lambda o: (o["name"] or "").lower())
+    ch["lobbied_reports"], ch["lobbied_quarters"] = e.get("reports", 0), e.get("quarters", [])
+    lda_ids = {str(o[2]): o[0] for o in e["orgs"].values() if o[2]}
+    ch["chambers"] = []
+    for chamber in ("house", "senate"):
+        vs = [x for x in ch["votes"] if x.get("chamber") == chamber]
+        if not vs:
+            continue
+        last = vs[-1]
+        rows, split = [], {}
+        for bio, p in last["_pos"].items():
+            s = ledger.side(p)
+            m = by_id.get(bio)
+            party = ledger.caucus_party(m) if m else (former.get(bio) or {}).get("party")
+            key = (party or "?", s or ("P" if p == "Present" else "-"))
+            split[key] = split.get(key, 0) + 1
+            if not m:
+                continue
+            money = member_sector_money(bio, finance, lobbying, {}, lda_ids, upto=last["date"], since=window_start)
+            rows.append({"bioguide": bio, "name": m["name"], "party": m["party"], "caucus": party, "state": m["state"],
+                         "position": p, "side": s, **money})
+        rows.sort(key=lambda r: (r["side"] or "Z", r["name"]))
+        ch["chambers"].append({"chamber": chamber, "vote": {k: v for k, v in last.items() if k != "_pos"},
+                               "members": rows, "party_split": {f"{p}-{s}": n for (p, s), n in sorted(split.items())},
+                               "unknown_party": sum(n for (p, s), n in split.items() if p == "?"),
+                               "money_pattern": _pattern(rows)})
+    for x in ch["votes"]:
+        x.pop("_pos", None)
+    ch["date"] = ch["votes"][-1]["date"]
+    last_chamber = ch["chambers"][-1] if ch["chambers"] else {"members": [], "money_pattern": {}}
+    for c in ch["chambers"]:
+        if c["vote"]["id"] == ch["votes"][-1]["id"]:
+            last_chamber = c
+    # Shared fields the site and Findings read on every chain
+    ch["members"], ch["money_pattern"] = last_chamber["members"], last_chamber["money_pattern"]
+    ch["former"], ch["former_detail"], ch["unknown_party"] = [], [], 0
+    ch["party_split"] = last_chamber.get("party_split", {})
+    ch["committee_control"], ch["defense_committees"], ch["contractor_companies"] = None, [], []
+    ch["advocacy_orgs"], ch["advocacy_after"], ch["advocacy_noside"], ch["advocacy_meta"] = {"block": [], "proceed": []}, [], [], {}
+    ch["advocacy_pattern"] = None
+    r = (research.get("resolutions") or {}).get(bkey, {})
+    ch["mechanism"] = r or None
+    order = {"documented": 0, "estimated": 1, "associated": 2, "none_found": 3}
+    placed = []
+    for o in research.get("outcomes", []):
+        if o.get("country") or bkey not in (o.get("applies_to") or []):
+            continue
+        when = o.get("date") or (o.get("source") or {}).get("date") or ""
+        rel = "before the vote" if when and when <= ch["date"] else "after the vote" if when else ""
+        placed.append({**o, "_order": order.get(o.get("grade"), 4), "when": when, "when_rel": rel,
+                       "scope": "context" if o.get("context_only") else "this_rule", "group_label": None})
+    ch["outcomes"] = [o for o in placed if o["scope"] != "context"]
+    ch["context"] = ([o for o in placed if o["scope"] == "context"] +
+                     [x for x in research.get("context", []) if not x.get("country") and bkey in (x.get("applies_to") or [])])
+    ch["genocide_note"] = None
+    ch["review"] = reviews.get(ch["id"]) or {}
+    set_status(ch)
+    return ch
 
 
 def _company_key(name: str) -> str:
@@ -369,7 +542,7 @@ def _pattern(rows: list[dict]) -> dict:
 
 
 def for_site(members, finance, lobbying, votes, data_root: Path, committees: dict | None = None,
-             advocacy_data: dict | None = None) -> list[dict]:
+             advocacy_data: dict | None = None, spend: dict | None = None, bill_info: dict | None = None) -> list[dict]:
     """Chains with everything a page needs: reviewed research where it exists, otherwise the AI
     drafter's output, clearly marked as an unreviewed draft."""
     data_root = Path(data_root)
@@ -379,7 +552,8 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
                 load_json(data_root / "chains" / "reviews.json", {}), committees,
                 load_json(data_root / "advocacy.json", {}), advocacy_data,
-                {k: v for k, v in load_json(data_root / "former_members.json", {}).items() if not k.startswith("_")})
+                {k: v for k, v in load_json(data_root / "former_members.json", {}).items() if not k.startswith("_")},
+                spend=spend, bill_info=bill_info)
     for ch in out:
         ch["research_by"] = "research" if ch["mechanism"] or ch["outcomes"] else None
         d = load_json(data_root / "chains" / "drafts" / f"{ch['id']}.json", None)
@@ -468,7 +642,9 @@ def all_claims(research: dict, advocacy_cfg: dict, drafts: list[dict] | None = N
                         "sources": srcs})
     for key, r in (research.get("resolutions") or {}).items():
         srcs = list(r.get("sources") or []) + [h["source"] for h in r.get("history", []) if h.get("source")]
-        out.append({"fp": r["_fp"], "kind": "sale record", "grade": None, "label": f"{r.get('bill', key)}: what the sale contained",
+        rec = "rule record" if r.get("rule") or r.get("agency") else "sale record"
+        what = "what the rule did" if rec == "rule record" else "what the sale contained"
+        out.append({"fp": r["_fp"], "kind": rec, "grade": None, "label": f"{r.get('bill', key)}: {what}",
                     "item": {k: v for k, v in r.items() if not k.startswith("_")}, "sources": srcs})
     for org in advocacy_cfg.get("organizations", []):
         out.append({"fp": org["_fp"], "kind": "stated position", "grade": None, "label": f"{org['name']}: stated positions",

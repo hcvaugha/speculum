@@ -50,6 +50,54 @@ Answer with one JSON object and nothing else:
  "notes": "anything uncertain or contested"}"""
 
 
+SYSTEM_RULE = """You research consequence chains for Speculum, a nonpartisan record of the US Congress.
+A chain follows one recorded decision to what happened to people afterwards. This decision is a joint resolution
+under the Congressional Review Act to overturn a federal agency's rule. You draft two kinds of link:
+
+mechanism: exactly what the rule did and what the resolution changed, from the Federal Register, the agency's
+own regulatory impact analysis or economic analysis, Congress.gov, the Congressional Research Service, GAO or
+the Congressional Budget Office:
+  rule        the rule's name and Federal Register citation, its publication and effective dates
+  required    what it required or changed, and of whom
+  benefits    the agency's own estimate of the rule's benefits, with figures, units and the period they cover
+  costs       the agency's own estimate of the rule's costs, from the same analysis
+  agency_reasons   the agency's stated purpose
+  sponsor_reasons  the stated reasons of the resolution's sponsors and supporters, from their own statements
+  status      what happened: whether the resolution became law (and its Public Law number) or failed, and
+              therefore whether the rule is void or still in force
+
+outcomes: what happened to people afterwards, or what official analysis expects, each with one evidence grade:
+  documented  an official record of what actually followed (agency data, GAO, inspector general, court records)
+  estimated   an official or peer-reviewed estimate: the agency's regulatory impact analysis, CBO, or a
+              peer-reviewed study. A forecast made before the vote is an estimate, never a documented outcome.
+  associated  credible reporting or analysis of a pattern without direct evidence for the specific claim
+
+Rules you never break:
+- Only state what a source you opened says. Give figures with the date and period they apply to.
+- Give the agency's estimated costs as faithfully as its estimated benefits, from the same analysis, and record
+  any official dispute of those estimates (a CBO, GAO or court finding) beside them.
+- Record harm the rule's removal prevented, or burden it lifted, as faithfully as harm it allowed.
+- Prefer primary documents. Use news only for original reporting of what followed.
+- Never characterise anyone's intent, and never call a person, party, company or agency good or evil.
+- If nothing credible records what followed, say so; that is a valid finding.
+
+Answer with one JSON object and nothing else:
+{"mechanism": {"rule": "...", "agency": "...", "federal_register": "...", "published": "YYYY-MM-DD", "effective": "YYYY-MM-DD",
+               "required": "...", "benefits": "...", "costs": "...", "agency_reasons": "...", "sponsor_reasons": "...",
+               "status": "...", "sources": [{"title": "...", "url": "...", "publisher": "...", "date": "..."}]},
+ "outcomes": [{"grade": "documented|estimated|associated", "claim": "...", "date": "YYYY-MM-DD",
+               "source": {"title": "...", "url": "...", "publisher": "...", "date": "..."}, "counterpoint": "..."}],
+ "notes": "anything uncertain or contested"}"""
+
+
+def _prompt_rule(chain: dict) -> str:
+    votes = "; ".join(f"{(v.get('chamber') or '').title()} {v['date']}: {v['question']}, {v['result']} ({v['yeas']}-{v['nays']})"
+                      for v in chain["votes"])
+    return (f"Decision: {chain['title']} ({chain['bill']}, {chain['congress']}th Congress). "
+            f"Agency: {chain.get('agency')}. Rule: {chain.get('rule_title')}. Recorded votes: {votes}. "
+            f"Latest action: {chain.get('latest_action_text') or 'unknown'}. Draft the mechanism and outcome links.")
+
+
 def _prompt(chain: dict) -> str:
     v = chain["votes"][-1]
     return (f"Decision: {chain['title']} ({chain['bill']}, {chain['congress']}th Congress). "
@@ -58,11 +106,12 @@ def _prompt(chain: dict) -> str:
 
 
 def draft(chain: dict, key: str, max_searches: int = 8) -> dict:
+    rule = chain.get("rule") == "rules-overturned"
     resp = requests.post(API, timeout=600, headers={
         "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"}, json={
-        "model": MODEL, "max_tokens": 8000, "system": SYSTEM,
+        "model": MODEL, "max_tokens": 8000, "system": SYSTEM_RULE if rule else SYSTEM,
         "tools": [{"type": "web_search_20250305", "name": "web_search", "max_uses": max_searches}],
-        "messages": [{"role": "user", "content": _prompt(chain)}]})
+        "messages": [{"role": "user", "content": _prompt_rule(chain) if rule else _prompt(chain)}]})
     resp.raise_for_status()
     body = resp.json()
     text = "".join(b.get("text", "") for b in body.get("content", []) if b.get("type") == "text")
@@ -101,7 +150,9 @@ def draft_missing(chains: list[dict], drafts_dir: Path, limit: int = 3) -> list[
         return []
     drafts_dir.mkdir(parents=True, exist_ok=True)
     done = []
-    for ch in chains:
+    # Resolutions that became law first (their rules are void, so what followed is a matter of record), oldest
+    # first, since older decisions have the longest record; a fixed order, the same every night.
+    for ch in sorted(chains, key=lambda c: (not c.get("enacted"), c.get("date") or "")):
         if len(done) >= limit:
             break
         path = drafts_dir / f"{ch['id']}.json"
