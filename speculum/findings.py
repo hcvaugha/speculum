@@ -64,7 +64,7 @@ def _pct(a, b):
     return a / b if b else 0.0
 
 
-def build(members: list[dict], votes: dict, money: dict, chains: list[dict] | None) -> dict:
+def build(members: list[dict], votes: dict, money: dict, chains: list[dict] | None, bills: dict | None = None) -> dict:
     F = []
 
     # How they vote
@@ -142,6 +142,24 @@ def build(members: list[dict], votes: dict, money: dict, chains: list[dict] | No
                   "sub": ("Largest issue areas: " + ", ".join(f"{a['name'].lower()} ({_money(a['spent'])})" for a in sp[:3]) + ".") if sp else "",
                   "scope": "Quarterly lobbying reports (LD-2); an organization lobbying for itself is counted once.",
                   "link": "money.html", "link_label": "What organizations spend lobbying"})
+
+    # Who lobbies bills: every organization that named a bill with a page, counted once
+    if bills and bills.get("bills"):
+        from .lobbysectors import GROUPS, GROUP_ORDER
+        seen = {}
+        for b in bills["bills"]:
+            for o in b["orgs"]:
+                seen.setdefault((o["name"] or "").lower(), o["sector"])
+        g = Counter(GROUPS[s] for s in seen.values())
+        n = sum(g.values())
+        top = bills["bills"][0]
+        F.append({"id": "bill-lobbyists", "group": "Who lobbies", "head": _pct(g.get("Business", 0), n), "fmt": "pct",
+                  "text": f"of the {n:,} organizations that named bills on lobbying reports are businesses or business groups.",
+                  "sub": "; ".join(f"{k.lower()} {_pct(g[k], n):.0%}" for k in GROUP_ORDER[1:] if g.get(k)).capitalize()
+                         + f". The most lobbied bill, {top['label']}, was named by {top['n_orgs']:,} organizations; "
+                         f"{len(top['former']):,} of the lobbyists who named it list a former government post.",
+                  "scope": "Quarterly lobbying reports (LD-2) since 2025; sectors from each organization's own description of its business.",
+                  "link": "bills.html", "link_label": "Who lobbies each bill"})
 
     # What followed
     sales = [c for c in chains or [] if c.get("votes")]
