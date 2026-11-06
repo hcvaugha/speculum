@@ -36,7 +36,7 @@ export async function onRequestPost(ctx) {
   try {
     return await handle(ctx);
   } catch (e) {                                   // never answer with Cloudflare's HTML error page
-    return json({ error: `Server error: ${e && e.message ? e.message : e}` }, 500);
+    return json({ error: `Server error: ${e && e.message ? e.message : e}` }, 422);
   }
 }
 
@@ -70,7 +70,7 @@ async function handle({ request, env }) {
     }
     await cf(env, path, { method: 'PUT', body: JSON.stringify(body) });
   } catch (e) {
-    return json({ error: `Cloudflare: ${e.message}` }, 502);
+    return json({ error: `Cloudflare: ${e.message}` }, 422);   // not 502: Cloudflare replaces 502 with its own page
   }
   const key = `s:${await hex(email, 16)}`;
   const rec = JSON.parse((await env.SIGNUPS.get(key)) || 'null') || { email, name: '', note: '', first: new Date().toISOString() };
