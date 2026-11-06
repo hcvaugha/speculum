@@ -256,7 +256,7 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { padding: 4px 0; }
 
 /* Early-access form on the holding page */
 .holding .early { max-width: 440px; margin: 44px auto 0; text-align: left; border-top: 1px solid var(--line-soft); padding-top: 28px; }
-.holding .early h2 { font: 500 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); text-align: center; margin: 0 0 14px; }
+.holding .early h2 { border: 0; padding: 0; font: 500 12px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); text-align: center; margin: 0 0 14px; }
 .holding .early > p { color: var(--ink-2); font-size: 15px; margin: 0 0 8px; text-align: center; }
 .holding .early label { display: block; margin: 14px 0 0; font-size: 13px; color: var(--ink-2); }
 .holding .early .opt { color: var(--ink-3); }
