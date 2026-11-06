@@ -31,15 +31,14 @@
 <div class="haxis num"><span>All to Republicans</span><span>Even</span><span>All to Democrats</span></div>
 
 <h2>The 100 largest</h2>
-<div class="tbl-wrap"><table>
-<thead><tr><th>Organization</th><th class="r">Given</th><th class="r">Members</th><th style="min-width:160px">Democrats · Republicans</th></tr></thead>
-<tbody>
 {% for o in d.orgs[:100] %}{% set dr = o.D + o.R %}
-<tr><td>{% if o.page %}<a href="interest/{{ o.page }}.html">{{ o.name }}</a>{% else %}{{ o.name }}{% endif %}{% if o.firm %} <span class="muted">· lobbying firm</span>{% endif %}</td>
-<td class="r num">{{ o.total|money }}</td><td class="r num">{{ o.members }}</td>
-<td>{% if dr %}<div class="fbar split thin"><span class="pD" style="width:{{ 100 * o.D / dr }}%"></span><span class="pR" style="width:{{ 100 * o.R / dr }}%"></span><b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b></div><span class="num muted" style="font-size:12px">{{ (o.D / dr)|pct }} · {{ (o.R / dr)|pct }}</span>{% endif %}</td></tr>
+<div class="mrow">
+  <div class="mlabel">{% if o.page %}<a href="interest/{{ o.page }}.html">{{ o.name }}</a>{% else %}{{ o.name }}{% endif %}{% if o.firm %} <span class="muted">· lobbying firm</span>{% endif %}</div>
+  <div class="mfig num">{{ o.total|money }}</div>
+  {% if dr %}<div class="fbar split thin"><span class="pD" style="width:{{ 100 * o.D / dr }}%"></span><span class="pR" style="width:{{ 100 * o.R / dr }}%"></span><b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b></div>
+  <div class="mparts num"><span class="party-D">Democrats {{ (o.D / dr)|pct }}</span> · <span class="party-R">Republicans {{ (o.R / dr)|pct }}</span> · {{ o.members }} members</div>{% endif %}
+</div>
 {% endfor %}
-</tbody></table></div>
 
 <div class="notice">The party holding the majority chairs every committee and sets the agenda, and organizations tend to give more to it and to incumbents; the seat line is there so that difference can be seen, not explained away. Giving to both parties can be read many ways. This page does not choose one. How each figure is computed is on the <a href="method.html#money">Method</a> page.</div>
 {% endblock %}

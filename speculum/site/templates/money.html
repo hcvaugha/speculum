@@ -6,21 +6,21 @@
 <p class="meta">Seats now: {{ d.seats.all.get('D', 0) }} Democrats · {{ d.seats.all.get('R', 0) }} Republicans · {{ d.seats.all.get('I', 0) }} independents · <a href="funders.html">Do the parties share funders? →</a></p>
 
 <h2>1 · Where campaign money comes from</h2>
-<p class="meta">Receipts of each member's principal campaign committee this cycle (FEC), through {{ (d.campaign.values()|map(attribute='through')|max) if d.campaign else '—' }}. Small gifts are itemized under $200; party is party committees; PACs include every political committee that is not a party.</p>
+<p class="meta">Receipts of each member's principal campaign committee this cycle (FEC), through {{ (d.campaign.values()|map(attribute='through')|max) if d.campaign else '—' }}. Small gifts are individual gifts under $200, which campaigns need not itemize. PACs include every political committee that is not a party. Other is the rest of total receipts, such as transfers from joint fundraising committees (which pass on money raised from individuals and PACs together), loans and refunds.</p>
 <div class="mlegend">
   <span><i style="background:var(--small)"></i>Small individual gifts</span><span><i style="background:var(--large)"></i>Larger individual gifts</span>
   <span><i style="background:var(--pac)"></i>PACs and other committees</span><span><i style="background:var(--party)"></i>Party</span>
-  <span><i style="background:var(--self)"></i>Candidate's own money</span><span><i style="background:var(--line)"></i>Other</span>
+  <span><i style="background:var(--self)"></i>Candidate's own money</span><span><i style="background:#4a4540"></i>Other (transfers, loans, refunds)</span>
 </div>
 {% for ch in ['senate', 'house'] %}
 <h3 class="msub">{{ 'Senate' if ch == 'senate' else 'House' }}</h3>
 {% for p in ['D', 'R', 'I'] %}{% set c = d.campaign.get(ch ~ '-' ~ p) %}{% if c %}
 {% set tot = c.small + c.large + c.pac + c.party_cmte + c.self + c.other %}
 <div class="mrow">
-  <div class="mlabel"><span class="party-{{ p }}">{{ party_names.get(p, p) }}s</span> <span class="muted">· {{ c.members }} members</span></div>
+  <div class="mlabel"><span class="party-{{ p }}">{{ party_names.get(p, p) }}s</span> <span class="muted">· {{ c.members }} member{{ "s" if c.members != 1 }}</span></div>
   <div class="mfig num">{{ c.receipts|money }} <span class="muted">· {{ (c.receipts / c.members)|money }} each on average</span></div>
   <div class="fbar" role="img" aria-label="{{ party_names.get(p, p) }} {{ ch }} receipts by source">
-    {% for k, var in [('small','--small'),('large','--large'),('pac','--pac'),('party_cmte','--party'),('self','--self'),('other','--line')] %}{% if tot and c[k] %}<span style="width:{{ 100 * c[k] / tot }}%;background:var({{ var }})" title="{{ c[k]|money }}"></span>{% endif %}{% endfor %}
+    {% for k, var in [('small','--small'),('large','--large'),('pac','--pac'),('party_cmte','--party'),('self','--self'),('other','--other')] %}{% if tot and c[k] %}<span style="width:{{ 100 * c[k] / tot }}%;background:var({{ var }})" title="{{ c[k]|money }}"></span>{% endif %}{% endfor %}
   </div>
   <div class="mparts num muted">small {{ (c.small / tot)|pct }} · larger {{ (c.large / tot)|pct }} · PACs {{ (c.pac / tot)|pct }} · party {{ (c.party_cmte / tot)|pct }} · own {{ (c.self / tot)|pct }} · other {{ (c.other / tot)|pct }}</div>
 </div>
