@@ -314,7 +314,8 @@ def _median(xs):
 def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, sectors: dict,
           research: dict, reviews: dict, committees: dict | None = None,
           advocacy_cfg: dict | None = None, advocacy_data: dict | None = None,
-          former_members: dict | None = None, spend: dict | None = None, bill_info: dict | None = None) -> list[dict]:
+          former_members: dict | None = None, spend: dict | None = None, bill_info: dict | None = None,
+          lobbying_records: dict | None = None) -> list[dict]:
     from .sources.committees import on_defense_committee
     from . import bills as bills_mod
     by_id = {m["bioguide"]: m for m in members}
@@ -363,11 +364,18 @@ def build(members: list[dict], finance: dict, lobbying: dict, votes: dict, secto
     # LD-203 window: from the first day of the earliest reporting year collected through the vote date.
     # Items dated outside the reporting years (typos such as 2029, or late reports of older gifts) are left out.
     tag_claims(research, advocacy_cfg or {})
-    yrs = [int(y) for y in (lobbying.get("years") or []) if str(y).isdigit()]
-    window_start = f"{min(yrs)}-01-01" if yrs else None
+    current = lobbying
+
+    def lob_for(congress) -> tuple[dict, str | None]:
+        """The contributions read for a decision: its own Congress's finished record once that Congress has
+        closed, otherwise the current reading. The window starts with that record's first reporting year."""
+        lob = (lobbying_records or {}).get(int(congress or 0)) or current
+        yrs = [int(y) for y in (lob.get("years") or []) if str(y).isdigit()]
+        return lob, (f"{min(yrs)}-01-01" if yrs else None)
     out = []
     for ch in chains.values():
         rule = ch.pop("_rule")
+        lobbying, window_start = lob_for(ch.get("congress"))
         area = rule.get("area")
         ch["template"] = rule["template"]
         ch["area"] = area(ch["title"]) if callable(area) else area or area_of(ch.get("agency"))
@@ -681,13 +689,20 @@ def for_site(members, finance, lobbying, votes, data_root: Path, committees: dic
     drafter's output, clearly marked as an unreviewed draft."""
     data_root = Path(data_root)
     research = load_json(data_root / "chains" / "research.json", {})
+    from .sources.lda import clean
+    records = {}
+    for p in sorted((data_root / "records").glob("lobbying-*.json")) if (data_root / "records").exists() else []:
+        try:
+            records[int(p.stem.split("-")[1])] = clean(load_json(p, {}), members)
+        except (ValueError, IndexError):
+            continue
     checks = load_json(data_root / "chains" / "checks.json", {}).get("checks", {})
     disputes = load_json(data_root / "chains" / "disputes.json", {})
     out = build(members, finance, lobbying, votes, load_json(data_root / "sectors.json", {}), research,
                 load_json(data_root / "chains" / "reviews.json", {}), committees,
                 load_json(data_root / "advocacy.json", {}), advocacy_data,
                 {k: v for k, v in load_json(data_root / "former_members.json", {}).items() if not k.startswith("_")},
-                spend=spend, bill_info=bill_info)
+                spend=spend, bill_info=bill_info, lobbying_records=records)
     for ch in out:
         ch["research_by"] = "research" if ch["mechanism"] or ch["outcomes"] else None
         d = load_json(data_root / "chains" / "drafts" / f"{ch['id']}.json", None)

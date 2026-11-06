@@ -149,9 +149,31 @@ class HonoreeMatcher:
         return top[0] if len(top) == 1 else None
 
 
+CLOSING = (3, 31)   # through March 31 of a new Congress's first year, the old Congress's reports are still read
+
+
+def congress_of(year: int) -> int:
+    return (year - 1789) // 2 + 1
+
+
 def _years(today: date) -> list[int]:
-    start = today.year - 1 if today.year % 2 == 0 else today.year   # the current Congress's years
+    """The reporting years read each night: the current Congress's. A Congress's last reports (July-December of
+    its second year, the election season) are due January 30, after it has ended, and amendments follow; so
+    until March 31 the closing Congress's years are still read. No report for the new year is due before July."""
+    if today.year % 2 == 1 and (today.month, today.day) <= CLOSING:
+        return [today.year - 2, today.year - 1]
+    start = today.year - 1 if today.year % 2 == 0 else today.year
     return list(range(start, today.year + 1))
+
+
+def closed_record(previous: dict | None, current: dict | None) -> int | None:
+    """When the years read move on to a new Congress, the Congress whose complete record the previous copy
+    holds (its two years), so that copy can be kept as that Congress's finished record. Otherwise None."""
+    old = [int(y) for y in ((previous or {}).get("years") or [])]
+    new = [int(y) for y in ((current or {}).get("years") or [])]
+    if len(old) == 2 and old[0] % 2 == 1 and old[1] == old[0] + 1 and new and min(new) > old[1]:
+        return congress_of(old[0])
+    return None
 
 
 def _fetch_reports(fetch, key: str | None, year: int) -> list[dict]:

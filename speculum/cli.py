@@ -71,6 +71,16 @@ def cmd_snapshot(args) -> int:
     votes = step("votes", lambda: _votes(fetch, keys, members, snap, errors))
     lobbying = step("lobbying", lambda: lda.fetch_lobbying(fetch, keys["lda"], members, run_date))
     if lobbying is not None:
+        # The night the years read move on to a new Congress, keep the closing Congress's last copy as its
+        # finished record: chains about that Congress's votes keep reading it (data/records/lobbying-<congress>.json).
+        before = _latest(snap, "lobbying.json")
+        done = lda.closed_record(before, lobbying)
+        if done:
+            rec = ROOT / "records" / f"lobbying-{done}.json"
+            if not rec.exists():
+                rec.parent.mkdir(parents=True, exist_ok=True)
+                rec.write_text(json.dumps(before, separators=(",", ":"), sort_keys=True, ensure_ascii=False), encoding="utf-8")
+                log.info("kept the %sth Congress's lobbyist contributions as its finished record: %s", done, rec)
         snap.write("lobbying.json", lobbying)
 
     def _spend():

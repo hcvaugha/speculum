@@ -86,3 +86,28 @@ def test_war_powers_heading_keeps_the_titles_article():
     c = chains.build(_members(), {}, {"years": [2025]}, v, {}, {}, {}, spend={"quarters": {}}, bill_info={"bills": {}})[0]
     assert c["heading"] == "removing US forces from hostilities with the Islamic Republic of Iran"
     assert c["area"] == "defense-foreign" and c["template"] == "chain_rule.html"
+
+
+def test_lobbyist_contribution_years_close_out_a_congress():
+    from datetime import date
+    from speculum.sources import lda
+    assert lda._years(date(2026, 11, 6)) == [2025, 2026]
+    assert lda._years(date(2027, 1, 30)) == [2025, 2026]       # year-end 2026 reports are due now
+    assert lda._years(date(2027, 3, 31)) == [2025, 2026]
+    assert lda._years(date(2027, 4, 1)) == [2027]
+    assert lda._years(date(2028, 5, 1)) == [2027, 2028]
+    assert lda.closed_record({"years": [2025, 2026]}, {"years": [2027]}) == 119
+    assert lda.closed_record({"years": [2025, 2026]}, {"years": [2025, 2026]}) is None
+    assert lda.closed_record({"years": [2027]}, {"years": [2027, 2028]}) is None
+
+
+def test_a_decision_reads_its_own_congress_after_it_closes():
+    info = {"bills": {"119-HJRES18": {"title": CRA}}}
+    spend = {"quarters": {"2025-Q1": {"orgs": {"bankco": ["Bank Co", "finance", "777"]}, "people": {},
+                                      "bills": {"HJRES18": {"orgs": ["bankco"], "reports": 1}}}}}
+    record = {"years": [2025, 2026], "by_member": {"H0": [{"date": "2025-02-01", "amount": 500.0, "registrant_id": "777", "type": "FECA"}]}}
+    now = {"years": [2027], "by_member": {}}                                          # the new Congress's reading
+    out = chains.build(_members(), {}, now, _votes(), {}, {}, {}, spend=spend, bill_info=info, lobbying_records={119: record})
+    c = next(x for x in out if x["rule"] == "rules-overturned")
+    assert c["window_start"] == "2025-01-01"
+    assert next(r for r in c["chambers"][0]["members"] if r["bioguide"] == "H0")["lobby"] == 500.0
