@@ -17,8 +17,8 @@
 {% for p in ['D', 'R', 'I'] %}{% set c = d.campaign.get(ch ~ '-' ~ p) %}{% if c %}
 {% set tot = c.small + c.large + c.pac + c.party_cmte + c.self + c.other %}
 <div class="mrow">
-  <div class="mlabel"><span class="party-{{ p }}">{{ party_names.get(p, p) }}s</span> <span class="muted">· {{ c.members }} member{{ "s" if c.members != 1 }}</span></div>
-  <div class="mfig num">{{ c.receipts|money }} <span class="muted">· {{ (c.receipts / c.members)|money }} each on average</span></div>
+  <div class="mlabel"><span class="party-{{ p }}">{{ party_names.get(p, p) }}s</span> <span class="muted">· {{ c.members }} member{{ "s" if c.members != 1 }} · {{ (c.receipts / c.members)|money }} each on average</span></div>
+  <div class="mfig num">{{ c.receipts|money }}</div>
   <div class="fbar" role="img" aria-label="{{ party_names.get(p, p) }} {{ ch }} receipts by source">
     {% for k, var in [('small','--small'),('large','--large'),('pac','--pac'),('party_cmte','--party'),('self','--self'),('other','--other')] %}{% if tot and c[k] %}<span style="width:{{ 100 * c[k] / tot }}%;background:var({{ var }})" title="{{ c[k]|money }}"></span>{% endif %}{% endfor %}
   </div>

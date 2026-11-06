@@ -235,3 +235,21 @@ h3.msub { font: 500 20px/1.2 var(--serif); margin: 22px 0 4px; color: var(--ink)
 ul.plain { list-style: none; padding: 0; } ul.plain li { padding: 4px 0; }
 .home-money { border: 1px solid var(--line); background: var(--panel); padding: 16px 18px; margin: 20px 0 8px; }
 .home-money h2 { margin-top: 0; }
+
+/* Findings */
+.finding { padding: 18px 0 16px; border-bottom: 1px solid var(--line-soft); }
+.finding .ftext { font-size: 1.12rem; line-height: 1.5; margin: 0 0 6px; color: var(--ink); }
+.finding .fhead { display: block; font-size: 2.4rem; line-height: 1.1; color: var(--gold); font-weight: 500; margin-bottom: 4px; }
+.finding .fsub { margin: 0 0 6px; color: var(--ink-soft, var(--ink)); }
+
+/* The Tide: dated timeline of editions */
+.tide-date { font-size: 1.15rem; color: var(--ink); margin: 2px 0; }
+.tide-line { list-style: none; margin: 8px 0 0; padding: 0 0 0 18px; border-left: 2px solid var(--line-soft); }
+.tide-line > li { position: relative; padding: 4px 0 18px; }
+.tide-line > li::before { content: ""; position: absolute; left: -25px; top: 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--line-soft); border: 2px solid var(--bg, #0d0d0d); }
+.tide-line > li.here::before { background: var(--gold); }
+.tl-when { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.tl-when a { color: var(--ink); font-weight: 500; }
+.tl-stories { margin: 6px 0 0; padding-left: 18px; }
+.tl-stories li { margin: 3px 0; }
+.tl-empty { margin: 4px 0 0; }

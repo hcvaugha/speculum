@@ -6,7 +6,7 @@ _UPPER = {"Pac": "PAC", "Pacs": "PACs", "Llc": "LLC", "Llp": "LLP", "Lp": "LP", 
           "Ubs": "UBS", "Tiaa": "TIAA", "Hca": "HCA", "Aarp": "AARP", "Ctia": "CTIA", "Ahip": "AHIP", "Usaa": "USAA",
           "Aig": "AIG", "Jpmorgan": "JPMorgan", "Ibm": "IBM", "Ups": "UPS", "Bae": "BAE", "Abb": "ABB", "Aep": "AEP",
           "Nea": "NEA", "Aft": "AFT", "Ama": "AMA", "Aba": "ABA", "Nab": "NAB", "Nar": "NAR", "Phrma": "PhRMA",
-          "Ge": "GE", "Gm": "GM", "Erisa": "ERISA", "Ny": "NY", "Nyc": "NYC", "Rtx": "RTX", "Usa,": "USA,", "Us": "US"}
+          "Ge": "GE", "Gm": "GM", "Erisa": "ERISA", "Aicpa": "AICPA", "Naic": "NAIC", "Nahb": "NAHB", "Nreca": "NRECA", "Ncta": "NCTA", "Nfib": "NFIB", "Aflac": "Aflac", "Ny": "NY", "Nyc": "NYC", "Rtx": "RTX", "Usa,": "USA,", "Us": "US"}
 _KEEP = {"Mr", "Mrs", "Ms", "Dr", "St", "Mt", "Ltd", "Hwy", "Pkwy", "Jr", "Sr", "Bros", "Wm", "Ft", "Sq", "Hq"}
 
 

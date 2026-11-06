@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Findings · Speculum{% endblock %}
+{% block body %}
+<h1>Findings</h1>
+<p class="lede">The same measures, computed from the record every night by fixed rules. Each finding says what it counts and links to the data behind it. None says what it means.</p>
+{% for g in f.groups %}
+<h2>{{ g }}</h2>
+{% for x in f.findings if x.group == g %}
+<div class="finding" id="{{ x.id }}">
+  <p class="ftext">{% if x.head is not none %}<b class="fhead num">{% if x.fmt == 'pct' %}{{ x.head|pct }}{% elif x.fmt == 'money' %}{{ x.head|money }}{% else %}{{ x.head|num }}{% endif %}</b> {% endif %}{{ x.text }}</p>
+  {% if x.sub %}<p class="fsub">{{ x.sub }}</p>{% endif %}
+  <p class="meta">{{ x.scope }} <a href="{{ root }}{{ x.link }}">{{ x.link_label }} →</a></p>
+</div>
+{% endfor %}
+{% endfor %}
+<div class="notice">Which measures appear here, and the rule behind each, are on the <a href="method.html#findings">Method</a> page. A measure is never added or dropped because of what it shows.</div>
+{% endblock %}

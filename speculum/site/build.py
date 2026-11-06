@@ -46,19 +46,32 @@ def day_number(d: str) -> int:
     return (date.fromisoformat(d) - date.fromisoformat(DAY_ZERO)).days + 1
 
 
-def billname(code: str) -> str:
-    """SJRES54 -> S.J.Res. 54, HR1234 -> H.R. 1234."""
-    m = re.match(r"^(HCONRES|SCONRES|HJRES|SJRES|HRES|SRES|HR|S)\s*(\d+)$", (code or "").upper().replace(".", "").replace(" ", ""))
-    if not m:
-        return code or ""
-    names = {"HCONRES": "H.Con.Res.", "SCONRES": "S.Con.Res.", "HJRES": "H.J.Res.", "SJRES": "S.J.Res.",
-             "HRES": "H.Res.", "SRES": "S.Res.", "HR": "H.R.", "S": "S."}
-    return f"{names[m.group(1)]} {m.group(2)}"
+def longdate(iso: str) -> str:
+    """2026-11-06 -> Friday, November 6, 2026."""
+    try:
+        d = date.fromisoformat((iso or "")[:10])
+    except ValueError:
+        return iso or ""
+    return f"{d:%A}, {d:%B} {d.day}, {d.year}"
+
+
+def shortdate(iso: str) -> str:
+    """2026-04-15 -> Apr 15, 2026."""
+    try:
+        d = date.fromisoformat((iso or "")[:10])
+    except ValueError:
+        return iso or ""
+    return f"{d:%b} {d.day}, {d.year}"
+
+
+from ..findings import billname  # noqa: E402  (SJRES54 -> S.J.Res. 54, HR1234 -> H.R. 1234)
 
 
 def env() -> Environment:
     e = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
     e.filters["billname"] = billname
+    e.filters["longdate"] = longdate
+    e.filters["shortdate"] = shortdate
     e.filters["money"] = money
     e.filters["pct"] = pct
     e.globals["css_v"] = __import__("hashlib").sha256((HERE / "static" / "style.css").read_bytes()).hexdigest()[:10]
@@ -188,7 +201,10 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     chains = None
     if common["show_dependents"]:
         chains = _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common, public)
-    _build_money(E, snapshots_root, snap.date, prev, members, finance, lobbying, chains, common)
+    money_data = _build_money(E, snapshots_root, snap.date, prev, members, finance, lobbying, chains, common)
+    from .. import findings as findings_mod
+    fd = findings_mod.build(members, votes, money_data, chains)
+    (prev / "findings.html").write_text(E.get_template("findings.html").render(root="", page="findings", f=fd, **common), encoding="utf-8")
     _build_pages(E, snapshots_root.parent, prev, common)
     from .. import lameduck as lameduck_mod
     ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
@@ -254,7 +270,7 @@ def _set_aside(snapshots_root: Path) -> list[dict]:
     return json.loads(p.read_text())["set_aside"] if p.exists() else []
 
 
-def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, finance, lobbying, chains, common) -> None:
+def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, finance, lobbying, chains, common) -> dict:
     """Where the money goes, and Shared funders (see speculum/money.py)."""
     from .. import money as money_mod
     spend = read_newest(snapshots_root, "spend.json", date)
@@ -275,6 +291,7 @@ def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, financ
     for a in data["areas"]:
         orgs = [o for o in data["orgs"] if o["area"] == a["key"]][:40]
         (prev / "money" / f"{a['key']}.html").write_text(tmpl.render(root="../", page="money", a=a, orgs=orgs, **ctx, **common), encoding="utf-8")
+    return data
 
 
 def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict, public: bool = False) -> None:
@@ -286,12 +303,20 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
     (prev / "tide").mkdir(exist_ok=True)
     tmpl = E.get_template("tide.html")
     glass = _glass_by_edition(chains_mod.load_json(snapshots_root.parent / "tide" / "glass.json", {}), dates)
+    eds = []
     for i, d in enumerate(dates):
         cur = Snapshot(snapshots_root, d)
         ed = cur.read("tide.json") or tide_mod.build_edition(cur, Snapshot(snapshots_root, dates[i - 1]) if i else None)
-        ed = _apply_approvals(ed, approvals.get(d, {}), public)
-        ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names,
-                   day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, glass=glass.get(d), **common)
+        eds.append((d, cur, _apply_approvals(ed, approvals.get(d, {}), public)))
+    # The record so far: every edition, newest first, with its headlines, for the timeline on each page.
+    timeline = [{"date": d, "day": day_number(d), "founding": d == DAY_ZERO, "roll_calls": ed.get("roll_calls"),
+                 "glass": bool(glass.get(d)),
+                 "stories": [{"id": s["id"], "kind": s.get("kind"), "headline": s.get("headline"), "date": (s.get("date") or "")[:10],
+                              "status": s.get("status")} for s in ed.get("stories") or []]}
+                for d, cur, ed in reversed(eds)]
+    for d, cur, ed in eds:
+        ctx = dict(page="tide", ed=ed, ed_day=day_number(d), archive=list(reversed(dates)), names=names, timeline=timeline,
+                   latest=dates[-1], day_zero=DAY_ZERO, fs=_founding_stats(cur) if d == DAY_ZERO else None, glass=glass.get(d), **common)
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")

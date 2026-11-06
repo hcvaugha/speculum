@@ -3,7 +3,8 @@
 {% block body %}
 <div class="tide-mast">
   <div class="tide-name">The Tide</div>
-  <div class="meta">Edition of {{ ed.date }} · Day {{ ed_day }} of the record{% if fs %}{% elif ed.first %} · the {{ ed.roll_calls }} roll calls of the 30 days to Day Zero{% else %} · {{ ed.roll_calls }} new roll calls since {{ ed.since }}{% endif %}</div>
+  <div class="tide-date">{% if ed.date == latest %}Latest edition · {% endif %}{{ ed.date|longdate }}</div>
+  <div class="meta">Day {{ ed_day }} of the record{% if fs %}{% elif ed.first %} · the {{ ed.roll_calls }} roll calls of the 30 days to Day Zero{% else %} · {{ ed.roll_calls }} new roll calls since {{ ed.since|shortdate }}{% endif %}</div>
 </div>
 
 {% if fs %}{% include "_founding.html" %}{% endif %}
@@ -14,7 +15,7 @@
 <div class="stories">
 {% for s in ed.stories %}
 <article class="story" id="{{ s.id }}">
-  <div class="kicker">{{ s.kind }}{% if s.date %} · {{ s.date[:10] }}{% endif %}{% if not public %} · <span class="story-status st-{{ s.status }}">{{ {'published': 'Published', 'held': 'Held back'}[s.status] }}</span> <span class="muted">{{ s.id }}</span>{% endif %}</div>
+  <div class="kicker">{{ s.kind }}{% if s.date %} · <time datetime="{{ s.date[:10] }}">{{ s.date|shortdate }}</time>{% endif %}{% if not public %} · <span class="story-status st-{{ s.status }}">{{ {'published': 'Published', 'held': 'Held back'}[s.status] }}</span> <span class="muted">{{ s.id }}</span>{% endif %}</div>
   <h3>{{ s.headline }}</h3>
   <p class="dek">{{ s.dek }}</p>
   <ul class="facts">{% for f in s.facts %}<li>{{ f }}</li>{% endfor %}</ul>
@@ -44,8 +45,18 @@
 </div>
 {% endif %}
 
-{% if archive|length > 1 %}
-<h2>Earlier editions</h2>
-<p class="meta">{% for d in archive %}{% if d != ed.date %}<a href="{{ root }}tide/{{ d }}.html">{{ d }}{% if d == day_zero %} · No. 1, the founding edition{% endif %}</a>{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}</p>
+{% if timeline|length > 1 %}
+<h2 id="record">The record so far</h2>
+<p class="meta">Every edition, newest first. One edition is published each night from that day's filings; story dates are the dates of the votes and filings they report.</p>
+<ol class="tide-line">
+{% for e in timeline %}{% set href = root ~ ('tide.html' if e.date == latest else 'tide/' ~ e.date ~ '.html') %}
+<li class="{{ 'here' if e.date == ed.date else '' }}">
+  <div class="tl-when"><a href="{{ href }}"><time datetime="{{ e.date }}">{{ e.date|longdate }}</time></a>
+    <span class="muted">Day {{ e.day }}{% if e.founding %} · the founding edition{% endif %}{% if e.date == ed.date %} · you are here{% endif %}</span></div>
+  {% if e.stories %}<ul class="tl-stories">{% for s in e.stories %}<li><a href="{{ href }}#{{ s.id }}">{{ s.headline }}</a> <span class="muted">· {{ s.kind }}{% if s.date %}, {{ s.date|shortdate }}{% endif %}{% if not public and s.status == 'held' %} · held back{% endif %}</span></li>{% endfor %}</ul>
+  {% else %}<p class="muted tl-empty">{% if e.founding %}Where the record begins.{% else %}No new roll calls or filings.{% endif %}{% if e.glass %} Across the Glass.{% endif %}</p>{% endif %}
+</li>
+{% endfor %}
+</ol>
 {% endif %}
 {% endblock %}
