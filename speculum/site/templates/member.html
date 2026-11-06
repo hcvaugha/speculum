@@ -7,7 +7,10 @@
 {% if leaving %}<p class="notice" style="margin-top:0">Not returning in January: {{ leaving_label|lower }}{% if leaving.detail %}. {{ leaving.detail }}{% endif %}. Votes after Election Day are compared with this member's own record on the <a href="../lameduck.html">lame-duck watch</a>.</p>{% endif %}
 <p class="meta">Bioguide {{ m.bioguide }}{% if L.finance and L.finance.candidate_id %} · FEC <a href="https://www.fec.gov/data/candidate/{{ L.finance.candidate_id }}/">{{ L.finance.candidate_id }}</a>{% endif %} · <a href="https://bioguide.congress.gov/search/bio/{{ m.bioguide }}">Congressional biography</a></p>
 
-<h2>The Ledger</h2>
+{% from "_toc.html" import toc %}{{ toc([("ledger", "The Ledger"), ("money", "Where the money came from"),
+  ("committees", "Committee contributors") if L.finance and L.finance.top_committees else none,
+  ("lobbyists", "Lobbyist contributions"), ("honors", "Paid in their honor") if honors else none, ("votes", "Recent roll calls")]) }}
+<h2 id="ledger">The Ledger</h2>
 <div class="readings">
   <div class="reading">
     <div class="label">Small donors</div>
@@ -47,7 +50,7 @@
 </div>
 <div class="notice">Readings not yet live: <b>Independence</b> (votes against the stated positions of this member's own top funders), <b>Exposure</b>, <b>Timing</b>, <b>Revolving door</b>, and <b>Earmarks and trades</b>. They arrive once funder positions are coded and reviewed. See the <a href="../method.html">method</a>.</div>
 
-<h2>Where the money came from</h2>
+<h2 id="money">Where the money came from</h2>
 {% if L.funding %}
 <p class="meta">{{ L.funding.total|money }} in contributions · {{ L.finance.cycle_label }} · through {{ L.finance.coverage_end or 'latest report' }}{% if L.funding.other_receipts >= 1000 %} · total receipts {{ L.funding.receipts|money }}, including {{ L.funding.other_receipts|money }} in transfers from the member's own fundraising committees and other receipts that are not contributions{% endif %}</p>
 <div class="fbar" role="img" aria-label="Contributions by source">
@@ -61,7 +64,7 @@
 {% endif %}
 
 {% if L.finance and L.finance.top_committees %}
-<h2>Largest committee contributors</h2>
+<h2 id="committees">Largest committee contributors</h2>
 <div class="tbl-wrap"><table>
 <thead><tr><th>Committee</th><th class="r">Amount</th><th class="r">Gifts</th></tr></thead>
 <tbody>
@@ -72,7 +75,7 @@
 <p class="meta" style="margin-top:8px">Itemized receipts from committees to {{ L.finance.committee_name or 'the principal campaign committee' }}, {{ L.finance.cycle_label }}.</p>
 {% endif %}
 
-<h2>Lobbyist contributions</h2>
+<h2 id="lobbyists">Lobbyist contributions</h2>
 {% if L.lobbyist_items %}
 <div class="tbl-wrap"><table>
 <thead><tr><th>Date</th><th>Reported by</th><th>Paid to</th><th>Type</th><th class="r">Amount</th></tr></thead>
@@ -87,7 +90,7 @@
 {% endif %}
 
 {% if honors %}
-<h2>Paid in their honor</h2>
+<h2 id="honors">Paid in their honor</h2>
 <p class="meta">Money lobbying organizations reported spending to honor this member: gifts to charities, events and institutions named for or honoring them. Not campaign money, and not counted in the totals above.</p>
 <div class="tbl-wrap"><table>
 <thead><tr><th>Date</th><th>Reported by</th><th>Paid to</th><th>Type</th><th class="r">Amount</th></tr></thead>
@@ -96,7 +99,7 @@
 {% endfor %}</tbody></table></div>
 {% endif %}
 
-<h2>Recent roll calls</h2>
+<h2 id="votes">Recent roll calls</h2>
 {% if recent %}
 <div class="tbl-wrap"><table>
 <thead><tr><th>Date</th><th>Question</th><th>Result</th><th>Vote</th></tr></thead>

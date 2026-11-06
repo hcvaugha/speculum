@@ -59,3 +59,12 @@ def test_text_cleanups_from_the_site_check():
     assert _plain("&#226;€‹Public policy advocacy.") == "Public policy advocacy."
     assert all(no_post(x) for x in ("None.", "N/A", "none", " Not applicable. "))
     assert not any(no_post(x) for x in ("Chief of Staff", "LA, US Senate"))
+
+
+def test_long_pages_get_jump_links_and_short_ones_do_not():
+    from jinja2 import Environment, FileSystemLoader
+    from speculum.site.build import HERE
+    e = Environment(loader=FileSystemLoader(HERE / "templates"))
+    t = e.from_string('{% from "_toc.html" import toc %}{{ toc(items) }}')
+    assert 'href="#a"' in t.render(items=[("a", "A"), ("b", "B"), None, ("c", "C")])
+    assert "toc" not in t.render(items=[("a", "A"), None, ("b", "B")])          # fewer than three sections: no bar

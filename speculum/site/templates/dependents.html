@@ -5,12 +5,17 @@
 <p class="lede">Every decision has dependents: the people who live with what it set in motion, often far from the chamber and long after the vote. Each chain here follows one recorded decision forward, from the vote, to what it changed, to what happened next, with the money that stood around it.</p>
 <p class="meta">{{ chains|length }} chain{{ '' if chains|length == 1 else 's' }} · decisions are chosen by fixed rules, not by topic or party · {% set checked = chains|selectattr('auto_public')|list|length %}{{ checked }} source-checked{% if approved %}, {{ approved }} also reviewed by the editor{% endif %}{% if chains|length - checked %}, {{ chains|length - checked }} not yet checked{% endif %}</p>
 
+{% if groups|length > 1 %}
+<nav class="themes" id="themes" aria-label="Themes">{% for rule, group in groups %}{% set law = group|selectattr('enacted')|list|length %}
+<a href="#{{ rule.id }}"><b>{{ rule.name }}</b><span class="n">{{ group|length }}</span><span>{{ rule.blurb }}{% if law %} {{ law }} became law.{% endif %}</span></a>{% endfor %}
+</nav>
+{% endif %}
 <div class="grades">
   {% for g, desc in grades.items() %}<div class="grade-key"><span class="grade grade-{{ g }}">{{ g|capitalize }}</span> {{ desc }}</div>{% endfor %}
 </div>
 
-{% for rule_name, group in groups %}
-<h2>{{ rule_name }}</h2>
+{% for rule, group in groups %}{% set rule_name = rule.name %}
+<h2 id="{{ rule.id }}">{{ rule_name }}</h2>
 <p class="muted">{{ group[0].why }}</p>
 {% set arms = group[0].rule == 'arms-sales' %}
 {% if not arms %}{% set law = group|selectattr('enacted')|list|length %}{% set unknown = group|rejectattr('latest_action_text')|list|length %}{% set noun = group[0].page.measure %}<p class="meta">{{ group|length }} {{ noun }}{{ '' if group|length == 1 else 's' }} with a recorded vote; {{ law }} became law{% if unknown %} so far (the final status of {{ unknown }} is still being collected){% endif %}. Every such {{ noun }} is included, whoever sponsored it{% if group[0].rule == 'rules-overturned' %} and whatever the rule concerned{% endif %}.</p>{% endif %}
@@ -28,6 +33,7 @@
 </tr>
 {% endfor %}
 </tbody></table></div>
+{% if groups|length > 1 %}<p class="to-themes"><a href="#themes">↑ All themes</a></p>{% endif %}
 {% endfor %}
 
 <div class="notice">A chain judges a decision, never a person. It names who voted and who was funded, and lets the record of what followed speak. Every link carries an evidence grade and a source, outcomes a decision prevented are recorded as faithfully as outcomes it caused, and a member who voted against a decision is not tied to what it did. Research is done with AI. An item appears on the public site only after an independent AI checker has opened its source and confirmed that it says what the item says; anyone can dispute an item with a source, and it is withdrawn until checked again.</div>

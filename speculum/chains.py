@@ -44,6 +44,7 @@ TIES = {
 RULES = [
     {
         "id": "arms-sales",
+        "blurb": "Senate votes on blocking a foreign arms sale.",
         "name": "Foreign arms sales",
         "test": re.compile(r"disapproval of the proposed (foreign military sale|export|direct commercial sale|transfer)"
                            r"[^.]*defense articles", re.I),
@@ -69,6 +70,7 @@ RULES = [
     },
     {
         "id": "rules-overturned",
+        "blurb": "Votes on overturning a federal agency's rule.",
         "name": "Regulations overturned",
         # Every resolution under the Congressional Review Act with a recorded vote, whoever sponsored it and
         # whatever the rule was about. Titles follow the form fixed by 5 U.S.C. 802(a).
@@ -104,6 +106,7 @@ RULES = [
     },
     {
         "id": "reconciliation",
+        "blurb": "Votes on budget reconciliation bills.",
         "name": "Budget reconciliation",
         # Every reconciliation bill: its title is fixed as "to provide for reconciliation pursuant to" the budget resolution.
         "test": re.compile(r"to provide for reconciliation pursuant to", re.I),
@@ -137,6 +140,7 @@ RULES = [
     },
     {
         "id": "emergencies",
+        "blurb": "Votes on ending a national emergency, most of them declared to impose tariffs.",
         "name": "Ending national emergencies",
         # Every resolution to end a national emergency under the National Emergencies Act (50 U.S.C. 1622).
         "test": re.compile(r"terminating the national emergency declared", re.I),
@@ -170,6 +174,7 @@ RULES = [
     },
     {
         "id": "war-powers",
+        "blurb": "Votes on directing US forces out of hostilities.",
         "name": "War powers",
         # Every resolution or bill directing the removal of US forces from hostilities (War Powers Resolution,
         # 50 U.S.C. 1544(c), and 50 U.S.C. 1546a).

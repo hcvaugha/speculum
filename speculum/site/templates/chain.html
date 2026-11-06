@@ -52,9 +52,10 @@
   <div class="reading"><div class="label">How it was cleared</div><div class="context" style="margin-top:6px">{{ mx.clearance or 'Not researched.' }}</div></div>
 </div>
 
+{% from "_toc.html" import toc %}{{ toc([("decision", "The decision"), ("record", "What the sale contained"), ("shows", "What the record shows"), ("money", "The money around the vote"), ("dispute", "Dispute an item")]) }}
 <ol class="chain">
 <li>
-  <div class="step">1 · The decision</div>
+  <div class="step" id="decision">1 · The decision</div>
   <p>{{ c.why }}{% for s in c.why_sources %} <a href="{{ s.url }}" class="muted" style="font-size:12px">[{{ s.publisher }}]</a>{% endfor %}</p>
   <div class="tbl-wrap"><table>
   <thead><tr><th>Date</th><th>Question</th><th>Result</th><th class="r">Yea</th><th class="r">Nay</th></tr></thead>
@@ -67,7 +68,7 @@
 </li>
 
 <li>
-  <div class="step">2 · What the sale contained</div>
+  <div class="step" id="record">2 · What the sale contained</div>
   {% if c.mechanism %}
   {% if mx.end_use_first %}<p><b>{{ mx.end_use_first }}</b></p>{% endif %}
   <p>{{ mx['items'] }}{% if mx.value %} · {{ mx.value }}{% endif %}</p>
@@ -82,7 +83,7 @@
 </li>
 
 <li>
-  <div class="step">3 · What the record shows</div>
+  <div class="step" id="shows">3 · What the record shows</div>
   <p class="meta" style="margin-top:0">Each item carries two separate judgments. Its <b>grade</b> says how strong the evidence is for the finding itself. Its <b>place on this page</b> says how it relates to this sale. Dates show when each finding was published, before or after the sale and the vote. Court orders on provisional measures and arrest warrants are graded Associated: they are court records, but they do not decide the facts.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
   {% set same = c.outcomes|selectattr('scope', 'equalto', 'same_type')|list %}
   {% set wider = c.outcomes|selectattr('scope', 'equalto', 'wider')|list %}
@@ -118,7 +119,7 @@
 </li>
 
 <li>
-  <div class="step">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
+  <div class="step" id="money">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
   <p>Legal, publicly disclosed contributions reported to each senator's campaign and leadership committees by registered lobbyists and lobbying organizations of companies on the <a href="https://www.sipri.org/databases/armsindustry">SIPRI Top 100 arms producers</a> list (LD-203 reports). <b>Window:</b> contributions dated {{ c.window_start or 'from the start of the reporting years collected' }} through the vote on {{ c.date }}, the same window for every senator on this vote; nothing given after the vote is counted. <b>PAC money:</b> {% if c.money_pattern.values()|map(attribute='Y')|map(attribute='pac_n')|sum + c.money_pattern.values()|map(attribute='N')|map(attribute='pac_n')|sum %}shown where collected; PAC figures are campaign-cycle totals and cannot be cut at the vote date{% else %}not yet collected for senators: unknown, not zero{% endif %}.</p>
   <p class="notice" style="margin-top:0"><b>These figures do not show that any contribution influenced any vote.</b> Money can follow votes as easily as precede them, and seniority, committee seats, home-state industry and a senator's general stance on arms sales can drive both. Comparisons are made only within a party, a median is shown only for groups of {{ min_n }} or more, and every senator's figure is listed below.</p>
   {{ money_table(c.money_pattern, c.contractor_companies) }}

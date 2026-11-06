@@ -1,0 +1,5 @@
+{# "On this page": jump links for long pages. Items are (anchor, label) pairs; a falsy item (a section the page
+   does not have) is skipped, and the bar appears only when there are at least three sections to jump between. #}
+{% macro toc(items) %}{% set items = items|select|list %}{% if items|length >= 3 %}
+<nav class="toc" aria-label="On this page"><span class="toc-label">On this page</span>{% for id, label in items %}<a href="#{{ id }}">{{ label }}</a>{% endfor %}</nav>
+{% endif %}{% endmacro %}

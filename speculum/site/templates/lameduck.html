@@ -8,8 +8,10 @@
 {% if not rows %}
 <p class="muted">The list of departing members is being compiled from the House Press Gallery and called races.</p>
 {% else %}
+{% from "_toc.html" import toc %}{% set chs = rows|map(attribute='member.chamber')|unique|list %}
+{% if chs|length > 1 %}<nav class="toc" aria-label="On this page"><span class="toc-label">On this page</span>{% for ch in chs|sort %}<a href="#{{ ch }}">{{ 'Senate' if ch == 'senate' else 'House' }}</a>{% endfor %}</nav>{% endif %}
 {% for chamber, group in rows|groupby('member.chamber') %}
-<h2>{{ 'Senate' if chamber == 'senate' else 'House' }}</h2>
+<h2 id="{{ chamber }}">{{ 'Senate' if chamber == 'senate' else 'House' }}</h2>
 <div class="tbl-wrap"><table>
 <thead><tr><th>Member</th><th>Why not returning</th><th class="r">With party, before</th><th class="r">With party, since</th><th class="r">Change</th><th class="r">Voted, before</th><th class="r">Voted, since</th></tr></thead>
 <tbody>

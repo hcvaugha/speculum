@@ -48,9 +48,10 @@
   <div class="reading"><div class="label">What became of it</div><div class="context" style="margin-top:6px">{% if c.latest_action_text %}{{ c.latest_action_text }}{% if c.latest_action and c.latest_action.date %} <span class="muted">({{ c.latest_action.date }})</span>{% endif %}{% else %}Not yet recorded here.{% endif %}{% if c.bill_url %} <a href="{{ c.bill_url }}" class="muted">Congress.gov</a>{% endif %}</div></div>
 </div>
 
+{% from "_toc.html" import toc %}{{ toc([("decision", "The decision"), ("record", pg.record_title), ("shows", "What the record shows"), ("money", "The money around the vote"), ("dispute", "Dispute an item")]) }}
 <ol class="chain">
 <li>
-  <div class="step">1 · The decision</div>
+  <div class="step" id="decision">1 · The decision</div>
   <p>{{ c.why }}{% for s in c.why_sources %} <a href="{{ s.url }}" class="muted" style="font-size:12px">[{{ s.publisher }}]</a>{% endfor %}</p>
   <div class="tbl-wrap"><table>
   <thead><tr><th>Date</th><th>Chamber</th><th>Question</th><th>Result</th><th class="r">Yea</th><th class="r">Nay</th></tr></thead>
@@ -62,7 +63,7 @@
 </li>
 
 <li>
-  <div class="step">2 · {{ pg.record_title }}</div>
+  <div class="step" id="record">2 · {{ pg.record_title }}</div>
   {% if c.mechanism %}
   {% if mx.rule %}<p><b>{{ mx.rule }}</b>{% if mx.federal_register %} <span class="muted">· {{ mx.federal_register }}</span>{% endif %}{% if mx.published %} <span class="muted">· published {{ mx.published }}</span>{% endif %}{% if mx.effective %} <span class="muted">· effective {{ mx.effective }}</span>{% endif %}</p>{% endif %}
   {% if mx[pg.main] %}<p>{{ mx[pg.main] }}</p>{% endif %}
@@ -81,7 +82,7 @@
 </li>
 
 <li>
-  <div class="step">3 · What the record shows</div>
+  <div class="step" id="shows">3 · What the record shows</div>
   <p class="meta" style="margin-top:0">Each item carries an evidence grade. An estimate made before the vote, such as {{ pg.estimate_example }}, is graded Estimated: it is a forecast, not a record of what happened. Dates show when each finding was published, before or after the vote.{% if public %} Items graded Associated are not published automatically.{% endif %}</p>
   {% if c.outcomes %}
   {% for o in c.outcomes|sort(attribute='_order') %}{{ outcome(o) }}{% endfor %}
@@ -93,7 +94,7 @@
 </li>
 
 <li>
-  <div class="step">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
+  <div class="step" id="money">4 · The money around the vote <span class="grade grade-associated">Associated</span></div>
   {% if c.lobbied_orgs %}
   <p>{{ c.lobbied_orgs|length }} organization{{ '' if c.lobbied_orgs|length == 1 else 's' }} named this {{ pg.measure }} in quarterly lobbying reports (LD-2) {% if c.lobbied_quarters %}from {{ c.lobbied_quarters|first }} to {{ c.lobbied_quarters|last }}{% endif %}. <b>The reports do not say which side an organization took</b>; one that lobbied on a {{ pg.measure }} may have lobbied for it or against it.</p>
   {% if c.lobbied_groups|length > 1 %}<p class="meta">By the organizations' own description of their business: {% for g in c.lobbied_groups %}{{ g.name }} {{ g.n|num }}{% if not loop.last %} · {% endif %}{% endfor %}.</p>{% endif %}
