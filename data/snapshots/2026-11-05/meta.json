@@ -1,5 +1,5 @@
 {
- "calls": 3582,
+ "calls": 9557,
  "counts": {
   "finance": 518,
   "house": 433,
@@ -15,6 +15,6 @@
  "fec_through": "2026-10-22",
  "finance_partial": null,
  "note": "",
- "raw_files": 3581,
+ "raw_files": 9556,
  "votes_through": "2026-09-30"
 }
