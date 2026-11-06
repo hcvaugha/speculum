@@ -14,7 +14,7 @@ on:
         description: "Snapshot date override (YYYY-MM-DD); leave blank for today"
         required: false
       only:
-        description: "Rerun only these sources for that date (space-separated: votes finance lobbying); blank for all"
+        description: "Rerun only these sources for that date (space-separated: votes finance lobbying spend advocacy); blank for all"
         required: false
 
 permissions:

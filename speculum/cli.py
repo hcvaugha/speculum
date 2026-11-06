@@ -72,6 +72,14 @@ def cmd_snapshot(args) -> int:
     lobbying = step("lobbying", lambda: lda.fetch_lobbying(fetch, keys["lda"], members, run_date))
     if lobbying is not None:
         snap.write("lobbying.json", lobbying)
+
+    def _spend():
+        from .sources import lobbyspend
+        return lobbyspend.fetch_spend(fetch, keys["lda"], run_date, previous=_latest(snap, "spend.json"),
+                                      deadline=deadline - 150 * 60)   # leave advocacy and finance time
+    spend = step("spend", _spend)
+    if spend is not None:
+        snap.write("spend.json", spend)
     def _advocacy():
         from .sources import advocacy
         from .chains import load_json
@@ -119,7 +127,7 @@ def cmd_snapshot(args) -> int:
         # A partial rerun fills in sources for a night already saved: keep what that night recorded
         # about the sources this run did not touch.
         prior = snap.read("meta.json", {}) or {}
-        skipped = [k for k in ("votes", "finance", "lobbying", "advocacy") if k not in args.only]
+        skipped = [k for k in ("votes", "finance", "lobbying", "spend", "advocacy") if k not in args.only]
         meta["errors"] = {**{k: v for k, v in (prior.get("errors") or {}).items()
                              if any(k == s or k.startswith(s + "_") for s in skipped)}, **errors}
         if "finance" not in args.only:
@@ -265,7 +273,7 @@ def main(argv=None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("snapshot", help="fetch every source and write today's snapshot")
     s.add_argument("--date", help="override the snapshot date (YYYY-MM-DD)")
-    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying", "advocacy"])
+    s.add_argument("--only", nargs="*", choices=["votes", "finance", "lobbying", "spend", "advocacy"])
     s.add_argument("--top-committees", type=int, default=50, help="committee givers kept per member (pages show the top 10)")
     b = sub.add_parser("build", help="render the site from the latest snapshot")
     b.add_argument("--out", default="dist")
