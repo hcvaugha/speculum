@@ -35,6 +35,9 @@ if [ -n "${SPECULUM_ADMIN_PASSWORD:-}" ]; then
 fi
 # One-click approvals on signups.html: a token limited to Access policies, from the CLOUDFLARE_ACCESS_TOKEN secret.
 if [ -n "${CLOUDFLARE_ACCESS_TOKEN:-}" ]; then
+  AT=$(printf '%s' "$CLOUDFLARE_ACCESS_TOKEN" | tr -d '[:space:]')
+  echo "approvals token: ${#AT} characters; Cloudflare says: $(curl -s -H "Authorization: Bearer $AT" https://api.cloudflare.com/client/v4/user/tokens/verify \
+    | python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("result") or {}).get("status") or [e.get("message") for e in d.get("errors") or []])' 2>/dev/null)"
   printf '%s' "$(printf '%s' "$CLOUDFLARE_ACCESS_TOKEN" | tr -d '[:space:]')" | npx --yes wrangler@3 pages secret put CF_ACCESS_TOKEN --project-name speculum-public >/dev/null \
     && printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | npx --yes wrangler@3 pages secret put CF_ACCOUNT_ID --project-name speculum-public >/dev/null \
     && echo "early-access approvals enabled" || echo "::warning::Could not enable early-access approvals."
