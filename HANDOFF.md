@@ -32,6 +32,7 @@ A public, nonpartisan record of Congress at speculum.vote: how every member vote
 - `lobbying.json` and `spend.json` are written as compact JSON. GitHub refuses files over 100 MB, and the run prints a warning when any file passes 80 MB. Gzip is written with a fixed header, so unchanged data gives unchanged bytes. Big files stay uncompressed on purpose: git stores a plain night as a small delta, while a gzipped one would be stored whole.
 - The checkout holds about 180 MB of snapshots (Day Zero plus one standing copy of each file) and grows by a few KB a night, plus the size of whatever changed.
 - A back-dated rerun (`--date` earlier than the newest night) never prunes. It keeps that night's saved edition of The Tide when the night before is in git history only.
+- A night whose edition of The Tide failed to build keeps its own files, and the night before's, until it has one. The site build then makes the edition from them. A rerun whose copy turns out the same as the night before's drops its copy and updates the index.
 
 ## The site's sections
 

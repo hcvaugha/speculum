@@ -32,6 +32,7 @@ log = logging.getLogger("speculum")
 KEPT = {"meta.json", "tide.json"}                  # every night keeps its own; all other files roll forward
 COMPACT = {"lobbying.json", "spend.json"}          # the large ones: no indentation (about 15% smaller)
 WARN_BYTES = 80 * 1024 * 1024                      # GitHub refuses any file over 100 MB
+TIDE_NEEDS = ("members.json", "votes.json.gz", "lobbying.json", "finance.json")   # an edition reads these, tonight's and the night before's
 
 
 def _text(name: str, data) -> str:
@@ -71,12 +72,17 @@ class Snapshot:
         text = _text(name, data)
         path = self.dir / name
         if name not in KEPT:
-            standing = self.standing(name)
-            if standing is not None:
+            prev = previous(self.root, self.date)
+            seen = set()
+            for standing in (self.standing(name), prev.standing(name) if prev else None):
+                if standing is None or standing in seen:
+                    continue
+                seen.add(standing)
                 try:
                     if _decode(name, standing.read_bytes()) == text:
-                        if standing.parent != self.dir:
-                            path.unlink(missing_ok=True)     # a rerun's own copy, now matching an earlier night's
+                        if standing.parent != self.dir and path.exists():
+                            path.unlink()                     # a rerun's own copy, now the same as the night before's
+                            self._repoint(name, standing)
                         return None
                 except (OSError, ValueError):
                     pass
@@ -142,6 +148,14 @@ class Snapshot:
                 out[name] = before[name]                      # stood before, now in git history only
         return out
 
+    def _repoint(self, name: str, standing: Path) -> None:
+        """Keep this night's index true when a rerun drops its own copy in favor of an earlier night's."""
+        meta = self._meta()
+        if "files" in meta:
+            body = standing.read_bytes()
+            meta["files"][name] = {"night": standing.parent.name, "sha256": sha256(body), "bytes": len(body)}
+            (self.dir / "meta.json").write_bytes(_encode("meta.json", _text("meta.json", meta)))
+
     def _meta(self) -> dict:
         p = self.dir / "meta.json"
         try:
@@ -188,9 +202,16 @@ def prune(root: Path) -> list[Path]:
     if not files:
         return []                                             # no index yet: nothing can be safely removed
     keep = {p.resolve() for p in (newest.standing(n) for n in files) if p}
+    # A night without a saved edition of The Tide gets one built from its own files and the night before's,
+    # so those stay until it has one.
+    for i, d in enumerate(dates):
+        if not (root / d / "tide.json").exists():
+            for s in (Snapshot(root, d), Snapshot(root, dates[i - 1]) if i else None):
+                if s:
+                    keep |= {p.resolve() for p in (s.standing(n) for n in TIDE_NEEDS) if p}
     removed = []
     for d in all_dates(root, with_meta=False):
-        if d in (DAY_ZERO, newest.date):
+        if d in (DAY_ZERO, newest.date) or d > newest.date:
             continue
         for p in sorted((root / d).iterdir()):
             if p.is_file() and p.name not in KEPT and p.resolve() not in keep:
@@ -203,6 +224,8 @@ def restore(root: Path, date: str, out: Path, repo: Path | None = None) -> dict:
     """Rebuild one night's files into `out` from the working tree or git history, checking each
     against the SHA-256 in that night's index. Needs the full history (`git fetch --unshallow`)."""
     root, out = Path(root), Path(out)
+    if date not in all_dates(root):
+        raise SystemExit(f"no saved night {date}")
     snap = Snapshot(root, date)
     files = snap._meta().get("files")
     if files is None:

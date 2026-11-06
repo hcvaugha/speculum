@@ -84,3 +84,35 @@ def test_restore_rebuilds_a_pruned_night_from_git_history(tmp_path):
     assert result["lobbying.json"].startswith("ok")
     assert json.loads((out / "lobbying.json").read_text()) == {"a": 1}
     assert (out / "meta.json").exists()
+
+
+def test_a_rerun_that_matches_the_night_before_keeps_no_copy(tmp_path):
+    _night(tmp_path, DAY_ZERO, {"finance.json": {"x": 1}})
+    s = _night(tmp_path, "2026-11-04", {"finance.json": {"x": 2}})
+    assert (s.dir / "finance.json").exists()
+    s.write("finance.json", {"x": 1})                            # rerun: the source went back to what stood before
+    assert not (s.dir / "finance.json").exists()
+    assert s.read("finance.json") == {"x": 1}
+
+
+def test_prune_keeps_what_a_night_without_an_edition_needs(tmp_path):
+    _night(tmp_path, DAY_ZERO, {"lobbying.json": {"a": 0}})
+    _night(tmp_path, "2026-11-04", {"lobbying.json": {"a": 1}})
+    s = _night(tmp_path, "2026-11-05", {"lobbying.json": {"a": 2}})
+    (s.dir / "tide.json").unlink()                               # tonight's edition failed to build
+    _night(tmp_path, "2026-11-06", {"lobbying.json": {"a": 3}})
+    prune(tmp_path)
+    assert (tmp_path / "2026-11-05" / "lobbying.json").exists()
+    assert (tmp_path / "2026-11-04" / "lobbying.json").exists()  # the night before it, too
+    (s.dir / "tide.json").write_text("{}")                       # once it has an edition, they can go
+    prune(tmp_path)
+    assert not (tmp_path / "2026-11-05" / "lobbying.json").exists()
+    assert not (tmp_path / "2026-11-04" / "lobbying.json").exists()
+
+
+def test_restore_refuses_a_night_that_was_never_saved(tmp_path):
+    import pytest
+    _night(tmp_path, DAY_ZERO, {})
+    with pytest.raises(SystemExit):
+        restore(tmp_path, "2026-12-01", tmp_path / "out")
+    assert not (tmp_path / "2026-12-01").exists()
