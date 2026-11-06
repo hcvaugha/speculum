@@ -119,6 +119,8 @@ def build(snapshots_root: Path, out: Path, raw_root: Path | None = None) -> dict
         (pub / "member").mkdir(exist_ok=True)
         _render_site(E, pub, snapshots_root, snap, public=True)
         (pub / "robots.txt").write_text("User-agent: *\nAllow: /\n", encoding="utf-8")
+        # The owner's list of readers' requests stays at speculum.vote/signups after launch.
+        (pub / "signups.html").write_text(E.get_template("signups.html").render(), encoding="utf-8")
     result["public"] = mode
     return result
 
@@ -139,7 +141,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
 
     site_cfg = chains_mod.load_json(snapshots_root.parent / "site.json", {}) or {}
     common = {"snapshot_date": snap.date, "day_number": day_number(snap.date), "public": public,
-              "show_dependents": (not public) or bool(site_cfg.get("dependents_public", True))}
+              "show_dependents": (not public) or bool(site_cfg.get("dependents_public", True)),
+              "launched": site_cfg.get("public") == "launch"}
     rows = []
     for m in members:
         L = ledgers[m["bioguide"]]
@@ -383,6 +386,7 @@ def _build_pages(E, data_root: Path, prev: Path, common: dict) -> None:
     corrections = chains_mod.load_json(data_root / "corrections.json", {"entries": []})
     entries = sorted(corrections.get("entries", []), key=lambda e: e.get("date", ""), reverse=True)
     (prev / "about.html").write_text(E.get_template("about.html").render(root="", page="about", **common), encoding="utf-8")
+    (prev / "join.html").write_text(E.get_template("join.html").render(root="", page="join", **common), encoding="utf-8")
     (prev / "corrections.html").write_text(E.get_template("corrections.html").render(
         root="", page="corrections", entries=entries, contact=corrections.get("contact"), **common), encoding="utf-8")
 

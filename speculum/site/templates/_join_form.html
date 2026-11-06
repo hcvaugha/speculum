@@ -1,0 +1,27 @@
+<form class="join-form" id="join" novalidate>
+  <label>Email<input type="email" name="email" required autocomplete="email" maxlength="254"></label>
+  <label>Name <span class="opt">(optional)</span><input type="text" name="name" autocomplete="name" maxlength="120"></label>
+  <label>What brings you here? <span class="opt">(optional)</span><textarea name="note" rows="3" maxlength="1000"></textarea></label>
+  <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button type="submit">Ask to join the readers</button>
+  <p class="join-msg" role="status" aria-live="polite"></p>
+  <p class="fine">Your email is used only to write to you about Speculum and to let you sign in. It is never shared, sold or published.</p>
+</form>
+<script>
+(function () {
+  var f = document.getElementById('join'), msg = f.querySelector('.join-msg'), btn = f.querySelector('button');
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(f).entries());
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((d.email || '').trim())) { msg.textContent = 'Please enter a valid email address.'; return; }
+    btn.disabled = true; msg.textContent = 'Sending…';
+    fetch('{{ root }}api/early-access', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(d) })
+      .then(function (r) { return r.json().then(function (j) { return [r.ok, j]; }); })
+      .then(function (x) {
+        if (x[0]) { f.reset(); msg.textContent = "Thank you. Your request is in, and you'll hear from us by email."; }
+        else { msg.textContent = x[1].error || 'Something went wrong. Please try again.'; btn.disabled = false; }
+      })
+      .catch(function () { msg.textContent = 'Could not reach the site. Please try again.'; btn.disabled = false; });
+  });
+})();
+</script>
