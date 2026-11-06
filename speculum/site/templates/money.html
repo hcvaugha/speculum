@@ -47,7 +47,7 @@
 
 <h2>3 · What organizations spend lobbying</h2>
 {% if d.has_spend %}
-<p class="meta">{{ d.spend_total|money }} reported on quarterly lobbying reports (LD-2), {{ d.spend_quarters|first }} to {{ d.spend_quarters|last }}{% if d.spend_partial %}; {{ d.spend_partial|join(', ') }} still being read{% endif %}. A report's amount is split equally across the issue areas it lists; an organization that lobbies for itself is counted once, since its report includes what it paid outside firms.</p>
+<p class="meta">{{ d.spend_total|money }} reported on quarterly lobbying reports (LD-2), {{ d.spend_quarters|first }} to {{ d.spend_quarters|last }}{% if d.spend_partial %}; {{ d.spend_partial|join(', ') }} still being read{% endif %}. {{ d.spend_placed|money }} of it is on reports that list issue areas, shown below. A report's amount is split equally across the issue areas it lists; an organization that lobbies for itself is counted once, since its report includes what it paid outside firms.</p>
 {% set smax = d.areas|map(attribute='spent')|max %}
 {% for a in d.areas|sort(attribute='spent', reverse=True) %}{% if a.spent %}
 <div class="mrow">
