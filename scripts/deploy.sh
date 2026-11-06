@@ -27,6 +27,12 @@ else
 fi
 npx --yes wrangler@3 pages project create speculum-public --production-branch main >/dev/null 2>&1 || true
 npx --yes wrangler@3 pages project create speculum-preview --production-branch main >/dev/null 2>&1 || true
+# Set before deploying: Pages applies a secret only to deployments made after it.
+# The password for the early-access list page (signups.html), from the SPECULUM_ADMIN_PASSWORD GitHub secret.
+if [ -n "${SPECULUM_ADMIN_PASSWORD:-}" ]; then
+  printf '%s' "$SPECULUM_ADMIN_PASSWORD" | npx --yes wrangler@3 pages secret put ADMIN_KEY --project-name speculum-public >/dev/null \
+    && echo "early-access list password set" || echo "::warning::Could not set the early-access list password."
+fi
 status=0
 for pair in "dist/public speculum-public" "dist/preview speculum-preview"; do
   set -- $pair
@@ -46,9 +52,4 @@ for pair in "dist/public speculum-public" "dist/preview speculum-preview"; do
   fi
 done
 rm -f wrangler.toml
-# The password for the early-access list page (signups.html), from the SPECULUM_ADMIN_PASSWORD GitHub secret.
-if [ -n "${SPECULUM_ADMIN_PASSWORD:-}" ]; then
-  printf '%s' "$SPECULUM_ADMIN_PASSWORD" | npx --yes wrangler@3 pages secret put ADMIN_KEY --project-name speculum-public >/dev/null \
-    && echo "early-access list password set" || echo "::warning::Could not set the early-access list password."
-fi
 exit $status
