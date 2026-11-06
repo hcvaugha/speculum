@@ -33,6 +33,12 @@ if [ -n "${SPECULUM_ADMIN_PASSWORD:-}" ]; then
   printf '%s' "$SPECULUM_ADMIN_PASSWORD" | npx --yes wrangler@3 pages secret put ADMIN_KEY --project-name speculum-public >/dev/null \
     && echo "early-access list password set" || echo "::warning::Could not set the early-access list password."
 fi
+# One-click approvals on signups.html: a token limited to Access policies, from the CLOUDFLARE_ACCESS_TOKEN secret.
+if [ -n "${CLOUDFLARE_ACCESS_TOKEN:-}" ]; then
+  printf '%s' "$CLOUDFLARE_ACCESS_TOKEN" | npx --yes wrangler@3 pages secret put CF_ACCESS_TOKEN --project-name speculum-public >/dev/null \
+    && printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | npx --yes wrangler@3 pages secret put CF_ACCOUNT_ID --project-name speculum-public >/dev/null \
+    && echo "early-access approvals enabled" || echo "::warning::Could not enable early-access approvals."
+fi
 status=0
 for pair in "dist/public speculum-public" "dist/preview speculum-preview"; do
   set -- $pair

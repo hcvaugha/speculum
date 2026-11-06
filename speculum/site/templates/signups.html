@@ -6,6 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Early-access list · Speculum</title>
 <link rel="stylesheet" href="static/style.css?v={{ css_v }}">
+<style>td.act button{background:transparent;color:var(--gold);border:1px solid var(--gold-dim);padding:4px 10px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}td.act{white-space:nowrap}</style>
 </head>
 <body>
 <main class="wrap" style="max-width:900px;margin:0 auto;padding:32px 16px">
@@ -17,12 +18,41 @@
   </form>
   <div id="out" hidden>
     <p class="meta"><span id="n"></span> · <a href="#" id="csv">Download CSV</a></p>
-    <div class="tbl-wrap"><table><thead><tr><th>Signed up</th><th>Name</th><th>Email</th><th>Note</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Signed up</th><th>Name</th><th>Email</th><th>Note</th><th>Early access</th></tr></thead><tbody id="rows"></tbody></table></div>
   </div>
 </main>
 <script>
 (function () {
-  var f = document.getElementById('f'), msg = document.getElementById('msg'), rows = [];
+  var f = document.getElementById('f'), msg = document.getElementById('msg'), rows = [], pass = '';
+  var INVITE_SUBJECT = 'Your early access to Speculum';
+  var INVITE_BODY = "Hi{name},\n\nThank you for signing up. You're in.\n\nSpeculum is a public record of Congress: how every member votes, where their campaign money comes from, and who lobbies them, from public filings, updated every night.\n\nOpen https://early.speculum.vote and enter this email address. Cloudflare will send you a one-time code to sign in; no password needed.\n\nWhat helps most: anything that looks wrong, unclear or missing. Reply to this email, or use the Dispute link beside any item in The Dependents.\n\nThank you,\nSpeculum\nhello@speculum.vote";
+  function invite(r) {
+    var body = INVITE_BODY.replace('{name}', r.name ? ' ' + r.name.split(' ')[0] : '');
+    return 'mailto:' + encodeURIComponent(r.email) + '?subject=' + encodeURIComponent(INVITE_SUBJECT) + '&body=' + encodeURIComponent(body);
+  }
+  function render() {
+    document.getElementById('n').textContent = rows.length + (rows.length === 1 ? ' person' : ' people') + ' · ' +
+      rows.filter(function (r) { return r.approved; }).length + ' approved';
+    document.getElementById('rows').innerHTML = rows.map(function (r, i) {
+      var act = r.approved
+        ? '<span class="st-published">Approved ' + esc(r.approved.slice(0, 10)) + '</span> · <a href="' + invite(r) + '">Invite</a> · <a href="#" data-i="' + i + '" data-a="remove">Remove</a>'
+        : '<button type="button" data-i="' + i + '" data-a="approve">Approve</button>';
+      return '<tr><td class="num">' + esc((r.first || '').slice(0, 16).replace('T', ' ')) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.email) + '</td><td>' + esc(r.note) + '</td><td class="act">' + act + '</td></tr>';
+    }).join('');
+  }
+  document.getElementById('rows').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-a]'); if (!t) return; e.preventDefault();
+    var r = rows[+t.getAttribute('data-i')], a = t.getAttribute('data-a');
+    if (a === 'remove' && !confirm('Remove ' + r.email + ' from early access?')) return;
+    t.textContent = a === 'approve' ? 'Approving…' : 'Removing…';
+    fetch('api/approve', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ key: pass, email: r.email, action: a }) })
+      .then(function (x) { return x.json(); })
+      .then(function (j) {
+        if (j.error) { alert(j.error); render(); return; }
+        r.approved = j.approved ? new Date().toISOString() : null; render();
+      })
+      .catch(function () { alert('Could not reach the site.'); render(); });
+  });
   function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   f.addEventListener('submit', function (e) {
     e.preventDefault(); msg.textContent = 'Checking…';
@@ -30,11 +60,8 @@
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (j.error) { msg.textContent = j.error; return; }
-        rows = j.rows; msg.textContent = ''; f.hidden = true;
-        document.getElementById('n').textContent = rows.length + (rows.length === 1 ? ' person' : ' people');
-        document.getElementById('rows').innerHTML = rows.map(function (r) {
-          return '<tr><td class="num">' + esc((r.first || '').slice(0, 16).replace('T', ' ')) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.email) + '</td><td>' + esc(r.note) + '</td></tr>';
-        }).join('');
+        rows = j.rows; pass = f.key.value; msg.textContent = ''; f.hidden = true;
+        render();
         document.getElementById('out').hidden = false;
       })
       .catch(function () { msg.textContent = 'Could not reach the site.'; });
@@ -42,7 +69,7 @@
   document.getElementById('csv').addEventListener('click', function (e) {
     e.preventDefault();
     var q = function (s) { return '"' + String(s || '').replace(/"/g, '""') + '"'; };
-    var csv = ['signed_up,name,email,note'].concat(rows.map(function (r) { return [r.first, r.name, r.email, r.note].map(q).join(','); })).join('\n');
+    var csv = ['signed_up,name,email,note,approved'].concat(rows.map(function (r) { return [r.first, r.name, r.email, r.note, r.approved || ''].map(q).join(','); })).join('\n');
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'speculum-early-access.csv'; a.click();
   });

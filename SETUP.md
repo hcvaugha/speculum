@@ -34,6 +34,7 @@ In github.com/hcvaugha/speculum: Settings → Secrets and variables → Actions 
 | `CLOUDFLARE_API_TOKEN` | the token from step 2 |
 | `CLOUDFLARE_ACCOUNT_ID` | the Account ID from step 2 |
 | `ANTHROPIC_API_KEY` | a key from console.anthropic.com → API Keys. It runs the nightly source check: without it nothing new in The Dependents is checked, so nothing new is published. Expect a few dollars a month. |
+| `CLOUDFLARE_ACCESS_TOKEN` | optional: a Cloudflare token with only Account → Access: Apps and Policies → Edit. It powers the Approve and Remove buttons on speculum.vote/signups.html, which add or remove a reader in the "Approved readers" Access policy guarding early.speculum.vote. |
 | `SPECULUM_DISPATCH_TOKEN` | a GitHub fine-grained token with access to this repository only and the permission Actions → Read and write. The Cloudflare scheduler uses it to start the nightly, because GitHub's own schedule often skips runs. When it expires, make a new one, replace this secret, and rerun the Scheduler workflow. |
 
 Then Settings → Actions → General → Workflow permissions → choose **Read and write permissions** → Save. The nightly job needs this to commit each snapshot and attach the raw archive.
