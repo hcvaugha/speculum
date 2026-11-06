@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Where the money goes · Speculum{% endblock %}
+{% block body %}
+<h1>Where the money goes</h1>
+<p class="lede">Three measures, each from one kind of public filing, computed the same way for every member and party. Where money is split by party, the line marks each party's share of seats, so you can compare how the money divides with how Congress divides.</p>
+<p class="meta">Seats now: {{ d.seats.all.get('D', 0) }} Democrats · {{ d.seats.all.get('R', 0) }} Republicans · {{ d.seats.all.get('I', 0) }} independents · <a href="funders.html">Do the parties share funders? →</a></p>
+
+<h2>1 · Where campaign money comes from</h2>
+<p class="meta">Receipts of each member's principal campaign committee this cycle (FEC), through {{ (d.campaign.values()|map(attribute='through')|max) if d.campaign else '—' }}. Small gifts are itemized under $200; party is party committees; PACs include every political committee that is not a party.</p>
+<div class="mlegend">
+  <span><i style="background:var(--small)"></i>Small individual gifts</span><span><i style="background:var(--large)"></i>Larger individual gifts</span>
+  <span><i style="background:var(--pac)"></i>PACs and other committees</span><span><i style="background:var(--party)"></i>Party</span>
+  <span><i style="background:var(--self)"></i>Candidate's own money</span><span><i style="background:var(--line)"></i>Other</span>
+</div>
+{% for ch in ['senate', 'house'] %}
+<h3 class="msub">{{ 'Senate' if ch == 'senate' else 'House' }}</h3>
+{% for p in ['D', 'R', 'I'] %}{% set c = d.campaign.get(ch ~ '-' ~ p) %}{% if c %}
+{% set tot = c.small + c.large + c.pac + c.party_cmte + c.self + c.other %}
+<div class="mrow">
+  <div class="mlabel"><span class="party-{{ p }}">{{ party_names.get(p, p) }}s</span> <span class="muted">· {{ c.members }} members</span></div>
+  <div class="mfig num">{{ c.receipts|money }} <span class="muted">· {{ (c.receipts / c.members)|money }} each on average</span></div>
+  <div class="fbar" role="img" aria-label="{{ party_names.get(p, p) }} {{ ch }} receipts by source">
+    {% for k, var in [('small','--small'),('large','--large'),('pac','--pac'),('party_cmte','--party'),('self','--self'),('other','--line')] %}{% if tot and c[k] %}<span style="width:{{ 100 * c[k] / tot }}%;background:var({{ var }})" title="{{ c[k]|money }}"></span>{% endif %}{% endfor %}
+  </div>
+  <div class="mparts num muted">small {{ (c.small / tot)|pct }} · larger {{ (c.large / tot)|pct }} · PACs {{ (c.pac / tot)|pct }} · party {{ (c.party_cmte / tot)|pct }} · own {{ (c.self / tot)|pct }} · other {{ (c.other / tot)|pct }}</div>
+</div>
+{% endif %}{% endfor %}
+{% endfor %}
+
+<h2>2 · Money from organizations that lobby, by what they lobby on</h2>
+<p class="meta">{{ d.given_total|money }} in federal campaign contributions to sitting members, reported by lobbying registrants, their PACs and their lobbyists ({{ d.lda_years }}, LD-203). Each organization is placed in issue areas by what it lobbies on (its LD-2 reports), in proportion. Bars show how each area's money divides between the parties; <span class="seatmark-key"></span> marks Democrats' share of the two parties' seats ({{ d.d_seat_share|pct }}).</p>
+{% if not d.has_spend %}<p class="notice">Issue areas appear once the lobbying reports (LD-2) have been read; until then all money shows as not placed.</p>{% endif %}
+{% set amax = d.areas|map(attribute='given_total')|max %}
+{% for a in d.areas|sort(attribute='given_total', reverse=True) %}{% if a.given_total %}
+{% set dr = a.given.D + a.given.R %}
+<div class="mrow">
+  <div class="mlabel"><a href="money/{{ a.key }}.html">{{ a.name }}</a></div>
+  <div class="mfig num">{{ a.given_total|money }}</div>
+  <div class="mtotal"><span style="width:{{ 100 * a.given_total / amax }}%"></span></div>
+  {% if dr %}<div class="fbar split" role="img" aria-label="{{ a.name }}: {{ (a.given.D / dr)|pct }} to Democrats, {{ (a.given.R / dr)|pct }} to Republicans">
+    <span class="pD" style="width:{{ 100 * a.given.D / dr }}%"></span><span class="pR" style="width:{{ 100 * a.given.R / dr }}%"></span>
+    <b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b>
+  </div>
+  <div class="mparts num"><span class="party-D">Democrats {{ (a.given.D / dr)|pct }}</span> · <span class="party-R">Republicans {{ (a.given.R / dr)|pct }}</span>{% if a.given.I %} · <span class="party-I">independents {{ a.given.I|money }}</span>{% endif %}</div>{% endif %}
+</div>
+{% endif %}{% endfor %}
+
+<h2>3 · What organizations spend lobbying</h2>
+{% if d.has_spend %}
+<p class="meta">{{ d.spend_total|money }} reported on quarterly lobbying reports (LD-2), {{ d.spend_quarters|first }} to {{ d.spend_quarters|last }}{% if d.spend_partial %}; {{ d.spend_partial|join(', ') }} still being read{% endif %}. A report's amount is split equally across the issue areas it lists; an organization that lobbies for itself is counted once, since its report includes what it paid outside firms.</p>
+{% set smax = d.areas|map(attribute='spent')|max %}
+{% for a in d.areas|sort(attribute='spent', reverse=True) %}{% if a.spent %}
+<div class="mrow">
+  <div class="mlabel"><a href="money/{{ a.key }}.html">{{ a.name }}</a></div>
+  <div class="mfig num">{{ a.spent|money }}</div>
+  <div class="mtotal gold"><span style="width:{{ 100 * a.spent / smax }}%"></span></div>
+  <div class="mparts">{% if a.traced %}<a href="dependents.html">{{ a.traced|length }} decision{{ 's' if a.traced|length != 1 }} traced to recorded outcomes in The Dependents →</a>{% else %}<span class="muted">No decision traced to outcomes yet</span>{% endif %}</div>
+</div>
+{% endif %}{% endfor %}
+{% else %}
+<p class="notice">Lobbying spending appears once the quarterly lobbying reports (LD-2) have been read.</p>
+{% endif %}
+
+<div class="notice">These pages count money; they do not say what it bought. Contributions are legal and reported; lobbying is legal and reported. Whether a pattern means anything is for you to judge. How each figure is computed is on the <a href="method.html#money">Method</a> page.</div>
+{% endblock %}

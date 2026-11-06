@@ -3,6 +3,18 @@
 {% block body %}
 <h1>The Chamber</h1>
 <p class="lede">Every sitting member of the House and Senate, read the same way. Sort by any column; open a member to see their full Ledger and the filings behind it.</p>
+{% if mb %}
+<section class="home-money">
+  <h2>Where the money goes</h2>
+  <p class="meta">Organizations that lobby gave {{ mb.given_total|money }} to sitting members ({{ mb.lda_years }}){% if mb.spend_total %} and reported {{ mb.spend_total|money }} spent lobbying{% endif %}. Largest areas by contributions, and how each divides between the parties (<span class="seatmark-key"></span> = Democrats' share of seats):</p>
+  {% for a in (mb.areas|sort(attribute='given_total', reverse=True))[:5] %}{% set dr = a.given.D + a.given.R %}{% if dr %}
+  <div class="mrow">
+    <div class="mlabel"><a href="money/{{ a.key }}.html">{{ a.name }}</a></div><div class="mfig num">{{ a.given_total|money }}</div>
+    <div class="fbar split thin"><span class="pD" style="width:{{ 100 * a.given.D / dr }}%"></span><span class="pR" style="width:{{ 100 * a.given.R / dr }}%"></span><b class="seatmark" style="left:{{ 100 * mb.d_seat_share }}%"></b></div>
+  </div>{% endif %}{% endfor %}
+  <p class="meta" style="margin-top:12px"><a href="money.html">Where the money goes →</a> · <a href="funders.html">Do the parties share funders? {{ mb.overlap_all.both|num }} of {{ mb.overlap_all.orgs|num }} organizations gave to both →</a></p>
+</section>
+{% endif %}
 <p class="meta">{{ members|length }} members · campaign money through {{ fec_through or "latest filings" }} · votes through {{ votes_through or "latest roll call" }}</p>
 
 <div class="filters">

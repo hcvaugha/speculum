@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ a.name }} · Where the money goes · Speculum{% endblock %}
+{% block body %}
+<p class="meta"><a href="../money.html">← Where the money goes</a></p>
+<h1>{{ a.name }}</h1>
+{% if a.codes %}<p class="meta">Lobbying issue areas included (LDA codes): {{ a.codes|join(', ') }}</p>{% endif %}
+
+<div class="mstats">
+  <div><b class="num">{{ a.given_total|money }}</b><span>in campaign contributions to sitting members ({{ d.lda_years }})</span></div>
+  {% set dr = a.given.D + a.given.R %}
+  {% if dr %}<div><b class="num party-D">{{ (a.given.D / dr)|pct }}</b><span>to Democrats</span></div>
+  <div><b class="num party-R">{{ (a.given.R / dr)|pct }}</b><span>to Republicans</span></div>{% endif %}
+  {% if a.spent %}<div><b class="num">{{ a.spent|money }}</b><span>spent lobbying ({{ d.spend_quarters|first }} to {{ d.spend_quarters|last }})</span></div>{% endif %}
+</div>
+{% if dr %}<div class="fbar split"><span class="pD" style="width:{{ 100 * a.given.D / dr }}%"></span><span class="pR" style="width:{{ 100 * a.given.R / dr }}%"></span><b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b></div>
+<p class="meta"><span class="seatmark-key"></span> Democrats' share of the two parties' seats ({{ d.d_seat_share|pct }}).</p>{% endif %}
+
+<h2>What followed</h2>
+{% if a.traced %}
+<p>{{ a.traced|length }} decision{{ 's' if a.traced|length != 1 }} in this area {{ 'are' if a.traced|length != 1 else 'is' }} traced to recorded outcomes in <a href="../dependents.html">The Dependents</a>:</p>
+<ul class="plain">{% for c in a.traced %}<li><a href="../chain/{{ c.id }}.html">{{ c.title }}</a> <span class="muted">· {{ c.date }}</span></li>{% endfor %}</ul>
+{% else %}
+<p class="muted">No decision in this area has been traced to recorded outcomes yet.</p>
+{% endif %}
+
+{% if orgs %}
+<h2>Organizations giving the most</h2>
+<p class="meta">Organizations whose lobbying is mostly in this area, by contributions to sitting members.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Organization</th><th class="r">Given</th><th class="r">To Democrats</th><th class="r">To Republicans</th><th class="r">Members</th></tr></thead>
+<tbody>{% for o in orgs %}
+<tr><td>{% if o.page %}<a href="../interest/{{ o.page }}.html">{{ o.name }}</a>{% else %}{{ o.name }}{% endif %}</td><td class="r num">{{ o.total|money }}</td>
+<td class="r num">{{ o.D|money }}</td><td class="r num">{{ o.R|money }}</td><td class="r num">{{ o.members }}</td></tr>
+{% endfor %}</tbody></table></div>
+{% endif %}
+
+{% if a.top_clients %}
+<h2>Spending the most on lobbying here</h2>
+<p class="meta">The share of each organization's reported lobbying spending attributed to this area's issue codes.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Organization</th><th class="r">Lobbying in this area</th></tr></thead>
+<tbody>{% for c in a.top_clients %}<tr><td>{{ c.name }}</td><td class="r num">{{ c.amount|money }}</td></tr>{% endfor %}</tbody></table></div>
+{% endif %}
+{% endblock %}

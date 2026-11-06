@@ -134,8 +134,10 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
             "lobby": L["lobbyist_total"], "unity": L["unity"], "attend": L["attendance"],
         })
     rows.sort(key=lambda r: r["sort_name"])
+    from .. import money as money_mod
+    mb = money_mod.build(members, finance, lobbying, read_newest(snapshots_root, "spend.json", snap.date))
     (prev / "index.html").write_text(E.get_template("chamber.html").render(
-        root="", page="chamber", rows=rows, members=members,
+        root="", page="chamber", rows=rows, members=members, mb=mb,
         fec_through=max((f.get("coverage_end") or "" for f in finance.values()), default=None) or meta.get("fec_through"),
         votes_through=meta.get("votes_through"), **common), encoding="utf-8")
 
@@ -180,8 +182,10 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
         root="", page="dayzero", meta=_meta_defaults(Snapshot(snapshots_root, DAY_ZERO).read("meta.json", meta) if DAY_ZERO in all_dates(snapshots_root) else meta), history=history, **common), encoding="utf-8")
     _build_tide(E, snapshots_root, prev, members, common, public)
     _build_interests(E, prev, members, finance, lobbying, common)
+    chains = None
     if common["show_dependents"]:
-        _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common, public)
+        chains = _build_chains(E, snapshots_root.parent, prev, members, finance, lobbying, votes, common, public)
+    _build_money(E, snapshots_root, snap.date, prev, members, finance, lobbying, chains, common)
     _build_pages(E, snapshots_root.parent, prev, common)
     from .. import lameduck as lameduck_mod
     ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
@@ -189,7 +193,8 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     (prev / "lameduck.html").write_text(E.get_template("lameduck.html").render(
         root="", page="lameduck", rows=ld_rows, as_of=(ld.get("as_of") or "")[:10] or "—",
         min_after=lameduck_mod.MIN_AFTER, **common), encoding="utf-8")
-    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", **common), encoding="utf-8")
+    from .. import money as money_mod
+    (prev / "method.html").write_text(E.get_template("method.html").render(root="", page="method", money_areas=money_mod.AREAS, **common), encoding="utf-8")
     # The readings only: itemized contributions live on each member's page and in the raw archive
     # (with them, this file passed Cloudflare's 25 MB limit on the first full night).
     slim = {bio: {**{k: v for k, v in L.items() if k != "lobbyist_items"}, "lobbyist_count": len(L.get("lobbyist_items") or [])}
@@ -221,7 +226,7 @@ def public_view(c: dict) -> dict:
     return v
 
 
-def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common, public: bool = False) -> None:
+def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, votes, common, public: bool = False) -> list:
     from ..snapshot import latest as _latest
     snap = _latest(data_root / "snapshots")
     chains = chains_mod.for_site(members, finance, lobbying, votes, data_root,
@@ -238,6 +243,30 @@ def _build_chains(E, data_root: Path, prev: Path, members, finance, lobbying, vo
         (prev / "chain" / f"{c['id']}.html").write_text(tmpl.render(
             root="../", page="dependents", c=c, party_names=PARTY_NAMES, min_n=chains_mod.MIN_N, gap=int(chains_mod.GAP),
             lobby_years=lobbying.get("years_label", ""), **common), encoding="utf-8")
+    return chains
+
+
+def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, finance, lobbying, chains, common) -> None:
+    """Where the money goes, and Shared funders (see speculum/money.py)."""
+    from .. import money as money_mod
+    spend = read_newest(snapshots_root, "spend.json", date)
+    data = money_mod.build(members, finance, lobbying, spend, chains)
+    have = {p.stem for p in (prev / "interest").glob("*.html")}
+    for o in data["orgs"]:
+        o["name"] = org_name(o["name"] or "")
+        o["page"] = _interest_slug("r", o["id"]) if o["id"] and _interest_slug("r", o["id"]) in have else None
+    for a in data["areas"]:
+        for c in a["top_clients"]:
+            c["name"] = org_name(c["name"] or "")
+    data["has_spend"] = bool(spend)
+    (prev / "money").mkdir(exist_ok=True)
+    ctx = {"d": data, "area_names": money_mod.AREA_NAMES, "party_names": PARTY_NAMES}
+    (prev / "money.html").write_text(E.get_template("money.html").render(root="", page="money", **ctx, **common), encoding="utf-8")
+    (prev / "funders.html").write_text(E.get_template("funders.html").render(root="", page="funders", **ctx, **common), encoding="utf-8")
+    tmpl = E.get_template("money_area.html")
+    for a in data["areas"]:
+        orgs = [o for o in data["orgs"] if o["area"] == a["key"]][:40]
+        (prev / "money" / f"{a['key']}.html").write_text(tmpl.render(root="../", page="money", a=a, orgs=orgs, **ctx, **common), encoding="utf-8")
 
 
 def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict, public: bool = False) -> None:

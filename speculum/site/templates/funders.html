@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Shared funders · Speculum{% endblock %}
+{% block body %}
+<h1>Do the parties share funders?</h1>
+<p class="lede">The organizations that lobby Congress and report federal campaign contributions (LD-203, {{ d.lda_years }}): how many give to members of one party, and how many give to both. Counts and shares only; the comparison line shows how seats divide.</p>
+{% set A = d.overlap_all %}{% set B = d.overlap_big %}{% set T = d.overlap_top100 %}
+<div class="mstats">
+  <div><b class="num">{{ A.orgs|num }}</b><span>organizations gave to sitting members</span></div>
+  <div><b class="num">{{ A.both|num }}</b><span>gave to members of both parties</span></div>
+  <div><b class="num party-D">{{ A.only_D|num }}</b><span>gave only to Democrats</span></div>
+  <div><b class="num party-R">{{ A.only_R|num }}</b><span>gave only to Republicans</span></div>
+</div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Organizations</th><th class="r">Count</th><th class="r">Gave to both parties</th><th class="r">Only Democrats</th><th class="r">Only Republicans</th><th class="r">Money from those giving to both</th></tr></thead>
+<tbody>
+{% for label, x in [('All that gave', A), ('Gave $' ~ (d.threshold|num) ~ ' or more', B), ('The 100 largest', T)] %}
+<tr><td>{{ label }}</td><td class="r num">{{ x.orgs|num }}</td><td class="r num">{{ x.both|num }} <span class="muted">({{ (x.both / x.orgs)|pct if x.orgs else '—' }})</span></td>
+<td class="r num">{{ x.only_D|num }}</td><td class="r num">{{ x.only_R|num }}</td>
+<td class="r num">{{ x.money_from_both|money }} of {{ x.money|money }} <span class="muted">({{ (x.money_from_both / x.money)|pct if x.money else '—' }})</span></td></tr>
+{% endfor %}
+</tbody></table></div>
+<p class="meta">"Both parties" means at least one Democrat and at least one Republican. Gifts to the three independents are counted in totals but do not make an organization count as giving to both.</p>
+
+<h2>How each organization divides its money</h2>
+<p class="meta">The {{ d.hist_n|num }} organizations that gave ${{ d.threshold|num }} or more to the two parties' members, by the share that went to Democrats. <span class="seatmark-key"></span> marks Democrats' share of the two parties' seats ({{ d.d_seat_share|pct }}).</p>
+{% set hmax = d.hist|max %}
+<div class="hist" role="img" aria-label="Number of organizations by share of money to Democrats">
+  {% for n in d.hist %}<div class="hcol"><span class="hbar" style="height:{{ (100 * n / hmax) if hmax else 0 }}%"></span><span class="hn num">{{ n }}</span></div>{% endfor %}
+  <b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b>
+</div>
+<div class="haxis num"><span>All to Republicans</span><span>Even</span><span>All to Democrats</span></div>
+
+<h2>The 100 largest</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Organization</th><th class="r">Given</th><th class="r">Members</th><th style="min-width:160px">Democrats · Republicans</th></tr></thead>
+<tbody>
+{% for o in d.orgs[:100] %}{% set dr = o.D + o.R %}
+<tr><td>{% if o.page %}<a href="interest/{{ o.page }}.html">{{ o.name }}</a>{% else %}{{ o.name }}{% endif %}{% if o.firm %} <span class="muted">· lobbying firm</span>{% endif %}</td>
+<td class="r num">{{ o.total|money }}</td><td class="r num">{{ o.members }}</td>
+<td>{% if dr %}<div class="fbar split thin"><span class="pD" style="width:{{ 100 * o.D / dr }}%"></span><span class="pR" style="width:{{ 100 * o.R / dr }}%"></span><b class="seatmark" style="left:{{ 100 * d.d_seat_share }}%"></b></div><span class="num muted" style="font-size:12px">{{ (o.D / dr)|pct }} · {{ (o.R / dr)|pct }}</span>{% endif %}</td></tr>
+{% endfor %}
+</tbody></table></div>
+
+<div class="notice">The party holding the majority chairs every committee and sets the agenda, and organizations tend to give more to it and to incumbents; the seat line is there so that difference can be seen, not explained away. Giving to both parties can be read many ways. This page does not choose one. How each figure is computed is on the <a href="method.html#money">Method</a> page.</div>
+{% endblock %}
