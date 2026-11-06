@@ -281,3 +281,17 @@ ul.plain { list-style: none; padding: 0; } ul.plain li { padding: 4px 0; }
 ul.orgs, ul.former { columns: 2 280px; column-gap: 28px; margin: 8px 0 16px; }
 ul.orgs li, ul.former li { break-inside: avoid; margin: 2px 0; font-size: 14px; }
 details > summary { cursor: pointer; padding: 6px 0; color: var(--ink); }
+
+/* Home */
+.home-hero { margin: 8px 0 10px; }
+.home-hero h1 { font-size: 2.6rem; margin-bottom: 10px; }
+.home-findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 12px 0 8px; }
+.home-findings .hf { display: block; background: var(--panel); border: 1px solid var(--line); padding: 16px 18px; color: var(--ink); border-bottom-width: 1px; }
+.home-findings .hf b { display: block; font: 500 2rem/1.1 var(--serif); color: var(--gold); margin-bottom: 6px; }
+.home-findings .hf span { font-size: 14px; color: var(--ink-2); }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 12px 0 8px; }
+.home-grid a { display: block; border: 1px solid var(--line); padding: 16px 18px; color: var(--ink); }
+.home-grid a:hover, .home-findings .hf:hover { border-color: var(--gold-dim); }
+.home-grid b { display: block; font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.home-grid span { font-size: 14px; color: var(--ink-2); }
+.home-tide li { margin: 6px 0; }

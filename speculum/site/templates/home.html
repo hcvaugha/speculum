@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Speculum · A public record of Congress{% endblock %}
+{% block body %}
+<div class="home-hero">
+  <h1>A public record of Congress</h1>
+  <p class="lede">How every member of Congress votes, where their campaign money comes from, and who lobbies them, drawn only from public filings and updated every night. The same rules for every member and both parties, and every figure links to its source. The record describes; you decide.</p>
+  <p class="meta">Day {{ day_number }} of the record, which began November 3, 2026 · {{ n_members|num }} sitting members · {{ n_votes|num }} roll calls · {{ n_bills|num }} lobbied bills · updated {{ snapshot_date|shortdate }}</p>
+</div>
+
+<h2>From tonight's findings</h2>
+<div class="home-findings">
+{% for x in f.findings if x.head is not none %}{% if loop.index <= 4 %}
+<a class="hf" href="findings.html#{{ x.id }}">
+  <b class="num">{% if x.fmt == 'pct' %}{{ x.head|pct }}{% elif x.fmt == 'money' %}{{ x.head|money }}{% else %}{{ x.head|num }}{% endif %}</b>
+  <span>{{ x.text }}</span>
+</a>
+{% endif %}{% endfor %}
+</div>
+<p class="meta"><a href="findings.html">All findings →</a> The same measures every night, chosen in advance; none says what it means.</p>
+
+<h2>Where to look</h2>
+<div class="home-grid">
+  <a href="tide.html"><b>The Tide</b><span>A new edition each night: the votes and filings of the day, written by fixed templates.</span></a>
+  <a href="findings.html"><b>Findings</b><span>Plain measures of the whole record, recomputed nightly.</span></a>
+  <a href="chamber.html"><b>The Chamber</b><span>All {{ n_members }} members, side by side. Open any member's full record: votes, money, lobbyists.</span></a>
+  <a href="money.html"><b>The Money</b><span>Where campaign money comes from, what organizations spend lobbying, and whether the parties share funders.</span></a>
+  <a href="bills.html"><b>Bills</b><span>Who lobbied each bill, by sector, and what they gave the members who voted on it.</span></a>
+  <a href="interests.html"><b>Interests</b><span>The organizations behind the money, and the members they give to.</span></a>
+  {% if show_dependents %}<a href="dependents.html"><b>The Dependents</b><span>{{ n_chains }} decisions followed past the vote, to what has been documented since.</span></a>{% endif %}
+  <a href="method.html"><b>Method</b><span>Every rule behind every figure, published so anyone can check the work.</span></a>
+</div>
+
+{% set recent = [] %}{% for e in timeline %}{% for s in e.stories %}{% if recent|length < 6 %}{% set _ = recent.append((e, s)) %}{% endif %}{% endfor %}{% endfor %}
+{% if recent %}
+<h2>Latest from The Tide</h2>
+<ul class="plain home-tide">
+{% for e, s in recent %}<li><a href="{{ 'tide.html' if loop.first and e.date == timeline[0].date else 'tide/' ~ e.date ~ '.html' }}#{{ s.id }}">{{ s.headline }}</a> <span class="muted">· {{ s.kind }} · edition of {{ e.date|shortdate }}</span></li>{% endfor %}
+</ul>
+<p class="meta"><a href="tide.html#record">Every edition →</a></p>
+{% endif %}
+
+<div class="notice">Spot an error? Items in The Dependents can be disputed with a source right on the page; for anything else, send the filing that shows it to <a href="corrections.html">corrections</a>, where every change is recorded.</div>
+{% endblock %}

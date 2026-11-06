@@ -40,6 +40,9 @@ for pair in "dist/public speculum-public" "dist/preview speculum-preview"; do
   rm -f wrangler.toml
   [ -n "$NS" ] && printf 'name = "%s"\npages_build_output_dir = "%s"\ncompatibility_date = "2024-09-01"\n\n[[kv_namespaces]]\nbinding = "DISPUTES"\nid = "%s"\n' "$2" "$1" "$NS" > wrangler.toml
   [ -n "$NS" ] && [ -n "$SU" ] && printf '\n[[kv_namespaces]]\nbinding = "SIGNUPS"\nid = "%s"\n' "$SU" >> wrangler.toml
+  # The preview alone gets a redirect from its *.pages.dev addresses to early.speculum.vote, which Access protects.
+  rm -f functions/_middleware.js
+  [ "$2" = "speculum-preview" ] && cp scripts/preview/_middleware.js functions/_middleware.js
   if ! npx --yes wrangler@3 pages deploy "$1" --project-name "$2" --branch main --commit-dirty=true; then
     if [ -f wrangler.toml ]; then
       echo "::warning::Deploy of $2 with the disputes binding failed; deploying without it."
@@ -51,5 +54,5 @@ for pair in "dist/public speculum-public" "dist/preview speculum-preview"; do
     fi
   fi
 done
-rm -f wrangler.toml
+rm -f wrangler.toml functions/_middleware.js
 exit $status

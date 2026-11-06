@@ -156,7 +156,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     spend = read_newest(snapshots_root, "spend.json", snap.date)
     mb = money_mod.build(members, finance, lobbying, spend, set_aside=_set_aside(snapshots_root))
     bd = _build_bills(E, prev, spend, votes, members, lobbying, read_newest(snapshots_root, "billinfo.json", snap.date), common)
-    (prev / "index.html").write_text(E.get_template("chamber.html").render(
+    (prev / "chamber.html").write_text(E.get_template("chamber.html").render(
         root="", page="chamber", rows=rows, members=members, mb=mb,
         fec_through=max((f.get("coverage_end") or "" for f in finance.values()), default=None) or meta.get("fec_through"),
         votes_through=meta.get("votes_through"), **common), encoding="utf-8")
@@ -200,7 +200,7 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     history.reverse()
     (prev / "day-zero.html").write_text(E.get_template("dayzero.html").render(
         root="", page="dayzero", meta=_meta_defaults(Snapshot(snapshots_root, DAY_ZERO).read("meta.json", meta) if DAY_ZERO in all_dates(snapshots_root) else meta), history=history, **common), encoding="utf-8")
-    _build_tide(E, snapshots_root, prev, members, common, public)
+    timeline = _build_tide(E, snapshots_root, prev, members, common, public)
     _build_interests(E, prev, members, finance, lobbying, common)
     chains = None
     if common["show_dependents"]:
@@ -209,6 +209,10 @@ def _render_site(E, prev: Path, snapshots_root: Path, snap, public: bool) -> dic
     from .. import findings as findings_mod
     fd = findings_mod.build(members, votes, money_data, chains, bd)
     (prev / "findings.html").write_text(E.get_template("findings.html").render(root="", page="findings", f=fd, **common), encoding="utf-8")
+    # The front page: what Speculum is, a few of the night's findings, where to go, and the latest stories.
+    (prev / "index.html").write_text(E.get_template("home.html").render(
+        root="", page="home", f=fd, timeline=timeline or [], n_members=len(members), n_votes=len(votes.get("votes", [])),
+        n_bills=len(bd["bills"]), n_chains=len(chains or []), mb=mb, **common), encoding="utf-8")
     _build_pages(E, snapshots_root.parent, prev, common)
     from .. import lameduck as lameduck_mod
     ld = chains_mod.load_json(snapshots_root.parent / "lameduck.json", {"members": []})
@@ -320,7 +324,7 @@ def _build_money(E, snapshots_root: Path, date: str, prev: Path, members, financ
     return data
 
 
-def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict, public: bool = False) -> None:
+def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common: dict, public: bool = False) -> list:
     """One edition per snapshot: the stored tide.json if the nightly run wrote one, else built now."""
     dates = all_dates(snapshots_root)
     approvals = {k: v for k, v in chains_mod.load_json(snapshots_root.parent / "tide" / "approvals.json", {}).items()
@@ -346,6 +350,7 @@ def _build_tide(E, snapshots_root: Path, prev: Path, members: list[dict], common
         (prev / "tide" / f"{d}.html").write_text(tmpl.render(root="../", **ctx), encoding="utf-8")
         if d == dates[-1]:
             (prev / "tide.html").write_text(tmpl.render(root="", **ctx), encoding="utf-8")
+    return timeline
 
 
 def _glass_by_edition(cfg: dict, dates: list[str]) -> dict:

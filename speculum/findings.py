@@ -80,7 +80,7 @@ def build(members: list[dict], votes: dict, money: dict, chains: list[dict] | No
                   "sub": (f"On passing bills and resolutions: {_pct(b['same'], b['n']):.0%} ({b['same']:,} of {b['n']:,}). " if b.get("n") else "")
                          + f"On {_pct(a['solid_opposed'], a['n']):.0%} of roll calls, at least 90% of each party voted together, on opposite sides.",
                   "scope": f"Roll calls {pa['from']} to {pa['through']}, quorum calls left out.",
-                  "link": "index.html", "link_label": "Every member's votes"})
+                  "link": "chamber.html", "link_label": "Every member's votes"})
 
     # Where the money comes from
     ov = money.get("overlap_all") or {}
