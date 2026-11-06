@@ -67,8 +67,19 @@ def shortdate(iso: str) -> str:
 from ..findings import billname  # noqa: E402  (SJRES54 -> S.J.Res. 54, HR1234 -> H.R. 1234)
 
 
+_ZW = re.compile("\u00e2\u20ac\u2039|[\u200b\u200c\u200d\ufeff]")
+
+
+def _plain(value):
+    """Every value printed on a page: entities in source text decoded, invisible junk removed. Markup is left alone."""
+    if isinstance(value, str) and not hasattr(value, "__html__") and ("&" in value or "\u00e2" in value or "\u200b" in value or "\ufeff" in value):
+        import html as _h
+        value = _ZW.sub("", _h.unescape(value))
+    return value
+
+
 def env() -> Environment:
-    e = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]))
+    e = Environment(loader=FileSystemLoader(HERE / "templates"), autoescape=select_autoescape(["html"]), finalize=_plain)
     e.filters["billname"] = billname
     e.filters["longdate"] = longdate
     e.filters["billnorm"] = lambda b: re.sub(r"[^A-Z0-9]", "", (b or "").upper())
@@ -321,6 +332,7 @@ def _build_bills(E, prev: Path, spend, votes, members, lobbying, info, common) -
     from .. import bills as bills_mod
     bd = bills_mod.build(spend, votes, members, lobbying, info)
     E.globals["bill_slugs"] = set(bd["by_slug"])
+    E.globals["member_ids"] = {m["bioguide"] for m in members}
     (prev / "bill").mkdir(exist_ok=True)
     (prev / "bills.html").write_text(E.get_template("bills.html").render(
         root="", page="bills", b=bd, group_colors=GROUP_COLORS, slugs_json=json.dumps(sorted(bd["by_slug"])), **common), encoding="utf-8")

@@ -47,3 +47,15 @@ def test_the_glass_frames_the_record_and_teases_the_game(tmp_path):
     assert "Malleus Cordis" in g and 'href="join.html"' in g
     assert "casts no real person as anything" in g
     assert 'href="glass.html"' in (d / "public" / "index.html").read_text()      # the seal in every footer
+
+
+def test_text_cleanups_from_the_site_check():
+    from speculum.names import org_name
+    from speculum.site.build import _plain
+    from speculum.sources.lobbyspend import no_post
+    assert org_name("THE HOME DEPOT INC. POLITICAL ACTION COMMITTEE; THE") == "The Home Depot Inc. Political Action Committee"
+    assert org_name("HOME DEPOT INC POLITICAL ACTION COMMITTEE, THE") == "The Home Depot Inc Political Action Committee"
+    assert _plain("Centers for Medicare &#38; Medicaid Services") == "Centers for Medicare & Medicaid Services"
+    assert _plain("&#226;€‹Public policy advocacy.") == "Public policy advocacy."
+    assert all(no_post(x) for x in ("None.", "N/A", "none", " Not applicable. "))
+    assert not any(no_post(x) for x in ("Chief of Staff", "LA, US Senate"))

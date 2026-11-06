@@ -32,7 +32,8 @@ def org_name(raw: str) -> str:
     t = re.sub(r"(\w)'S\b", r"\1's", t)                       # title() capitalizes after apostrophes
     m = re.match(r"^(.*?)[;,]\s*The(\s*\(.*\))?$", t)         # "Committee Pac; The" -> "The Committee PAC"
     if m:
-        t = "The " + m.group(1).strip() + (m.group(2) or "")
+        core = m.group(1).strip()
+        t = ("" if re.match(r"(?i)the\b", core) else "The ") + core + (m.group(2) or "")
     words = t.split(" ")                                        # small words stay small inside a name
     t = " ".join([words[0]] + [w.lower() if w in ("Of", "And", "For", "The", "In", "On", "To", "At", "A") else w for w in words[1:]])
     return t

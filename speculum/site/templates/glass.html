@@ -32,7 +32,7 @@
     <section class="pane">
       <div class="pane-label">What is</div>
       <p class="glass-voice">It shows the hall as it stands tonight.</p>
-      <p>Day {{ day_number }}. {{ (now.members or 0)|num }} members, {{ n_votes_now|num }} roll calls read, {{ n_editions }} edition{{ '' if n_editions == 1 else 's' }} of The Tide{% if n_chains %}, {{ n_chains }} decision{{ '' if n_chains == 1 else 's' }} followed in The Dependents{% endif %}. Updated {{ snapshot_date|shortdate }}.</p>
+      <p>Day {{ day_number }}. {{ (now.members or 0)|num }} members, {{ n_votes_now|num }} roll calls read, {{ n_editions }} edition{{ '' if n_editions == 1 else 's' }} of The Tide{% if n_chains %}, {{ n_chains }} decision{{ '' if n_chains == 1 else 's' }} listed in The Dependents{% endif %}. Updated {{ snapshot_date|shortdate }}.</p>
       <a class="pane-link" href="tide.html">The Tide →</a>
     </section>
     <section class="pane">
@@ -44,7 +44,7 @@
     <section class="pane">
       <div class="pane-label">What could not be</div>
       <p class="glass-voice">And it shows what was asked for, and not given.</p>
-      {% if n_chains %}<p>Of the {{ n_chains }} decision{{ '' if n_chains == 1 else 's' }} followed in The Dependents, each brought to a recorded vote, {{ n_law }} became law and {{ n_not }} did not{% if n_unknown %}; the outcome of {{ n_unknown }} is still being collected{% endif %}.</p>
+      {% if n_chains %}<p>Of the {{ n_chains }} decision{{ '' if n_chains == 1 else 's' }} listed in The Dependents, each brought to a recorded vote, {{ n_law }} became law and {{ n_not }} did not{% if n_unknown %}; the outcome of {{ n_unknown }} is still being collected{% endif %}.</p>
       <a class="pane-link" href="dependents.html">The Dependents →</a>
       {% else %}<p>Nothing is shown here yet.</p>{% endif %}
     </section>

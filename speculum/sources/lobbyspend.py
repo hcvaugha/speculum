@@ -55,6 +55,11 @@ _BILL = re.compile(
 _BILL_TYPES = {"HCONRES", "SCONRES", "HJRES", "SJRES", "HRES", "SRES", "HR", "S"}
 
 
+def no_post(text: str | None) -> bool:
+    """A covered-position entry that says there was none ("None.", "N/A", "Not applicable")."""
+    return (text or "").strip().strip(".").strip().lower() in ("", "none", "n/a", "na", "no", "not applicable", "-", "none listed")
+
+
 def bills_in(text: str | None) -> list[str]:
     """Bill keys named in a description, e.g. ['HR1', 'S2296'], in order, without repeats."""
     out = []
@@ -153,7 +158,7 @@ def aggregate(filings: list[dict]) -> dict:
                 for l in a.get("lobbyists") or []:
                     pos = (l.get("covered_position") or "").strip()
                     lid = (l.get("lobbyist") or {}).get("id")
-                    if pos and lid and pos.lower() not in ("n/a", "na", "none"):
+                    if pos and lid and not no_post(pos):
                         bill_lobbyists.setdefault(b, {})[str(lid)] = 1
                         if str(lid) not in people:
                             p = l["lobbyist"]

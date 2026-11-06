@@ -34,6 +34,9 @@ def _congress(label: str) -> int:
 QUARTER_END = {1: "03-31", 2: "06-30", 3: "09-30", 4: "12-31"}
 
 
+from .sources.lobbyspend import no_post as lobbyspend_no_post
+
+
 def collect(spend: dict | None, info: dict | None = None) -> dict:
     """Merge the quarters: per (congress, bill) the organizations, report count, quarters and former officials.
     A mention in a quarter that ended before the bill was introduced refers to an earlier Congress's bill of the
@@ -55,7 +58,7 @@ def collect(spend: dict | None, info: dict | None = None) -> dict:
                 elif k in orgs and orgs[k][2] and not e["orgs"][k][2]:
                     e["orgs"][k] = orgs[k]
             for lid in v.get("former") or []:
-                if lid in people:
+                if lid in people and not lobbyspend_no_post(people[lid][1] if len(people[lid]) > 1 else ""):
                     e["former"][lid] = people[lid]
             e["reports"] += v.get("reports", 0)
             e["quarters"].append(label)

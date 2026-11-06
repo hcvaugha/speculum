@@ -5,7 +5,7 @@
 <h1>{{ x.label }}</h1>
 {% if x.title %}<p class="lede">{{ x.title }}</p>{% else %}<p class="lede muted">Title not yet read from Congress.gov.</p>{% endif %}
 {% set i = x.info %}
-<p class="meta">{{ x.congress }}th Congress{% if i.introduced %} · introduced {{ i.introduced|shortdate }}{% endif %}{% if i.sponsor %} · sponsor: {% if i.sponsor_bioguide %}<a href="../member/{{ i.sponsor_bioguide }}.html">{{ i.sponsor }}</a>{% else %}{{ i.sponsor }}{% endif %}{% endif %}{% if i.policy_area %} · {{ i.policy_area }}{% endif %}{% if i.url %} · <a href="{{ i.url }}">Congress.gov</a>{% endif %}</p>
+<p class="meta">{{ x.congress }}th Congress{% if i.introduced %} · introduced {{ i.introduced|shortdate }}{% endif %}{% if i.sponsor %} · sponsor: {% if i.sponsor_bioguide and i.sponsor_bioguide in member_ids %}<a href="../member/{{ i.sponsor_bioguide }}.html">{{ i.sponsor }}</a>{% else %}{{ i.sponsor }}{% endif %}{% endif %}{% if i.policy_area %} · {{ i.policy_area }}{% endif %}{% if i.url %} · <a href="{{ i.url }}">Congress.gov</a>{% endif %}</p>
 {% if i.latest_action and i.latest_action.text %}<p class="meta">Latest action{% if i.latest_action.date %}, {{ i.latest_action.date|shortdate }}{% endif %}: {{ i.latest_action.text }}</p>{% endif %}
 
 <h2>Who lobbied it</h2>

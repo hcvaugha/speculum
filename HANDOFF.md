@@ -58,6 +58,7 @@ The Dependents has five themes, each a rule in `RULES` (`speculum/chains.py`):
 - One lobbying filer is set aside, with its filings, in `data/lobbying_set_aside.json`.
 - Lobbying spending matches in-house and firm reports by organization name, so totals run about 3% above independent counts (stated on the Method page).
 - GitHub's own cron is unreliable; the Cloudflare scheduler is the main trigger.
+- Cloudflare Pages allows 20,000 files per deployment and 25 MiB per file. The full site is about 10,100 files (mostly member, bill and interest pages) and its largest file is `ledgers.json` at 4 MB. Watch the count as bill and interest pages grow.
 - To check: LD-203 years follow the current Congress (`_years` in `speculum/sources/lda.py`). From January 1, 2027 the window is 2027 only, so Year-End 2026 contribution reports (July–December 2026, filed by January 30, 2027) would not be fetched. Decide whether the window should keep the previous Congress's final year until those reports are in.
 - Bills list and lobbied-bill ranking break ties by bill number, so the order a file lists bills in never changes a page.
 - Adding a Dependents theme: a rule in `RULES` (title test from the statute, subject parser, area, `page` block, `why` with verified sources) and a drafter brief in `BRIEFS`.
