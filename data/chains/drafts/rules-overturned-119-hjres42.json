@@ -1,0 +1,141 @@
+{
+ "mechanism": {
+  "rule": "Energy Conservation Program for Appliance Standards: Certification Requirements, Labeling Requirements, and Enforcement Provisions for Certain Consumer Products and Commercial Equipment (final rule, 10 CFR Parts 429 and 431)",
+  "agency": "Department of Energy (Office of Energy Efficiency and Renewable Energy)",
+  "federal_register": "89 FR 81994 (Doc. 2024-21950)",
+  "published": "2024-10-09",
+  "effective": "2024-12-23",
+  "required": "<cite index=\"11-1\">DOE published a final rule to establish and amend the certification provisions, labeling requirements, and enforcement provisions for specific consumer products and commercial and industrial equipment.</cite> <cite index=\"15-10\">The products named include central air conditioners and heat pumps, dishwashers, residential clothes washers, pool heaters, dehumidifiers, external power supplies, battery chargers, computer room air conditioners and direct-expansion outdoor air systems, among others.</cite> The obligations fall on the manufacturers who certify these products to DOE. <cite index=\"50-5\">The CRS summary says the rule aligned reporting requirements with currently applicable energy conservation standards and test procedures, and gave DOE the information needed to classify products for applying standards.</cite> The rule changed reporting, labeling and enforcement provisions. Per CRS and an efficiency-advocacy group, it did not change the efficiency levels that products must meet (see notes).",
+  "benefits": "In the portions I opened, DOE did not state a quantified dollar or energy-savings benefit for this rule. The only figures I found are paperwork-burden figures (see costs). Ballotpedia, a secondary source, lists the estimated benefit as $0 and says the rule was <cite index=\"17-3\">not deemed significant</cite>. I did not open DOE's full regulatory-review sections to confirm there is no quantified benefit elsewhere in the document. DOE's stated qualitative benefit is that <cite index=\"15-9\">certification reports give DOE and consumers current efficiency information and support effective enforcement.</cite>",
+  "costs": "From the rule's Paperwork Reduction Act section, DOE estimated <cite index=\"33-2\">35 hours per manufacturer to develop the required certification reports.</cite> Five annual line items appear in the text I retrieved: <cite index=\"33-4,33-5\">490 burden hours and $35,770</cite>; <cite index=\"33-7,33-8\">420 hours and $30,660</cite>; <cite index=\"33-10,33-11\">315 hours and $22,995</cite>; <cite index=\"33-13,33-14\">175 hours and $12,775</cite>; and <cite index=\"33-16,33-17\">1,505 hours and $109,865</cite>. These sum to 2,905 hours and $212,065 per year (my arithmetic). That total matches the cost figure Ballotpedia reports. I did not confirm which product each line item covers. For residential clothes washers, DOE determined that <cite index=\"33-1\">its amendments would not cause any measurable change in reporting burden or hours.</cite> The retrieved figures give no period beyond 'annual' and no discount rate. No CBO, GAO or court finding disputing these estimates was found.",
+  "agency_reasons": "DOE said it was updating certification and labeling requirements because, since its previous certification rule (87 FR 43952, July 2022), <cite index=\"11-5\">it had proposed or finalized test procedures and/or energy conservation standards for multiple products and equipment.</cite> It said the amendments ensure <cite index=\"13-5\">reporting consistent with currently applicable energy conservation standards and test procedures.</cite>",
+  "sponsor_reasons": "House sponsor Rep. Andrew Clyde (R-GA) said the rule <cite index=\"42-2\">added costs and red tape for appliance manufacturers, with consumers bearing the ultimate cost.</cite> A House Republican release carrying statements from Clyde and Rep. McClain described the rule as placing <cite index=\"39-10\">undue burdens on manufacturers and consumers, leading to increased costs and limiting consumer choice.</cite> That release described the rule as requiring higher energy efficiency standards, which differs from the CRS description of the rule (see notes). Senate sponsor Sen. Jon Husted (R-OH) said, as reported by the Daily Caller News Foundation, that <cite index=\"63-7\">bureaucratic, out-of-touch regulations make it harder for taxpayers to afford appliances.</cite> Majority Leader Thune said on the Senate floor that the Senate was <cite index=\"62-8\">committed to eliminating rules that impose unjustified burdens.</cite> I did not review Democratic floor statements in full.",
+  "status": "Became law. H.J.Res.42 was introduced 2025-02-12 and passed the House 2025-03-05 (222-203). The Senate agreed to the motion to proceed 2025-04-29 (52-46) and passed the resolution 2025-04-30 (52-46); <cite index=\"58-1\">the Senate Daily Press logged the vote as party line.</cite> <cite index=\"20-4\">It was sent to the President on May 6, 2025, and signed May 9, 2025, becoming Pub. L. 119-8.</cite> <cite index=\"22-8,22-9,22-10\">The law states that Congress disapproves the rule (89 Fed. Reg. 81994, October 9, 2024) and that it shall have no force or effect.</cite> The rule is therefore void and not in force.",
+  "sources": [
+   {
+    "title": "Federal Register: Energy Conservation Program for Appliance Standards: Certification Requirements, Labeling Requirements, and Enforcement Provisions (final rule, 89 FR 81994)",
+    "url": "https://www.federalregister.gov/documents/2024/10/09/2024-21950/energy-conservation-program-for-appliance-standards-certification-requirements-labeling-requirements",
+    "publisher": "Office of the Federal Register / DOE",
+    "date": "2024-10-09"
+   },
+   {
+    "title": "Public Law 119-8 (H.J.Res.42)",
+    "url": "https://www.congress.gov/119/plaws/publ8/PLAW-119publ8.pdf",
+    "publisher": "Congress.gov / GPO",
+    "date": "2025-05-09"
+   },
+   {
+    "title": "H.J.Res.42 - 119th Congress (summary and actions)",
+    "url": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/42",
+    "publisher": "Congress.gov (CRS summary)",
+    "date": "2025-05-09"
+   },
+   {
+    "title": "Federal Register: Certification Requirements... (CRA revocation final rule, 90 FR 43371)",
+    "url": "https://www.federalregister.gov/documents/2025/09/09/2025-17262/energy-conservation-program-for-appliance-standards-certification-requirements-labeling-requirements",
+    "publisher": "Office of the Federal Register / DOE",
+    "date": "2025-09-09"
+   },
+   {
+    "title": "Energy Conservation Program: Proposed Agency Information Collection Revision",
+    "url": "https://www.federalregister.gov/documents/2024/10/02/2024-22604/energy-conservation-program-proposed-agency-information-collection-revision",
+    "publisher": "Office of the Federal Register / DOE",
+    "date": "2024-10-02"
+   },
+   {
+    "title": "Senate Daily Press, Wednesday, April 30, 2025",
+    "url": "https://www.dailypress.senate.gov/wednesday-april-30-2025/",
+    "publisher": "U.S. Senate Press Gallery",
+    "date": "2025-04-30"
+   },
+   {
+    "title": "Chairwoman McClain and Rep. Clyde Statements on the U.S. House Passing Legislation to Reverse a Biden-era Burdensome Regulation Affecting Consumers",
+    "url": "https://gop.gov/news/documentsingle.aspx?DocumentID=1896",
+    "publisher": "House Republicans",
+    "date": "2025-03-05"
+   },
+   {
+    "title": "Clyde resolution to overturn Biden-era energy standards passes Senate",
+    "url": "https://jamesmagazinega.com/2025/05/02/clyde-resolution-to-overturn-biden-era-energy-standards-passes-senate/",
+    "publisher": "James Magazine (reproducing Rep. Clyde's statement)",
+    "date": "2025-05-02"
+   },
+   {
+    "title": "'Unjustified Burdens': Senate Passes Resolution To Repeal Biden-Era Appliance Rule",
+    "url": "https://yournews.com/2025/04/30/3410877/senate-votes-to-overturn-biden-era-appliance-rule-advancing-gop-rollback/",
+    "publisher": "Daily Caller News Foundation (via YourNews)",
+    "date": "2025-04-30"
+   },
+   {
+    "title": "Ballotpedia: Energy Conservation Program for Appliance Standards: Certification Requirements... rule",
+    "url": "https://ballotpedia.org/Energy_Conservation_Program_for_Appliance_Standards:_Certification_Requirements,_Labeling_Requirements,_and_Enforcement_Provisions_for_Certain_Consumer_Products_and_Commercial_Equipment_rule",
+    "publisher": "Ballotpedia (secondary)",
+    "date": "2025"
+   }
+  ]
+ },
+ "outcomes": [
+  {
+   "grade": "documented",
+   "claim": "DOE removed the 2024 certification, labeling and enforcement provisions from 10 CFR parts 429 and 431. DOE said it was acting because <cite index=\"20-6\">Pub. L. 119-8 caused the October 2024 rule to have no force or effect</cite>. DOE also said the action <cite index=\"54-6\">relieves manufacturers from certain certification, compliance, and enforcement requirements.</cite> <cite index=\"55-3\">The removal rule took effect September 9, 2025.</cite> The reporting changes the 2024 rule had added no longer apply to manufacturers of the covered products.",
+   "date": "2025-09-09",
+   "source": {
+    "title": "Federal Register: Certification Requirements... (CRA revocation final rule)",
+    "url": "https://www.federalregister.gov/documents/2025/09/09/2025-17262/energy-conservation-program-for-appliance-standards-certification-requirements-labeling-requirements",
+    "publisher": "Office of the Federal Register / DOE",
+    "date": "2025-09-09"
+   },
+   "counterpoint": "The Appliance Standards Awareness Project (an efficiency-advocacy group) said before the Senate vote that reversing the rule <cite index=\"60-4\">would make it more difficult for DOE or other parties to identify products that do not comply with standards.</cite> This was a pre-vote forecast by an advocacy group, not an official finding. I found no record of changes in actual enforcement or compliance."
+  },
+  {
+   "grade": "estimated",
+   "claim": "Before the vote, DOE's own paperwork estimate for the rule was about 2,905 burden hours and $212,065 per year in manufacturer reporting costs across the five line items retrieved, at 35 hours per manufacturer per report. Nullification removes these estimated burdens for the products covered. DOE found no measurable burden change for residential clothes washers. These figures are DOE's forecasts, not measured outcomes, and I did not confirm the product coverage of each line item.",
+   "date": "2024-10-09",
+   "source": {
+    "title": "Federal Register: Certification Requirements... final rule (Paperwork Reduction Act section)",
+    "url": "https://www.federalregister.gov/documents/2024/10/09/2024-21950/energy-conservation-program-for-appliance-standards-certification-requirements-labeling-requirements",
+    "publisher": "Office of the Federal Register / DOE",
+    "date": "2024-10-09"
+   },
+   "counterpoint": "DOE stated that certification reports provide DOE and consumers with efficiency information and support effective enforcement. That information benefit is not quantified in the sources I opened, so no dollar comparison with the burden can be made. Sponsors characterised the rule as raising costs for consumers; DOE's retrieved estimates cover manufacturer reporting costs only, and I found no DOE estimate of consumer price effects."
+  },
+  {
+   "grade": "associated",
+   "claim": "An efficiency-advocacy group (ASAP) said the nullified requirements concerned certification only. It said they did not affect the efficiency levels products must meet, calling the fight over them <cite index=\"60-5\">mostly a sideshow.</cite> If that is right, the resolution's direct effect on appliance efficiency and household energy bills would be small, and its effect would come mainly through reporting and enforcement visibility. This is advocacy-group analysis, not an official estimate, and no data on actual outcomes (prices, energy use, enforcement actions) were found.",
+   "date": "2025-03-05",
+   "source": {
+    "title": "House Bill Undoing Appliance Standards \"Certification\" Update Does Not Change Efficiency Levels",
+    "url": "https://appliance-standards.org/document/house-bill-undoing-appliance-standards-certification-update-does-not-change-efficiency",
+    "publisher": "Appliance Standards Awareness Project",
+    "date": "2025-03-05"
+   },
+   "counterpoint": "The House Republican release said the rule required products to meet higher efficiency standards and raised consumer costs. Rep. Clyde's statements say consumers bear the rule's costs. The CRS summary describes the rule as certification, labeling and enforcement changes, which is consistent with ASAP's characterisation."
+  }
+ ],
+ "notes": "(1) I read the Federal Register rule only in excerpts: the synopsis, the Paperwork Reduction Act figures and the regulatory-review headings. I did not read DOE's full cost-benefit discussion. No quantified benefit was found, and Ballotpedia's $0 benefit figure is a secondary source. (2) The five paperwork-cost line items sum exactly to Ballotpedia's $212,065. I did not map each line to a product, and the full-text cost totals should be checked against the rule PDF before publication. (3) The House Republican release describes the rule as requiring products to meet higher efficiency standards. The CRS summary and ASAP describe it as changing certification, labeling and enforcement provisions and aligning reporting with existing standards. I treated the CRS and Federal Register descriptions as authoritative on what the rule did. (4) No CBO or GAO analysis of this resolution and no court finding on DOE's estimates were found. (5) I found no credible record of what happened to appliance prices, energy use, compliance rates or DOE enforcement counts after nullification, and that absence is itself the finding. (6) This is a sibling of other CRA resolutions on DOE efficiency standards (for example H.J.Res.75 on commercial refrigeration standards). Those change efficiency levels, but this one does not, so their analyses should not be conflated. (7) DOE's 2025 removal rule cited good cause to skip notice and comment because it implements Pub. L. 119-8. I did not retrieve its own burden-reduction figures.",
+ "_drafted": {
+  "by": "claude-sonnet-5-5",
+  "on": "2026-11-07",
+  "status": "draft",
+  "usage": {
+   "input_tokens": 155954,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 8839,
+   "output_tokens_details": {
+    "thinking_tokens": 2752
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard",
+   "server_tool_use": {
+    "web_search_requests": 8,
+    "web_fetch_requests": 0
+   }
+  }
+ }
+}

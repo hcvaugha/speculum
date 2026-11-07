@@ -831,6 +831,175 @@
    ],
    "kind": "outcome",
    "label": "Amnesty International identified Chinese-made GB50A guided bombs (North Darfur, 9 Mar 2025"
+  },
+  "b6c970bcdbd10400": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The Unified Agenda entry supports two effective-date delays (02/20/25 and 03/20/25), the May 20, 2025 withdrawal, and that the rule 'no longer has force or effect.' It does not state that the standards never took effect, though no effective date is listed. It also does not contain the compliance dates (Dec. 23, 2027; Dec. 31, 2028), the DOE walk-in coolers page statement, the Congress.gov summary language, the point that display doors and panels were not amended, or the counterpoint about compliance spending and later effects.",
+   "quotes": [
+    "Final Rule; Delay of Effective Date 02/20/25 90 FR 9951",
+    "Final Rule; Delay of Effective Date 03/20/25 90 FR 13054",
+    "Final Rule; Withdrawal 05/20/25 90 FR 21391"
+   ],
+   "kind": "outcome",
+   "label": "The amended standards never took effect. DOE delayed the rule's effective date twice, then"
+  },
+  "948842588c6bc1e6": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The source matches the NPV of $2.00–$4.74 billion, 1.60 quads FFC savings, 28.82 Mt CO2, the $554.5M/yr net benefit with $369.8M in operating-cost savings at 3%, and equipment costs of $99.1–$101.2M/yr. But the claim gives the purchase period as 2029–2058 for all equipment, while the source says non-display doors purchased 2028–2057 and refrigeration systems 2029–2058. The counterpoint's combined INPV change of −$63M to −$42M is not stated: the source gives −$61.2M to −$45.7M for refrigeration systems and −$2.0M to +$3.5M for non-display doors separately, so the combined figure is the checker's own arithmetic.",
+   "quotes": [
+    "The cumulative net present value (\"NPV\") of total consumer benefits of the standards for walk-ins ranges from $2.00 billion USD (at a 7-percent discount rate) to $4.74 billion USD (at a 3-percent discount rate).",
+    "for walk-in non-display doors purchased during the period 2028-2057 and walk-in refrigeration systems purchased in 2029-2058",
+    "amount to 1.60 quadrillion British thermal units (\"Btu\"), or quads of-full-fuel cycle energy savings"
+   ],
+   "kind": "outcome",
+   "label": "Benefit forgone, per DOE's pre-vote analysis. DOE estimated the standards would have deliv"
+  },
+  "f81e2d7780eb806e": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The equipment-cost figures ($99.1M/yr at 7%, $101.2M/yr at 3%), the operating-cost savings ($304.4M and $369.8M), the compliance dates (Dec 23, 2027 and Dec 31, 2028) and commercial availability of compliant equipment all match the source. Two things do not: the $42–$63M INPV decline is not stated in the source and only follows from adding the door (−$2.0M to +$3.5M) and refrigeration (−$61.2M to −$45.7M) ranges, and the source says nothing about a repeal removing these costs.",
+   "quotes": [
+    "the estimated cost of the standards adopted in this rule is $99.1 million per year in increased equipment costs, while the estimated annual benefits are $304.4 million in reduced operating costs",
+    "the estimated cost of the standards is $101.2 million per year in increased equipment costs, while the estimated annual benefits are $369.8 million in reduced equipment operating costs",
+    "the change in INPV for non-display door manufacturers is estimated to range from −0.4 percent to 0.7 percent, which is approximately −$2.0 million to $3.5 million"
+   ],
+   "kind": "outcome",
+   "label": "Burden lifted, per DOE's pre-vote analysis. The repeal removed the equipment cost increase"
+  },
+  "1e12f145aa813abb": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The release supports ASAP's statement that blocking the standards would raise costs for restaurants, convenience stores and grocery stores that would be passed on to consumers, and it gives the 1.6-year and 3-year payback figures. But it attributes the $6.5 billion figure to DOE ('DOE estimates'), not ASAP, and says 'up to', not 'about'. The counterpoint about NACS, NGA and FMI and about the sponsors' cost-benefit argument appears nowhere in the cited source, and no other source is named for it.",
+   "quotes": [
+    "will raise costs for restaurants, convenience stores, and grocery stores—costs that will be passed on to consumers",
+    "the standards would save businesses up to $6.5 billion on utility bills (from the use of products sold over 30 years), DOE estimates",
+    "bill savings offsetting those costs within 1.6 years on average for non-display doors and 3 years on average for refrigeration systems"
+   ],
+   "kind": "outcome",
+   "label": "The Appliance Standards Awareness Project (ASAP), an efficiency advocacy group, said after"
+  },
+  "20021cabc0b28271": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The Federal Register rule supports the main claim: removal of the October 2024 provisions from 10 CFR parts 429 and 431 because of Pub. L. 119-8, the verbatim 'relieves manufacturers' passage, the September 9, 2025 effective date, and the reversion to the pre-2024 reporting rules. The 'Pub. L. 119-8 caused…' passage is a close paraphrase rather than verbatim, but it keeps the meaning. The counterpoint's quote attributed to the Appliance Standards Awareness Project does not appear in this source, and no ASAP source was provided to check it, so that part is unverified.",
+   "quotes": [
+    "Pub. L. 119-8 , which, pursuant to the CRA, disapproved and caused DOE's October 9, 2024 final rule to have no force or effect",
+    "As this rule relieves manufacturers from certain certification, compliance, and enforcement requirements",
+    "The effective date of this rule is September 9, 2025."
+   ],
+   "kind": "outcome",
+   "label": "DOE removed the 2024 certification, labeling and enforcement provisions from 10 CFR parts "
+  },
+  "c5ea73df36c21cd0": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The retrieved text breaks off in section III.G, before the Paperwork Reduction Act section (IV.C), so the core figures (2,905 burden hours, $212,065 per year, 35 hours per manufacturer per report, five line items) do not appear and cannot be verified. What can be checked is supported: DOE found no measurable burden change for residential clothes washers, said certification reports provide efficiency information and support enforcement, and pointed to IV.C for costs of new reporting such as for electric pool heaters.",
+   "quotes": [
+    "DOE makes a final determination that these amendments would not cause any measurable change in reporting burden or hours for RCWs.",
+    "Certification reports provide DOE and consumers with comprehensive, up-to-date efficiency information and support effective enforcement.",
+    "Costs associated with the new reporting requirements pertaining to electric pool heaters are discussed in section IV.C of this document."
+   ],
+   "kind": "outcome",
+   "label": "Before the vote, DOE's own paperwork estimate for the rule was about 2,905 burden hours an"
+  },
+  "365efaf90d324e42": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The main claim matches the source: ASAP said the resolution undoes certification requirements with no effect on efficiency levels, called the fight 'mostly a sideshow', and said enforcement would become harder. The counterpoint cannot be checked against this source. It relies on a House Republican release, Rep. Clyde's statements and a CRS summary, none of which was provided, and this source does not contain those positions.",
+   "quotes": [
+    "would undo technical updates to certification requirements for a range of products subject to energy efficiency standards but has no effect on the efficiency levels those products must meet",
+    "doesn’t have an effect in any direction on how efficient products need to be, so this is mostly a sideshow",
+    "would, however, make it more difficult for DOE or other parties to identify products that do not comply with standards"
+   ],
+   "kind": "outcome",
+   "label": "An efficiency-advocacy group (ASAP) said the nullified requirements concerned certificatio"
+  },
+  "9ce8ba4a2e3e1113": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The notice date, the 'no force or effect' language, the removal of the report-for-every-plan and minimum survey provisions, the restored 'reason to believe' text, and BOEM's statement that the notice is not APA rulemaking all match the source. The restoration of the 'reason to believe' standard is supported by the regulatory text, but the claim attributes it to 'the CRS summary,' which is not cited or quoted here and cannot be verified from this source.",
+   "quotes": [
+    "Under the joint resolution and by operation of the Congressional Review Act, the “Protection of Marine Archaeological Resources” rule has no force or effect.",
+    "the replacement of the “reason to believe” standard in the current regulations with the requirement that all proposed exploration or development plans that would disturb the seabed must be accompanied by an archaeological report, and (2) the codification of minimum requirements for any new high resolution geophysical surveys",
+    "If the Regional Director has reason to believe that an archaeological resource may exist in the lease area, the Regional Director will require in writing that your EP, DOCD, or DPP be accompanied by an archaeological report."
+   ],
+   "kind": "outcome",
+   "label": "BOEM published a Federal Register notice on April 14, 2025 to reflect the nullification in"
+  },
+  "7d7140315a8016af": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The cost figures ($5,925,770 at 3%, $4,452,834 at 7%, $398,305 annualized in 2024 dollars at 3%), the 505 burden hours, and BOEM's 'negligible', 'minimal' and 'area will not increase' statements all match the source. The source does not say the rule is void or that operators are relieved of the cost, and the ACRA 'a very small amount' quote to Science and the sponsors' characterisation do not appear in it.",
+   "quotes": [
+    "BOEM estimates that the changes would increase total OCS archaeology survey costs over the next 20 years by $5,925,770, using a 3 percent discount rate, or by $4,452,834, using a 7 percent discount rate.",
+    "Annualized Incremental Costs $398,305 2024 3 20 years",
+    "BOEM would increase the overall annual burden by 505 hours."
+   ],
+   "kind": "outcome",
+   "label": "BOEM's own analysis projected the rule would raise total OCS archaeology survey costs by $"
+  },
+  "2831a1f7a16a746c": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "The final rule supports the core claim: BOEM expected the rule to make it more likely that archaeological resources would be located and identified before operators inadvertently damaged them, it listed only qualitative benefits, and it describes the earlier 'reason to believe' standard under which a Regional Director could require a report. The rule does not say that it was voided. Its only industry pushback is that API, NOPC and OOC called it too burdensome and API called its coverage unclear; it does not contain the NOIA or Kennedy statements or OOC's 'far too ambiguous' remark, and Science, which is named for that remark, was not checked. The 'estimated' grade does not fit, because BOEM gave no aggregate figure for the benefit and it is an agency forecast.",
+   "quotes": [
+    "thereby increasing the likelihood that these resources will be located and identified before they can be inadvertently damaged by an OCS operator",
+    "The estimated benefits associated with this final rulemaking are qualitative benefits",
+    "Reduces the likelihood of disturbing shipwrecks or other historical sites"
+   ],
+   "kind": "outcome",
+   "label": "BOEM expected the rule to increase the likelihood that seabed archaeological resources (su"
+  },
+  "490d95b8d8c3dad5": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "Most core facts check out against the final rule, the TSD, the GAO report, P.L. 119-7, the Unified Agenda and the sponsor and industry pages. These include the dates, the RIN, the scope (no change for display doors or panels), the NPV of $2.00B–$4.74B, 1.60 quads and 6.3%, 28.82 Mt CO2, the annualized $101.2M/$99.1M costs and $369.8M/$554.5M figures, the INPV range of -$63M to -$42M, the nearly $1 billion cost claim, the Guthrie/Latta and Fedorchak statements, the NACS letter, and the delay and withdrawal citations. Several things fail. (1) The sources say 2023$, not 2022 dollars. (2) The 2029–2058 period covers refrigeration systems only; non-display doors are 2028–2057. (3) The words 'limited consumer choice' come from Chairwoman McClain in Bice's release, not from Bice. (4) The House 203-182 and Senate 51-46/53-42 vote counts could not be verified because congress.gov was unreachable, and P.L. 119-7 gives only the dates. Also, the 7%-case health ($140.9M) and net ($442.7M) figures and the conversion costs ($1.4M and $90.1M) do appear in the rule, so they were not actually missing from it.",
+   "quotes": [
+    "The cumulative net present value (\"NPV\") of total consumer benefits of the standards for walk-ins ranges from $2.00 billion USD (at a 7-percent discount rate) to $4.74 billion USD (at a 3-percent discount rate).",
+    "All monetary values in this document are expressed in 2023 dollars",
+    "Biden's regulations limited consumer choice, raised prices, and put unnecessary financial burdens on American businesses and families. House Republicans continue to reverse this regulatory non-sense and lower costs for businesses and families,\" Chairwoman McClain said."
+   ],
+   "kind": "rule record",
+   "label": "draft-0: what the rule did"
+  },
+  "3b1d6bb4bbd662bb": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "Most of the claim checks out against DOE's final rule, Pub. L. 119-8, DOE's CRA revocation rule, the Senate Daily Press, the GOP release and Ballotpedia: the rule's purpose, product list, effective date, agency reasons, RCW burden finding, Ballotpedia's $0 benefit and $212,065 cost, the Senate's party-line 52-46 passage, and the signing and nullification. Several parts could not be verified. Congress.gov was blocked, so the CRS summary, the House vote of 222-203 and the April 29 motion-to-proceed vote are unchecked. The retrieved rule text cuts off before the Paperwork Reduction Act section, so the '35 hours per manufacturer' wording and the five line-item hour and dollar figures are unchecked; the revocation rule says '35 hours per response'. The YourNews page had no article text, so the Husted and Thune quotes are unchecked. No efficiency-advocacy group source is cited for the 'did not change efficiency levels' attribution, though DOE's rule itself says it is not amending the standards. The Clyde wording appears in James Magazine's narration, not inside Clyde's quoted statement.",
+   "quotes": [
+    "DOE is not amending the test procedures or energy conservation standards for CAC/HPs, DWs, RCWs",
+    "these amendments would not cause any measurable change in reporting burden or hours for RCWs",
+    "Estimated cost: $212,065"
+   ],
+   "kind": "rule record",
+   "label": "draft-1: what the rule did"
+  },
+  "d5693077169a9429": {
+   "result": "partly_supported",
+   "on": "2026-11-07",
+   "by": "claude-opus-5-5",
+   "note": "Almost every element checks out against the sources I could read: the FR rule text (requirements, effective date, qualitative benefits, $5,925,770 / $4,452,834 and $398,305 costs, 505 hours, regional small-entity analysis including the '100 percent' Gulf wording, which the claim says could not be confirmed but is in the FR text), $31,457 on omb.report, the BOEM release, Ballotpedia, Kennedy's release, the Hyde-Smith, Ezell, NOIA, Westerman and DOI statements, PL 119-3, and the 54-44 and 221-202 votes. Two things fall short: the CRS summary sentence could not be checked because congress.gov was inaccessible (90 FR 15531 shows BOEM did restore the 'reason to believe' text, but that is not the CRS wording), and the FR table lists four qualitative benefits, not one.",
+   "quotes": [
+    "BOEM estimates that the changes would increase total OCS archaeology survey costs over the next 20 years by $5,925,770, using a 3 percent discount rate, or by $4,452,834, using a 7 percent discount rate.",
+    "Therefore, BOEM estimates that up to 100 percent of the increased Gulf of Mexico compliance cost for survey line spacing of 30 meters would be borne by operators that are small entities.",
+    "Provides regulatory clarity and certainty for operators; and Reduces risk and potential mitigation costs to offshore oil and gas operators."
+   ],
+   "kind": "rule record",
+   "label": "draft-2: what the rule did"
   }
  }
 }

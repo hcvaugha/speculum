@@ -1,0 +1,159 @@
+{
+ "mechanism": {
+  "rule": "Protection of Marine Archaeological Resources (RIN 1010-AE11; amended 30 CFR part 550)",
+  "agency": "Bureau of Ocean Energy Management (BOEM), Department of the Interior",
+  "federal_register": "89 FR 71160 (Docket BOEM-2023-0012)",
+  "published": "2024-09-03",
+  "effective": "2024-10-03",
+  "required": "<cite index=\"3-1,3-2\">The rule required lessees and operators to submit an archaeological report with any oil and gas exploration or development plan they submit to BOEM for approval of proposed activities on the Outer Continental Shelf (OCS). Previously, a report was required only if the plan covered an area where a BOEM Regional Director had \"reason to believe\" an archaeological resource might be present.</cite> <cite index=\"3-4\">It also defined the minimum survey information needed to support the report's conclusions, the procedures for reporting possible resources and continuing operations when one may be present, and what to do if an unanticipated resource is found.</cite> <cite index=\"54-7\">BOEM's announcement says the rule also required a qualified marine archaeologist to collect and analyze the survey data.</cite>",
+  "benefits": "The agency's estimated benefits are qualitative only, with no dollar or unit figures. <cite index=\"30-7\">The Federal Register says the estimated benefits of the final rule are qualitative.</cite> <cite index=\"31-7\">The summary table lists one benefit: \"Provides regulatory clarity and certainty for operators.\"</cite> <cite index=\"3-3\">BOEM also stated that the rule would increase the likelihood that archaeological resources are located and identified before an OCS operator can inadvertently damage them, in compliance with section 106 of the National Historic Preservation Act.</cite> The rule text contains no quantified estimate of resources protected. Ballotpedia lists the estimated benefit as $0, meaning no quantified dollar benefit. That is a third-party summary, not a BOEM figure.",
+  "costs": "<cite index=\"56-9\">BOEM estimated the changes would increase total OCS archaeology survey costs over the next 20 years by $5,925,770 at a 3 percent discount rate, or $4,452,834 at 7 percent.</cite> <cite index=\"56-10\">The annualized incremental cost is $398,305 (2024 dollars, 3 percent discount rate, 20-year period). BOEM attributes it to increased compliance costs from higher measurement-capability requirements in water depths of 100 meters or less.</cite> <cite index=\"30-3\">BOEM stated that most of the revisions would have no or negligible cost impacts for operators.</cite> <cite index=\"35-2\">The information-collection estimate adds 505 annual burden hours.</cite> <cite index=\"35-5\">It puts the annual cost to the federal government at $31,457.</cite> BOEM's regulatory flexibility analysis says the economic impact on small entities varies by OCS region (Federal Register 89 FR 71160). The Kennedy press release quotes the agency as saying 100 percent of the increased Gulf compliance cost would fall on small-entity operators. I could not open the underlying analysis to confirm that wording. Dispute: I found no CBO, GAO or court finding on these estimates. <cite index=\"32-3\">In the final rule, BOEM disagreed with a commenter's claim that the rule's survey costs were substantial.</cite> Industry commenters and sponsors dispute the cost characterisation (see sponsor_reasons).",
+  "agency_reasons": "<cite index=\"4-5\">BOEM said the purpose was to address concerns that its existing regulatory requirements fail to adequately protect marine archaeological resources.</cite> <cite index=\"4-4\">It cited its inability to accurately identify the location of such potential resources.</cite> <cite index=\"3-3\">It also cited compliance with section 106 of the National Historic Preservation Act.</cite> <cite index=\"20-7\">Per Ballotpedia, BOEM Director Elizabeth Klein said the improved reporting requirements would increase BOEM's ability to proactively identify marine archaeological resources and decrease the likelihood of unintentional damage from OCS activities.</cite>",
+  "sponsor_reasons": "Sen. John Kennedy (R-La.) sponsored S.J.Res.11 and Sen. Cindy Hyde-Smith (R-Miss.) cosponsored it. <cite index=\"43-4\">Kennedy said on the Senate floor that the rule places an immense burden on small oil and natural gas producers by forcing them to map the ocean floor for shipwrecks before they can begin production.</cite> <cite index=\"69-8,69-9\">He also said the Gulf has already been surveyed, that this is how about 4,000 shipwrecks were found, and that the surveys have cost hundreds of millions of dollars.</cite> That cost and shipwreck-count figure is from his floor remarks, not from the rule's analysis. <cite index=\"46-7\">Hyde-Smith called the requirement an unnecessary and excessive burden on offshore energy activities.</cite> <cite index=\"34-4\">House Natural Resources Committee materials say the rule imposed excessive regulatory burdens on domestic energy producers and increased compliance costs.</cite> <cite index=\"39-7\">The National Ocean Industries Association (NOIA) president called the rule a solution in search of a problem.</cite> <cite index=\"39-8\">NOIA also said industry has led in identifying and protecting marine archaeological sites.</cite> <cite index=\"24-3,24-4\">The Interior Department's statement on the signing said the rule mandated reports in previously unsurveyed areas where operations proposed seafloor-disturbing activities, and that this imposed compliance costs on energy producers.</cite>",
+  "status": "The resolution became law as Public Law 119-3. <cite index=\"11-7,11-9,11-10\">It states that Congress disapproves the rule (89 Fed. Reg. 71160) and that the rule shall have no force or effect. It was approved March 14, 2025.</cite> <cite index=\"11-14,11-16\">The Senate passed it on Feb. 25 and the House on Mar. 6, 2025.</cite> The recorded votes were Senate 54-44 on passage and House 221-202. The rule is void. <cite index=\"49-3\">The CRS summary says nullifying the rule requires BOEM to reinstate the regulations previously in effect, which authorized an archaeological report only if a BOEM regional director has reason to believe a resource may be present.</cite>",
+  "sources": [
+   {
+    "title": "Protection of Marine Archaeological Resources (final rule, 89 FR 71160)",
+    "url": "https://www.federalregister.gov/documents/2024/09/03/2024-19188/protection-of-marine-archaeological-resources",
+    "publisher": "Federal Register / BOEM",
+    "date": "2024-09-03"
+   },
+   {
+    "title": "Protection of Marine Archaeological Resources; Congressional Review Act revocation (90 FR 15531)",
+    "url": "https://www.federalregister.gov/documents/2025/04/14/2025-06291/protection-of-marine-archaeological-resources",
+    "publisher": "Federal Register / BOEM",
+    "date": "2025-04-14"
+   },
+   {
+    "title": "Public Law 119-3",
+    "url": "https://www.congress.gov/119/plaws/publ3/PLAW-119publ3.htm",
+    "publisher": "Congress.gov / GPO",
+    "date": "2025-03-14"
+   },
+   {
+    "title": "S.J.Res.11 summary (CRS)",
+    "url": "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/11",
+    "publisher": "Congress.gov / Congressional Research Service",
+    "date": "2025-03-14"
+   },
+   {
+    "title": "Protection of Marine Archaeological Resources Final Rule - OMB 1010-0196 (information collection)",
+    "url": "https://omb.report/icr/202403-1010-001",
+    "publisher": "OMB reginfo mirror (omb.report)",
+    "date": "2024-09-03"
+   },
+   {
+    "title": "BOEM Announces Final Rule to Better Protect Marine Archaeological Resources",
+    "url": "https://www.boem.gov/newsroom/press-releases/boem-announces-final-rule-better-protect-marine-archaeological-resources",
+    "publisher": "BOEM",
+    "date": "2024-08-30"
+   },
+   {
+    "title": "Senate passes Kennedy resolution to repeal Biden admin rule targeting offshore oil and gas production",
+    "url": "https://www.kennedy.senate.gov/public/2025/2/senate-passes-kennedy-resolution-to-repeal-biden-admin-rule-targeting-offshore-oil-and-gas-production",
+    "publisher": "Office of Sen. John Kennedy",
+    "date": "2025-02-25"
+   },
+   {
+    "title": "Congressional Record, Senate, S1322 (Kennedy floor remarks)",
+    "url": "https://congress.gov/119/crec/2025/02/25/171/37/CREC-2025-02-25-pt1-PgS1322.pdf",
+    "publisher": "Congressional Record",
+    "date": "2025-02-25"
+   },
+   {
+    "title": "Hyde-Smith votes to begin overturning harmful Biden energy policies",
+    "url": "https://www.hydesmith.senate.gov/hyde-smith-votes-begin-overturning-harmful-biden-energy-policies",
+    "publisher": "Office of Sen. Cindy Hyde-Smith",
+    "date": "2025-02-25"
+   },
+   {
+    "title": "TO THE PRESIDENT'S DESK: Ezell's Move to Repeal Biden's Offshore Drilling Restrictions",
+    "url": "https://ezell.house.gov/news/documentsingle.aspx?DocumentID=700",
+    "publisher": "Office of Rep. Mike Ezell",
+    "date": "2025-03-06"
+   },
+   {
+    "title": "Westerman Testifies on Behalf of Overturning Disastrous BOEM Rule",
+    "url": "https://naturalresources.house.gov/news/documentsingle.aspx?DocumentID=416953",
+    "publisher": "House Committee on Natural Resources",
+    "date": "2025"
+   },
+   {
+    "title": "Department of the Interior Secretary Applauds Congressional Action to Enhance Offshore Energy Development",
+    "url": "https://www.doi.gov/pressreleases/department-interior-secretary-applauds-congressional-action-enhance-offshore-energy",
+    "publisher": "U.S. Department of the Interior",
+    "date": "2025-03-14"
+   },
+   {
+    "title": "Protection of Marine Archaeological Resources rule (2024)",
+    "url": "https://ballotpedia.org/Protection_of_Marine_Archaeological_Resources_rule_(2024)",
+    "publisher": "Ballotpedia (secondary)",
+    "date": "2025"
+   }
+  ]
+ },
+ "outcomes": [
+  {
+   "grade": "documented",
+   "claim": "BOEM published a Federal Register notice on April 14, 2025 to reflect the nullification in the Code of Federal Regulations. It stated that the rule has no force or effect by operation of the joint resolution and the CRA. The archaeological-report-for-every-plan requirement and the codified minimum survey standards are therefore no longer in force. The prior \"reason to believe\" standard is restored, per the CRS summary.",
+   "date": "2025-04-14",
+   "source": {
+    "title": "Protection of Marine Archaeological Resources; Congressional Review Act revocation (90 FR 15531)",
+    "url": "https://www.federalregister.gov/documents/2025/04/14/2025-06291/protection-of-marine-archaeological-resources",
+    "publisher": "Federal Register / BOEM",
+    "date": "2025-04-14"
+   },
+   "counterpoint": "<cite index=\"67-9,67-10\">BOEM described its notice as not an exercise of its APA rulemaking authority. It said the notice only reflects what the congressional action had already accomplished.</cite> The legal effect dates from the law (March 14, 2025), not from this notice."
+  },
+  {
+   "grade": "estimated",
+   "claim": "BOEM's own analysis projected the rule would raise total OCS archaeology survey costs by $5,925,770 over 20 years at a 3 percent discount rate ($4,452,834 at 7 percent). That is about $398,305 a year in 2024 dollars at 3 percent. It also projected 505 added annual information-collection burden hours. With the rule void, the operators it covered are relieved of this projected cost. This is a pre-vote forecast, not a measured outcome.",
+   "date": "2024-09-03",
+   "source": {
+    "title": "Protection of Marine Archaeological Resources (final rule, 89 FR 71160), Costs and Benefits",
+    "url": "https://www.federalregister.gov/documents/2024/09/03/2024-19188/protection-of-marine-archaeological-resources",
+    "publisher": "Federal Register / BOEM",
+    "date": "2024-09-03"
+   },
+   "counterpoint": "BOEM itself called most revisions' costs no or negligible and the total cost minimal. It said the area covered by surveys would not increase. The American Cultural Resources Association told Science the rule required only \"a very small amount\" of time and money. Sponsors and industry groups characterise the burden as larger and as falling mostly on small operators. I found no CBO, GAO or court finding that confirms or disputes BOEM's figures."
+  },
+  {
+   "grade": "estimated",
+   "claim": "BOEM expected the rule to increase the likelihood that seabed archaeological resources (such as shipwrecks) would be located and identified before OCS operators could inadvertently damage them. It quantified no benefit. With the rule void, the agency's expected increase in identification before disturbance is not realised, and the earlier case-by-case standard applies. This is a forecast of lost protection, not a recorded loss.",
+   "date": "2024-09-03",
+   "source": {
+    "title": "Protection of Marine Archaeological Resources (final rule, 89 FR 71160)",
+    "url": "https://regulations.justia.com/regulations/fedreg/2024/09/03/2024-19188.html",
+    "publisher": "Federal Register via Justia",
+    "date": "2024-09-03"
+   },
+   "counterpoint": "NOIA says industry already identifies and protects marine archaeological sites. Kennedy said the Gulf has already been extensively surveyed. Under the restored standard, a BOEM regional director can still require a report where there is reason to believe a resource may be present. The Offshore Operators Committee called the rule far too ambiguous when it was proposed (reported by Science)."
+  }
+ ],
+ "notes": "(1) I relied on text excerpts returned by search, not full page reads, so the Federal Register cost table was seen in part. The 20-year figures and the annualized $398,305 come from those excerpts. (2) I did not find the underlying benefit-cost memo in the docket or the regulatory flexibility analysis. The statement that 100 percent of Gulf compliance cost falls on small entities comes only from Sen. Kennedy's press release quoting the agency, so I did not put it in the cost field as an agency figure. (3) The Federal Register revocation notice says the House passed the resolution on March 4, 2025. The Public Law legislative history and the recorded vote data give March 6, 2025, and I used March 6. (4) Congress.gov records the law as becoming Public Law 119-3 on March 14, 2025. One secondary source gives March 13 as the signing date. (5) I found no credible record of what followed in practice. I found no agency data, GAO or inspector general report, or court record on archaeological resources damaged or surveys skipped since March 2025. I also found none on operator costs saved or on exploration or development plans filed since the rule was nullified. Statements that the rule delayed investment or raised energy prices are advocacy claims, not measured outcomes, and I did not grade them. (6) BOEM was reported dissolved on July 10, 2026 and replaced by the Marine Minerals Administration (Wikipedia, secondary source, not verified). Any later archaeological-survey policy may sit with the successor body, and I did not check it.",
+ "_drafted": {
+  "by": "claude-sonnet-5-5",
+  "on": "2026-11-07",
+  "status": "draft",
+  "usage": {
+   "input_tokens": 201710,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 8305,
+   "output_tokens_details": {
+    "thinking_tokens": 1919
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard",
+   "server_tool_use": {
+    "web_search_requests": 8,
+    "web_fetch_requests": 0
+   }
+  }
+ }
+}

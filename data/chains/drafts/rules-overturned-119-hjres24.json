@@ -1,0 +1,165 @@
+{
+ "mechanism": {
+  "rule": "Energy Conservation Program: Energy Conservation Standards for Walk-In Coolers and Walk-In Freezers (final rule, RIN 1904-AD79, docket EERE-2017-BT-STD-0009)",
+  "agency": "Department of Energy (Office of Energy Efficiency and Renewable Energy)",
+  "federal_register": "89 Fed. Reg. 104616 (Dec. 23, 2024)",
+  "published": "2024-12-23",
+  "effective": "2025-02-21",
+  "required": "DOE adopted amended energy conservation standards for walk-ins and said they would save significant energy and were technologically feasible and economically justified. The rule did not amend standards for display doors or panels. It set maximum daily energy consumption standards for walk-in non-display doors and higher minimum efficiency standards (AWEF2) for walk-in refrigeration systems. Non-display doors had to comply by December 23, 2027, and refrigeration systems by December 31, 2028. The standards would have applied to manufacturers of this equipment, and indirectly to the businesses that buy and use it. DOE expected manufacturers could meet the non-display door level with existing equipment. For walk-in panels, DOE did not adopt more stringent standards.",
+  "benefits": "DOE's own analysis, in the final rule: the cumulative net present value of total consumer benefits is $2.00 billion (7% discount rate) to $4.74 billion (3% discount rate), for equipment purchased in 2029–2058. National energy savings were projected at 1.60 quads (full-fuel-cycle). DOE described this as a 6.3 percent saving relative to energy use without amended standards. Cumulative emission reductions over the same period were estimated at 28.82 million metric tons of CO2, plus 8.8 thousand tons of SO2 and other pollutants. Annualized, at a 3% discount rate: $369.8 million per year in reduced equipment operating costs, $96.5 million in climate benefits and $189.4 million in health benefits, for a net benefit of $554.5 million per year. At a 7% rate for consumer and health items, annual benefits were $304.4 million in reduced operating costs and $326.5 million in climate benefits. The health and net figures for the 7% case were cut off in the text I opened. All figures are DOE's, in 2022 dollars per the source tables, and cover equipment shipped over the analysis period.",
+  "costs": "DOE's own analysis, from the same final rule. At a 3% discount rate, the estimated cost is $101.2 million per year in increased equipment costs. At a 7% rate for consumer costs, the estimated cost is $99.1 million per year in increased equipment costs. For manufacturers, the technical support document states the change in industry net present value (INPV) for walk-ins ranges from -$63 million to -$42 million. The final rule's text also refers to manufacturer conversion costs, but the figure was truncated in the text I opened, so it is not reported here. Official dispute: I found no CBO, GAO or court finding disputing DOE's estimates. The GAO major-rule report restates DOE's NPV figures without assessing them.",
+  "agency_reasons": "Under EPCA, DOE must periodically review its existing standards to determine whether more-stringent standards would be technologically feasible and economically justified, and would result in significant energy savings. DOE concluded the adopted standards represent the maximum improvement in energy efficiency that is technologically feasible and economically justified, and would result in significant conservation of energy.",
+  "sponsor_reasons": "Rep. Stephanie Bice (R-OK), the House sponsor, said the rule limited consumer choice in her framing, and that overturning it protects economic freedom and consumer choice and keeps businesses from bearing unnecessary costs. She also described the rule as having an estimated compliance cost of nearly $1 billion. Her floor remarks said the resolution would protect small businesses from unnecessary compliance cost and preserve the diversity of choice available to consumers. House Energy and Commerce Chairmen Guthrie and Latta said the rule was an example of needless regulation raising prices for businesses and families while failing to provide cost savings or increase food safety. Rep. Fedorchak said the rule was neither technologically feasible nor economically justified (her characterization). Industry groups NACS, the National Grocers Association and FMI sent a letter supporting the resolution; they said retailers would have to absorb costs or pass them to consumers as higher prices. I did not locate a $1 billion total cost figure in the DOE analysis pages I opened. DOE's own annualized equipment-cost estimates are roughly $99–101 million per year.",
+  "status": "Became law. H.J.Res. 24 passed the House 203-182 on 2025-03-27. The Senate agreed to the motion to proceed 51-46 on 2025-04-02 and passed the resolution 53-42 on 2025-04-03. It was sent to the President on May 5, 2025 and signed on May 9, 2025. As Public Law 119-7, Congress disapproves the rule at 89 Fed. Reg. 104616, and the rule has no force or effect. The rule is void. DOE had earlier delayed its effective date twice (90 FR 9951 on 02/20/25 and 90 FR 13054 on 03/20/25). It then published a withdrawal notice (90 FR 21391) on 05/20/25.",
+  "sources": [
+   {
+    "title": "Energy Conservation Program: Energy Conservation Standards for Walk-In Coolers and Walk-In Freezers (final rule)",
+    "url": "https://www.federalregister.gov/documents/2024/12/23/2024-28474/energy-conservation-program-energy-conservation-standards-for-walk-in-coolers-and-walk-in-freezers",
+    "publisher": "Federal Register / Department of Energy",
+    "date": "2024-12-23"
+   },
+   {
+    "title": "Final rule (public inspection copy), 2024-28474",
+    "url": "https://public-inspection.federalregister.gov/2024-28474.pdf",
+    "publisher": "Federal Register",
+    "date": "2024-12-20"
+   },
+   {
+    "title": "Technical Support Document: Energy Efficiency Program, walk-in coolers and freezers",
+    "url": "https://downloads.regulations.gov/EERE-2017-BT-STD-0009-0093/content.pdf",
+    "publisher": "Department of Energy via Regulations.gov",
+    "date": "2024-12"
+   },
+   {
+    "title": "GAO major rule report: Energy Conservation Standards for Walk-In Coolers and Walk-In Freezers",
+    "url": "https://www.gao.gov/assets/880/874605.pdf",
+    "publisher": "U.S. Government Accountability Office",
+    "date": "2025-01"
+   },
+   {
+    "title": "H.J.Res.24 - 119th Congress",
+    "url": "https://www.congress.gov/bill/119th-congress/house-joint-resolution/24",
+    "publisher": "Congress.gov",
+    "date": "2025-05-09"
+   },
+   {
+    "title": "Public Law 119-7",
+    "url": "https://www.congress.gov/119/plaws/publ7/PLAW-119publ7.pdf",
+    "publisher": "Congress.gov / GPO",
+    "date": "2025-05-09"
+   },
+   {
+    "title": "Spring 2025 Unified Agenda of Federal Regulatory and Deregulatory Actions",
+    "url": "https://www.federalregister.gov/documents/2025/09/22/2025-18327/spring-2025-unified-agenda-of-federal-regulatory-and-deregulatory-actions",
+    "publisher": "Federal Register",
+    "date": "2025-09-22"
+   },
+   {
+    "title": "Congresswoman Bice Applauds President Trump's Signing of Her Legislation",
+    "url": "https://bice.house.gov/media/press-releases/congresswoman-bice-applauds-president-trumps-signing-her-legislation-overturn",
+    "publisher": "Office of Rep. Stephanie Bice",
+    "date": "2025-05-09"
+   },
+   {
+    "title": "Bice Celebrates the Passage of her Legislation",
+    "url": "https://bice.house.gov/media/press-releases/bice-celebrates-passage-her-legislation-overturn-burdensome-biden-era",
+    "publisher": "Office of Rep. Stephanie Bice",
+    "date": "2025-03-27"
+   },
+   {
+    "title": "Chairmen Guthrie and Latta Applaud Passage of CRA Resolutions",
+    "url": "https://energycommerce.house.gov/posts/chairmen-guthrie-and-latta-applaud-passage-of-congressional-review-act-resolutions-to-roll-back-harmful-biden-harris-doe-standards-on-refrigeration-products",
+    "publisher": "House Committee on Energy and Commerce",
+    "date": "2025-03-27"
+   },
+   {
+    "title": "Rep. Fedorchak: These rules are textbook examples of government overreach",
+    "url": "https://fedorchak.house.gov/media/press-releases/rep-fedorchak-these-rules-are-textbook-examples-government-overreach",
+    "publisher": "Office of Rep. Julie Fedorchak",
+    "date": "2025-03"
+   },
+   {
+    "title": "House Votes to Block Costly Energy Mandates on Businesses",
+    "url": "https://www.convenience.org/stay-current/news/2025/april/1/4-house-votes-to-block-costly-energy-mandates_gr",
+    "publisher": "NACS",
+    "date": "2025-04-01"
+   }
+  ]
+ },
+ "outcomes": [
+  {
+   "grade": "documented",
+   "claim": "The amended standards never took effect. DOE delayed the rule's effective date twice, then published a withdrawal notice stating the standards have no force or effect. DOE's walk-in coolers page states that as of May 20, 2025 the rule was withdrawn. The compliance dates (Dec. 23, 2027 for non-display doors, Dec. 31, 2028 for refrigeration systems) had not yet arrived, so no manufacturer was yet required to meet the new levels. The Congress.gov summary states that walk-in non-display doors and refrigeration systems are no longer required to comply with the new standards. Existing standards for display doors and panels were never amended by this rule.",
+   "date": "2025-05-20",
+   "source": {
+    "title": "Spring 2025 Unified Agenda (entry 58, RIN 1904-AD79)",
+    "url": "https://www.federalregister.gov/documents/2025/09/22/2025-18327/spring-2025-unified-agenda-of-federal-regulatory-and-deregulatory-actions",
+    "publisher": "Federal Register / DOE",
+    "date": "2025-09-22"
+   },
+   "counterpoint": "Because the compliance dates were years away, no compliance spending or cost savings under the rule can have occurred before the repeal. The effects on equipment buyers and on energy use fall in 2027 and later, so this link records only the legal outcome."
+  },
+  {
+   "grade": "estimated",
+   "claim": "Benefit forgone, per DOE's pre-vote analysis. DOE estimated the standards would have delivered cumulative consumer net present value of $2.00 billion (7% discount rate) to $4.74 billion (3%) for equipment purchased 2029–2058. It also projected 1.60 quads of full-fuel-cycle energy savings and 28.82 Mt of CO2 reductions over the same period. The annualized net benefit at a 3% discount rate was $554.5 million per year, including $369.8 million in operating-cost savings. This is a forecast made before the vote, not a measured result.",
+   "date": "2024-12-23",
+   "source": {
+    "title": "Energy Conservation Program: Energy Conservation Standards for Walk-In Coolers and Walk-In Freezers (final rule)",
+    "url": "https://www.federalregister.gov/documents/2024/12/23/2024-28474/energy-conservation-program-energy-conservation-standards-for-walk-in-coolers-and-walk-in-freezers",
+    "publisher": "Federal Register / DOE",
+    "date": "2024-12-23"
+   },
+   "counterpoint": "In the same analysis DOE estimated increased equipment costs of $99.1–$101.2 million per year and a manufacturer INPV change of -$63 million to -$42 million. Sponsors said the cost was nearly $1 billion, and I could not trace that figure to the DOE pages I opened. No CBO, GAO or court finding disputing DOE's estimates was found. DOE's climate and health benefit values depend on its chosen social-cost and discount-rate assumptions."
+  },
+  {
+   "grade": "estimated",
+   "claim": "Burden lifted, per DOE's pre-vote analysis. The repeal removed the equipment cost increases DOE had projected for the standards ($99.1 million per year at a 7% discount rate and $101.2 million per year at 3%). It also removed a projected decline in manufacturer industry value of $42–$63 million (INPV). Purchasers of walk-in equipment and its manufacturers would have faced these costs from 2027–2028 onward.",
+   "date": "2024-12-23",
+   "source": {
+    "title": "Energy Conservation Program: Energy Conservation Standards for Walk-In Coolers and Walk-In Freezers (final rule)",
+    "url": "https://www.federalregister.gov/documents/2024/12/23/2024-28474/energy-conservation-program-energy-conservation-standards-for-walk-in-coolers-and-walk-in-freezers",
+    "publisher": "Federal Register / DOE",
+    "date": "2024-12-23"
+   },
+   "counterpoint": "DOE's same analysis projected that operating-cost savings ($304.4–$369.8 million per year) would exceed these added equipment costs. It also said non-display door standards could be met with existing equipment. How much of the cost would have been passed on to customers was not established in the sources I opened."
+  },
+  {
+   "grade": "associated",
+   "claim": "The Appliance Standards Awareness Project (ASAP), an efficiency advocacy group, said after the Senate vote that blocking the standards would raise costs for restaurants, convenience stores and grocery stores, and that those costs would be passed on to consumers. It said bill savings would repay the added upfront cost within 1.6 years on average for non-display doors and 3 years for refrigeration systems. Press reporting also attributes to ASAP an estimate of about $6.5 billion in utility-bill savings for walk-in coolers and freezers over 30 years of sales. These are advocacy-group projections made at the time of the vote. I found no measurement of actual price or bill changes.",
+   "date": "2025-04-03",
+   "source": {
+    "title": "Senate Vote to Undo Efficiency Standards for Walk-In Coolers Will Raise Bills, Strain Electric Grid",
+    "url": "https://appliance-standards.org/document/senate-vote-undo-efficiency-standards-walk-coolers-will-raise-bills-strain-electric-grid",
+    "publisher": "Appliance Standards Awareness Project",
+    "date": "2025-04-03"
+   },
+   "counterpoint": "Industry groups (NACS, the National Grocers Association, FMI) argued the opposite: that the rule would force costly, specialized equipment purchases and higher prices. Sponsors also said the rule's costs outweighed its benefits. ASAP is an advocacy organization, and its payback figures are projections, not records of events."
+  }
+ ],
+ "notes": "(1) No credible record of measured effects on people was found. I found no agency data, GAO or inspector-general report, or peer-reviewed study of how equipment prices, business costs, energy use or food prices changed after the repeal. The standards' compliance dates (Dec. 2027 and Dec. 2028) fall after the period I could check, so real-world effects would not be visible yet. That is a valid finding, not a gap to fill with forecasts. (2) The DOE figures (NPV, annualized benefits and costs, INPV) are DOE's forecasts, published before the vote. They are estimates, not documented outcomes. The 7% annualized case was truncated in the text I opened, so I did not report its health-benefit or net-benefit figures. Ballotpedia lists an estimated benefit of $672.7 million and cost of $99.1 million, but I did not rely on it because it is a secondary source. (3) The sponsors' 'nearly $1 billion' compliance-cost figure was not located in the DOE final-rule pages or the TSD summary I opened. It may refer to a different measure, such as total conversion or lifetime costs. I have recorded it as the sponsors' statement and have not verified it. (4) The Conference Board noted at the time that it was unclear whether rollbacks would change the equipment manufacturers actually produce. Many manufacturers may already have been moving toward the higher levels (reported in a policy alert, not an official analysis). (5) H.J.Res. 24 is one of several DOE appliance-standard CRA resolutions signed together on May 9, 2025. Outcomes specific to this rule are hard to separate from the others. (6) Sources and what I opened: the Federal Register, GAO, Congress.gov, the Public Law text and the Unified Agenda entries were opened. Other items (press releases, ASAP, trade-press articles) are used only for statements of reasons and projections, not as evidence of outcomes. (7) The CRA's bar on reissuing a 'substantially the same' rule is part of the statute. I did not open a source on its effect here, so I have made no claim about whether DOE may issue a new walk-in standard.",
+ "_drafted": {
+  "by": "claude-sonnet-5-5",
+  "on": "2026-11-07",
+  "status": "draft",
+  "usage": {
+   "input_tokens": 149294,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 10012,
+   "output_tokens_details": {
+    "thinking_tokens": 2978
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard",
+   "server_tool_use": {
+    "web_search_requests": 7,
+    "web_fetch_requests": 0
+   }
+  }
+ }
+}
